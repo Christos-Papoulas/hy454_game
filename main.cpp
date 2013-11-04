@@ -3,29 +3,27 @@
  * http://www.allegro.cc/forums/thread/606482
  *
  * Also see here for more info:
- * 
+ *
  * http://wiki.allegro.cc/index.php?title=Allegro_5_Tutorial
- * 
+ *
  * Place fixed_font.tga and icon.tga from the Allegro 5 examples/data
  * folder next to the .exe and there will be an FPS counter and an
  * icon.
- * 
+ *
  * Left mouse = Pan
  * Right mouse = Rotozoom
  * Esc = Quit
  */
- 
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
- 
+
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_font.h"
- 
+
 /* Our window. */
 ALLEGRO_DISPLAY *display;
 /* Our tiles atlas. */
@@ -43,7 +41,7 @@ ALLEGRO_FONT *font;
 /* Simple FPS counter. */
 int fps, fps_accum;
 double fps_time;
- 
+
 /* Places a single tile into the tile atlas.
  * Normally you would load the tiles from a file.
  */
@@ -74,7 +72,7 @@ void tile_draw(int i, float x, float y, float w, float h) {
             break;
     }
 }
- 
+
 /* Creates the tiles and a random 100x100 map. */
 void tile_map_create(void) {
     int i;
@@ -92,28 +90,28 @@ void tile_map_create(void) {
         tile_draw(i, i * 66, 0, 66, 66);
     }
     al_set_target_backbuffer(display);
- 
+
     /* Create the random map. */
     for (y = 0; y < 100; y++) {
         for (x = 0; x < 100; x++) {
             tile_map[x + y * 100] = rand() % 4;
         }
     }
- 
+
     /* Center of map. */
     scroll_x = 100 * 32 / 2;
     scroll_y = 100 * 32 / 2;
 }
- 
+
 /* Draws the complete map. */
 void tile_map_draw(void) {
     int x, y;
     ALLEGRO_TRANSFORM transform;
     float w, h;
- 
+
     w = al_get_display_width(display);
     h = al_get_display_height(display);
- 
+
     /* Initialize transformation. */
     al_identity_transform(&transform);
     /* Move to scroll position. */
@@ -125,9 +123,9 @@ void tile_map_draw(void) {
     al_translate_transform(&transform, w * 0.5, h * 0.5);
     /* All subsequent drawing is transformed. */
     al_use_transform(&transform);
- 
+
     al_clear_to_color(al_map_rgb(0, 0, 0));
- 
+
     al_hold_bitmap_drawing(1);
     for (y = 0; y < 100; y++) {
         for (x = 0; x < 100; x++) {
@@ -139,18 +137,18 @@ void tile_map_draw(void) {
         }
     }
     al_hold_bitmap_drawing(0);
- 
+
     al_identity_transform(&transform);
     al_use_transform(&transform);
 }
- 
+
 int main(void) {
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
     bool redraw = true;
- 
+
     srand(time(NULL));
- 
+
     /* Init Allegro 5 + addons. */
     al_init();
     al_init_image_addon();
@@ -158,12 +156,10 @@ int main(void) {
     al_init_font_addon();
     al_install_mouse();
     al_install_keyboard();
- 
     /* Create our window. */
     al_set_new_display_flags(ALLEGRO_RESIZABLE);
     display = al_create_display(640, 480);
     al_set_window_title(display, "Allegro 5 Tilemap Example");
- 
     /* The example will work without those, but there will be no
      * FPS display and no icon.
      */
@@ -171,11 +167,11 @@ int main(void) {
     icon = al_load_bitmap("icon.tga");
     if (icon)
         al_set_display_icon(display, icon);
- 
+
     al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
- 
+
     tile_map_create();
- 
+
     timer = al_create_timer(1.0 / 60);
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_keyboard_event_source());
@@ -183,11 +179,11 @@ int main(void) {
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_start_timer(timer);
- 
+
     while (1) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
- 
+
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
             break;
         if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -223,7 +219,7 @@ int main(void) {
             al_acknowledge_resize(display);
             redraw = true;
         }
- 
+
         if (redraw && al_is_event_queue_empty(queue)) {
             double t = al_get_time();
             tile_map_draw();
