@@ -1,5 +1,5 @@
 /* Simple Allegro 5 tilemap example from allegro.cc:
- *
+ * TEST
  * http://www.allegro.cc/forums/thread/606482
  *
  * Also see here for more info:
