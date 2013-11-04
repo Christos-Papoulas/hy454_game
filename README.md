@@ -15,6 +15,6 @@ and start building efficient Allegro Programs.
 
 ## Tutorial for C++
 
-A basic guide ["From C to C++!"](http://www.4p8.com/eric.brasseur/cppcen.html) is a good chance to start. But as we continue, we need a [full guide of C++ is this](http://e-maxx.ru/bookz/files/stroustrup.pdf).
+A basic guide ["From C to C++!"](http://www.4p8.com/eric.brasseur/cppcen.html) is a good chance to start. But as we continue, we need a [full guide of C++](http://e-maxx.ru/bookz/files/stroustrup.pdf).
 
 Takis, Lefteris, Christos
