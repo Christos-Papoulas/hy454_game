@@ -12,3 +12,5 @@ So, in order to work well with Allegro 5 the [basic guide](http://wiki.allegro.c
 ###Reference Manual.
 When we have understand the basic of Allegro, we will need a [full reference manual](http://alleg.strangesoft.net/docs/refman.pdf)
 and start building efficient Allegro Programs.
+
+Takis, Leyteris, Christos
