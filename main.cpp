@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "header_files/Animator.h"
 
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
