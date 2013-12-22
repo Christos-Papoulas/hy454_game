@@ -91,11 +91,17 @@ void MarioBrosMain::FPSCalculation(){
 		return ;
 }
 
+void MarioBrosMain::InitializeGame() {
+		al_start_timer(timer);
+
+		redraw = true;
+}
+
 int main() {
 		using namespace MarioBrosMain;
 
 		if(InitAllegro()){
-		
+				InitializeGame();
 		}
 		system("PAUSE");
 		return 0;

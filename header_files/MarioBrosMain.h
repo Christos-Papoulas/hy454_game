@@ -8,7 +8,8 @@
 #include <assert.h>
 
 /* our libraries */
-#include "Animator.h"
+#include "header_files\Animator.h"
+#include "header_files\terrain\terrain.h"
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 
@@ -27,7 +28,7 @@ ALLEGRO_EVENT_QUEUE *queue = NULL;
 bool redraw = true;
 
 const float FPS = 90;
-/* Our Dedines */
+/* Our Defines */
 #define SCREEN_WINDOW_WIDTH 800
 #define SCREEN_WINDOW_HEIGHT 600
 
@@ -42,6 +43,8 @@ namespace MarioBrosMain {
 		extern void CollisionChecking();
 		extern void CommitDestructions();
 		extern void FPSCalculation();
+
+		extern void InitializeGame();
 }
 
 #endif
