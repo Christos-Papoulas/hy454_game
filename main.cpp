@@ -1,32 +1,66 @@
-/* Simple Allegro 5 tilemap example from allegro.cc:
- * TEST
- * http://www.allegro.cc/forums/thread/606482
- *
- * Also see here for more info:
- *
- * http://wiki.allegro.cc/index.php?title=Allegro_5_Tutorial
- *
- * Place fixed_font.tga and icon.tga from the Allegro 5 examples/data
- * folder next to the .exe and there will be an FPS counter and an
- * icon.
- *
- * Left mouse = Pan
- * Right mouse = Rotozoom
- * Esc = Quit
- */
+#include "header_files\MarioBrosMain.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "header_files/Animator.h"
+bool MarioBrosMain::InitAllegro(){
+		if(!al_init()){
+				al_show_native_message_box(NULL, "Error", NULL, "Game can not Initialize Graphics.\n", NULL, NULL);
+				return false;
+		}
+		timer = al_create_timer(1.0 / FPS);
+		if(!timer) {
+				al_show_native_message_box(NULL, "Error", NULL, "Game can not Initialize FPS timer\n", NULL, NULL);
+				return false;
+		}
+		display = al_create_display(SCREEN_WINDOW_WIDTH, SCREEN_WINDOW_HEIGHT);
+		if(!display) {
+				al_show_native_message_box(NULL, "Error", NULL, "Game can not create display\n", NULL, NULL);
+				al_destroy_timer(timer);
+				return false;
+		}
+		al_set_window_position(display, 0, 0);
 
-#include "allegro5/allegro.h"
-#include "allegro5/allegro_image.h"
-#include "allegro5/allegro_primitives.h"
-#include "allegro5/allegro_font.h"
+		al_install_keyboard();
+		al_init_image_addon();
 
-/* Our window. */
-ALLEGRO_DISPLAY *display;
+		if(!al_install_audio()){
+				al_show_native_message_box(NULL, "Error", NULL, "Game can not initialize audio\n", NULL, NULL);
+				al_destroy_display(display);
+				al_destroy_timer(timer);
+				return false;
+		}
+
+		if(!al_init_acodec_addon()){
+				al_show_native_message_box(NULL, "Error", NULL, "Game can not initialize audio codecs\n", NULL, NULL);
+				al_destroy_display(display);
+				al_destroy_timer(timer);
+				return false;
+		}
+
+		queue = al_create_event_queue();
+		if(!queue) {
+				al_show_native_message_box(NULL, "Error", NULL, "Game can not create game events\n", NULL, NULL);
+				al_destroy_display(display);
+				al_destroy_timer(timer);
+				return false;
+		}
+		al_register_event_source(queue, al_get_display_event_source(display));
+		al_register_event_source(queue, al_get_timer_event_source(timer));
+	
+		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
+		al_flip_display();
+
+		return true;
+}
+
+int main() {
+		using namespace MarioBrosMain;
+
+		if(InitAllegro()){
+		
+		}
+		system("PAUSE");
+		return 0;
+}
+
 /* Our tiles atlas. */
 ALLEGRO_BITMAP *tiles;
 /* Our tilemap. */
@@ -143,27 +177,27 @@ void tile_map_draw(void) {
     al_use_transform(&transform);
 }
 
-int main(void) {
+/*int main(void) {
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
     bool redraw = true;
 
     srand(time(NULL));
 
-    /* Init Allegro 5 + addons. */
+    // Init Allegro 5 + addons. 
     al_init();
     al_init_image_addon();
     al_init_primitives_addon();
     al_init_font_addon();
     al_install_mouse();
     al_install_keyboard();
-    /* Create our window. */
+    // Create our window. 
     al_set_new_display_flags(ALLEGRO_RESIZABLE);
     display = al_create_display(640, 480);
     al_set_window_title(display, "Allegro 5 Tilemap Example");
-    /* The example will work without those, but there will be no
-     * FPS display and no icon.
-     */
+    // The example will work without those, but there will be no
+    // FPS display and no icon.
+    //
     font = al_load_font("fixed_font.tga", 0, 0);
     icon = al_load_bitmap("icon.tga");
     if (icon)
@@ -198,14 +232,14 @@ int main(void) {
             mouse = 0;
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            /* Left button scrolls. */
+            // Left button scrolls
             if (mouse == 1) {
                 float x = event.mouse.dx / zoom;
                 float y = event.mouse.dy / zoom;
                 scroll_x -= x * cos(rotate) + y * sin(rotate);
                 scroll_y -= y * cos(rotate) - x * sin(rotate);
             }
-            /* Right button zooms/rotates. */
+            // Right button zooms/rotates.
             if (mouse == 2) {
                 rotate += event.mouse.dx * 0.01;
                 zoom += event.mouse.dy * 0.01 * zoom;
@@ -240,14 +274,11 @@ int main(void) {
         }
     }
     return 0;
-}
+} */
 
 
 /*
 // 1st example by the additional lesson materials.
-#include <stdlib.h>
-#include <stdio.h>
-#include <allegro5/allegro.h>
 
 int main()
 {
