@@ -16,7 +16,7 @@ class TileLayer{
 				Index GetTile(Dim col, Dim row);
 				const std::pair<Dim, Dim> GetTileCoordinates(Dim mx, Dim my) const;
 				const Rect GetViewWindow(void) const;
-				void SetViewWindow(constRect&);
+				void SetViewWindow(const Rect&);
 				void Display(Bitmap at, constRect& displayArea);
 				void Scroll(HorizScroll h, VertScroll v);
 				bool CanScroll(HorizScroll h) const;
