@@ -51,6 +51,46 @@ bool MarioBrosMain::InitAllegro(){
 		return true;
 }
 
+//game loop logic
+void MarioBrosMain::MainLoopOneIteration() {
+		InputManagement(); //just reads from local input queue
+		AnimationProgress();
+		ArtificialIntelligence();
+		CollisionChecking();
+		CommitDestructions();
+		FPSCalculation();
+}
+
+void MarioBrosMain::InputManagement(){
+		assert(0 && "Unimpemented");
+		return ;
+}
+
+void MarioBrosMain::AnimationProgress(){
+		assert(0 && "Unimpemented");
+		return ;
+}
+
+void MarioBrosMain::ArtificialIntelligence(){
+		assert(0 && "Unimpemented");
+		return ;
+}
+
+void MarioBrosMain::CollisionChecking(){
+		assert(0 && "Unimpemented");
+		return ;
+}
+
+void MarioBrosMain::CommitDestructions(){
+		assert(0 && "Unimpemented");
+		return ;
+}
+
+void MarioBrosMain::FPSCalculation(){
+		assert(0 && "Unimpemented");
+		return ;
+}
+
 int main() {
 		using namespace MarioBrosMain;
 
@@ -60,6 +100,10 @@ int main() {
 		system("PAUSE");
 		return 0;
 }
+
+
+// from here and below are skata only for looking when we dont
+// know what to do.
 
 /* Our tiles atlas. */
 ALLEGRO_BITMAP *tiles;

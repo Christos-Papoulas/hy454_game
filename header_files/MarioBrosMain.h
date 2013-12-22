@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <assert.h>
 
 /* our libraries */
 #include "Animator.h"
@@ -32,6 +33,15 @@ const float FPS = 90;
 
 namespace MarioBrosMain {
 		extern bool InitAllegro();
+
+		extern void MainLoopOneIteration();
+
+		extern void InputManagement();
+		extern void AnimationProgress();
+		extern void ArtificialIntelligence();
+		extern void CollisionChecking();
+		extern void CommitDestructions();
+		extern void FPSCalculation();
 }
 
 #endif
