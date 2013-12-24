@@ -30,4 +30,6 @@ class Rect {
 
 };
 
+unsigned int CurrTime();
+
 #endif

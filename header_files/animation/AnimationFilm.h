@@ -18,8 +18,9 @@ public:
 				assert(boxes.size() > frameNo);
 				return boxes[frameNo];
 		}
-		void DisplayFrame(Bitmap d, const Point& at, byte frameNo) const;
+		void DisplayFrame(Bitmap dest, const Point& at, byte frameNo) const;
 		AnimationFilm(Bitmap, const std::vector<Rect>, const std::string& );
+		~AnimationFilm();
 };
 
 #endif
