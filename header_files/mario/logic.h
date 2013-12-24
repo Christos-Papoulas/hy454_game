@@ -5,7 +5,10 @@ class Logic {
 		private:
 				static bool isPaused;
 		public:
-				static bool IsPaused() { return isPaused; }
+				static void Create();
+				static void Clean();
+				static bool IsGamePaused();
+				
 
 };
 

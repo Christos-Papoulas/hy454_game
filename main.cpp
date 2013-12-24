@@ -62,9 +62,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 }
 
 void MarioBrosMain::InputManagement(){
-		assert(0 && "Unimpemented");
-		return ;
-		/*if(!Logic::IsPaused()) {
+		if(1) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)) // up
 						return ; // @todo something
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)) // down
@@ -75,7 +73,7 @@ void MarioBrosMain::InputManagement(){
 						return ; // @todo something
 				else
 						return ; // other keys...
-		}*/
+		}
 }
 
 void MarioBrosMain::AnimationProgress(){
@@ -109,11 +107,21 @@ void MarioBrosMain::InitializeGame() {
 		redraw = true;
 }
 
+void ManageGameLoop() {
+		using namespace MarioBrosMain;
+		while(true) {
+				al_wait_for_event(queue, &events);
+				al_get_keyboard_state(&keyboardState);
+				MainLoopOneIteration();
+		}
+}
+
 int main() {
 		using namespace MarioBrosMain;
 
 		if(InitAllegro()){
 				InitializeGame();
+				ManageGameLoop();
 		}
 		system("PAUSE");
 		return 0;

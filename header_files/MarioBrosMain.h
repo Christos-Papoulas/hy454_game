@@ -26,6 +26,7 @@
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_TIMER *timer = NULL;
 ALLEGRO_EVENT_QUEUE *queue = NULL;
+ALLEGRO_EVENT events;
 
 ALLEGRO_KEYBOARD_STATE keyboardState;
 bool redraw = true;
