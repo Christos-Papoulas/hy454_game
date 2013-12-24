@@ -10,6 +10,7 @@
 /* our libraries */
 #include "header_files\Animator.h"
 #include "header_files\terrain\terrain.h"
+#include "header_files\mario\logic.h"
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 
@@ -25,6 +26,8 @@
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_TIMER *timer = NULL;
 ALLEGRO_EVENT_QUEUE *queue = NULL;
+
+ALLEGRO_KEYBOARD_STATE keyboardState;
 bool redraw = true;
 
 const float FPS = 90;

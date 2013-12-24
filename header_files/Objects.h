@@ -19,8 +19,8 @@ class Point {
 				Dim GetX() const { return x; } 
 				Dim GetY() const { return y; }
 
-				void SetX(Dim _x) : x(_x) { }
-				void SetY(Dim _y) : y(_y) { }
+				void SetX(Dim _x) { x = _x; }
+				void SetY(Dim _y) { y = _y; }
 };
 
 #endif

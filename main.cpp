@@ -64,6 +64,18 @@ void MarioBrosMain::MainLoopOneIteration() {
 void MarioBrosMain::InputManagement(){
 		assert(0 && "Unimpemented");
 		return ;
+		/*if(!Logic::IsPaused()) {
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)) // up
+						return ; // @todo something
+				else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)) // down
+						return ; // @todo something
+				else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)) // right
+						return ; // @todo something
+				else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)) // lest
+						return ; // @todo something
+				else
+						return ; // other keys...
+		}*/
 }
 
 void MarioBrosMain::AnimationProgress(){
