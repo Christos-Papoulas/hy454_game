@@ -7,6 +7,6 @@ class Logic {
 		public:
 				static bool IsPaused() { return isPaused; }
 
-}
+};
 
 #endif
