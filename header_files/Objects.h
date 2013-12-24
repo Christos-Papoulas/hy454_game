@@ -4,8 +4,8 @@
 #include <allegro5\allegro5.h> 
 
 typedef unsigned char byte;
-typedef unsigned int Dim;
-typedef unsigned char Index;
+typedef unsigned short Dim;
+typedef unsigned short Index;
 typedef ALLEGRO_BITMAP* Bitmap;
 
 class Point {

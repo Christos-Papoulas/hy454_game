@@ -1,9 +1,12 @@
+#define TILE_WIDTH 16
+#define TILE_HEIGHT 16
 #define ROW_MASK 0x0F
 #define COL_MASK 0xF0
 #define COL_SHIFT 4
 
+
 #include "header_files\Objects.h"
-#include "header_files\MarioBrosMain.h"
+#include <stdio.h>
 
 byte MakeIndex (byte row, byte col ) { 
 	return (col<<COL_SHIFT) | row; 
@@ -25,8 +28,7 @@ Dim TileY (byte index){
 	return GetRow(index)*TILE_HEIGHT; 
 }
 
-#define TILE_WIDTH 16
-#define TILE_HEIGHT 16
+
 #define MUL_TILE_WIDTH(i) ((i)<<4)
 #define MUL_TILE_HEIGHT(i) ((i)<<4)
 
@@ -58,10 +60,10 @@ byte TileY3 (Index index) {
 typedef ALLEGRO_BITMAP * Bitmap;
 
 void PutTile (Bitmap at, Dim x, Dim y, Bitmap tiles, Index tile) {
-	blit(
+	/*blit(
 	tiles, Rect(TileX3(tile), TileY3(tile), TILE_WIDTH, TILE_HEIGHT),
 	at, Point(x,y)
-	);
+	);*/
 }
 
 
@@ -103,6 +105,5 @@ bool IsTileSolid2 (Dim row, Dim col) {
 	unsigned tilePos = MUL_MAX_WIDTH(row) + col;
 	return tileSolitidy[DIV_32(tilePos)] & (1 << MOD_32(tilePos));
 }
-
 
 
