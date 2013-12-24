@@ -1,9 +1,12 @@
 #ifndef _OBJECTS_H_
 #define _OBJECTS_H_
 
+#include <allegro5\allegro5.h> 
+
 typedef unsigned char byte;
 typedef unsigned int Dim;
 typedef unsigned char Index;
+typedef ALLEGRO_BITMAP* Bitmap;
 
 class Point {
 		Dim x;
@@ -21,6 +24,10 @@ class Point {
 
 				void SetX(Dim _x) { x = _x; }
 				void SetY(Dim _y) { y = _y; }
+};
+
+class Rect {
+
 };
 
 #endif
