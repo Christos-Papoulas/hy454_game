@@ -20,6 +20,7 @@ class Sprite {
 				bool IsVisible () const;
 				bool CollisionCheck (Sprite *s);
 				Sprite (Dim _x, Dim _y, AnimationFilm* film);
+				void Display(Bitmap dest);
 };
 
 #endif
