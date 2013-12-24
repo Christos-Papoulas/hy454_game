@@ -1,4 +1,5 @@
 Debug/
+Release/
 allegro.log
 *.vcxproj
 allegro.vcxproj.filt
