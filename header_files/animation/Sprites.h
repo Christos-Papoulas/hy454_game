@@ -21,6 +21,7 @@ class Sprite {
 				bool CollisionCheck (Sprite *s);
 				Sprite (Dim _x, Dim _y, AnimationFilm* film);
 				void Display(Bitmap dest);
+				void Move(Dim x,Dim y);
 };
 
 #endif

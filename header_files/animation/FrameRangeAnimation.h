@@ -1,5 +1,5 @@
-#ifndef _FRAMEANIMATION_H_
-#define _FRAMEANIMATION_H_
+#ifndef _FRAME_RANGE_ANIMATION_H_
+#define _FRAME_RANGE_ANIMATION_H_
 
 #include "MovingAnimation.h"
 
@@ -14,7 +14,7 @@ class FrameRangeAnimation : public MovingAnimation {
 				void		SetStartFrame(frame_t v) { start = v; }
 				frame_t GetEndFrame() const { return end; }
 				void		SetEndFrame(frame_t v) { end = v; }
-				Animation* Clone (animid_t newId) const {
+				Animation* Clone (animid_t newId) /*const*/ {
 						return new FrameRangeAnimation(
 								start, end, GetDx(), GetDy(), GetDelay(), GetContinuous(), newId
 						);

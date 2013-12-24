@@ -1,6 +1,10 @@
 #ifndef _MOVINGPATHANIMATION_H_
 #define _MOVINGPATHANIMATION_H_
 
+#include "Animation.h"
+#include <list>
+
+typedef unsigned char frame_t;
 // lecture 11 slide 14
 struct PathEntry {
 		offset_t		dx, dy;

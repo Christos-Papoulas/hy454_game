@@ -24,6 +24,27 @@ bool Sprite::CollisionCheck (Sprite *s) {
 		return false;
 }
 
+
+void Sprite::Move (Dim x,Dim y) {
+	assert(0 && "unimplemented");
+	return ;
+	/*Apply the movement;
+	if (gravityAddicted) {
+		Check the terrain tiles just below;
+		if (over solid terrain) {
+			if (isFalling) {
+				isFalling = false;
+				NotifyStopFalling();
+			}
+		}
+		else
+			if (!isFalling) {
+				isFalling = true; 
+				NotifyStartFalling(); 
+			}
+	}*/
+}
+
 Sprite::Sprite(Dim _x, Dim _y, AnimationFilm* film) : 
 		x(_x), y(_y), currFilm(film), isVisible(true)
 {
