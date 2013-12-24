@@ -5,3 +5,12 @@ AnimationFilm::AnimationFilm(Bitmap _bitmap, const std::vector<Rect> _boxes, con
 {
 		assert(!_boxes.empty() && !_id.empty());
 }
+
+AnimationFilm::~AnimationFilm() {
+
+}
+
+void AnimationFilm::DisplayFrame(Bitmap dest, const Point& at, byte frameNo) const {
+		//MaskedBlit(bitmap, GetFrameNo(frameNo), dest, at);
+		return ;
+}
