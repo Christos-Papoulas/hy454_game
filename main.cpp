@@ -51,6 +51,16 @@ bool MarioBrosMain::InitAllegro(){
 		return true;
 }
 
+ void MarioBrosMain::Rendering(timestamp_t now) {
+		if(!al_is_event_queue_empty(queue)) 
+				return ;
+		 
+		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
+		Terrain::DisplayTerrain(al_get_backbuffer(display), now);
+		// @todo display AnimatorHolder;
+		al_flip_display(); // is blocking depending on defines?
+}
+
 //game loop logic
 void MarioBrosMain::MainLoopOneIteration() {
 		InputManagement(); //just reads from local input queue

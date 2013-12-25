@@ -4,8 +4,8 @@
 #include "Animator.h"
 #include "../animation/Sprites.h"
 #include "../animation/MovingAnimation.h"
+
 // lecture11 slide27
-typedef unsigned long timestamp_t;
 
 class MovingAnimator : public Animator {
 	Sprite* sprite;

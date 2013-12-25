@@ -4,6 +4,7 @@
 
 #include "..\Objects.h"
 
+// lecture9 slide11
 #define ROW_MASK 0x0F
 #define COL _MAS 0XF0
 #define COL_SHIFT 4

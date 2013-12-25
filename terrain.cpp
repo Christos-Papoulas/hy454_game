@@ -17,3 +17,7 @@ void Terrain::Create() {
 void Terrain::CleanUp() {
 		delete terrain;
 }
+
+void Terrain::DisplayTerrain(Bitmap, timestamp_t) {
+		assert(0 && "Unimplemented");
+}

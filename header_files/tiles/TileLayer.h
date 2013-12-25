@@ -1,10 +1,11 @@
 #ifndef _TILELAYER_H_
 #define _TILELAYER_H_
 
+#include <stdio.h>
 #include "..\Objects.h"
 
-#define MAX_HEIGHT 100 //@todo the real values
-#define MAX_WIDTH 100 //@todo the real values
+#define MAX_HEIGHT 256 //@todo the real values
+#define MAX_WIDTH 1024 //@todo the real values
 
 class TileLayer{
 		private:
@@ -21,7 +22,7 @@ class TileLayer{
 				/*void Scroll(HorizScroll h, VertScroll v);
 				bool CanScroll(HorizScroll h) const;
 				bool CanScroll(VertScroll v) const;*/
-				void WriteMap(FILE* fp) const;
+				void WriteMap(FILE* fp);
 				bool ReadMap(FILE* fp);
 };
 

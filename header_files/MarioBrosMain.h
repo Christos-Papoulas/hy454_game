@@ -8,9 +8,12 @@
 #include <assert.h>
 
 /* our libraries */
-#include "header_files\Animator.h"
+#include "header_files\animator\Animator.h"
+#include "header_files\animator\AnimatorHolder.h"
 #include "header_files\terrain\terrain.h"
 #include "header_files\mario\logic.h"
+#include "header_files\Objects.h"
+
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 
@@ -38,6 +41,8 @@ const float FPS = 90;
 
 namespace MarioBrosMain {
 		extern bool InitAllegro();
+
+		extern void Rendering(timestamp_t );
 
 		extern void MainLoopOneIteration();
 

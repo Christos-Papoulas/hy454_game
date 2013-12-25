@@ -2,6 +2,8 @@
 #define _TERRAIN_H_
 
 #include <assert.h>
+#include "..\Objects.h"
+#include "..\animator\Animator.h"
 
 class Terrain {
 	private:
@@ -12,7 +14,7 @@ class Terrain {
 	public:
 		static void Create();
 		static void CleanUp();
-		static void DisplayTerrain();
+		static void DisplayTerrain(Bitmap, timestamp_t);
 };
 
 #endif

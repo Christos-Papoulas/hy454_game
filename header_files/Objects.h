@@ -5,8 +5,10 @@
 
 typedef unsigned char byte;
 typedef unsigned short Dim;
-typedef unsigned short Index;
+typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
 typedef ALLEGRO_BITMAP* Bitmap;
+typedef ALLEGRO_DISPLAY* Display;
+
 
 class Point {
 		Dim x;

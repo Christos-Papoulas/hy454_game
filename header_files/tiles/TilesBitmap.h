@@ -1,4 +1,7 @@
-#include "header_files\Objects.h"
+#ifndef _TILES_BITMAP_H_
+#define _TILES_BITMAP_H_
+
+#include "..\Objects.h"
 
 #define MAX_WIDTH 1024
 #define MAX_HEIGHT  256
@@ -15,4 +18,6 @@ class TilesBitmap {
 	public:
 		void PutTile (Bitmap at, Dim x, Dim y, Index tile) const;
 		Index GetPointedTile (Dim x, Dim y) const;
-}
+};
+
+#endif
