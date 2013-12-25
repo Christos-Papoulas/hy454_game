@@ -2,11 +2,13 @@
 #define _TILELAYER_H_
 
 #include <stdio.h>
+#include <utility> // for pair
 #include "..\Objects.h"
 
 #define MAX_HEIGHT 256 //@todo the real values
 #define MAX_WIDTH 1024 //@todo the real values
 
+//lecture9 slide53
 class TileLayer{
 		private:
 				Index		map[MAX_HEIGHT][MAX_WIDTH];
@@ -19,9 +21,9 @@ class TileLayer{
 				const Rect GetViewWindow(void) const;
 				void SetViewWindow(const Rect&);
 				void Display(Bitmap at, const Rect& displayArea);
-				/*void Scroll(HorizScroll h, VertScroll v);
+				void Scroll(HorizScroll h, VertScroll v);
 				bool CanScroll(HorizScroll h) const;
-				bool CanScroll(VertScroll v) const;*/
+				bool CanScroll(VertScroll v) const;
 				void WriteMap(FILE* fp);
 				bool ReadMap(FILE* fp);
 };

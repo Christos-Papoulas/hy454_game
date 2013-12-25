@@ -5,6 +5,10 @@
 #include "..\Objects.h"
 #include "..\animator\Animator.h"
 
+//Rect		viewWin; // maybe DUBLICATE from TileLayer:viewWindow
+//Rect		displayArea;
+//Bitmap		tileBitmap;
+
 class Terrain {
 	private:
 		Terrain();

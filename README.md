@@ -2,6 +2,8 @@ hy454_game
 ==========
 
 The project of hy454 
+## Technical Issues
+All the useful defines are at /header_files/Objects.h
 
 ## Tutorial for allegro
 ###Beggining Tutorial

@@ -3,12 +3,15 @@
 
 #include <allegro5\allegro5.h> 
 
+// All the useful defines!
 typedef unsigned char byte;
 typedef unsigned short Dim;
 typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
 typedef ALLEGRO_BITMAP* Bitmap;
 typedef ALLEGRO_DISPLAY* Display;
-
+//lecture9 slide31
+enum HorizScroll { Left = -1, HorizIntact = 0, Right = +1 };
+enum VertScroll{ Up = -1, VertIntact = 0, Down = +1 };
 
 class Point {
 		Dim x;
@@ -29,7 +32,14 @@ class Point {
 };
 
 class Rect {
-
+		Point loc;
+		public:
+				void SetX(Dim x) { loc.SetX(x); }
+				void SetY(Dim y) { loc.SetY(y); }
+				Dim GetX() { return loc.GetX(); }
+				Dim GetY() { return loc.GetY(); }
+				void IncreaseX(Dim x) { loc.SetX(loc.GetX() + x); }
+				void IncreaseY(Dim y) { loc.SetY(loc.GetY() + y); }
 };
 
 unsigned int CurrTime();
