@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="16" height="15" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Game_pause" tilewidth="16" tileheight="16">
+  <image source="Game_Start.JPG" width="330" height="210"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="15">
+  <data encoding="base64" compression="zlib">
+   eJwrZGBgKBzFwwrPBmJzILYAYksgthoEbhrFtMEALFppOQ==
+  </data>
+ </layer>
+</map>

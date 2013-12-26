@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="224" height="15" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="225" height="15" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="Mario" tilewidth="16" tileheight="16">
-  <image source="52571.png" width="528" height="448"/>
+  <image source="map.png" width="528" height="448"/>
  </tileset>
- <tileset firstgid="925" name="items" tilewidth="16" tileheight="16">
-  <image source="items.png" width="576" height="336"/>
- </tileset>
- <tileset firstgid="1681" name="enemies" tilewidth="16" tileheight="16">
-  <image source="enemies.png" width="808" height="128"/>
- </tileset>
- <layer name="background" width="224" height="15">
+ <layer name="enemies" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt07ENACEQwLAT+y/EYN//DlBESC7cp8leMxs49s25uh1e5z/o+A86/oOO/6DjP+j4Dzr+g47/oOM/6PgPOv6Djv+g4z/o3Pz3A/eOyeI=
+   eJzt2bsJACAMBUD338JVXMVF7FOpBPxw16QJj0falAIAAADsqGECAAAAAAD8op0uwFOy/mUrOa/+6mZ794SMuPf7zQCAew36cgu2
   </data>
  </layer>
- <layer name="Map" width="224" height="15">
+ <layer name="Items" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmUFOw0AMRZN0BbRCwCrbLIEWCVR6AMQJKi7RNSw4CHAT4FScAQfFwjIzGU9mkkyDn/TVKJnYHtefNCLLFEVRFEUJ5aXIslfQWxEeIzROSO6h88YkdA/73v9Y9Ze5bN09O7aJcy6M79OTd1jzAfq0rKW9scXEGG1xfBi6/tj4zmTbHv5D/2PV/8Vy2uo3eUuC1H+unvhAexMrpjSn1q/1+7BjOW25+vZfV8p+wydD4ZBtbUh/fO+11YPXykZ7/LNbTNXIxc695IdU/acoqVFl6j9FGYMqU/8pyhhw73X135wIMfnv2SBOLP/xdxF8n6CffXAA9R8K9+CzVkKMvdnutb2nlYJjSXyfnEhlOXbBZ106+xT6vtyl3ybvdfXfAjQDHZNzJv9tDOJQ/50m+Cx0eaau/0K4B742RVL8DmqkHuL1m2bdZ/5jYPOepH7uv/qZtyTCZ2Do//9O4PMadBbw/fvMjvRZ5PIMve7agyvW2LO/hfyPoIeOdfRVv9RDvP+2Wbedx/pDf6fQ+9u8x/1nmh/uv1mjFTmu8fXfEeSYgxb5b94boQfXcP2WaJO3z/6arEOkzyK6bs1y0uuSPeDaGPV3wVQ/sm3yPzWfbR4csn4+r5iTn+f9b5t1fp7Xz2fDt3683+U9098OPj/co+i5K3Jc1+Xrv0u4ZwlagepUqr9CYsQIjTMFTbkPdwEau/ZUhcSIERpnCppyH0L89w1AwJBL
+   eJztmUEOgjAQANF/+BC9evVJPlAf5F05EJrNtl1aKF2ZSfYAtLsl6WRpGAaAPriefMZnqAuAXtjbJRyEozPuZ3ldElre0jxL6lmcwj3oGYuDsXlrO/j6xVvJZ3GQ/gdeKelx1nk1fTBXawIHj8U9sh89s/W5TTqz1bfoGE8lcBB6p6V/lnrWNYXQB8EzLf2z1LOuKSTWA7VeCDOP894rgJGW/lnqaWO0+SE5v1o6+I/nFUntO94Szy51qV2yVv+y+GfJo43R5k+kzoL0QfBAq/4Xqyfvaddajgn+D4J3wv1c61zOP1lDu58ao9WxOgjggZQb0pHY+JIa4TNZMwcOAgAALOcLj8LYpw==
   </data>
  </layer>
- <layer name="Items" width="224" height="15">
+ <layer name="Map" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt17ENwCAMBEAk2CKbsGsos112yAIWDYURuZPcWhTIb5cCAABAprdmvwCAyG0+b6sHBQAni7JPBs4NuxyHeX7wp1dvsNlMvNpab3LIPwAAAIC9fPTqCCI=
-  </data>
- </layer>
- <layer name="enemies" width="224" height="15">
-  <data encoding="base64" compression="zlib">
-   eJzt2SEOACAIBVCT929eyOKtzBocbgZ17xUCjDHqTwkAAACIqHmsAAAAAAAALykyDoJO5WE7e17N4qJ3t0U/umOe+/1nAMBdOpj5Dg0=
+   eJztmc1OAjEQxwucVIgRT3DcowomGiThanwbj3rwQdQ3UR9BH4i702QnGYbO9mu720D/yS8su/2YTudPszofKDUvFDLgWNV33gsFyjGq7Ry+D5X6AD6H8WPEjtNX/H0Tu4a+8q9FYw8Vjz9Us4FbuydgW19v6+8SVLrtc4I9/YI238CP0JbmRxoTx2gaJ1VNthF/355qWkPO+deisZtkip+Lxx+iX4jnz/F3gXrQRz4etNWlDzQ/bY1Z4j+M+F1kij+VNoPdOaW5uvBgKDOVfn9zQG9NE1LbmPz49pXiwWezGtPzruhKVY1NG8eYTB5cC1B14cFCwYcuVKl0HvQ9C4sHC7mRWpXqxoPSGVjOwULupBT3X6gHxwSU6Rx8E6Bq04P83QTfL+hnij07AU4TtHWhjbVJfaX3Nppn6dplfJ85kUqZr21gvUvfKZLo+3PIn2BM/gv14AQYAefkHn8fDD0Hpwk8EovNN1fAteMaeNscyXEPNK4+4vHTem+6h6SQ5D+TB6cshg37rs++BQHPQu7BkP8PXgB3wGVH9eN6Jtl8Q5/b1mAbq+/61/G/ROxBqvhdfcTzz+vd1Jfex/rH2ggV7d/kP+5BGj+Ke3BUsyTXWr4e1G3PYOwxMCG5u7fUMLICHghrS/2vSDtXP5jardic9LnLGrBtG/GHYIqf1++rwx50GT+vWZyT3+f5N9W7NCaPH/cJRePnmg92P7Wwv81/1IOm+lFq36fou1tyreMK8eAN9FsAS0BPV9gHa6aNMWLHOQQOOQ+PkfQdf64UD+aXz1yJ9eA/syxxJA==
   </data>
  </layer>
 </map>
