@@ -8,11 +8,11 @@
 #include <assert.h>
 
 /* our libraries */
-#include "header_files\animator\Animator.h"
-#include "header_files\animator\AnimatorHolder.h"
-#include "header_files\terrain\terrain.h"
-#include "header_files\mario\logic.h"
-#include "header_files\Objects.h"
+#include "animator\Animator.h"
+#include "animator\AnimatorHolder.h"
+#include "terrain\terrain.h"
+#include "mario\logic.h"
+#include "Objects.h"
 
 
 /* Alllegro Libraries */

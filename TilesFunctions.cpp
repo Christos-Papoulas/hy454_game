@@ -1,3 +1,7 @@
+
+
+
+
 /*void PutTile (Bitmap at, Dim x, Dim y, Bitmap tiles, Index tile) {
 	blit(
 	tiles, Rect(TileX3(tile), TileY3(tile), TILE_WIDTH, TILE_HEIGHT),

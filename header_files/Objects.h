@@ -13,6 +13,13 @@ typedef ALLEGRO_DISPLAY* Display;
 enum HorizScroll { Left = -1, HorizIntact = 0, Right = +1 };
 enum VertScroll{ Up = -1, VertIntact = 0, Down = +1 };
 
+#define TILES_COLUMNS 28
+#define TILES_ROWS 33
+unsigned char divIndex[TILES_COLUMNS*TILES_ROWS];
+unsigned char modIndex[TILES_COLUMNS*TILES_ROWS];
+
+
+
 class Point {
 		Dim x;
 		Dim y;
@@ -43,5 +50,6 @@ class Rect {
 };
 
 unsigned int CurrTime();
+void CalculateTilesPosition();
 
 #endif
