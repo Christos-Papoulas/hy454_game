@@ -36,8 +36,8 @@ bool redraw = true;
 
 const float FPS = 90;
 /* Our Defines */
-#define SCREEN_WINDOW_WIDTH 800
-#define SCREEN_WINDOW_HEIGHT 600
+#define SCREEN_WINDOW_WIDTH 16*16
+#define SCREEN_WINDOW_HEIGHT 16*15
 
 namespace MarioBrosMain {
 		extern bool InitAllegro();

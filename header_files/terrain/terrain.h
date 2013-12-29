@@ -6,9 +6,9 @@
 #include "..\Objects.h"
 #include "..\animator\Animator.h"
 #include "..\tiles\TileLayer.h"
+#include "..\tiles\TilesBitmap.h"
 
 
-//Rect		viewWin; // maybe DUBLICATE from TileLayer:viewWindow
 //Rect		displayArea;
 //Bitmap		tileBitmap;
 

@@ -15,7 +15,7 @@
 #define TILE_WIDTH 16 //@todo is this value real? YES
 #define TILE_HEIGHT 16 //@todo is this value real? YES
 
-namespace Terrain {
+namespace TerrainUtils {
 		extern byte MakeIndex (byte row, byte col);
 		extern byte GetCol (byte b);
 		extern byte GetRow (byte b);

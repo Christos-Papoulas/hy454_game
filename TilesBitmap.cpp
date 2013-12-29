@@ -16,6 +16,6 @@ Bitmap TilesBitmap::LoadTiles() {
 void TilesBitmap::PutTile(Bitmap at, Dim x, Dim y, Index tile) const {
 	assert(at);
 	if(tile)
-			al_draw_bitmap_region(tiles, Terrain::TileX(tile), Terrain::TileY(tile), TILE_WIDTH, TILE_HEIGHT, x, y, NULL); // @todo the real values
+			al_draw_bitmap_region(tiles, TerrainUtils::TileX(tile), TerrainUtils::TileY(tile), TILE_WIDTH, TILE_HEIGHT, x, y, NULL); // @todo the real values
 
 }
