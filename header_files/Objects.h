@@ -4,6 +4,13 @@
 #include <allegro5\allegro5.h> 
 
 // All the useful defines!
+
+#define TILES_COLUMNS 28
+#define TILES_ROWS 33
+
+//Define file paths
+#define MAP_WORLD_1_1		"data\\map_1-1.txt"
+
 typedef unsigned char byte;
 typedef unsigned short Dim;
 typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
@@ -13,8 +20,7 @@ typedef ALLEGRO_DISPLAY* Display;
 enum HorizScroll { Left = -1, HorizIntact = 0, Right = +1 };
 enum VertScroll{ Up = -1, VertIntact = 0, Down = +1 };
 
-#define TILES_COLUMNS 28
-#define TILES_ROWS 33
+
 
 class Point {
 		Dim x;

@@ -2,8 +2,9 @@
 #define _TILELAYER_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <utility> // for pair
-#include <fstream>
+#include <assert.h>
 
 #include "..\Objects.h"
 
@@ -15,8 +16,10 @@ class TileLayer{
 		private:
 				Index		map[MAX_HEIGHT][MAX_WIDTH];
 				Rect		viewWindow;
-		
+				
 		public:
+				TileLayer();
+				~TileLayer();
 				void SetTile(Dim col, Dim row, Index index);
 				Index GetTile(Dim col, Dim row);
 				const std::pair<Dim, Dim> GetTileCoordinates(Dim mx, Dim my) const;

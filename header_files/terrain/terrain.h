@@ -2,8 +2,10 @@
 #define _TERRAIN_H_
 
 #include <assert.h>
+
 #include "..\Objects.h"
 #include "..\animator\Animator.h"
+#include "..\tiles\TileLayer.h"
 
 //Rect		viewWin; // maybe DUBLICATE from TileLayer:viewWindow
 //Rect		displayArea;
@@ -14,6 +16,7 @@ class Terrain {
 		Terrain();
 		~Terrain();
 		static Terrain* terrain;
+		static TileLayer* tileLayerinstance;
 
 	public:
 		static void Create();

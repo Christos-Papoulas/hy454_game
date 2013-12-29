@@ -2,8 +2,14 @@
 
 
 bool TileLayer::ReadMap(FILE* fp) {
-		//to do
-		return false;
+	assert(fp != NULL);
+	
+	for(int i = 0; i < MAX_HEIGHT; ++i)
+			for(int j = 0; j < MAX_WIDTH; ++j)
+					if(!fscanf(fp, "%d", &map[i][j]))
+							return false;
+	
+	return true;
 }
 
 //lecture9 slide 14

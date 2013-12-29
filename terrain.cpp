@@ -11,7 +11,14 @@ Terrain::~Terrain() {
 }
 
 void Terrain::Create() {
-		assert(0 && "Unimplemented");
+		FILE* fp;
+		terrain = new Terrain();
+		tileLayerinstance = new TileLayer();
+
+		fp = fopen(MAP_WORLD_1_1, "r");
+		//if(tileLayer->ReadMap(fp))
+				fprintf(stderr, "cannot read the map 1-1 file\n");
+		fclose(fp);
 }
 
 void Terrain::CleanUp() {
