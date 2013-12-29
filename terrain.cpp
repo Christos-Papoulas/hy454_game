@@ -25,11 +25,10 @@ void Terrain::CleanUp() {
 }
 
 void Terrain::DisplayTerrain(Bitmap bmp, timestamp_t tnow) {
-		//tileLayer->Display(bmp);
+		terrain->tileLayer->Display(bmp);
+
 		//lecture9 slide29
-		/*
-		Dim rowend = (tileLayer->GetViewWindow()).GetX();
-		for (Dim row = 0; row < rowend; ++row)
+		/*for (Dim row = 0; row < rowend; ++row)
 				for (Dim col = 0; col < viewWin.w; ++col)
 						PutTile(
 								GetScreen(),

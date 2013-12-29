@@ -6,7 +6,7 @@
 
 #define MAX_WIDTH 225
 #define MAX_HEIGHT 15
-#define TILES_MAP_PATH "..\\Data\\Bitmaps\\Tiles\\map.png"
+#define TILES_MAP_PATH ".\\Data\\Bitmaps\\Tiles\\map.png"
 
 #include <string>
 
