@@ -17,7 +17,7 @@ class Terrain {
 		Terrain();
 		~Terrain();
 		static Terrain* terrain;
-		static TileLayer* tileLayer;
+		TileLayer* tileLayer;
 
 	public:
 		static void Create();

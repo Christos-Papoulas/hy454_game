@@ -3,7 +3,7 @@
 
 
 TileLayer::TileLayer() {
-		//assert(0 && "Unimplemented");
+		tilesBitmap = new TilesBitmap();
 }
 
 bool TileLayer::ReadMap(FILE* fp) {
