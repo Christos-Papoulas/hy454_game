@@ -13,7 +13,7 @@ Terrain::~Terrain() {
 void Terrain::Create() {
 		FILE* fp;
 		terrain = new Terrain();
-		TileLayer *tileLayer = new TileLayer();
+		TileLayer* tileLayer = new TileLayer();
 
 		fp = fopen(MAP_WORLD_1_1, "r");
 		if(!tileLayer->ReadMap(fp))
@@ -26,10 +26,11 @@ void Terrain::CleanUp() {
 }
 
 void Terrain::DisplayTerrain(Bitmap bmp, timestamp_t tnow) {
-		assert(0 && "Unimplemented");
+		tileLayer->Display(bmp);
 		//lecture9 slide29
 		/*
-		for (Dim row = 0; row < viewWin.h; ++row)
+		Dim rowend = (tileLayer->GetViewWindow()).GetX();
+		for (Dim row = 0; row < rowend; ++row)
 				for (Dim col = 0; col < viewWin.w; ++col)
 						PutTile(
 								GetScreen(),
