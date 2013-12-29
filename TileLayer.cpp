@@ -1,6 +1,11 @@
 #include "header_files\tiles\TileLayer.h"
 
 
+
+TileLayer::TileLayer() {
+		assert(0 && "Unimplemented");
+}
+
 bool TileLayer::ReadMap(FILE* fp) {
 	assert(fp != NULL);
 	

@@ -13,7 +13,7 @@ Terrain::~Terrain() {
 void Terrain::Create() {
 		FILE* fp;
 		terrain = new Terrain();
-		tileLayerinstance = new TileLayer();
+		TileLayer *tileLayerinstance = new TileLayer();
 
 		fp = fopen(MAP_WORLD_1_1, "r");
 		//if(tileLayer->ReadMap(fp))
