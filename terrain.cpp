@@ -3,7 +3,7 @@
 Terrain* Terrain::terrain;
 
 Terrain::Terrain() {
-		terrain->tileLayer = new TileLayer();
+		;
 }
 
 Terrain::~Terrain() {
@@ -13,7 +13,8 @@ Terrain::~Terrain() {
 void Terrain::Create() {
 		FILE* fp;
 		terrain = new Terrain();
-		
+		terrain->tileLayer = new TileLayer();
+
 		fp = fopen(MAP_WORLD_1_1, "r");
 		if(!terrain->tileLayer->ReadMap(fp))
 				fprintf(stderr, "cannot read the map 1-1 file\n");
