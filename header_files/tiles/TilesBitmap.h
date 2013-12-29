@@ -12,6 +12,8 @@
 
 //lecture9 slide52
 class TilesBitmap {
+	public:
+		TilesBitmap();
 	private:
 		unsigned tileTransparency[MAX_WIDTH * MAX_HEIGHT / 32 + 1];
 		Bitmap tiles;
@@ -26,6 +28,7 @@ class TilesBitmap {
 	public:
 		void PutTile (Bitmap at, Dim x, Dim y, Index tile) const;
 		Index GetPointedTile (Dim x, Dim y) const;
+		
 };
 
 #endif
