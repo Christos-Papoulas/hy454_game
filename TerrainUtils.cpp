@@ -5,19 +5,11 @@ byte TerrainUtils::MakeIndex(byte row, byte col) {
 }
 
 byte TerrainUtils::GetCol(byte b) {
-		return b >> COL_SHIFT;
-}
-
-byte TerrainUtils::GetRow(byte b) {
 		return b & ROW_MASK;
 }
 
-Dim TerrainUtils::TileX(byte b) {
-		return TerrainUtils::GetCol(b)*TILE_WIDTH;
-}
-
-Dim TerrainUtils::TileY(byte b) {
-		return TerrainUtils::GetRow(b)*TILE_HEIGHT;
+byte TerrainUtils::GetRow(byte b) {
+		return b >> 4;
 }
 
 Dim TerrainUtils::TileX2(byte b) {

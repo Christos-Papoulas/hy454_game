@@ -114,7 +114,7 @@ void MarioBrosMain::FPSCalculation(){
 
 void MarioBrosMain::InitializeGame() {
 		al_start_timer(timer);
-
+		CalculateTilesPosition();
 		Terrain::Create();
 		redraw = true;
 }

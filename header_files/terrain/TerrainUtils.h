@@ -1,7 +1,6 @@
 #ifndef _TERRAINUTILS_H_
 #define _TERRAINUTILS_H_
 
-
 #include "..\Objects.h"
 
 // lecture9 slide11
