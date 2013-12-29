@@ -30,24 +30,10 @@ void TileLayer::SetTile(Dim col, Dim row, Index index) {
 		map[row][col] = index;
 }
 
-void my_usleep(int usec) 
-{ 
-    HANDLE timer; 
-    LARGE_INTEGER ft; 
-
-    ft.QuadPart = -(10*usec); // Convert to 100 nanosecond interval, negative value indicates relative time
-
-    timer = CreateWaitableTimer(NULL, TRUE, NULL); 
-    SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0); 
-    WaitForSingleObject(timer, INFINITE); 
-    CloseHandle(timer); 
-}
-
 Index TileLayer::GetTile(Dim col, Dim row) { 
 		Dim y = viewWindow.GetY();
-		static int skata = 0;
-		my_usleep(1000);
-		return map[row][col + skata++ / MAX_WIDTH]; 
+		
+		return map[row][col + y]; 
 }
 
 void TileLayer::WriteMap(FILE* fp) { 
