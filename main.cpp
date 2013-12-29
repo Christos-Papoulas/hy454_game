@@ -127,7 +127,7 @@ void ManageGameLoop() {
 				al_wait_for_event(queue, &events);
 				al_get_keyboard_state(&keyboardState);
 				Rendering(currTime);
-				MainLoopOneIteration();
+				//MainLoopOneIteration();
 		}
 }
 
@@ -136,7 +136,7 @@ int main() {
 
 		if(InitAllegro()){
 				InitializeGame();
-				//ManageGameLoop();
+				ManageGameLoop();
 		}
 		system("PAUSE");
 		return 0;
