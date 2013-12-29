@@ -23,6 +23,8 @@ class Terrain {
 		static void Create();
 		static void CleanUp();
 		static void DisplayTerrain(Bitmap, timestamp_t);
+		TileLayer* GetTileLayer() { return tileLayer; }
+		static Terrain* GetTerrain() { return terrain; }
 };
 
 #endif
