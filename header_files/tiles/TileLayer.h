@@ -6,6 +6,7 @@
 #include <utility> // for pair
 #include <assert.h>
 
+#include "..\logs\logs.h"
 #include "..\Objects.h"
 
 #define MAX_HEIGHT 15 

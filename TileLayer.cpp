@@ -14,6 +14,8 @@ bool TileLayer::ReadMap(FILE* fp) {
 					if(!fscanf(fp, "%d", &map[i][j]))
 							return false;
 	
+	log_write(__FILE__, __LINE__, "read map successfuly.");
+	
 	return true;
 }
 
