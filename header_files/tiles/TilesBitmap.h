@@ -3,8 +3,10 @@
 
 #include "..\Objects.h"
 
-#define MAX_WIDTH 1024
-#define MAX_HEIGHT  256
+#define MAX_WIDTH 225
+#define MAX_HEIGHT 15
+#define TILES_MAP_PATH "..\Data\Bitmaps\Tiles\map.png"
+
 //lecture9 slide52
 class TilesBitmap {
 	private:
@@ -15,7 +17,8 @@ class TilesBitmap {
 		bool LoadTransparencyInfo (const std::string & path);
 		void ProduceTransparencyInfo (void);
 		bool WriteTransparencyInfo (const std::string & path);
-		bool LoadTiles (const std::string & path);
+		//bool LoadTiles (const std::string & path);
+		Bitmap LoadTiles (void);
 
 	public:
 		void PutTile (Bitmap at, Dim x, Dim y, Index tile) const;
