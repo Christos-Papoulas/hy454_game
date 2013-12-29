@@ -7,6 +7,8 @@
 #define MAX_HEIGHT 15
 #define TILES_MAP_PATH "..\Data\Bitmaps\Tiles\map.png"
 
+#include <string>
+
 //lecture9 slide52
 class TilesBitmap {
 	private:
