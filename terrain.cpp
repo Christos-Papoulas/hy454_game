@@ -26,7 +26,7 @@ void Terrain::CleanUp() {
 }
 
 void Terrain::DisplayTerrain(Bitmap bmp, timestamp_t tnow) {
-		tileLayer->Display(bmp);
+		//tileLayer->Display(bmp);
 		//lecture9 slide29
 		/*
 		Dim rowend = (tileLayer->GetViewWindow()).GetX();
