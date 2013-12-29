@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <utility> // for pair
+#include <fstream>
+
 #include "..\Objects.h"
 
 #define MAX_HEIGHT 15 

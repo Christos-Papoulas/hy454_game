@@ -1,5 +1,8 @@
 #include "header_files\Objects.h"
 
+byte divIndex[TILES_COLUMNS*TILES_ROWS];
+byte modIndex[TILES_COLUMNS*TILES_ROWS];
+
 void CalculateTilesPosition(){
 	for (int i=0; i<TILES_COLUMNS*TILES_ROWS; ++i) {
 		divIndex[i] = i / TILES_ROWS;
