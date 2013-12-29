@@ -132,7 +132,7 @@ int main() {
 
 		if(InitAllegro()){
 				InitializeGame();
-				ManageGameLoop();
+				//ManageGameLoop();
 		}
 		system("PAUSE");
 		return 0;

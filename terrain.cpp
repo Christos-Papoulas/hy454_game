@@ -3,7 +3,7 @@
 Terrain* Terrain::terrain;
 
 Terrain::Terrain() {
-		assert(0 && "Unimplemented");
+		//assert(0 && "Unimplemented");
 }
 
 Terrain::~Terrain() {
@@ -16,7 +16,7 @@ void Terrain::Create() {
 		TileLayer *tileLayer = new TileLayer();
 
 		fp = fopen(MAP_WORLD_1_1, "r");
-		if(tileLayer->ReadMap(fp))
+		if(!tileLayer->ReadMap(fp))
 				fprintf(stderr, "cannot read the map 1-1 file\n");
 		fclose(fp);
 }

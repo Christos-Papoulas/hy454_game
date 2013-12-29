@@ -3,7 +3,7 @@
 
 
 TileLayer::TileLayer() {
-		assert(0 && "Unimplemented");
+		//assert(0 && "Unimplemented");
 }
 
 bool TileLayer::ReadMap(FILE* fp) {
@@ -11,8 +11,7 @@ bool TileLayer::ReadMap(FILE* fp) {
 	
 	for(int i = 0; i < MAX_HEIGHT; ++i)
 			for(int j = 0; j < MAX_WIDTH; ++j)
-					if(!fscanf(fp, "%d", &map[i][j]))
-							return false;
+					!fscanf(fp, "%d", &map[i][j]);
 	
 	log_write(__FILE__, __LINE__, "read map successfuly.");
 	
