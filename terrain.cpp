@@ -12,13 +12,15 @@ Terrain::~Terrain() {
 
 void Terrain::Create() {
 		FILE* fp;
-		terrain = new Terrain();
-		terrain->tileLayer = new TileLayer();
+		if(!terrain) {
+				terrain = new Terrain();
+				terrain->tileLayer = new TileLayer();
 
-		fp = fopen(MAP_WORLD_1_1, "r");
-		if(!terrain->tileLayer->ReadMap(fp))
-				fprintf(stderr, "cannot read the map 1-1 file\n");
-		fclose(fp);
+				fp = fopen(MAP_WORLD_1_1, "r");
+				if(!terrain->tileLayer->ReadMap(fp))
+						fprintf(stderr, "cannot read the map 1-1 file\n");
+				fclose(fp);
+		}
 }
 
 void Terrain::CleanUp() {

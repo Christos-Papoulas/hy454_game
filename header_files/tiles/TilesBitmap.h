@@ -6,6 +6,8 @@
 
 #define MAX_WIDTH 225
 #define MAX_HEIGHT 15
+#define SCREEN_WINDOW_WIDTH 16*16
+#define SCREEN_WINDOW_HEIGHT 16*15
 #define TILES_MAP_PATH ".\\Data\\Bitmaps\\Tiles\\map.png"
 
 #include <string>

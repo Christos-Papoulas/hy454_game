@@ -3,7 +3,6 @@
 
 TilesBitmap::TilesBitmap() {
 	LoadTiles();
-	assert(tiles);
 }
 
 Bitmap TilesBitmap::LoadTiles() {
@@ -15,7 +14,9 @@ Bitmap TilesBitmap::LoadTiles() {
 
 void TilesBitmap::PutTile(Bitmap at, Dim x, Dim y, Index tile) const {
 	assert(at);
-	if(tile)
-			al_draw_bitmap_region(tiles, TerrainUtils::TileX(tile), TerrainUtils::TileY(tile), TILE_WIDTH, TILE_HEIGHT, x, y, NULL); // @todo the real values
-
+	if(tile) {
+		Dim tilex = TerrainUtils::TileX(tile);
+		Dim tiley = TerrainUtils::TileY(tile);
+		al_draw_bitmap_region(tiles, tilex, tiley, SCREEN_WINDOW_WIDTH, SCREEN_WINDOW_HEIGHT, x, y, NULL); // @todo the real values
+	}
 }
