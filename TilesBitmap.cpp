@@ -2,9 +2,15 @@
 #include <string>
 
 Bitmap TilesBitmap::LoadTiles () {
-	Bitmap b;
-	b = al_load_bitmap(TILES_MAP_PATH);
-	//al_convert_mask_to_alpha(b, BB_ELECTRIC_BLUE);
-	//DASSERT( b );
-	return b;
+	tiles = al_load_bitmap(TILES_MAP_PATH);
+	al_convert_mask_to_alpha(tiles, al_map_rgba(0, 0, 0, 0));
+	assert( tiles );
+	return tiles;
+}
+
+void TilesBitmap::PutTile(Bitmap at, Dim x, Dim y, Index tile) const {
+	assert(at);
+	if(tile)
+			al_draw_bitmap_region(tiles, Terrain::TileX(tile), Terrain::TileY(tile), TILE_WIDTH, TILE_HEIGHT, x, y, NULL); // @todo the real values
+
 }

@@ -2,6 +2,7 @@
 #define _TILES_BITMAP_H_
 
 #include "..\Objects.h"
+#include "..\terrain\TerrainUtils.h"
 
 #define MAX_WIDTH 225
 #define MAX_HEIGHT 15

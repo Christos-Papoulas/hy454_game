@@ -63,6 +63,7 @@ bool MarioBrosMain::InitAllegro(){
 
 //game loop logic
 void MarioBrosMain::MainLoopOneIteration() {
+
 		InputManagement(); //just reads from local input queue
 		AnimationProgress();
 		ArtificialIntelligence();
@@ -120,9 +121,12 @@ void MarioBrosMain::InitializeGame() {
 
 void ManageGameLoop() {
 		using namespace MarioBrosMain;
+		timestamp_t currTime;
 		while(true) {
+				currTime =  CurrTime();
 				al_wait_for_event(queue, &events);
 				al_get_keyboard_state(&keyboardState);
+				Rendering(currTime);
 				MainLoopOneIteration();
 		}
 }
@@ -137,6 +141,23 @@ int main() {
 		system("PAUSE");
 		return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // from here and below are skata only for looking when we dont

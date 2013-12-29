@@ -12,8 +12,8 @@
 #define MUL_TILE_WIDTH(i)		((i)<<4)
 #define MUL_TILE_HEIGHT(i)	((i)<<4)
 
-#define TILE_WIDTH 16 //@todo is this value real?
-#define TILE_HEIGHT 16 //@todo is this value real?
+#define TILE_WIDTH 16 //@todo is this value real? YES
+#define TILE_HEIGHT 16 //@todo is this value real? YES
 
 namespace Terrain {
 		extern byte MakeIndex (byte row, byte col);
