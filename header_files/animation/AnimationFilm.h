@@ -6,6 +6,7 @@
 #include <string>
 #include "..\Objects.h"
 
+
 class AnimationFilm {
 		std::vector<Rect>		boxes;
 		Bitmap							bitmap;
