@@ -8,7 +8,7 @@
 
 
 class AnimationFilm {
-		std::vector<Rect> boxes;
+		std::vector<Rect> boxes; //in the .png file
 		Bitmap bitmap;
 		std::string id;
 public:
