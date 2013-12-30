@@ -6,6 +6,7 @@
 #include "..\tiles\TileLayer.h"
 #include <assert.h>
 
+//lecture10 slide24
 class Sprite {
 		byte frameNo;
 		Rect frameBox;

@@ -1,7 +1,13 @@
 #include "header_files\animation\AnimationFilmHolder.h"
 
+AnimationFilmHolder::AnimationFilmHolder(const char* path) {
+		assert(path);
+
+}
+
 void AnimationFilmHolder::Create(const char* path) {
-		;
+		if(!holder)
+				holder = new AnimationFilmHolder(path);
 }
 
 void AnimationFilmHolder::Load(const std::string& catalogue) {

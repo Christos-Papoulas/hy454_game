@@ -18,7 +18,7 @@ class AnimationFilmHolder {
 				Films						films;
 				//BitmapLoader		bitmaps; //only for loading of film bitmaps
 				static AnimationFilmHolder* holder; // sigleton
-				AnimationFilmHolder();
+				AnimationFilmHolder(const char* path);
 				~AnimationFilmHolder();
 		
 		public:
