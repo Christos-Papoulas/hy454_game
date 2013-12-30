@@ -9,8 +9,18 @@ AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 		//parse the info file!
 		ParseMarioInfo::Create();
 		ParseMarioInfo::ParseFile(MARIO_SPRITES_INFO);
-		
-
+		Index totalFrames = ParseMarioInfo::GetTotalFrames();
+		for(Index i = 0; i < totalFrames; i++) {
+				MarioInfo_t mInfo = ParseMarioInfo::GetNetMarioInfo(i);
+				char* cid = ParseMarioInfo::GetNetMarioInfoId(i);
+				std::vector<Rect> box;
+				for(Index j = 0; j < mInfo.numOfmoves; j++) {
+						Rect aRect; aRect.SetX(mInfo.moves[j].y); aRect.SetY(mInfo.moves[j].y);
+						box.push_back(aRect);
+				}
+				AnimationFilm* aAnimFilm = new AnimationFilm(btmp, box, cid);
+				
+		}
 }
 
 AnimationFilmHolder::~AnimationFilmHolder() {

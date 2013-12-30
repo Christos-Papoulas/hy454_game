@@ -12,7 +12,7 @@ class AnimationFilm {
 		Bitmap bitmap;
 		std::string id;
 public:
-		AnimationFilm(Bitmap, const std::vector<Rect>, const std::string& );
+		AnimationFilm(Bitmap , const std::vector<Rect>, const std::string& );
 		~AnimationFilm();
 		byte GetTotalFrames() const { return boxes.size(); }
 		Bitmap GetBitmap() const {return bitmap; }
