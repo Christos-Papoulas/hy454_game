@@ -22,7 +22,7 @@ class AnimationFilmHolder {
 				~AnimationFilmHolder();
 		
 		public:
-				static	void		Create(const char* path);
+				static void Create(const char* path);
 				void		CleanUp();
 				void		Load(const std::string& catalogue);
 				const		AnimationFilm* GetFilm (const std::string id) const;

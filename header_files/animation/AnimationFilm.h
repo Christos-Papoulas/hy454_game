@@ -8,16 +8,16 @@
 
 
 class AnimationFilm {
-		std::vector<Rect>		boxes;
-		Bitmap							bitmap;
-		std::string					id;
+		std::vector<Rect> boxes;
+		Bitmap bitmap;
+		std::string id;
 public:
 		AnimationFilm(Bitmap, const std::vector<Rect>, const std::string& );
 		~AnimationFilm();
-		byte								GetTotalFrames() const { return boxes.size(); }
-		Bitmap							GetBitmap() const {return bitmap; }
-		const std::string		GetID() const { return id;} 
-		const Rect					GetFrameBox(byte frameNo) const {
+		byte GetTotalFrames() const { return boxes.size(); }
+		Bitmap GetBitmap() const {return bitmap; }
+		const std::string GetID() const { return id;} 
+		const Rect GetFrameBox(byte frameNo) const {
 				assert(boxes.size() > frameNo);
 				return boxes[frameNo];
 		}
