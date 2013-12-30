@@ -9,7 +9,7 @@
 //Lecture10 slide19
 class BitmapLoader {
 		private:
-				static	BitmapLoader* bitmapLoader;
+				static	BitmapLoader* bitmapLoader; //singleton
 				static	Bitmap	bitmaps;
 				BitmapLoader();
 				~BitmapLoader();

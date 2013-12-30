@@ -1,8 +1,13 @@
 #include "header_files\animation\AnimationFilmHolder.h"
 
+AnimationFilmHolder* AnimationFilmHolder::holder = NULL;
+
 AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 		assert(path);
+}
 
+AnimationFilmHolder::~AnimationFilmHolder() {
+		delete holder; holder = NULL;
 }
 
 void AnimationFilmHolder::Create(const char* path) {
