@@ -12,6 +12,8 @@ class AnimationFilm {
 		Bitmap							bitmap;
 		std::string					id;
 public:
+		AnimationFilm(Bitmap, const std::vector<Rect>, const std::string& );
+		~AnimationFilm();
 		byte								GetTotalFrames() const { return boxes.size(); }
 		Bitmap							GetBitmap() const {return bitmap; }
 		const std::string		GetID() const { return id;} 
@@ -20,8 +22,6 @@ public:
 				return boxes[frameNo];
 		}
 		void DisplayFrame(Bitmap dest, const Point& at, byte frameNo) const;
-		AnimationFilm(Bitmap, const std::vector<Rect>, const std::string& );
-		~AnimationFilm();
 };
 
 #endif
