@@ -7,10 +7,13 @@
 
 #include "AnimationFilm.h"
 #include "BitmapLoader.h"
+#include "..\parsers\ParseMarioInfo.h"
 
 #include <string>
 #include <map>
 #include <assert.h>
+
+#define MARIO_SPRITES_BMP "./data/Bitmaps/Sprites/mario.bmp"
 
 class AnimationFilmHolder {
 		private:

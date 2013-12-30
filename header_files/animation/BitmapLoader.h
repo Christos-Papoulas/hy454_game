@@ -21,7 +21,7 @@ class BitmapLoader {
 				// prefer to massively clear bitmaps at the end than
 				// to destroy individual bitmaps during gameplay
 				static	void		CleanUp();
-				static	Bitmap	Load(const std::string& path);
+				static	Bitmap	Load(const char* path);
 };
 
 #endif

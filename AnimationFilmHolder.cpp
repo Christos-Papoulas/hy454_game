@@ -4,6 +4,13 @@ AnimationFilmHolder* AnimationFilmHolder::holder = NULL;
 
 AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 		assert(path);
+		BitmapLoader::Create();
+		Bitmap btmp = BitmapLoader::Load(path); //path to mario.png
+		//parse the info file!
+		ParseMarioInfo::Create();
+		ParseMarioInfo::ParseFile(MARIO_SPRITES_INFO);
+		
+
 }
 
 AnimationFilmHolder::~AnimationFilmHolder() {

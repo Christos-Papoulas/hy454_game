@@ -10,6 +10,7 @@
 /* our libraries */
 #include "animator\Animator.h"
 #include "animator\AnimatorHolder.h"
+#include "animation\AnimationFilmHolder.h"
 #include "terrain\terrain.h"
 #include "mario\logic.h"
 #include "Objects.h"

@@ -20,6 +20,8 @@ void Terrain::Create() {
 				if(!terrain->tileLayer->ReadMap(fp))
 						fprintf(stderr, "cannot read the map 1-1 file\n");
 				fclose(fp);
+
+				CalculateTilesPosition();
 		}
 }
 
