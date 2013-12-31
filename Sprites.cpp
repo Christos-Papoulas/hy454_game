@@ -69,4 +69,6 @@ void Sprite::Display(Bitmap dest) {
 				);
 				MaskedBlit(currFilm->GetBitmap(), clippedFrame,	dest, at);
 		}*/
+		al_draw_bitmap_region(currFilm->GetBitmap(), frameBox.GetX(), frameBox.GetY(), 
+			frameBox.GetWidth(), frameBox.GetHeight(), x, y, NULL);
 }

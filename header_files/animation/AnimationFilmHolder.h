@@ -15,11 +15,11 @@
 #include <assert.h>
 
 #define MARIO_SPRITES_BMP "./data/Bitmaps/Sprites/mario.bmp"
+typedef std::map<std::string, AnimationFilm*> Films;
 
 class AnimationFilmHolder {
 		private:
-				typedef std::map<std::string, AnimationFilm*> Films;
-				Films						films;
+				static	Films						films;
 				//BitmapLoader		bitmaps; //only for loading of film bitmaps
 				static AnimationFilmHolder* holder; // sigleton
 				AnimationFilmHolder(const char* path);
@@ -29,7 +29,7 @@ class AnimationFilmHolder {
 				static void Create(const char* path);
 				void		CleanUp();
 				void		Load(const std::string& catalogue);
-				const		AnimationFilm* GetFilm (const std::string id) const;
+				static	AnimationFilm* GetFilm (const std::string id);
 };
 
 #endif

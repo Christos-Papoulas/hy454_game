@@ -1,6 +1,7 @@
 #include "header_files\animation\AnimationFilmHolder.h"
 
 AnimationFilmHolder* AnimationFilmHolder::holder = NULL;
+Films						AnimationFilmHolder::films;
 
 AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 		assert(path);
@@ -16,11 +17,11 @@ AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 				std::vector<Rect> box;
 				for(Index j = 0; j < mInfo.numOfmoves; j++) {
 						Rect aRect; aRect.SetX(mInfo.moves[j].y); aRect.SetY(mInfo.moves[j].y);
+						aRect.SetHeight(mInfo.moves[j].lengthY); aRect.SetWidth(mInfo.moves[j].lengthX); 
 						box.push_back(aRect);
 				}
 				AnimationFilm* anAnimFilm = new AnimationFilm(btmp, box, cid);
 				std::ostringstream ss(cid);
-				ss << i;
 				films[ss.str()] = anAnimFilm;
 		}
 
@@ -50,7 +51,7 @@ void AnimationFilmHolder::CleanUp() {
 		films.clear(); 
 }
 
-const AnimationFilm* AnimationFilmHolder::GetFilm (const std::string id) const {
+AnimationFilm* AnimationFilmHolder::GetFilm (const std::string id) {
 		Films::const_iterator i = films.find(id);
 		return i != films.end() ? i->second : NULL;
 }

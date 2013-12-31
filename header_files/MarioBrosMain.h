@@ -13,6 +13,7 @@
 #include "animation\AnimationFilmHolder.h"
 #include "terrain\terrain.h"
 #include "mario\logic.h"
+#include "mario\SpritesHolder.h"
 #include "Objects.h"
 
 

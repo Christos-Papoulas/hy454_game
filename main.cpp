@@ -117,6 +117,7 @@ void MarioBrosMain::InitializeGame() {
 		
 		Terrain::Create();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
+		SpritesHolder* lala = new SpritesHolder();
 
 		redraw = true;
 }

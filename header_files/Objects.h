@@ -45,11 +45,16 @@ class Point {
 
 class Rect {
 		Point loc;
+		Point wh;
 		public:
 				void SetX(Dim x) { loc.SetX(x); }
 				void SetY(Dim y) { loc.SetY(y); }
+				void SetHeight(Dim x) { wh.SetX(x); }
+				void SetWidth(Dim y) { wh.SetY(y); }
 				Dim GetX() { return loc.GetX(); }
 				Dim GetY() { return loc.GetY(); }
+				Dim GetHeight() { return wh.GetX(); }
+				Dim GetWidth() { return wh.GetY(); }
 				void IncreaseX(Dim x) { loc.SetX(loc.GetX() + x); }
 				void IncreaseY(Dim y) { loc.SetY(loc.GetY() + y); }
 };
