@@ -15,12 +15,12 @@ class Sprite {
 		AnimationFilm* currFilm;
 		TileLayer* myLayer;
 		public:
+				Sprite (Dim _x, Dim _y, AnimationFilm* film);
 				void SetFrame (byte i);
 				byte GetFrame () const;
 				void SetVisibility (bool v);
 				bool IsVisible () const;
 				bool CollisionCheck (Sprite *s);
-				Sprite (Dim _x, Dim _y, AnimationFilm* film);
 				void Display(Bitmap dest);
 				void Move(Dim x,Dim y);
 };
