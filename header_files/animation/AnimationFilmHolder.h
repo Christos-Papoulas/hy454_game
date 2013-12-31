@@ -11,6 +11,7 @@
 
 #include <string>
 #include <map>
+#include <sstream>
 #include <assert.h>
 
 #define MARIO_SPRITES_BMP "./data/Bitmaps/Sprites/mario.bmp"

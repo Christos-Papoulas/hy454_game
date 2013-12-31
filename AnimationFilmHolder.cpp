@@ -18,9 +18,13 @@ AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 						Rect aRect; aRect.SetX(mInfo.moves[j].y); aRect.SetY(mInfo.moves[j].y);
 						box.push_back(aRect);
 				}
-				AnimationFilm* aAnimFilm = new AnimationFilm(btmp, box, cid);
-				
+				AnimationFilm* anAnimFilm = new AnimationFilm(btmp, box, cid);
+				std::ostringstream ss(cid);
+				ss << i;
+				films[ss.str()] = anAnimFilm;
 		}
+
+		//@todo destroy the fucking ParseMarioInfo instance.
 }
 
 AnimationFilmHolder::~AnimationFilmHolder() {
