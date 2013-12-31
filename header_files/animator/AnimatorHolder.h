@@ -25,6 +25,7 @@ class AnimatorHolder {
 			running.begin(), running.end(), ProgressFunctor(currTime)
 			); 
 		}
+		static void Display(Bitmap at);
 };
 
 #endif
