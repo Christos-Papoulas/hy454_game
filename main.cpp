@@ -65,13 +65,12 @@ bool MarioBrosMain::InitAllegro(){
 
 //game loop logic
 void MarioBrosMain::MainLoopOneIteration() {
-
-		InputManagement(); //just reads from local input queue
+		//InputManagement(); //just reads from local input queue
 		AnimationProgress();
-		ArtificialIntelligence();
-		CollisionChecking();
-		CommitDestructions();
-		FPSCalculation();
+		//ArtificialIntelligence();
+		//CollisionChecking();
+		//CommitDestructions();
+		//FPSCalculation();
 }
 
 void MarioBrosMain::InputManagement(){
@@ -90,7 +89,7 @@ void MarioBrosMain::InputManagement(){
 }
 
 void MarioBrosMain::AnimationProgress(){
-		assert(0 && "Unimpemented");
+		AnimatorHolder::Progress((timestamp_t)  0 ); // @todo the real time value
 		return ;
 }
 
@@ -133,7 +132,7 @@ void ManageGameLoop() {
 				al_get_keyboard_state(&keyboardState);
 				Rendering(currTime);
 				(((Terrain::GetTerrain())->GetTileLayer())->GetViewWindow()).IncreaseY(1);
-				//MainLoopOneIteration();
+				MainLoopOneIteration();
 		}
 }
 

@@ -1,6 +1,8 @@
 #ifndef _ANIMATOR_H_
 #define _ANIMATOR_H_
 
+#include "..\Objects.h"
+
 //lecture11 slide24
 typedef unsigned long timestamp_t;
 
@@ -24,6 +26,7 @@ class Animator {
 				bool HasFinished (void) const	{ return state != ANIMATOR_RUNNING; }
 				virtual void TimeShift (timestamp_t offset);
 				virtual void Progress (timestamp_t currTime)=0;
+				virtual void Display (Bitmap at)=0;
 				void SetOnFinish (FinishCallback f, void* c=(void*) 0){ onFinish = f, finishClosure = c; }
 				Animator (void); 
 				virtual ~Animator(){};

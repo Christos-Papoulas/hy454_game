@@ -20,11 +20,12 @@ class AnimatorHolder {
 		static void Cancel (Animator* a) { suspended.remove(a); }
 		static void MarkAsRunning (Animator* a) { suspended.remove(a); running.push_back(a); }
 		static void MarkAsSuspended (Animator* a) { running.remove(a); suspended.push_back(a); }
-		static void Progress (timestamp_t currTime) {
-			std::for_each(
+		static void Progress (timestamp_t currTime); /*{
+			std::for_each( //@done leei na kanoume aplo loop kai oxi for_each
 			running.begin(), running.end(), ProgressFunctor(currTime)
 			); 
-		}
+			return ;
+		}*/
 		static void Display(Bitmap at);
 };
 

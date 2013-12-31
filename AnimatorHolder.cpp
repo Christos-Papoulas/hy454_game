@@ -1,10 +1,13 @@
 #include "header_files\animator\AnimatorHolder.h"
 
-std::list<Animator*> running, suspended;
+std::list<Animator*> AnimatorHolder::running, AnimatorHolder::suspended;
 
-void AnimatorHolder :: Display(Bitmap at){
+void AnimatorHolder::Progress(timestamp_t currTime) {
+		for (std::list<Animator*>::const_iterator  it = running.begin(); it != running.end(); it++)
+				(*it)->Progress(currTime);
+}
 
-	//for (unsigned int i=0; i<running.size(); ++i)
-		//running[i]->Display(at);
-	
+void AnimatorHolder::Display(Bitmap at) {
+		for (std::list<Animator*>::const_iterator  it = running.begin(); it != running.end(); it++)
+				(*it)->Display(at); // @todo find method display
 }
