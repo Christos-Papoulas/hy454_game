@@ -16,7 +16,7 @@ AnimationFilmHolder::AnimationFilmHolder(const char* path) {
 				char* cid = ParseMarioInfo::GetNetMarioInfoId(i);
 				std::vector<Rect> box;
 				for(Index j = 0; j < mInfo.numOfmoves; j++) {
-						Rect aRect; aRect.SetX(mInfo.moves[j].y); aRect.SetY(mInfo.moves[j].y);
+						Rect aRect; aRect.SetX(mInfo.moves[j].x); aRect.SetY(mInfo.moves[j].y);
 						aRect.SetHeight(mInfo.moves[j].lengthY); aRect.SetWidth(mInfo.moves[j].lengthX); 
 						box.push_back(aRect);
 				}
