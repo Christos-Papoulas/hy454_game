@@ -21,6 +21,7 @@ class MovingAnimator : public Animator {
 			state  = ANIMATOR_RUNNING;
 		}
 		void Display(Bitmap at);
+		Sprite* GetSprite();
 };
 
 #endif

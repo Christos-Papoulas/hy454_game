@@ -19,3 +19,6 @@ void MovingAnimator::Display(Bitmap at) {
 		sprite->Display(at);
 }
 
+Sprite* MovingAnimator::GetSprite() {
+	return sprite;
+}

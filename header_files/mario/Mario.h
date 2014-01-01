@@ -15,8 +15,8 @@ class Mario {
 	public:
 		static void Create(MovingAnimator* mario_animator);
 		static void Destroy();
-		void MarioMovesLeft();
-		void MarioMovesRight();
+		static void MarioMovesLeft();
+		static void MarioMovesRight();
 };
 
 #endif

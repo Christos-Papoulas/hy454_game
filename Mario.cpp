@@ -18,9 +18,9 @@ void Mario::Create(MovingAnimator* mario_animator) {
 }
 
 void Mario::MarioMovesLeft() {
-		;
+	MarioAnimator->GetSprite()->Move(1,0);
 }
 
 void Mario::MarioMovesRight() {
-		;
+	MarioAnimator->GetSprite()->Move(1,0);
 }

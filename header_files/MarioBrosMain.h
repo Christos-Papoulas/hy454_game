@@ -14,6 +14,7 @@
 #include "terrain\terrain.h"
 #include "mario\logic.h"
 #include "mario\SpritesHolder.h"
+#include "mario\Mario.h"
 #include "Objects.h"
 
 

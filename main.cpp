@@ -64,7 +64,7 @@ bool MarioBrosMain::InitAllegro(){
 
 //game loop logic
 void MarioBrosMain::MainLoopOneIteration() {
-		//InputManagement(); //just reads from local input queue
+		InputManagement(); //just reads from local input queue
 		AnimationProgress();
 		//ArtificialIntelligence();
 		//CollisionChecking();
@@ -79,7 +79,7 @@ void MarioBrosMain::InputManagement(){
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)) // down
 						return ; // @todo something
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)) // right
-						return ; // @todo something
+						return Mario::MarioMovesRight(); // @todo something
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)) // lest
 						return ; // @todo something
 				else
