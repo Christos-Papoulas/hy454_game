@@ -15,8 +15,8 @@ bool TileLayer::ReadMap(FILE* fp) {
 			for(int j = 0; j < MAX_WIDTH; ++j)
 					fscanf(fp, "%d", &map[i][j]);
 	
-	/*log_write(__FILE__, __LINE__, "read map successfuly.");
-	for(int i = 0; i < MAX_HEIGHT; ++i) {
+	log_write(__FILE__, __LINE__, "read map successfuly.");
+	/*for(int i = 0; i < MAX_HEIGHT; ++i) {
 			for(int j = 0; j < MAX_WIDTH; ++j)
 					map[i][j]--;
 			
@@ -66,3 +66,8 @@ void TileLayer::Display(Bitmap at/*, const Rect& displayArea*/) {
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++)
 						tilesBitmap->PutTile(at, i, j, GetTile(i, j));
 }
+/*
+bool TileLayer::ProgressViewWindow(HorizScroll h) {
+		;
+}
+*/

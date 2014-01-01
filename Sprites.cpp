@@ -90,3 +90,8 @@ void Sprite::SetX(Dim _x) {
 void Sprite::SetY(Dim _y) {
 		y = _y;
 }
+
+void Sprite::MoveLeft(Dim x) {
+		if(GetX() > x)
+				SetX(GetX() - x);
+}

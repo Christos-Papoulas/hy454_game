@@ -16,7 +16,7 @@ class Terrain {
 	private:
 		Terrain();
 		~Terrain();
-		static Terrain* terrain;
+		static Terrain* terrain; //sigleton
 		TileLayer* tileLayer;
 
 	public:

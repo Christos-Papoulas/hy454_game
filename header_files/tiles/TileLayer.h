@@ -7,8 +7,6 @@
 #include <assert.h>
 #include <windows.h>
 
-
-
 #include "..\logs\logs.h"
 #include "..\Objects.h"
 #include "TilesBitmap.h"
@@ -37,6 +35,7 @@ class TileLayer{
 				void Scroll(HorizScroll h, VertScroll v);
 				bool CanScroll(HorizScroll h) const;
 				bool CanScroll(VertScroll v) const;
+				//bool ProgressViewWindow(HorizScroll h);
 				void WriteMap(FILE* fp);
 				bool ReadMap(FILE* fp);
 };

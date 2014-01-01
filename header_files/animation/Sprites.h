@@ -26,7 +26,8 @@ class Sprite {
 				bool IsVisible () const;
 				bool CollisionCheck (Sprite *s);
 				void Display(Bitmap dest);
-				void Move(Dim x,Dim y);
+				void Move(Dim x,Dim y); //right
+				void MoveLeft(Dim x);
 };
 
 #endif
