@@ -16,24 +16,24 @@ void ParseMarioInfo::Create() {
 
 void ParseMarioInfo::ParseFile(const char* f) {
 		FILE* fp = fopen(MARIO_SPRITES_INFO, "r");
-		Dim x = 0, y = 0, z = 0, k = 0;
+		unsigned short x = 0, y = 0, z = 0, k = 0;
 		assert(fp);
 		fscanf(fp, "%u", &marioInfo->totalFrames);
 		marioInfo->mariodetails = (MarioInfo_t*) malloc(sizeof(MarioInfo_t)*marioInfo->totalFrames);
-
-		for(int i = 0; i < marioInfo->totalFrames; ++i) {
-				fscanf(fp, "%u", &marioInfo->mariodetails[i].iid);
+		unsigned short skata;
+		for(unsigned short i = 0; i < marioInfo->totalFrames; ++i) {
+				fscanf(fp, "%d", &marioInfo->mariodetails[i].iid);
 				fscanf(fp, "%s", &marioInfo->mariodetails[i].cid);
-				fscanf(fp, "%u", &marioInfo->mariodetails[i].numOfmoves);
+				fscanf(fp, "%d", &marioInfo->mariodetails[i].numOfmoves);
 				marioInfo->mariodetails[i].moves = (Moves_t*) malloc(sizeof(Moves_t)*marioInfo->mariodetails[i].numOfmoves);
-				for(int j = 0; j < marioInfo->mariodetails[i].numOfmoves; ++j) {
-						fscanf(fp, "%u", &x);
-						marioInfo->mariodetails[i].moves[j].x = x;
-						fscanf(fp, "%u", &y);
-						marioInfo->mariodetails[i].moves[j].y = y;
-						fscanf(fp, "%u", &z);
+				for(unsigned short j = 0; j < marioInfo->mariodetails[i].numOfmoves; ++j) {
+						fscanf(fp, "%d", &x);
+						marioInfo->mariodetails[i].moves[j].y = x;
+						fscanf(fp, "%d", &y);
+						marioInfo->mariodetails[i].moves[j].x = y;
+						fscanf(fp, "%d", &z);
 						marioInfo->mariodetails[i].moves[j].lengthX = z;
-						fscanf(fp, "%u", &k);
+						fscanf(fp, "%d", &k);
 						marioInfo->mariodetails[i].moves[j].lengthY = k;
 				}
 		}
@@ -44,18 +44,18 @@ void ParseMarioInfo::PrintDataToLogFile() {
 		
 }
 
-MarioInfo_t ParseMarioInfo::GetNetMarioInfo(Dim i) {
+MarioInfo_t ParseMarioInfo::GetNetMarioInfo(unsigned short i) {
 		return marioInfo->mariodetails[i];
 }
 
-char* ParseMarioInfo::GetNetMarioInfoId(Dim i) {
+char* ParseMarioInfo::GetNetMarioInfoId(unsigned short i) {
 		return marioInfo->mariodetails[i].cid;
 }
 
-Dim ParseMarioInfo::GetTotalFrames() {
+unsigned short ParseMarioInfo::GetTotalFrames() {
 		return marioInfo->totalFrames;
 }
 
-Dim ParseMarioInfo::GetAnimationIdOf(Dim i) {
+unsigned short ParseMarioInfo::GetAnimationIdOf(unsigned short i) {
 		return marioInfo->mariodetails[i].iid;
 }
