@@ -4,6 +4,7 @@
 #include "../animation/Sprites.h"
 #include "../animation/AnimationFilmHolder.h"
 #include "../animation/MovingAnimation.h"
+#include "../animator/MovingAnimator.h"
 #include "../terrain/terrain.h"
 
 #include <string>
