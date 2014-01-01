@@ -14,3 +14,8 @@ void MovingAnimator::Progress (timestamp_t currTime) {
 		}
 	}
 }
+
+void MovingAnimator::Display(Bitmap at) { 
+		sprite->Display(at);
+}
+
