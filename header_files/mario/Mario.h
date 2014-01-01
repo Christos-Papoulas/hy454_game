@@ -2,6 +2,10 @@
 #define _MARIO_H_
 
 #include "../animator/MovingAnimator.h"
+#include "../terrain/terrain.h"
+#include "../tiles/TileLayer.h"
+#include "../tiles/TilesBitmap.h"
+
 #include <assert.h>
 
 

@@ -33,6 +33,7 @@ class TileLayer{
 				void SetViewWindow(const Rect&);
 				void Display(Bitmap at/*, const Rect& displayArea*/);
 				void Scroll(HorizScroll h, VertScroll v);
+				void ScrollHorizBy(Dim dx) { viewWindow.IncreaseX(dx); }
 				bool CanScroll(HorizScroll h) const;
 				bool CanScroll(VertScroll v) const;
 				//bool ProgressViewWindow(HorizScroll h);

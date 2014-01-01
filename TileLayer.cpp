@@ -64,10 +64,5 @@ void TileLayer::Display(Bitmap at/*, const Rect& displayArea*/) {
 
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++)
-						tilesBitmap->PutTile(at, i, j, GetTile(i, j));
+						tilesBitmap->PutTile(at, i, j, GetTile(viewWindow.GetX() + i, viewWindow.GetY() + j));
 }
-/*
-bool TileLayer::ProgressViewWindow(HorizScroll h) {
-		;
-}
-*/

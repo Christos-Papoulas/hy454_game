@@ -79,9 +79,9 @@ void MarioBrosMain::InputManagement(){
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)) // down
 						return ; // @todo something
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)) // right
-						return Mario::MarioMovesRight(); // @todo something
+						return Mario::MarioMovesRight();
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)) // lest
-						return Mario::MarioMovesLeft(); // @todo something
+						return Mario::MarioMovesLeft();
 				else
 						return ; // other keys...
 		}

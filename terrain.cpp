@@ -1,6 +1,7 @@
 #include "header_files\terrain\terrain.h"
 
 Terrain* Terrain::terrain;
+TileLayer* Terrain::tileLayer;
 
 Terrain::Terrain() {
 		;

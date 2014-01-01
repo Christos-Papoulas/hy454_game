@@ -18,9 +18,15 @@ void Mario::Create(MovingAnimator* mario_animator) {
 }
 
 void Mario::MarioMovesLeft() {
-	MarioAnimator->GetSprite()->MoveLeft(1);
+	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
+	//if(MarioAnimator->GetSprite()->GetX() >= vw.GetX())
+		MarioAnimator->GetSprite()->MoveLeft(1);
 }
 
 void Mario::MarioMovesRight() {
+	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
+	Dim x = MarioAnimator->GetSprite()->GetX();
+	if( (vw.GetX() + SCREEN_WINDOW_WIDTH/3) < x)
+			(Terrain::GetTileLayer())-> ScrollHorizBy(3);
 	MarioAnimator->GetSprite()->Move(1,0);
 }

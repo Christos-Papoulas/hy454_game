@@ -65,4 +65,5 @@ void CalculateTilesPosition();
 unsigned int CurrTime();
 void SetGameTime();
 timestamp_t GetCurrTime();
+
 #endif

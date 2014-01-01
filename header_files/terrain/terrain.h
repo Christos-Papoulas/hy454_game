@@ -8,22 +8,18 @@
 #include "..\tiles\TileLayer.h"
 #include "..\tiles\TilesBitmap.h"
 
-
-//Rect		displayArea;
-//Bitmap		tileBitmap;
-
 class Terrain {
 	private:
 		Terrain();
 		~Terrain();
 		static Terrain* terrain; //sigleton
-		TileLayer* tileLayer;
+		static TileLayer* tileLayer;
 
 	public:
 		static void Create();
 		static void CleanUp();
 		static void DisplayTerrain(Bitmap, timestamp_t);
-		TileLayer* GetTileLayer() { return tileLayer; }
+		static TileLayer* GetTileLayer() { return tileLayer; }
 		static Terrain* GetTerrain() { return terrain; }
 };
 
