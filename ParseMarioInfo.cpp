@@ -26,7 +26,7 @@ void ParseMarioInfo::ParseFile(const char* f) {
 				fscanf(fp, "%u", &marioInfo->mariodetails[i].numOfmoves);
 				marioInfo->mariodetails[i].moves = (Moves_t*) malloc(sizeof(Moves_t)*marioInfo->mariodetails[i].numOfmoves);
 				for(int j = 0; j < marioInfo->mariodetails[i].numOfmoves; ++j) {
-						int x;
+						Dim x;
 						fscanf(fp, "%u", &x);
 						marioInfo->mariodetails[i].moves[j].x = x;
 						fscanf(fp, "%u", &x);
@@ -44,14 +44,18 @@ void ParseMarioInfo::PrintDataToLogFile() {
 		
 }
 
-MarioInfo_t ParseMarioInfo::GetNetMarioInfo(unsigned short i) {
+MarioInfo_t ParseMarioInfo::GetNetMarioInfo(Dim i) {
 		return marioInfo->mariodetails[i];
 }
 
-char* ParseMarioInfo::GetNetMarioInfoId(unsigned short i) {
+char* ParseMarioInfo::GetNetMarioInfoId(Dim i) {
 		return marioInfo->mariodetails[i].cid;
 }
 
-unsigned short ParseMarioInfo::GetTotalFrames() {
+Dim ParseMarioInfo::GetTotalFrames() {
 		return marioInfo->totalFrames;
+}
+
+Dim ParseMarioInfo::GetAnimationIdOf(Dim i) {
+		return marioInfo->mariodetails[i].iid;
 }

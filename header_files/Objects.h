@@ -24,7 +24,6 @@ extern Dim modIndex[TILES_COLUMNS*TILES_ROWS + 1];
 enum HorizScroll { Left = -1, HorizIntact = 0, Right = +1 };
 enum VertScroll{ Up = -1, VertIntact = 0, Down = +1 };
 
-
 class Point {
 		Dim x;
 		Dim y;
@@ -59,7 +58,9 @@ class Rect {
 				void IncreaseY(Dim y) { loc.SetY(loc.GetY() + y); }
 };
 
-unsigned int CurrTime();
 void CalculateTilesPosition();
+
+unsigned int CurrTime();
+void SetGameTime();
 
 #endif

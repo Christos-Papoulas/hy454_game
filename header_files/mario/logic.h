@@ -8,8 +8,6 @@ class Logic {
 				static void Create();
 				static void Clean();
 				static bool IsGamePaused();
-				
-
 };
 
 #endif
