@@ -1,4 +1,5 @@
 #include "header_files\mario\SpritesHolder.h"
+#include "header_files\mario\Mario.h"
 
 SpritesHolder::SpritesHolder() {
 		Initializer::InitMario();
@@ -15,6 +16,8 @@ void Initializer::InitMario() {
 		// @todo put & make sure the currect values
 		MovingAnimation* aMovAnimn = new MovingAnimation(100, 100, 100, true, ParseMarioInfo::GetAnimationIdOf(1u));
 		MovingAnimator* aMovAnimr = (MovingAnimator*) new MovingAnimator(); // @todo implement Animator
+
+		Mario* mario = (Mario*) new Mario(aMovAnimr);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());				
 		AnimatorHolder::Register( aMovAnimr );				
 		AnimatorHolder::MarkAsRunning( aMovAnimr );
