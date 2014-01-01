@@ -1,5 +1,6 @@
 #include "header_files\MarioBrosMain.h"
 
+
 bool MarioBrosMain::InitAllegro(){
 		if(!al_init()){
 				al_show_native_message_box(NULL, "Error", NULL, "Game can not Initialize Graphics.\n", NULL, NULL);
@@ -57,9 +58,7 @@ bool MarioBrosMain::InitAllegro(){
 		 
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
 		Terrain::DisplayTerrain(al_get_backbuffer(display), now);
-		// @todo display AnimatorHolder;
-		Sprite *spriteMario = new Sprite(100, 100, AnimationFilmHolder::GetFilm( std::string("mariowalking") ));
-		spriteMario->Display(AnimationFilmHolder::GetFilm( "mariowalking" )->GetBitmap());
+		AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
 		al_flip_display(); // is blocking depending on defines?
 }
 
@@ -125,7 +124,7 @@ void MarioBrosMain::InitializeGame() {
 
 void ManageGameLoop() {
 		using namespace MarioBrosMain;
-		timestamp_t currTime;
+		
 		while(true) {
 				currTime =  CurrTime();
 				al_wait_for_event(queue, &events);

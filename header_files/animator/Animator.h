@@ -4,8 +4,6 @@
 #include "..\Objects.h"
 
 //lecture11 slide24
-typedef unsigned long timestamp_t;
-
 enum animatorstate_t {
 		ANIMATOR_FINISHED = 0,
 		ANIMATOR_RUNNING = 1,

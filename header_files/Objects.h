@@ -14,11 +14,13 @@
 typedef unsigned char byte;
 typedef unsigned short Dim;
 typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
+typedef unsigned long timestamp_t;
 typedef ALLEGRO_BITMAP* Bitmap;
 typedef ALLEGRO_DISPLAY* Display;
 
 extern Dim divIndex[TILES_COLUMNS*TILES_ROWS + 1];
 extern Dim modIndex[TILES_COLUMNS*TILES_ROWS + 1];
+extern timestamp_t currTime;
 
 //lecture9 slide31
 enum HorizScroll { Left = -1, HorizIntact = 0, Right = +1 };
@@ -62,5 +64,5 @@ void CalculateTilesPosition();
 
 unsigned int CurrTime();
 void SetGameTime();
-
+timestamp_t GetCurrTime();
 #endif

@@ -39,7 +39,6 @@ bool redraw = true;
 const float FPS = 90;
 /* Our Defines */
 
-
 namespace MarioBrosMain {
 		extern bool InitAllegro();
 

@@ -16,6 +16,7 @@ void ParseMarioInfo::Create() {
 
 void ParseMarioInfo::ParseFile(const char* f) {
 		FILE* fp = fopen(MARIO_SPRITES_INFO, "r");
+		Dim x = 0, y = 0, z = 0, k = 0;
 		assert(fp);
 		fscanf(fp, "%u", &marioInfo->totalFrames);
 		marioInfo->mariodetails = (MarioInfo_t*) malloc(sizeof(MarioInfo_t)*marioInfo->totalFrames);
@@ -26,15 +27,14 @@ void ParseMarioInfo::ParseFile(const char* f) {
 				fscanf(fp, "%u", &marioInfo->mariodetails[i].numOfmoves);
 				marioInfo->mariodetails[i].moves = (Moves_t*) malloc(sizeof(Moves_t)*marioInfo->mariodetails[i].numOfmoves);
 				for(int j = 0; j < marioInfo->mariodetails[i].numOfmoves; ++j) {
-						Dim x;
 						fscanf(fp, "%u", &x);
 						marioInfo->mariodetails[i].moves[j].x = x;
-						fscanf(fp, "%u", &x);
-						marioInfo->mariodetails[i].moves[j].y = x;
-						fscanf(fp, "%u", &x);
-						marioInfo->mariodetails[i].moves[j].lengthX = x;
-						fscanf(fp, "%u", &x);
-						marioInfo->mariodetails[i].moves[j].lengthY = x;
+						fscanf(fp, "%u", &y);
+						marioInfo->mariodetails[i].moves[j].y = y;
+						fscanf(fp, "%u", &z);
+						marioInfo->mariodetails[i].moves[j].lengthX = z;
+						fscanf(fp, "%u", &k);
+						marioInfo->mariodetails[i].moves[j].lengthY = k;
 				}
 		}
 		fclose(fp);
