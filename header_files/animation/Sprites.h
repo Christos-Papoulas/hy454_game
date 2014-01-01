@@ -16,6 +16,10 @@ class Sprite {
 		TileLayer* myLayer;
 		public:
 				Sprite (Dim _x, Dim _y, AnimationFilm* film);
+				Dim GetX();
+				Dim GetY();
+				void SetX(Dim _x);
+				void SetY(Dim _y);
 				void SetFrame (byte i);
 				byte GetFrame () const;
 				void SetVisibility (bool v);

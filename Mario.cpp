@@ -1,8 +1,11 @@
 #include "header_files\mario\Mario.h"
 
+Mario* Mario::mario = NULL;
+MovingAnimator* Mario::MarioAnimator = NULL;
+
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
-
+	MarioAnimator = mario_animator;
 }
 
 Mario::~Mario() {
@@ -12,4 +15,12 @@ Mario::~Mario() {
 void Mario::Create(MovingAnimator* mario_animator) {
 		if(!mario)
 				mario = new Mario(mario_animator);
+}
+
+void Mario::MarioMovesLeft() {
+		;
+}
+
+void Mario::MarioMovesRight() {
+		;
 }

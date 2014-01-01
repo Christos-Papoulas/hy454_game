@@ -8,14 +8,15 @@
 class Mario {
 	private:
 		static Mario* mario;
-		
+		static MovingAnimator* MarioAnimator;
+		Mario(MovingAnimator* mario_animator);
+		~Mario();
 
 	public:
 		static void Create(MovingAnimator* mario_animator);
-		Mario(MovingAnimator* mario_animator);
-		~Mario();
+		static void Destroy();
 		void MarioMovesLeft();
 		void MarioMovesRight();
-}
+};
 
 #endif

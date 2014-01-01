@@ -20,7 +20,6 @@ void ParseMarioInfo::ParseFile(const char* f) {
 		assert(fp);
 		fscanf(fp, "%u", &marioInfo->totalFrames);
 		marioInfo->mariodetails = (MarioInfo_t*) malloc(sizeof(MarioInfo_t)*marioInfo->totalFrames);
-		unsigned short skata;
 		for(unsigned short i = 0; i < marioInfo->totalFrames; ++i) {
 				fscanf(fp, "%d", &marioInfo->mariodetails[i].iid);
 				fscanf(fp, "%s", &marioInfo->mariodetails[i].cid);

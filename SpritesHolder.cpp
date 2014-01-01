@@ -17,7 +17,7 @@ void Initializer::InitMario() {
 		MovingAnimation* aMovAnimn = new MovingAnimation(100, 100, 100, true, ParseMarioInfo::GetAnimationIdOf(1u));
 		MovingAnimator* aMovAnimr = (MovingAnimator*) new MovingAnimator(); // @todo implement Animator
 
-		Mario* mario = (Mario*) new Mario(aMovAnimr);
+		Mario::Create(aMovAnimr);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());				
 		AnimatorHolder::Register( aMovAnimr );				
 		AnimatorHolder::MarkAsRunning( aMovAnimr );

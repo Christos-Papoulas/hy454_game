@@ -26,7 +26,8 @@ bool Sprite::CollisionCheck (Sprite *s) {
 
 
 void Sprite::Move (Dim x,Dim y) {
-	assert(0 && "unimplemented");
+	SetX(GetX() + x);
+	SetY(GetY() + y);
 	return ;
 	/*Apply the movement;
 	if (gravityAddicted) {
@@ -71,4 +72,21 @@ void Sprite::Display(Bitmap dest) {
 		}*/
 		al_draw_bitmap_region(currFilm->GetBitmap(), frameBox.GetX(), frameBox.GetY(), 
 			frameBox.GetWidth(), frameBox.GetHeight(), x, y, NULL);
+}
+
+
+Dim Sprite::GetX() {
+		return x;
+}
+
+Dim Sprite::GetY() {
+		return y;
+}
+
+void Sprite::SetX(Dim _x) {
+		x = _x;
+}
+
+void Sprite::SetY(Dim _y) {
+		y = _y;
 }
