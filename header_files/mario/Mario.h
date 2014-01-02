@@ -21,6 +21,7 @@ class Mario {
 		static void Destroy();
 		static void MarioMovesLeft();
 		static void MarioMovesRight();
+		static void MarioFinishWalking(Animator*, void*);
 };
 
 #endif

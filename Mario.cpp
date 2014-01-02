@@ -34,3 +34,7 @@ void Mario::MarioMovesRight() {
 			MarioAnimator->Progress(GetCurrTime());
 	}
 }
+
+void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
+		;
+}

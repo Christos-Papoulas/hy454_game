@@ -10,7 +10,7 @@
 #include "..\logs\logs.h"
 #include "..\Objects.h"
 #include "TilesBitmap.h"
-
+#include "../collision/Collision.h"
 
 #define MAX_HEIGHT 15 
 #define MAX_WIDTH 225
