@@ -20,7 +20,7 @@ bool Sprite::IsVisible() const {
 }
 
 bool Sprite::CollisionCheck (Sprite *s) {
-		assert(0 && "unimplemented");
+		//assert(0 && "unimplemented");
 
 		return false;
 }
