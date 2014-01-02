@@ -21,6 +21,7 @@
 class TileLayer{
 		private:
 				Index		map[MAX_HEIGHT][MAX_WIDTH];
+				Dim			Collision[MAX_HEIGHT][MAX_WIDTH];
 				Rect		viewWindow;
 				TilesBitmap* tilesBitmap;
 		public:

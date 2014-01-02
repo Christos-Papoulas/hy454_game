@@ -21,7 +21,12 @@ bool TileLayer::ReadMap(FILE* fp) {
 					map[i][j]--;
 			
 	}*/
-					
+	for(int i = 0; i < MAX_HEIGHT; ++i)
+			for(int j = 0; j < MAX_WIDTH; ++j) {
+					fscanf(fp, "%d", &Collision[i][j]);
+					if(Collision[i][j] != 1)	// All exept ground equals to zero
+						Collision[i][j] = 0;
+			}
 	return true;
 }
 
