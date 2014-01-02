@@ -24,7 +24,7 @@ class Sprite {
 				byte GetFrame () const;
 				void SetVisibility (bool v);
 				bool IsVisible () const;
-				bool CollisionCheck (Sprite *s);
+				static bool CollisionCheck (Sprite *s);
 				void Display(Bitmap dest);
 				void Move(Dim x,Dim y); //right
 				void MoveLeft(Dim x);

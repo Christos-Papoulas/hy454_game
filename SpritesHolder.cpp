@@ -19,7 +19,7 @@ void Initializer::InitMario() {
 						0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(1u)
 						);//new MovingAnimation(100, 100, 100, true, ParseMarioInfo::GetAnimationIdOf(1u));
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); //(MovingAnimator*) new MovingAnimator(); // @todo implement Animator
-
+		Sprite::CollisionCheck(spriteMario);
 		Mario::Create(aMovAnimr);
 		//((FrameRangeAnimation*) aMovAnimn)->start(spriteMario, aMovAnimn, currTime) ;
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());				
