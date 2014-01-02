@@ -98,9 +98,8 @@ void MarioBrosMain::ArtificialIntelligence(){
 }
 
 void MarioBrosMain::CollisionChecking(){
-		assert(0 && "Unimpemented");
-		
-		//Collision::MarioCollision(s->GetTileX(),s->GetTileY())
+		if(!Collision::MarioCollision(Mario::GetAnimator()->GetSprite()->GetTileX(),Mario::GetAnimator()->GetSprite()->GetTileY()))
+			//start falling
 		return ;
 }
 
