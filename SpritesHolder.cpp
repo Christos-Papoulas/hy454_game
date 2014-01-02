@@ -16,7 +16,7 @@ void Initializer::InitMario() {
 		// @todo put & make sure the currect values
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						1, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(1u)
+						0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(1u)
 						);//new MovingAnimation(100, 100, 100, true, ParseMarioInfo::GetAnimationIdOf(1u));
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); //(MovingAnimator*) new MovingAnimator(); // @todo implement Animator
 
