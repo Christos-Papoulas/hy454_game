@@ -31,7 +31,7 @@ class Sprite {
 				void MoveLeft(Dim x);
 				Dim GetTileX();
 				Dim GetTileY();
-				void SetFilmAndReset(AnimationFilm*);
+				void SetFilmAndReset(AnimationFilm*);		
 };
 
 #endif
