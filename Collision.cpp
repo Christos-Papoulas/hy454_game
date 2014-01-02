@@ -1,6 +1,9 @@
 #include "header_files\collision\Collision.h"
 #include "terrain\terrain.h"
 #include <iostream>
+#include "..\header_files\mario\Mario.h"
+
+
 
 Dim			Collision::Collision_map[MAX_HEIGHT][MAX_WIDTH];
 
@@ -20,4 +23,9 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	if(Collision_map[j+x_tile+1][i+y_tile] == 1)
 		return true;
 	return false;
+}
+
+void Collision::CheckGroundCollision() {
+	if(!Collision::MarioCollision(Mario::GetAnimator()->GetSprite()->GetTileX(),Mario::GetAnimator()->GetSprite()->GetTileY()))
+			Mario::GetAnimator()->GetSprite()->Move(0,1);
 }

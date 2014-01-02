@@ -98,8 +98,7 @@ void MarioBrosMain::ArtificialIntelligence(){
 }
 
 void MarioBrosMain::CollisionChecking(){
-		if(!Collision::MarioCollision(Mario::GetAnimator()->GetSprite()->GetTileX(),Mario::GetAnimator()->GetSprite()->GetTileY()))
-			Mario::GetAnimator()->GetSprite()->Move(0,1);
+		Collision::CheckGroundCollision();
 		return ;
 }
 
