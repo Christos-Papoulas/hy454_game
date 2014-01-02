@@ -2,7 +2,7 @@
 
 void Sprite::SetFrame (byte i) {
 		if(i != frameNo) {
-//				assert(i < currFilm->GetTotalFrames());
+				assert(i < currFilm->GetTotalFrames());
 				frameBox = currFilm->GetFrameBox(frameNo = i);
 		}
 }
@@ -95,4 +95,11 @@ void Sprite::SetY(Dim _y) {
 void Sprite::MoveLeft(Dim x) {
 		if(GetX() > x)
 				SetX(GetX() - x);
+}
+
+void Sprite::SetFilmAndReset(AnimationFilm* flm) {
+		assert(flm);
+		currFilm = flm; 
+		frameNo = currFilm->GetTotalFrames();
+		SetFrame(0u);
 }

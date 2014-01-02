@@ -36,6 +36,7 @@ void Mario::MarioMovesRight() {
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
-		int x = 5+6;
+		//AnimatorHolder::
+		(MarioAnimator->GetSprite())->SetFilmAndReset(AnimationFilmHolder::GetFilm( std::string("mariowaiting")));
 		return ;
 }

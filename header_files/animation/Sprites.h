@@ -28,6 +28,7 @@ class Sprite {
 				void Display(Bitmap dest);
 				void Move(Dim x,Dim y); //right
 				void MoveLeft(Dim x);
+				void SetFilmAndReset(AnimationFilm*);
 };
 
 #endif

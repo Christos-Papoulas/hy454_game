@@ -3,6 +3,7 @@
 
 #include "../animator/MovingAnimator.h"
 #include "../animator/FrameRangeAnimator.h"
+#include "../animation/AnimationFilmHolder.h"
 #include "../terrain/terrain.h"
 #include "../tiles/TileLayer.h"
 #include "../tiles/TilesBitmap.h"
