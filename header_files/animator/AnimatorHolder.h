@@ -3,6 +3,7 @@
 
 #include "Animator.h"
 #include "../animation/MovingAnimation.h"
+#include "./FrameRangeAnimator.h"
 #include <list>
 #include <algorithm>    // std::for_each
 #include "..\Objects.h"

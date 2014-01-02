@@ -2,6 +2,7 @@
 
 Mario* Mario::mario = NULL;
 MovingAnimator* Mario::MarioAnimator = NULL;
+MovingAnimator* Mario::MarioWaiting = NULL;
 
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
@@ -17,6 +18,11 @@ void Mario::Create(MovingAnimator* mario_animator) {
 				mario = new Mario(mario_animator);
 }
 
+void Mario::CreateWaiting(MovingAnimator* mario_animator) {
+		if(!MarioWaiting)
+				MarioWaiting = mario_animator;
+}
+
 void Mario::MarioMovesLeft() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	//if(MarioAnimator->GetSprite()->GetX() >= vw.GetX())
@@ -24,6 +30,8 @@ void Mario::MarioMovesLeft() {
 }
 
 void Mario::MarioMovesRight() {
+	AnimatorHolder::MarkAsSuspended(MarioWaiting);
+	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
 	if( x > 85) {
@@ -36,7 +44,10 @@ void Mario::MarioMovesRight() {
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
+		MarioWaiting->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX());
+		MarioWaiting->GetSprite()->SetY(MarioAnimator->GetSprite()->GetY());
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
+		AnimatorHolder::MarkAsRunning(MarioWaiting);
 //		(MarioAnimator->GetSprite())->SetFilmAndReset(AnimationFilmHolder::GetFilm( std::string("mariowaiting")));
 		return ;
 }
