@@ -88,7 +88,7 @@ void MarioBrosMain::InputManagement(){
 }
 
 void MarioBrosMain::AnimationProgress(){
-		AnimatorHolder::Progress(GetCurrTime());
+//		AnimatorHolder::Progress(GetCurrTime());
 		return ;
 }
 
