@@ -29,6 +29,8 @@ void Mario::MarioMovesRight() {
 	if( x > 85) {
 			(Terrain::GetTileLayer())-> ScrollHorizBy(5);
 			MarioAnimator->GetSprite()->SetX(0);
-	} else
+	} else {
 			MarioAnimator->GetSprite()->Move(1,0);
+			MarioAnimator->Progress(GetCurrTime());
+	}
 }

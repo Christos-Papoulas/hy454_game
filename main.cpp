@@ -88,7 +88,7 @@ void MarioBrosMain::InputManagement(){
 }
 
 void MarioBrosMain::AnimationProgress(){
-		AnimatorHolder::Progress((timestamp_t)  0 ); // @todo the real time value
+		//AnimatorHolder::Progress(GetCurrTime());
 		return ;
 }
 
@@ -114,7 +114,7 @@ void MarioBrosMain::FPSCalculation(){
 
 void MarioBrosMain::InitializeGame() {
 		al_start_timer(timer);
-		
+		currTime =  CurrTime();
 		Terrain::Create();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
 		SpritesHolder* lala = new SpritesHolder();

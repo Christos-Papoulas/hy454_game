@@ -11,6 +11,9 @@ class FrameRangeAnimator : public Animator {
 	FrameRangeAnimation* anim;
 	frame_t currFrame;
 	public:
+		FrameRangeAnimator (void): sprite((Sprite*) 0), 
+			anim((FrameRangeAnimation*) 0), currFrame(0xFF){}
+		~FrameRangeAnimator(){}
 		void Progress (timestamp_t currTime);
 		void Start (Sprite* s, FrameRangeAnimation* a, timestamp_t t) {
 			sprite = s;
@@ -19,9 +22,7 @@ class FrameRangeAnimator : public Animator {
 			state = ANIMATOR_RUNNING;
 			sprite->SetFrame(currFrame = anim->GetStartFrame());
 		}
-		FrameRangeAnimator (void): sprite((Sprite*) 0), 
-			anim((FrameRangeAnimation*) 0), currFrame(0xFF){}
-		~FrameRangeAnimator(){}
+		void Display(Bitmap at);
 };
 
 #endif

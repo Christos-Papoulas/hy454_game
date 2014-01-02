@@ -2,6 +2,8 @@
 
 // lecture11 slide30
 void FrameRangeAnimator::Progress (timestamp_t currTime) {
+	assert(anim);
+	assert(lastTime <= currTime);
 	while (currTime > lastTime && currTime - lastTime >= anim->GetDelay()) {
 		if (currFrame == anim->GetEndFrame())
 			currFrame = anim->GetStartFrame();
@@ -18,6 +20,9 @@ void FrameRangeAnimator::Progress (timestamp_t currTime) {
 	}
 }
 
+void FrameRangeAnimator::Display(Bitmap at){
+	sprite->Display(at);
+}
 // lecture11 slide31
 /*
 #define DELAY_TYPES 7

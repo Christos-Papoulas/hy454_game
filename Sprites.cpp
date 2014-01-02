@@ -2,7 +2,7 @@
 
 void Sprite::SetFrame (byte i) {
 		if(i != frameNo) {
-				assert(i < currFilm->GetTotalFrames());
+//				assert(i < currFilm->GetTotalFrames());
 				frameBox = currFilm->GetFrameBox(frameNo = i);
 		}
 }
