@@ -40,3 +40,7 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 //		(MarioAnimator->GetSprite())->SetFilmAndReset(AnimationFilmHolder::GetFilm( std::string("mariowaiting")));
 		return ;
 }
+
+MovingAnimator* Mario::GetAnimator() {
+	return MarioAnimator;
+}
