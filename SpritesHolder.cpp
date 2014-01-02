@@ -22,7 +22,8 @@ void Initializer::InitMario() {
 
 		Mario::Create(aMovAnimr);
 		//((FrameRangeAnimation*) aMovAnimn)->start(spriteMario, aMovAnimn, currTime) ;
-		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());				
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
 		AnimatorHolder::Register( aMovAnimr );				
 		AnimatorHolder::MarkAsRunning( aMovAnimr );
 }

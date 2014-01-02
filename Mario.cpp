@@ -36,5 +36,6 @@ void Mario::MarioMovesRight() {
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
-		;
+		int x = 5+6;
+		return ;
 }
