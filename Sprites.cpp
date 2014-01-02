@@ -20,8 +20,7 @@ bool Sprite::IsVisible() const {
 }
 
 bool Sprite::CollisionCheck (Sprite *s) {
-	if(Collision::MarioCollision(s->GetTileX(),s->GetTileY()))
-			return true;
+	//
 		return false;
 }
 
