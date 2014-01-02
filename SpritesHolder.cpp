@@ -25,7 +25,6 @@ void Initializer::InitMarioWalking() {
 		aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
 		AnimatorHolder::Register( aMovAnimr );				
 		AnimatorHolder::MarkAsRunning( aMovAnimr );
-		InitMarioWaiting();
 }
 
 void Initializer::InitMarioWaiting() {
@@ -47,4 +46,5 @@ void Initializer::InitMarioWaiting() {
 
 void Initializer::InitMario() {
 		InitMarioWalking();
+		InitMarioWaiting();
 }

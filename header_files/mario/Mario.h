@@ -15,6 +15,7 @@ class Mario {
 	private:
 		static Mario* mario;
 		static MovingAnimator* MarioAnimator;
+		static MovingAnimator* MarioWaiting;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 
