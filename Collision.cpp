@@ -9,3 +9,7 @@ void Collision::SetValue(Dim x, Dim y, Dim value) {
 		else
 			Collision_map[x][y] = 0;
 }
+
+bool Collision::MarioCollision(Dim x_tile, Dim y_tile) {
+	return false;
+}
