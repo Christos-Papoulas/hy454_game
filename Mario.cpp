@@ -44,11 +44,13 @@ void Mario::MarioMovesRight() {
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
+
 		MarioWaiting->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX());
+
 		MarioWaiting->GetSprite()->SetY(MarioAnimator->GetSprite()->GetY());
-		AnimatorHolder::MarkAsSuspended(MarioAnimator);
-		AnimatorHolder::MarkAsRunning(MarioWaiting);
-//		(MarioAnimator->GetSprite())->SetFilmAndReset(AnimationFilmHolder::GetFilm( std::string("mariowaiting")));
+	//	AnimatorHolder::MarkAsSuspended(MarioAnimator);
+	//	AnimatorHolder::MarkAsRunning(MarioWaiting);
+
 		return ;
 }
 
