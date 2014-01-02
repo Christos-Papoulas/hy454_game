@@ -4,5 +4,8 @@ Dim			Collision::Collision_map[MAX_HEIGHT][MAX_WIDTH];
 
 void Collision::SetValue(Dim x, Dim y, Dim value) { 
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
-		Collision_map[x][y] = value;
+		if (value == 1)
+			Collision_map[x][y] = value;
+		else
+			Collision_map[x][y] = 0;
 }
