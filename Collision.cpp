@@ -13,7 +13,7 @@ void Collision::SetValue(Dim x, Dim y, Dim value) {
 			Collision_map[x][y] = value;
 		else
 			Collision_map[x][y] = 0;
-		std::cout<< Collision_map[x][y] << " ";
+		//std::cout<< Collision_map[x][y] << " ";
 }
 
 bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
