@@ -1,4 +1,5 @@
 #include "header_files\tiles\TileLayer.h"
+#include "header_files\collision\Collision.h"
 
 TileLayer::TileLayer() {
 		tilesBitmap = new TilesBitmap();
@@ -23,9 +24,9 @@ bool TileLayer::ReadMap(FILE* fp) {
 	}*/
 	for(int i = 0; i < MAX_HEIGHT; ++i)
 			for(int j = 0; j < MAX_WIDTH; ++j) {
-					fscanf(fp, "%d", &Collision[i][j]);
-					if(Collision[i][j] != 1)	// All exept ground equals to zero
-						Collision[i][j] = 0;
+					fscanf(fp, "%d", &Collision_map[i][j]);
+					if(Collision_map[i][j] != 1)	// All exept ground equals to zero
+						Collision_map[i][j] = 0;
 			}
 	return true;
 }

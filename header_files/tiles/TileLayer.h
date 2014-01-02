@@ -11,6 +11,7 @@
 #include "..\Objects.h"
 #include "TilesBitmap.h"
 
+
 #define MAX_HEIGHT 15 
 #define MAX_WIDTH 225
 
@@ -21,7 +22,6 @@
 class TileLayer{
 		private:
 				Index		map[MAX_HEIGHT][MAX_WIDTH];
-				Dim			Collision[MAX_HEIGHT][MAX_WIDTH];
 				Rect		viewWindow;
 				TilesBitmap* tilesBitmap;
 		public:
