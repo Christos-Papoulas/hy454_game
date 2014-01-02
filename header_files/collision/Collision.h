@@ -12,5 +12,6 @@ class Collision{
 		public:
 			static void Create() {  };
 			static void SetValue(Dim x, Dim y, Dim value);
+			static bool MarioCollision(Dim x_tile, Dim y_tile);
 };
 #endif

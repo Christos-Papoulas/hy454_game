@@ -20,8 +20,8 @@ bool Sprite::IsVisible() const {
 }
 
 bool Sprite::CollisionCheck (Sprite *s) {
-		//assert(0 && "unimplemented");
-
+	if(Collision::MarioCollision(s->GetTileX(),s->GetTileY()))
+			return true;
 		return false;
 }
 
@@ -95,6 +95,14 @@ void Sprite::SetY(Dim _y) {
 void Sprite::MoveLeft(Dim x) {
 		if(GetX() > x)
 				SetX(GetX() - x);
+}
+
+Dim Sprite::GetTileX() {
+	return x/16;
+}
+
+Dim Sprite::GetTileY() {
+	return y/16;
 }
 
 void Sprite::SetFilmAndReset(AnimationFilm* flm) {

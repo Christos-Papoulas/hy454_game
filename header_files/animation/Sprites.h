@@ -4,6 +4,7 @@
 #include "../Objects.h"
 #include "AnimationFilm.h"
 #include "..\tiles\TileLayer.h"
+#include "..\collision\Collision.h"
 #include <assert.h>
 
 //lecture10 slide24
@@ -28,6 +29,8 @@ class Sprite {
 				void Display(Bitmap dest);
 				void Move(Dim x,Dim y); //right
 				void MoveLeft(Dim x);
+				Dim GetTileX();
+				Dim GetTileY();
 				void SetFilmAndReset(AnimationFilm*);
 };
 
