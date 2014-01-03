@@ -40,6 +40,10 @@ class Mario {
 		static void MarioFinisWaiting(Animator*, void*);
 		static void MarioStandingJump();
 		static  MovingAnimator* GetAnimator();
+		//copy the dest x,y to the the source
+		static void SetDimensions(MovingAnimator* source, MovingAnimator* dest);
+		//copy the dest x,y to all other mario animations
+		static void SetDimensions(MovingAnimator* dest);
 };
 
 #endif

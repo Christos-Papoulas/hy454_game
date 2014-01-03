@@ -45,19 +45,17 @@ MovingAnimator* Mario::GetActiveMario() {
 }
 
 void Mario::MarioFinisWaiting(Animator*, void*){ 
-	//	MarioAnimator->GetSprite()->SetX(MarioWaiting->GetSprite()->GetX());
-	//	MarioAnimator->GetSprite()->SetY(MarioWaiting->GetSprite()->GetY());
+
 		return ;
 }
 
 void Mario::MarioMovesLeft() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
-	//if(MarioAnimator->GetSprite()->GetX() >= vw.GetX())
-		MarioAnimator->GetSprite()->MoveLeft(1);
+	MarioAnimator->GetSprite()->MoveLeft(1);
 }
 
 void Mario::MarioMovesUp() {
-	MarioSJump->GetSprite()->MoveUp(1);
+	MarioSJump->GetSprite()->MoveUp(2);
 }
 
 void Mario::MarioMovesRight() {
@@ -76,8 +74,8 @@ void Mario::MarioMovesRight() {
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
-		MarioWaiting->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX());
-		MarioWaiting->GetSprite()->SetY(MarioAnimator->GetSprite()->GetY());
+		SetDimensions(MarioWaiting, MarioAnimator);
+		
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
@@ -87,27 +85,23 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
-		MarioSJump->GetSprite()->SetX(MarioWaiting->GetSprite()->GetX());
-		MarioSJump->GetSprite()->SetY(MarioWaiting->GetSprite()->GetY());
+		SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsRunning(MarioSJump);
 		
 		MarioMovesUp();
 		
-		MarioWaiting->GetSprite()->SetX(MarioSJump->GetSprite()->GetX());
-		MarioWaiting->GetSprite()->SetY(MarioSJump->GetSprite()->GetY());
-		MarioAnimator->GetSprite()->SetX(MarioSJump->GetSprite()->GetX());
-		MarioAnimator->GetSprite()->SetY(MarioSJump->GetSprite()->GetY());
+		SetDimensions(MarioWaiting, MarioSJump);
+		SetDimensions(MarioAnimator, MarioSJump);
+		
 		marioState = Jumping;
 		return ;
 }
 
 void Mario::MarioFinishSjumping(Animator*, void*) {
-		MarioWaiting->GetSprite()->SetX(MarioSJump->GetSprite()->GetX());
-		MarioWaiting->GetSprite()->SetY(MarioSJump->GetSprite()->GetY());
-		MarioAnimator->GetSprite()->SetX(MarioSJump->GetSprite()->GetX());
-		MarioAnimator->GetSprite()->SetY(MarioSJump->GetSprite()->GetY());
+		SetDimensions(MarioWaiting, MarioSJump);
+		SetDimensions(MarioAnimator, MarioSJump);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
@@ -120,4 +114,16 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 
 MovingAnimator* Mario::GetAnimator() {
 	return MarioAnimator;
+}
+
+void Mario::SetDimensions(MovingAnimator* source, MovingAnimator* dest) {
+		source->GetSprite()->SetX(dest->GetSprite()->GetX());
+		source->GetSprite()->SetY(dest->GetSprite()->GetY());
+		return ;
+}
+
+void Mario::SetDimensions(MovingAnimator* dest) {
+		SetDimensions(MarioAnimator, dest);
+		SetDimensions(MarioWaiting, dest);
+		SetDimensions(MarioSJump, dest);
 }

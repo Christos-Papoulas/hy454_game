@@ -58,6 +58,8 @@ void Collision::CheckGroundCollision() {
 	Dim x = activeMario->GetSprite()->GetTileX();
 	Dim y = activeMario->GetSprite()->GetTileY();
 	
-	if(!Collision::MarioCollision(x,y))
+	if(!Collision::MarioCollision(x,y)){
 		Mario::GetActiveMario()->GetSprite()->Move(0,1);
+		Mario::SetDimensions(Mario::GetActiveMario());
+	}
 }
