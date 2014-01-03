@@ -35,6 +35,10 @@ void Mario::MarioMovesLeft() {
 		MarioAnimator->GetSprite()->MoveLeft(1);
 }
 
+void Mario::MarioMovesUp() {
+	MarioSJump->GetSprite()->MoveUp(1);
+}
+
 void Mario::MarioMovesRight() {
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
@@ -60,12 +64,12 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
-		//MarioSJump->GetSprite()->SetX(MarioWaiting->GetSprite()->GetX());
-		//MarioSJump->GetSprite()->SetY(MarioWaiting->GetSprite()->GetY());
-
-		//AnimatorHolder::MarkAsSuspended(MarioWaiting);
-		//AnimatorHolder::MarkAsRunning(MarioSJump);
-
+		MarioSJump->GetSprite()->SetX(MarioWaiting->GetSprite()->GetX());
+		MarioSJump->GetSprite()->SetY(MarioWaiting->GetSprite()->GetY());
+		
+		AnimatorHolder::MarkAsSuspended(MarioWaiting);
+		AnimatorHolder::MarkAsRunning(MarioSJump);
+		Mario::MarioMovesUp();
 		return ;
 }
 

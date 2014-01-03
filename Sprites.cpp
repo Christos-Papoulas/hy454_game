@@ -96,6 +96,11 @@ void Sprite::MoveLeft(Dim x) {
 				SetX(GetX() - x);
 }
 
+void Sprite::MoveUp(Dim y) {
+	if(GetY() > y)
+		SetY(GetY() - y);
+}
+
 Dim Sprite::GetTileX() {
 	return x/16;
 }
