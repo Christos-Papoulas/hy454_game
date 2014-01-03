@@ -35,7 +35,21 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 		}
 		return true;
 	}
-	
+
+	if(Collision_map[j+x_tile+1][i+y_tile] == 34) {
+		if (Collision_map[j+x_tile][i+y_tile+1] == 34) {	//touvlo
+			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
+		}
+		return true;
+	}
+
+	if(Collision_map[j+x_tile+1][i+y_tile] == 265) {
+		return true;
+	}
+
+	if(Collision_map[j+x_tile+1][i+y_tile] == 266) {
+		return true;
+	}
 	return false;
 }
 
