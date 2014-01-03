@@ -11,21 +11,29 @@
 
 #include <assert.h>
 
+enum MarioState { 
+		Walking = 0,
+		Waiting,
+		Jumping
+};
+
 class Mario {
 	private:
 		static Mario* mario;
 		static MovingAnimator* MarioAnimator;
 		static MovingAnimator* MarioWaiting;
+		static MovingAnimator* MarioSJump;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 
 	public:
-		static void Create(MovingAnimator* mario_animator);
+		static void CreateWalking(MovingAnimator* mario_animator);
 		static void CreateWaiting(MovingAnimator* mario_animator);
 		static void Destroy();
 		static void MarioMovesLeft();
 		static void MarioMovesRight();
 		static void MarioFinishWalking(Animator*, void*);
+		static void MarioStandingJump();
 		static  MovingAnimator* GetAnimator();
 };
 

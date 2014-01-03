@@ -13,7 +13,7 @@ Mario::~Mario() {
 		delete mario; mario = NULL;
 }
 
-void Mario::Create(MovingAnimator* mario_animator) {
+void Mario::CreateWalking(MovingAnimator* mario_animator) {
 		if(!mario)
 				mario = new Mario(mario_animator);
 }
@@ -51,6 +51,10 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
 		return ;
+}
+
+void Mario::MarioStandingJump() {
+		;
 }
 
 MovingAnimator* Mario::GetAnimator() {

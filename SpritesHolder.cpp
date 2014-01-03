@@ -17,7 +17,7 @@ void Initializer::InitMarioWalking() {
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
-		Mario::Create(aMovAnimr);
+		Mario::CreateWalking(aMovAnimr);
 		
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
@@ -28,16 +28,13 @@ void Initializer::InitMarioWalking() {
 void Initializer::InitMarioWaiting() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariowaiting") ));
 		
-		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(3u));/* new FrameRangeAnimation(
-						0, 0, 
-						0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(3u)
-						);*/
+		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(3u));
 		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateWaiting(aMovAnimr);
 
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
-//		aMovAnimr->SetOnFinish(NULL, NULL);
+
 		AnimatorHolder::Register( aMovAnimr );
 }
 
