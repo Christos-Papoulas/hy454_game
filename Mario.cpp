@@ -86,7 +86,7 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
-		SetDimensions(MarioSJump, MarioWaiting);
+		/*SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsRunning(MarioSJump);
@@ -96,7 +96,7 @@ void Mario::MarioStandingJump() {
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
 		
-		marioState = Jumping;
+		marioState = Jumping;*/
 		return ;
 }
 

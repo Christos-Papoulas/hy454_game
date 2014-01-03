@@ -42,12 +42,8 @@ void Initializer::InitMarioWaiting() {
 void Initializer::InitMarioStandJump() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
 		std::vector<PathEntry> paths;
-		for(Dim i = 0u; i < 40u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry;
-				if(i < 20u)
-						PathEntry pathEntry(0, -2, 0, 100);
-				else
-						PathEntry pathEntry(0, +2, 0, 100);
+		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, 1, 0, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));

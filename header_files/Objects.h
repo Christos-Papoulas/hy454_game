@@ -12,9 +12,9 @@
 #define MAP_WORLD_1_1		"data\\map_1-1.txt"
 #define START_SCREEN_MAP	"data\\map_1-1.txt"
 
-typedef short byte; //typedef unsigned char byte;
-typedef short Dim; //typedef unsigned short Dim;
-typedef short Index; //typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
+typedef unsigned char byte;
+typedef unsigned short Dim;
+typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
 typedef unsigned long timestamp_t;
 typedef short offset_t;
 typedef unsigned short delay_t;
