@@ -97,6 +97,7 @@ void MarioBrosMain::ArtificialIntelligence(){
 		return ;
 }
 
+
 void MarioBrosMain::CollisionChecking(){
 		Collision::CheckGroundCollision();
 		return ;
