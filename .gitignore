@@ -1,5 +1,6 @@
 Debug/
 Release/
+Data/Sounds/
 allegro.log
 *.vcxproj
 allegro.vcxproj.filt
