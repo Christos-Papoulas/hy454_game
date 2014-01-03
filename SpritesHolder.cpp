@@ -41,7 +41,7 @@ void Initializer::InitMarioWaiting() {
 void Initializer::InitMarioStandJump() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
 		
-		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(1u));
+		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 1000, true, ParseMarioInfo::GetAnimationIdOf(1u));
 		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateSjumping(aMovAnimr);
