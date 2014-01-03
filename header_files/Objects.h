@@ -10,6 +10,7 @@
 
 //Define file paths
 #define MAP_WORLD_1_1		"data\\map_1-1.txt"
+#define START_SCREEN_MAP	"data\\map_1-1.txt"
 
 typedef short byte; //typedef unsigned char byte;
 typedef short Dim; //typedef unsigned short Dim;
