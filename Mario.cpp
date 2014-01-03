@@ -3,6 +3,7 @@
 Mario* Mario::mario = NULL;
 MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
+MovingAnimator* Mario::MarioSJump = NULL;
 
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
@@ -22,6 +23,11 @@ void Mario::CreateWaiting(MovingAnimator* mario_animator) {
 		if(!MarioWaiting)
 				MarioWaiting = mario_animator;
 }
+
+void Mario::CreateSjumping(MovingAnimator* mario_animator) {
+		if(!MarioSJump)
+				MarioSJump = mario_animator;
+} 
 
 void Mario::MarioMovesLeft() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();

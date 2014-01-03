@@ -29,6 +29,7 @@ class Mario {
 	public:
 		static void CreateWalking(MovingAnimator* mario_animator);
 		static void CreateWaiting(MovingAnimator* mario_animator);
+		static void CreateSjumping(MovingAnimator* mario_animator); //waiting and jump
 		static void Destroy();
 		static void MarioMovesLeft();
 		static void MarioMovesRight();

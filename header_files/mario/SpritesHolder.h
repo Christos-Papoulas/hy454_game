@@ -17,6 +17,7 @@ namespace Initializer {
 		extern void InitMario();
 		extern void InitMarioWalking();
 		extern void InitMarioWaiting();
+		extern void InitMarioStandJump();
 };
 
 class SpritesHolder {

@@ -1,6 +1,5 @@
 #include "header_files\mario\SpritesHolder.h"
 
-
 SpritesHolder::SpritesHolder() {
 		Initializer::InitMario();
 }
@@ -8,12 +7,13 @@ SpritesHolder::SpritesHolder() {
 SpritesHolder::~SpritesHolder() {
 		;
 }
+
 void Initializer::InitMarioWalking() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariowalking") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						0, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(1u)
+						0, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(0u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -38,7 +38,21 @@ void Initializer::InitMarioWaiting() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Initializer::InitMarioStandJump() {
+		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
+		
+		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(1u));
+		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
+		Sprite::CollisionCheck(spriteMario);
+		Mario::CreateSjumping(aMovAnimr);
+
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Initializer::InitMario() {
 		InitMarioWalking();
 		InitMarioWaiting();
+		InitMarioStandJump();
 }
