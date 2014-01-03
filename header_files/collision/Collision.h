@@ -4,6 +4,7 @@
 #include "../Objects.h"
 #include "../tiles/TileLayer.h"
 
+
 class Collision{
 		private:
 			static Dim			Collision_map[MAX_HEIGHT][MAX_WIDTH];
@@ -13,5 +14,6 @@ class Collision{
 			static void Create() {  };
 			static void SetValue(Dim x, Dim y, Dim value);
 			static bool MarioCollision(Dim x_tile, Dim y_tile);
+			static void CheckGroundCollision();
 };
 #endif

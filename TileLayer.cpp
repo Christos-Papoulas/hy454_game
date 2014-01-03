@@ -14,17 +14,19 @@ bool TileLayer::ReadMap(FILE* fp) {
 	for(int i = 0; i < MAX_HEIGHT; ++i)
 			for(int j = 0; j < MAX_WIDTH; ++j)
 					fscanf(fp, "%d", &map[i][j]);
-	
+					
 	log_write(__FILE__, __LINE__, "read map successfuly.");
 	/*for(int i = 0; i < MAX_HEIGHT; ++i) {
 			for(int j = 0; j < MAX_WIDTH; ++j)
 					map[i][j]--;
 			
 	}*/
+	
 	for(int i = 0; i < MAX_HEIGHT; ++i)
 			for(int j = 0; j < MAX_WIDTH; ++j) {
 					Dim value;
-					fscanf(fp, "%u", &value); Collision::SetValue(i, j, value);
+					value = map[i][j];
+					Collision::SetValue(i, j, value);
 			}
 	return true;
 }
