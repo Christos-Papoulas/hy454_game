@@ -21,17 +21,17 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	Dim i,j;
 	i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 	j = Terrain::GetTileLayer()->GetViewWindow().GetY();
-	//std::cout<< "(" << j+x_tile << " " << i+y_tile << ")";
+	assert(j+x_tile+1 < MAX_HEIGHT);
+	assert(i+y_tile < MAX_WIDTH);
 	if(Collision_map[j+x_tile+1][i+y_tile] == 1) {
 		if (Collision_map[j+x_tile][i+y_tile+1] == 34) {	//touvlo
-			//std::cout<< "(" << j+x_tile << " " << i+y_tile << ")";
-			Mario::GetAnimator()->GetSprite()->MoveLeft(1);
+			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
 		}
 		else if (Collision_map[j+x_tile][i+y_tile+1] == 298) {	//swlhnas
-			Mario::GetAnimator()->GetSprite()->MoveLeft(1);
+			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
 		}
 		else if(Collision_map[j+x_tile][i+y_tile+1] == 265) {	//swlhnas 2
-			Mario::GetAnimator()->GetSprite()->MoveLeft(1);
+			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
 		}
 		return true;
 	}
@@ -40,7 +40,10 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 }
 
 void Collision::CheckGroundCollision() {
-	MovingAnimator* lala = Mario::GetActiveMario();
-	if(!Collision::MarioCollision(Mario::GetAnimator()->GetSprite()->GetTileX(),Mario::GetAnimator()->GetSprite()->GetTileY()))
-			Mario::GetAnimator()->GetSprite()->Move(0,1);
+	MovingAnimator* activeMario = Mario::GetActiveMario();
+	Dim x = activeMario->GetSprite()->GetTileX();
+	Dim y = activeMario->GetSprite()->GetTileY();
+	
+	if(!Collision::MarioCollision(x,y))
+		Mario::GetActiveMario()->GetSprite()->Move(0,1);
 }

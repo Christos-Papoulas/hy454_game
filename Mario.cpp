@@ -44,6 +44,12 @@ MovingAnimator* Mario::GetActiveMario() {
 		return NULL;
 }
 
+void Mario::MarioFinisWaiting(Animator*, void*){ 
+	//	MarioAnimator->GetSprite()->SetX(MarioWaiting->GetSprite()->GetX());
+	//	MarioAnimator->GetSprite()->SetY(MarioWaiting->GetSprite()->GetY());
+		return ;
+}
+
 void Mario::MarioMovesLeft() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	//if(MarioAnimator->GetSprite()->GetX() >= vw.GetX())
@@ -66,6 +72,7 @@ void Mario::MarioMovesRight() {
 			MarioAnimator->GetSprite()->Move(1,0);
 			MarioAnimator->Progress(GetCurrTime());
 	}
+	marioState = Walking;
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
@@ -74,7 +81,8 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
-		
+
+		marioState = Waiting;
 		return ;
 }
 
@@ -89,6 +97,8 @@ void Mario::MarioStandingJump() {
 		
 		MarioWaiting->GetSprite()->SetX(MarioSJump->GetSprite()->GetX());
 		MarioWaiting->GetSprite()->SetY(MarioSJump->GetSprite()->GetY());
+
+		marioState = Jumping;
 		return ;
 }
 
@@ -99,6 +109,8 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
+		marioState = Waiting;
+
 		return ;
 }
 

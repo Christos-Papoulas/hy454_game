@@ -34,7 +34,7 @@ void Initializer::InitMarioWaiting() {
 		Mario::CreateWaiting(aMovAnimr);
 
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
-
+		aMovAnimr->SetOnFinish(Mario::MarioFinisWaiting, NULL);
 		AnimatorHolder::Register( aMovAnimr );
 }
 
