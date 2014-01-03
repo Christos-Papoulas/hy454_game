@@ -4,6 +4,7 @@ Mario* Mario::mario = NULL;
 MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
 MovingAnimator* Mario::MarioSJump = NULL;
+MarioState marioState = Waiting;
 
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
@@ -28,6 +29,20 @@ void Mario::CreateSjumping(MovingAnimator* mario_animator) {
 		if(!MarioSJump)
 				MarioSJump = mario_animator;
 } 
+
+MovingAnimator* Mario::GetActiveMario() {
+		switch (marioState) {
+		case Waiting:
+				return MarioWaiting;
+		case Walking:
+				return MarioAnimator;
+		case Jumping:
+				return MarioSJump;
+		default:
+				assert(0);
+		}
+		return NULL;
+}
 
 void Mario::MarioMovesLeft() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();

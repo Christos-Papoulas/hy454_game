@@ -40,6 +40,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 }
 
 void Collision::CheckGroundCollision() {
+	MovingAnimator* lala = Mario::GetActiveMario();
 	if(!Collision::MarioCollision(Mario::GetAnimator()->GetSprite()->GetTileX(),Mario::GetAnimator()->GetSprite()->GetTileY()))
 			Mario::GetAnimator()->GetSprite()->Move(0,1);
 }
