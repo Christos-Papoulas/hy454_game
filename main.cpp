@@ -67,7 +67,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		InputManagement(); //just reads from local input queue
 		AnimationProgress();
 		//ArtificialIntelligence();
-		//CollisionChecking();
+		CollisionChecking();
 		//CommitDestructions();
 		//FPSCalculation();
 }
@@ -97,9 +97,10 @@ void MarioBrosMain::ArtificialIntelligence(){
 		return ;
 }
 
+
 void MarioBrosMain::CollisionChecking(){
 		if(!Collision::MarioCollision(Mario::GetAnimator()->GetSprite()->GetTileX(),Mario::GetAnimator()->GetSprite()->GetTileY()))
-			//start falling
+			Mario::GetAnimator()->GetSprite()->Move(0,1);
 		return ;
 }
 

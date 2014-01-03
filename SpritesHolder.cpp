@@ -29,8 +29,8 @@ void Initializer::InitMarioWaiting() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariowaiting") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
-						0, 1, 
-						0, 0, 100, false, ParseMarioInfo::GetAnimationIdOf(4u)
+						0, 0, 
+						0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(4u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
@@ -39,7 +39,6 @@ void Initializer::InitMarioWaiting() {
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(NULL, NULL);
 		AnimatorHolder::Register( aMovAnimr );
-
 }
 
 void Initializer::InitMario() {
