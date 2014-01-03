@@ -25,8 +25,8 @@ void MovingPathAnimator::Progress (timestamp_t currTime) {
 
 				sprite->SetFrame(anim->GetPath()[currIndex].frame);
 				lastTime += anim->GetPath()[currIndex].delay;
-
-				if (++currIndex == anim->GetPath().size()){
+				currIndex +=1;
+				if (currIndex == anim->GetPath().size()){
 						if(!anim->GetContinuous()){
 								state = ANIMATOR_FINISHED;
 								NotifyStopped();

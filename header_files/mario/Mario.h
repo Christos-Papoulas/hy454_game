@@ -45,6 +45,8 @@ class Mario {
 		static void SetDimensions(MovingAnimator* source, MovingAnimator* dest);
 		//copy the dest x,y to all other mario animations
 		static void SetDimensions(MovingAnimator* dest);
+		static void SetDimensions(MovingPathAnimator* source, MovingAnimator* dest);
+		static void SetDimensions(MovingAnimator* source, MovingPathAnimator* dest);
 };
 
 #endif

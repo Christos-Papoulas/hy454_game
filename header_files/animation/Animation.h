@@ -5,9 +5,6 @@
 #include "..\Objects.h"
 
 // lecture11 slide 6
-typedef signed char offset_t;
-typedef unsigned short delay_t;
-typedef unsigned short animid_t;
 
 class Animation {
 		private:

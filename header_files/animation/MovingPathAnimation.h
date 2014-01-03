@@ -2,6 +2,7 @@
 #define _MOVINGPATHANIMATION_H_
 
 #include "Animation.h"
+#include "../Objects.h"
 #include <vector>
 
 typedef unsigned char frame_t;
