@@ -33,6 +33,7 @@ void Initializer::InitMarioWaiting() {
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateWaiting(aMovAnimr);
 
+		aMovAnimn->SetContinuous(false);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinisWaiting, NULL);
 		AnimatorHolder::Register( aMovAnimr );
@@ -40,14 +41,18 @@ void Initializer::InitMarioWaiting() {
 
 void Initializer::InitMarioStandJump() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
-		
-		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 1000, true, ParseMarioInfo::GetAnimationIdOf(1u));
-		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 5; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, 2, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateSjumping(aMovAnimr);
-
+		aMovAnimn->SetContinuous(false);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
-		aMovAnimr->SetOnFinish(Mario::MarioFinishSjumping, NULL);
+//		aMovAnimr->SetOnFinish(Mario::MarioFinishSjumping, NULL);
 		AnimatorHolder::Register( aMovAnimr );
 }
 

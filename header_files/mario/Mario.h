@@ -3,6 +3,7 @@
 
 #include "../animator/MovingAnimator.h"
 #include "../animator/FrameRangeAnimator.h"
+#include "../animator/MovingPathAnimator.h"
 #include "../animator/AnimatorHolder.h"
 #include "../animation/AnimationFilmHolder.h"
 #include "../terrain/terrain.h"
@@ -22,14 +23,14 @@ class Mario {
 		static Mario* mario;
 		static MovingAnimator* MarioAnimator;
 		static MovingAnimator* MarioWaiting;
-		static MovingAnimator* MarioSJump;
+		static MovingPathAnimator* MarioSJump;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 
 	public:
 		static void CreateWalking(MovingAnimator* mario_animator);
 		static void CreateWaiting(MovingAnimator* mario_animator);
-		static void CreateSjumping(MovingAnimator* mario_animator); //waiting and jump
+		static void CreateSjumping(MovingPathAnimator* mario_animator); //waiting and jump
 		static MovingAnimator* GetActiveMario();
 		static void Destroy();
 		static void MarioMovesLeft();
