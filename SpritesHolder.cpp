@@ -47,7 +47,7 @@ void Initializer::InitMarioStandJump() {
 		Mario::CreateSjumping(aMovAnimr);
 
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
-
+		aMovAnimr->SetOnFinish(Mario::MarioFinishSjumping, NULL);
 		AnimatorHolder::Register( aMovAnimr );
 }
 

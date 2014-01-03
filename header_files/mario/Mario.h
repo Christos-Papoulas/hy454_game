@@ -35,6 +35,7 @@ class Mario {
 		static void MarioMovesRight();
 		static void MarioMovesUp();
 		static void MarioFinishWalking(Animator*, void*);
+		static void MarioFinishSjumping(Animator*, void*);
 		static void MarioStandingJump();
 		static  MovingAnimator* GetAnimator();
 };

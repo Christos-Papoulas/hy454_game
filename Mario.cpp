@@ -77,6 +77,17 @@ void Mario::MarioStandingJump() {
 		return ;
 }
 
+void Mario::MarioFinishSjumping(Animator*, void*) {
+		MarioWaiting->GetSprite()->SetX(MarioSJump->GetSprite()->GetX());
+		MarioWaiting->GetSprite()->SetY(MarioSJump->GetSprite()->GetY());
+
+		AnimatorHolder::MarkAsSuspended(MarioSJump);
+		AnimatorHolder::MarkAsRunning(MarioWaiting);
+		
+		return ;
+}
+
+
 MovingAnimator* Mario::GetAnimator() {
 	return MarioAnimator;
 }
