@@ -41,7 +41,7 @@ bool MarioBrosMain::InitAllegro(){
 			return false;
 		}
 
-		sample = al_load_sample( "Data\\Sounds\\smb_music.ogg" );
+		sample = al_load_sample( "data\\Sounds\\smb_music.ogg" );
 		if (!sample) {
 			printf( "Audio clip sample not loaded!\n" ); 
 			return false;

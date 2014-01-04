@@ -8,7 +8,7 @@
 #define MAX_HEIGHT_START_SCREEN 15
 #define SCREEN_WINDOW_WIDTH 16*16
 #define SCREEN_WINDOW_HEIGHT 16*15
-#define TILES_START_SCREEN_PATH ".\\Data\\Bitmaps\\Tiles\\Game_Start.jpg"
+#define TILES_START_SCREEN_PATH ".\\Data\\Bitmaps\\Tiles\\Game_Start.bmp"
 
 #include <string>
 
