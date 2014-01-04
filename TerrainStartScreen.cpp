@@ -33,16 +33,4 @@ void TerrainStartScreen::CleanUp() {
 
 void TerrainStartScreen::DisplayTerrain(Bitmap bmp, timestamp_t tnow) {
 		terrainStartScreen->tileLayerStartScreen->Display(bmp);
-
-		//lecture9 slide29
-		/*for (Dim row = 0; row < rowend; ++row)
-				for (Dim col = 0; col < viewWin.w; ++col)
-						PutTile(
-								GetScreen(),
-								displayArea.x + MUL_TILE_WIDTH(col),
-								displayArea.y + MUL_TILE_HEIGHT(row),
-								tileBitmap,
-								map[row+ viewWin.y][col+ viewWin.x]
-						);
-		*/
 }
