@@ -67,6 +67,8 @@ namespace MarioBrosMain {
 		extern void FPSCalculation();
 		extern void StartScreen(timestamp_t now); 
 		extern void InitializeGame();
+
+		int z_pressed = 0;
 }
 
 #endif

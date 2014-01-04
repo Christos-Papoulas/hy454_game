@@ -104,8 +104,15 @@ void MarioBrosMain::InputManagement(){
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)) // lest
 						return Mario::MarioMovesLeft();
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
-					al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
-						return Mario::MarioStandingJump();
+					if(!z_pressed){
+						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+						z_pressed = 1;
+					}
+					
+					return Mario::MarioStandingJump();
+				}
+				else if(!al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){
+					z_pressed = 0;
 				}
 				else
 						return ; // other keys...
