@@ -17,8 +17,6 @@ bool TileLayerStartScreen::ReadMap(FILE* fp) {
 					
 	log_write(__FILE__, __LINE__, "read start screen successfuly.");
 
-	
-	
 	return true;
 }
 
@@ -36,10 +34,6 @@ Index TileLayerStartScreen::GetTile(Dim col, Dim row) {
 void TileLayerStartScreen::WriteMap(FILE* fp) { 
 	fwrite(start_screen, sizeof(start_screen[MAX_HEIGHT][MAX_WIDTH_]), 1, fp); 
 }
-
-
-
-
 
 void TileLayerStartScreen::Display(Bitmap at/*, const Rect& displayArea*/) {
 		assert(at);

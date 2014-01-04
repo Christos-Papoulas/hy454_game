@@ -16,10 +16,10 @@ void TerrainStartScreen::Create() {
 		FILE* fp_new;
 		if(!terrainStartScreen) {
 				terrainStartScreen = new TerrainStartScreen();
-				terrainStartScreen->tileLayerStartScreen = new TileLayerStartScreen();
+				tileLayerStartScreen = new TileLayerStartScreen();
 
 				fp_new = fopen(START_SCREEN_MAP, "r");
-				if(!terrainStartScreen->tileLayerStartScreen->ReadMap(fp_new))
+				if(!tileLayerStartScreen->ReadMap(fp_new))
 						fprintf(stderr, "cannot read start_screen file\n");
 				fclose(fp_new);
 
