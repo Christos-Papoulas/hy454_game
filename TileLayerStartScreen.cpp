@@ -41,7 +41,7 @@ void TileLayerStartScreen::Display(Bitmap at/*, const Rect& displayArea*/) {
 
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++) {
-						Index t =  GetTile(j, i);
+						Index t =  GetTile(i, j);
 						start_screen_tiles->PutTile(at, i, j, t);
 				}
 }
