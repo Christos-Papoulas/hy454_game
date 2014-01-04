@@ -25,7 +25,7 @@ void TileLayerStartScreen::SetTile(Dim col, Dim row, Index index) {
 		start_screen[row][col] = index;
 }
 
-Index TileLayerStartScreen::GetTile(Dim col, Dim row) { 
+Index TileLayerStartScreen::GetTile(Dim row, Dim col) { 
 		return start_screen[row][col]; 
 }
 
@@ -41,7 +41,7 @@ void TileLayerStartScreen::Display(Bitmap at/*, const Rect& displayArea*/) {
 
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++) {
-						Index t =  GetTile(i, j);
+						Index t =  GetTile(j, i);
 						start_screen_tiles->PutTile(at, i, j, t);
 				}
 }

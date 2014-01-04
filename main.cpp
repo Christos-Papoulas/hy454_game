@@ -41,7 +41,7 @@ bool MarioBrosMain::InitAllegro(){
 			return false;
 		}
 
-		sample = al_load_sample( "data\\Sounds\\smb_music.ogg" );
+		sample = al_load_sample( "Data\\Sounds\\smb_music.ogg" );
 		if (!sample) {
 			printf( "Audio clip sample not loaded!\n" ); 
 			return false;
@@ -109,6 +109,7 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
 		gameState = Play;
+		al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 		
 	}
 
