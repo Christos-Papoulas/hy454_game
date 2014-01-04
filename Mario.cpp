@@ -3,7 +3,7 @@
 Mario* Mario::mario = NULL;
 MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
-MovingAnimator* Mario::MarioSJump = NULL;
+MovingPathAnimator* Mario::MarioSJump = NULL;
 MarioState marioState = Waiting;
 
 Mario::Mario(MovingAnimator* mario_animator){
@@ -25,7 +25,7 @@ void Mario::CreateWaiting(MovingAnimator* mario_animator) {
 				MarioWaiting = mario_animator;
 }
 
-void Mario::CreateSjumping(MovingAnimator* mario_animator) {
+void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
 		if(!MarioSJump)
 				MarioSJump = mario_animator;
 } 
@@ -36,10 +36,11 @@ MovingAnimator* Mario::GetActiveMario() {
 				return MarioWaiting;
 		case Walking:
 				return MarioAnimator;
-		case Jumping:
-				return MarioSJump;
-		default:
-				assert(0);
+//		case Jumping:
+//				return MarioSJump;
+		default: 
+				;
+//				assert(0);
 		}
 		return NULL;
 }
@@ -85,17 +86,17 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
-		SetDimensions(MarioSJump, MarioWaiting);
+		/*SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsRunning(MarioSJump);
 		
-		MarioMovesUp();
+		//MarioMovesUp();
 		
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
 		
-		marioState = Jumping;
+		marioState = Jumping;*/
 		return ;
 }
 
@@ -111,7 +112,6 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		return ;
 }
 
-
 MovingAnimator* Mario::GetAnimator() {
 	return MarioAnimator;
 }
@@ -126,4 +126,16 @@ void Mario::SetDimensions(MovingAnimator* dest) {
 		SetDimensions(MarioAnimator, dest);
 		SetDimensions(MarioWaiting, dest);
 		SetDimensions(MarioSJump, dest);
+}
+
+void Mario::SetDimensions(MovingPathAnimator* source, MovingAnimator* dest) {
+		source->GetSprite()->SetX(dest->GetSprite()->GetX());
+		source->GetSprite()->SetY(dest->GetSprite()->GetY());
+		return ;
+}
+
+void Mario::SetDimensions(MovingAnimator* source, MovingPathAnimator* dest) {
+		source->GetSprite()->SetX(dest->GetSprite()->GetX());
+		source->GetSprite()->SetY(dest->GetSprite()->GetY());
+		return ;
 }

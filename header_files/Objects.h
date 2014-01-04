@@ -18,6 +18,10 @@ typedef unsigned char byte;
 typedef unsigned short Dim;
 typedef unsigned short Index; // [ MSB X ] [ LSB Y ]
 typedef unsigned long timestamp_t;
+typedef short offset_t;
+typedef unsigned short delay_t;
+typedef unsigned short animid_t;
+
 typedef ALLEGRO_BITMAP* Bitmap;
 typedef ALLEGRO_DISPLAY* Display;
 
