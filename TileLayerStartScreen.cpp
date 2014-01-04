@@ -26,9 +26,7 @@ void TileLayerStartScreen::SetTile(Dim col, Dim row, Index index) {
 }
 
 Index TileLayerStartScreen::GetTile(Dim col, Dim row) { 
-		Dim y = viewStartScreenWindow.GetY();
-		
-		return start_screen[row][col + y]; 
+		return start_screen[row][col]; 
 }
 
 void TileLayerStartScreen::WriteMap(FILE* fp) { 
@@ -42,6 +40,6 @@ void TileLayerStartScreen::Display(Bitmap at/*, const Rect& displayArea*/) {
 		al_clear_to_color(al_map_rgb(0,0,0));
 
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
-				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++)
-						start_screen_tiles->PutTile(at, i, j, GetTile(viewStartScreenWindow.GetX() + i, viewStartScreenWindow.GetY() + j));
+				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++) 
+						start_screen_tiles->PutTile(at, i, j, GetTile(i, j));
 }
