@@ -36,18 +36,23 @@ bool MarioBrosMain::InitAllegro(){
 				return false;
 		}
 
-		if (!al_reserve_samples(2)){
+		if (!al_reserve_samples(3)){
 			fprintf(stderr, "failed to reserve samples!\n");
 			return false;
 		}
 
 		music = al_load_sample(MUSIC_PATH);
 		jump_small = al_load_sample(JUMP_SMALL_PATH);
+		pause = al_load_sample(PAUSE_PATH);
 		if (!music) {
 			printf( "Audio clip sample not loaded!\n" ); 
 			return false;
 		}
 		if (!jump_small) {
+			printf( "Audio clip sample not loaded!\n" ); 
+			return false;
+		}
+		if (!pause) {
 			printf( "Audio clip sample not loaded!\n" ); 
 			return false;
 		}
@@ -74,9 +79,13 @@ bool MarioBrosMain::InitAllegro(){
 		 
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
 		StartScreen(now);
-		if (gameState == Play){
+		if(gameState == Play){
 			Terrain::DisplayTerrain(al_get_backbuffer(display), now);
 			AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
+		}
+		
+		if(gameState == Pause){
+			AnimatorHolder::MarkAsSuspended(Mario::GetActiveMario());
 		}
 
 		
@@ -94,28 +103,37 @@ void MarioBrosMain::MainLoopOneIteration() {
 }
 
 void MarioBrosMain::InputManagement(){
-		if(1) {
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)) // up
+	if(!al_key_down(&keyboardState, ALLEGRO_KEY_LEFT))
+		z_pressed = 0;
+	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
+		space_pressed = 0;
+		
+	if(1) {
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)){ // up
 						return ; // @todo something
-				else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)) // down
+				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
 						return ; // @todo something
-				else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)) // right
+				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
 						return Mario::MarioMovesRight();
-				else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)) // lest
+				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){ // lest
 						return Mario::MarioMovesLeft();
-				else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
+				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
+					if(!space_pressed){
+						al_play_sample(pause, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+						GamePause();
+						space_pressed = 1;
+					}
+					return ;
+				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
 					if(!z_pressed){
 						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 						z_pressed = 1;
 					}
 					
 					return Mario::MarioStandingJump();
-				}
-				else if(!al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){
-					z_pressed = 0;
-				}
-				else
+				}else{
 						return ; // other keys...
+				}
 		}
 }
 
@@ -124,9 +142,12 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
 		gameState = Play;
 		al_play_sample(music, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-		
+		//TerrainStartScreen::DisplayPause();
 	}
+}
 
+void MarioBrosMain::GamePause() {
+	gameState = Pause;
 }
 
 void MarioBrosMain::AnimationProgress(){

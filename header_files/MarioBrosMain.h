@@ -39,16 +39,19 @@ bool redraw = true;
 
 ALLEGRO_SAMPLE *music=NULL;
 ALLEGRO_SAMPLE *jump_small=NULL;
+ALLEGRO_SAMPLE *pause=NULL;
 
 const float FPS = 90;
 /* Our Defines */
 #define MUSIC_PATH "Data\\Sounds\\smb_music.ogg"
 #define JUMP_SMALL_PATH "Data\\Sounds\\smb_jump-small.wav"
+#define PAUSE_PATH "Data\\Sounds\\smb_pause.wav"
 
 enum GameState {
 	Start = 0,
 	Play,
 	Pause,
+	IsPaused,
 	Over
 };
 
@@ -68,7 +71,10 @@ namespace MarioBrosMain {
 		extern void StartScreen(timestamp_t now); 
 		extern void InitializeGame();
 
+		extern void GamePause();
+
 		int z_pressed = 0;
+		int space_pressed = 0;
 }
 
 #endif
