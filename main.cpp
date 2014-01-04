@@ -36,6 +36,17 @@ bool MarioBrosMain::InitAllegro(){
 				return false;
 		}
 
+		if (!al_reserve_samples(1)){
+			fprintf(stderr, "failed to reserve samples!\n");
+			return false;
+		}
+
+		sample = al_load_sample( "Data\\Sounds\\smb_music.ogg" );
+		if (!sample) {
+			printf( "Audio clip sample not loaded!\n" ); 
+			return false;
+		}
+
 		queue = al_create_event_queue();
 		if(!queue) {
 				al_show_native_message_box(NULL, "Error", NULL, "Game can not create game events\n", NULL, NULL);
