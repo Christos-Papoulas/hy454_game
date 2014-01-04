@@ -33,12 +33,17 @@ ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_TIMER *timer = NULL;
 ALLEGRO_EVENT_QUEUE *queue = NULL;
 ALLEGRO_EVENT events;
-ALLEGRO_SAMPLE *sample=NULL;
+
 ALLEGRO_KEYBOARD_STATE keyboardState;
 bool redraw = true;
 
+ALLEGRO_SAMPLE *music=NULL;
+ALLEGRO_SAMPLE *jump_small=NULL;
+
 const float FPS = 90;
 /* Our Defines */
+#define MUSIC_PATH "Data\\Sounds\\smb_music.ogg"
+#define JUMP_SMALL_PATH "Data\\Sounds\\smb_jump-small.wav"
 
 enum GameState {
 	Start = 0,
