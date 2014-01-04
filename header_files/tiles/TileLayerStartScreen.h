@@ -13,7 +13,7 @@
 #include "../collision/Collision.h"
 
 #define MAX_HEIGHT 15 
-#define MAX_WIDTH 225
+#define MAX_WIDTH_ 16
 
 #define VIEW_WINDOW_TILE_WIDTH 16
 #define VIEW_WINDOW_TILE_HEIGHT 16
@@ -21,7 +21,7 @@
 //lecture9 slide53
 class TileLayerStartScreen{
 		private:
-				Index		start_screen[MAX_HEIGHT][MAX_WIDTH];
+				Index		start_screen[MAX_HEIGHT][MAX_WIDTH_];
 				Rect		viewStartScreenWindow;
 				TilesBitmapStartScreen* start_screen_tiles;
 		public:
@@ -33,11 +33,6 @@ class TileLayerStartScreen{
 				Rect GetViewWindow(void) /*const*/;
 				void SetViewWindow(const Rect&);
 				void Display(Bitmap at/*, const Rect& displayArea*/);
-				void Scroll(HorizScroll h, VertScroll v);
-				void ScrollHorizBy(Dim dx) { viewStartScreenWindow.IncreaseX(dx); }
-				bool CanScroll(HorizScroll h) const;
-				bool CanScroll(VertScroll v) const;
-				//bool ProgressViewWindow(HorizScroll h);
 				void WriteMap(FILE* fp);
 				bool ReadMap(FILE* fp);
 };

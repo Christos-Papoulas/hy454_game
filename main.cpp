@@ -1,5 +1,5 @@
 #include "header_files\MarioBrosMain.h"
-
+GameState gameState = Start;
 
 bool MarioBrosMain::InitAllegro(){
 		if(!al_init()){
@@ -57,8 +57,13 @@ bool MarioBrosMain::InitAllegro(){
 				return ;
 		 
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
-		Terrain::DisplayTerrain(al_get_backbuffer(display), now);
-		AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
+		StartScreen(now);
+		if (gameState == Play){
+			Terrain::DisplayTerrain(al_get_backbuffer(display), now);
+			AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
+		}
+
+		
 		al_flip_display(); // is blocking depending on defines?
 }
 
@@ -82,11 +87,20 @@ void MarioBrosMain::InputManagement(){
 						return Mario::MarioMovesRight();
 				else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)) // lest
 						return Mario::MarioMovesLeft();
-				else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)) // lest
+				else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)) // z
 						return Mario::MarioStandingJump();
 				else
 						return ; // other keys...
 		}
+}
+
+void MarioBrosMain::StartScreen(timestamp_t now) {
+	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
+	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
+		gameState = Play;
+		
+	}
+
 }
 
 void MarioBrosMain::AnimationProgress(){
@@ -119,9 +133,10 @@ void MarioBrosMain::InitializeGame() {
 		al_start_timer(timer);
 		currTime =  CurrTime();
 		Terrain::Create();
+		TerrainStartScreen::Create();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
 		SpritesHolder* lala = new SpritesHolder();
-
+		gameState = Start;
 		redraw = true;
 }
 

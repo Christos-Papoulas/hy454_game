@@ -7,10 +7,12 @@
 
 #define TILES_COLUMNS 33
 #define TILES_ROWS 28u
+#define TILES_COLUMNS_START_SCREEN 39
+#define TILES_ROWS_START_SCREEN 13u
 
 //Define file paths
 #define MAP_WORLD_1_1		"data\\map_1-1.txt"
-#define START_SCREEN_MAP	"data\\map_1-1.txt"
+#define START_SCREEN_MAP	"data\\Game_Start.txt"
 
 typedef unsigned char byte;
 typedef unsigned short Dim;
@@ -21,6 +23,8 @@ typedef ALLEGRO_DISPLAY* Display;
 
 extern Dim divIndex[TILES_COLUMNS*TILES_ROWS + 1];
 extern Dim modIndex[TILES_COLUMNS*TILES_ROWS + 1];
+extern Dim divIndex_start_screen[TILES_COLUMNS_START_SCREEN*TILES_ROWS_START_SCREEN + 1];
+extern Dim modIndex_start_screen[TILES_COLUMNS_START_SCREEN*TILES_ROWS_START_SCREEN + 1];
 extern timestamp_t currTime;
 
 //lecture9 slide31
@@ -62,6 +66,7 @@ class Rect {
 };
 
 void CalculateTilesPosition();
+void CalculateTilesPositionStartScreen();
 
 unsigned int CurrTime();
 void SetGameTime();

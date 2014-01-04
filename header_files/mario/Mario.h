@@ -8,6 +8,7 @@
 #include "../terrain/terrain.h"
 #include "../tiles/TileLayer.h"
 #include "../tiles/TilesBitmap.h"
+#include "../terrain/TerrainStartScreen.h"
 
 #include <assert.h>
 

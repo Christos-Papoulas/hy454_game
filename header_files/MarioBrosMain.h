@@ -40,6 +40,13 @@ bool redraw = true;
 const float FPS = 90;
 /* Our Defines */
 
+enum GameState {
+	Start = 0,
+	Play,
+	Pause,
+	Over
+};
+
 namespace MarioBrosMain {
 		extern bool InitAllegro();
 
@@ -53,7 +60,7 @@ namespace MarioBrosMain {
 		extern void CollisionChecking();
 		extern void CommitDestructions();
 		extern void FPSCalculation();
-
+		extern void StartScreen(timestamp_t now); 
 		extern void InitializeGame();
 }
 

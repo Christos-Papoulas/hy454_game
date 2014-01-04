@@ -12,18 +12,13 @@ bool TileLayerStartScreen::ReadMap(FILE* fp) {
 	assert(fp != NULL);
 	
 	for(int i = 0; i < MAX_HEIGHT; ++i)
-			for(int j = 0; j < MAX_WIDTH; ++j)
+			for(int j = 0; j < MAX_WIDTH_; ++j)
 					fscanf(fp, "%d", &start_screen[i][j]);
 					
 	log_write(__FILE__, __LINE__, "read start screen successfuly.");
 
 	
-	for(int i = 0; i < MAX_HEIGHT; ++i)
-			for(int j = 0; j < MAX_WIDTH; ++j) {
-					Dim value;
-					value = start_screen[i][j];
-					Collision::SetValue(i, j, value);
-			}
+	
 	return true;
 }
 
@@ -39,7 +34,7 @@ Index TileLayerStartScreen::GetTile(Dim col, Dim row) {
 }
 
 void TileLayerStartScreen::WriteMap(FILE* fp) { 
-	fwrite(start_screen, sizeof(start_screen[MAX_HEIGHT][MAX_WIDTH]), 1, fp); 
+	fwrite(start_screen, sizeof(start_screen[MAX_HEIGHT][MAX_WIDTH_]), 1, fp); 
 }
 
 
