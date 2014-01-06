@@ -108,7 +108,12 @@ void MarioBrosMain::InputManagement(){
 	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
 		space_pressed = 0;
 		
-	if(1) {
+	if(1 && !Mario::isWalkingJump()) {
+			
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT))
+						if(Mario::isWalking() && !Mario::isWalkingJump())
+							return Mario::MarioWalkingJump();
+				
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)){ // up
 						return ; // @todo something
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down

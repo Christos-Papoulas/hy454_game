@@ -4,6 +4,7 @@ Mario* Mario::mario = NULL;
 MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
 MovingPathAnimator* Mario::MarioSJump = NULL;
+MovingPathAnimator* Mario::MarioWJump = NULL;
 MarioState Mario::marioState = Waiting;
 
 Mario::Mario(MovingAnimator* mario_animator){
@@ -30,6 +31,11 @@ void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
 				MarioSJump = mario_animator;
 } 
 
+void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
+		if(!MarioWJump)
+				MarioWJump = mario_animator;
+}
+
 MovingAnimator* Mario::GetActiveMario() {
 		switch (marioState) {
 		case Waiting:
@@ -37,6 +43,8 @@ MovingAnimator* Mario::GetActiveMario() {
 		case Walking:
 				return MarioAnimator;
 		case Jumping:
+				return NULL;
+		case WalkAndJump:
 				return NULL;
 		default: 
 				assert(0);
@@ -100,6 +108,17 @@ void Mario::MarioStandingJump() {
 		return ;
 }
 
+void Mario::MarioWalkingJump() {
+		SetDimensions(MarioWJump, MarioAnimator);
+
+		AnimatorHolder::MarkAsSuspended(MarioAnimator);
+		AnimatorHolder::MarkAsSuspended(MarioWaiting);
+		AnimatorHolder::MarkAsRunning(MarioWJump);
+		
+		marioState = WalkAndJump;
+		return ;
+}
+
 void Mario::MarioFinishSjumping(Animator*, void*) {
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
@@ -108,7 +127,22 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
-		//marioState = Waiting;
+		marioState = Waiting;
+
+		return ;
+}
+
+void Mario::MarioFinishWjumping(Animator*, void*) {
+		SetDimensions(MarioWaiting, MarioWJump);
+		SetDimensions(MarioAnimator, MarioWJump);
+		SetDimensions(MarioSJump, MarioWJump);
+
+		AnimatorHolder::MarkAsSuspended(MarioSJump);
+		AnimatorHolder::MarkAsSuspended(MarioWJump);
+		AnimatorHolder::MarkAsSuspended(MarioAnimator);
+		AnimatorHolder::MarkAsRunning(MarioWaiting);
+		
+		marioState = Waiting;
 
 		return ;
 }
@@ -139,4 +173,9 @@ void Mario::SetDimensions(MovingAnimator* source, MovingPathAnimator* dest) {
 		source->GetSprite()->SetX(dest->GetSprite()->GetX());
 		source->GetSprite()->SetY(dest->GetSprite()->GetY());
 		return ;
+}
+
+void Mario::SetDimensions(MovingPathAnimator* source, MovingPathAnimator* dest) {
+		source->GetSprite()->SetX(dest->GetSprite()->GetX());
+		source->GetSprite()->SetY(dest->GetSprite()->GetY());
 }

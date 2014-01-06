@@ -43,7 +43,7 @@ void Initializer::InitMarioStandJump() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 300);
+				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));
@@ -56,8 +56,34 @@ void Initializer::InitMarioStandJump() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Initializer::InitMarioWalkJumnp() {
+		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
+		std::vector<PathEntry> paths;
+		
+		for(offset_t i = 0, j= 20; i < 10; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(5, -j, 0, 300);
+				printf("%d ", -j);
+				paths.push_back( pathEntry );
+		}
+		printf("\n");
+		for(offset_t i = 0, j= 2; i < 10; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(5, j, 0, 300);
+				printf("%d ", j);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		Sprite::CollisionCheck(spriteMario);
+		Mario::CreateWjumping(aMovAnimr);
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishWjumping, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Initializer::InitMario() {
 		InitMarioWalking();
 		InitMarioWaiting();
 		InitMarioStandJump();
+		InitMarioWalkJumnp();
 }
