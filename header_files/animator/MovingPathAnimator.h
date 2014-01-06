@@ -8,6 +8,8 @@
 
 #include <assert.h>
 
+typedef void (*OnProcessCallback)(int );
+
 class MovingPathAnimator : public Animator {
 		Sprite *sprite;
 		MovingPathAnimation *anim;

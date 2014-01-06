@@ -46,6 +46,12 @@ void Sprite::Move (Dim x,Dim y) {
 	}*/
 }
 
+void Sprite::Move(int x, int y){
+	SetX(GetX() + x);
+	SetY(GetY() + y);
+	return ;
+}
+
 Sprite::Sprite(Dim _x, Dim _y, AnimationFilm* film) : 
 		x(_x), y(_y), currFilm(film), isVisible(true)
 {

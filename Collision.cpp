@@ -55,6 +55,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 
 void Collision::CheckGroundCollision() {
 	MovingAnimator* activeMario = Mario::GetActiveMario();
+	if(activeMario == NULL) return ; // NULL when mario is jumping
 	Dim x = activeMario->GetSprite()->GetTileX();
 	Dim y = activeMario->GetSprite()->GetTileY();
 	

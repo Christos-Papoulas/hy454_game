@@ -31,11 +31,12 @@ void ParseMarioInfo::ParseFile(const char* f) {
 						fscanf(fp, "%d", &y);
 						marioInfo->mariodetails[i].moves[j].x = y;
 						fscanf(fp, "%d", &z);
-						marioInfo->mariodetails[i].moves[j].lengthX = z;
+					  marioInfo->mariodetails[i].moves[j].lengthX = z;
 						fscanf(fp, "%d", &k);
 						marioInfo->mariodetails[i].moves[j].lengthY = k;
 				}
 		}
+
 		fclose(fp);
 }
 

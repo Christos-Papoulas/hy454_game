@@ -25,6 +25,7 @@ class Mario {
 		static MovingAnimator* MarioAnimator;
 		static MovingAnimator* MarioWaiting;
 		static MovingPathAnimator* MarioSJump;
+		static MarioState marioState;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 
@@ -33,6 +34,7 @@ class Mario {
 		static void CreateWaiting(MovingAnimator* mario_animator);
 		static void CreateSjumping(MovingPathAnimator* mario_animator); //waiting and jump
 		static MovingAnimator* GetActiveMario();
+		static bool isStandingJumping() { return marioState == Jumping; }
 		static void Destroy();
 		static void MarioMovesLeft();
 		static void MarioMovesRight();

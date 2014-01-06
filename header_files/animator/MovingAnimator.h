@@ -5,11 +5,12 @@
 #include "../animation/Sprites.h"
 #include "../animation/MovingAnimation.h"
 
-// lecture11 slide27
 
+// lecture11 slide27
 class MovingAnimator : public Animator {
 	Sprite* sprite;
 	MovingAnimation* anim;
+	
 	public:
 		MovingAnimator (void): sprite((Sprite*) 0), anim((MovingAnimation*) 0){}
 		~MovingAnimator(){}

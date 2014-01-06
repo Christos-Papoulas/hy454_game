@@ -27,7 +27,8 @@ class Sprite {
 				bool IsVisible () const;
 				static bool CollisionCheck (Sprite *s);
 				void Display(Bitmap dest);
-				void Move(Dim x,Dim y); //right
+				void Move(Dim x, Dim y); //right
+				void Move(int x, int y);
 				void MoveLeft(Dim x);
 				void MoveUp(Dim y);
 				Dim GetTileX();

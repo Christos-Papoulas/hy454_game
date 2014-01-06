@@ -4,7 +4,7 @@ Mario* Mario::mario = NULL;
 MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
 MovingPathAnimator* Mario::MarioSJump = NULL;
-MarioState marioState = Waiting;
+MarioState Mario::marioState = Waiting;
 
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
@@ -36,11 +36,10 @@ MovingAnimator* Mario::GetActiveMario() {
 				return MarioWaiting;
 		case Walking:
 				return MarioAnimator;
-//		case Jumping:
-//				return MarioSJump;
+		case Jumping:
+				return NULL;
 		default: 
-				;
-//				assert(0);
+				assert(0);
 		}
 		return NULL;
 }
@@ -86,8 +85,9 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
-		/*SetDimensions(MarioSJump, MarioWaiting);
+		SetDimensions(MarioSJump, MarioWaiting);
 
+		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsRunning(MarioSJump);
 		
@@ -96,7 +96,7 @@ void Mario::MarioStandingJump() {
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
 		
-		marioState = Jumping;*/
+		marioState = Jumping;
 		return ;
 }
 
@@ -105,9 +105,10 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		SetDimensions(MarioAnimator, MarioSJump);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
+		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
-		marioState = Waiting;
+		//marioState = Waiting;
 
 		return ;
 }

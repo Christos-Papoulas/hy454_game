@@ -17,9 +17,9 @@ Sprite* MovingPathAnimator::GetSprite(void){
 }
 
 void MovingPathAnimator::Progress (timestamp_t currTime) {
-		currIndex = 0u;
 		assert(lastTime <= currTime); 
 		assert(anim->GetPath().size());
+
 		while (currTime > lastTime && currTime - lastTime >= anim->GetPath()[currIndex].delay){
 				sprite->Move(anim->GetPath()[currIndex].dx, anim->GetPath()[currIndex].dy);
 
@@ -29,6 +29,7 @@ void MovingPathAnimator::Progress (timestamp_t currTime) {
 				if (currIndex == anim->GetPath().size()){
 						if(!anim->GetContinuous()){
 								state = ANIMATOR_FINISHED;
+								currIndex = 0;
 								NotifyStopped();
 								return;
 						}else
