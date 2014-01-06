@@ -1,7 +1,7 @@
 #include "header_files\collision\Collision.h"
-#include "terrain\terrain.h"
+#include "header_files\terrain\terrain.h"
 #include <iostream>
-#include "..\header_files\mario\Mario.h"
+#include "header_files\mario\Mario.h"
 
 
 

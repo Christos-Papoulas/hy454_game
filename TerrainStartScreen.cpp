@@ -16,7 +16,7 @@ void TerrainStartScreen::Create() {
 		FILE* fp_new;
 		if(!terrainStartScreen) {
 				terrainStartScreen = new TerrainStartScreen();
-				tileLayerStartScreen = new TileLayerStartScreen();
+				terrainStartScreen->tileLayerStartScreen = new TileLayerStartScreen();
 
 				fp_new = fopen(START_SCREEN_MAP, "r");
 				if(!tileLayerStartScreen->ReadMap(fp_new))
