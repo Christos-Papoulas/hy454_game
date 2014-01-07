@@ -70,7 +70,7 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	MarioAnimator->GetSprite()->MoveLeft(1);
+	MarioBWalk->GetSprite()->MoveLeft(2);
 	marioState = backwalk;
 	//Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	//MarioAnimator->GetSprite()->MoveLeft(1);

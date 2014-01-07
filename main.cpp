@@ -98,7 +98,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		InputManagement(); //just reads from local input queue
 		AnimationProgress();
 		//ArtificialIntelligence();
-		CollisionChecking();
+		//CollisionChecking();
 		//CommitDestructions();
 		//FPSCalculation();
 }
