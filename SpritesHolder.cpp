@@ -81,9 +81,26 @@ void Initializer::InitMarioWalkJumnp() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Initializer::InitMarioBackWalk() {
+		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariobackwalk") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 2, 
+						0, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(6u)
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		Mario::CreateBackWalking(aMovAnimr);
+		
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishBackWalk, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Initializer::InitMario() {
 		InitMarioWalking();
 		InitMarioWaiting();
 		InitMarioStandJump();
 		InitMarioWalkJumnp();
+		InitMarioBackWalk();
 }

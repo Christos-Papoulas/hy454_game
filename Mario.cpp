@@ -5,6 +5,8 @@ MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
 MovingPathAnimator* Mario::MarioSJump = NULL;
 MovingPathAnimator* Mario::MarioWJump = NULL;
+MovingAnimator* Mario::MarioBWalk = NULL;
+
 MarioState Mario::marioState = Waiting;
 
 Mario::Mario(MovingAnimator* mario_animator){
@@ -26,6 +28,11 @@ void Mario::CreateWaiting(MovingAnimator* mario_animator) {
 				MarioWaiting = mario_animator;
 }
 
+void Mario::CreateBackWalking(MovingAnimator* mario_animator) {
+		if(!MarioBWalk)
+				MarioBWalk = mario_animator;
+}
+
 void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
 		if(!MarioSJump)
 				MarioSJump = mario_animator;
@@ -42,6 +49,8 @@ MovingAnimator* Mario::GetActiveMario() {
 				return MarioWaiting;
 		case Walking:
 				return MarioAnimator;
+		case backwalk:
+				return NULL;
 		case Jumping:
 				return NULL;
 		case WalkAndJump:
@@ -53,31 +62,32 @@ MovingAnimator* Mario::GetActiveMario() {
 }
 
 void Mario::MarioFinisWaiting(Animator*, void*){ 
-
+		SetDimensions(MarioBWalk, MarioAnimator);
 		return ;
 }
 
 void Mario::MarioMovesLeft() {
-	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
+	AnimatorHolder::MarkAsSuspended(MarioWaiting);
+	AnimatorHolder::MarkAsSuspended(MarioAnimator);
+	AnimatorHolder::MarkAsRunning(MarioBWalk);
 	MarioAnimator->GetSprite()->MoveLeft(1);
-}
-
-void Mario::MarioMovesUp() {
-	MarioSJump->GetSprite()->MoveUp(2);
+	marioState = backwalk;
+	//Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
+	//MarioAnimator->GetSprite()->MoveLeft(1);
 }
 
 void Mario::MarioMovesRight() {
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
+	AnimatorHolder::MarkAsSuspended(MarioBWalk);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
 	if( x > 85) {
 			(Terrain::GetTileLayer())-> ScrollHorizBy(5);
 			MarioAnimator->GetSprite()->SetX(16);
-	} else {
+	} else 
 			MarioAnimator->GetSprite()->Move(1,0);
-			MarioAnimator->Progress(GetCurrTime());
-	}
+	
 	marioState = Walking;
 }
 
@@ -119,9 +129,24 @@ void Mario::MarioWalkingJump() {
 		return ;
 }
 
+void Mario::MarioFinishBackWalk(Animator*, void*) {
+		SetDimensions(MarioWaiting, MarioBWalk);
+		SetDimensions(MarioAnimator, MarioBWalk);
+		SetDimensions(MarioSJump, MarioBWalk);
+		SetDimensions(MarioWJump, MarioBWalk);
+
+		AnimatorHolder::MarkAsSuspended(MarioBWalk);
+		AnimatorHolder::MarkAsRunning(MarioWaiting);
+		
+		marioState = Waiting;
+
+		return ;
+}
+
 void Mario::MarioFinishSjumping(Animator*, void*) {
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
+		SetDimensions(MarioBWalk, MarioSJump);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -136,6 +161,7 @@ void Mario::MarioFinishWjumping(Animator*, void*) {
 		SetDimensions(MarioWaiting, MarioWJump);
 		SetDimensions(MarioAnimator, MarioWJump);
 		SetDimensions(MarioSJump, MarioWJump);
+		SetDimensions(MarioBWalk, MarioWJump);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioWJump);

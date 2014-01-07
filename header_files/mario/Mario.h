@@ -15,6 +15,7 @@
 
 enum MarioState { 
 		Walking = 0,
+		backwalk,
 		Waiting,
 		Jumping,
 		WalkAndJump
@@ -25,8 +26,10 @@ class Mario {
 		static Mario* mario;
 		static MovingAnimator* MarioAnimator;
 		static MovingAnimator* MarioWaiting;
+		static MovingAnimator* MarioBWalk;
 		static MovingPathAnimator* MarioSJump;
 		static MovingPathAnimator* MarioWJump;
+		
 		static MarioState marioState;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
@@ -34,6 +37,7 @@ class Mario {
 	public:
 		static void CreateWalking(MovingAnimator* mario_animator);
 		static void CreateWaiting(MovingAnimator* mario_animator);
+		static void CreateBackWalking(MovingAnimator* mario_animator);
 		static void CreateSjumping(MovingPathAnimator* mario_animator); //waiting and jump
 		static void CreateWjumping(MovingPathAnimator* mario_animator);
 		static MovingAnimator* GetActiveMario();
@@ -43,8 +47,8 @@ class Mario {
 		static void Destroy();
 		static void MarioMovesLeft();
 		static void MarioMovesRight();
-		static void MarioMovesUp();
 		static void MarioFinishWalking(Animator*, void*);
+		static void MarioFinishBackWalk(Animator*, void*);
 		static void MarioFinishSjumping(Animator*, void*);
 		static void MarioFinisWaiting(Animator*, void*);
 		static void MarioFinishWjumping(Animator*, void*);
