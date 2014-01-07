@@ -17,6 +17,7 @@ class TerrainStartScreen {
 
 	public:
 		static void Create();
+		static void CreatePause();
 		static void CleanUp();
 		static void DisplayTerrain(Bitmap, timestamp_t);
 		static TileLayerStartScreen* GetTileLayer() { return tileLayerStartScreen; }

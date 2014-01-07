@@ -86,6 +86,7 @@ bool MarioBrosMain::InitAllegro(){
 		
 		if(gameState == Pause){
 			AnimatorHolder::MarkAsSuspended(Mario::GetActiveMario());
+			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 		}
 
 		
@@ -108,7 +109,7 @@ void MarioBrosMain::InputManagement(){
 	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
 		space_pressed = 0;
 		
-	if(1 && !Mario::isWalkingJump()) {
+	if(1 && !Mario::isWalkingJump() && gameState == Play) {
 			
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT))
 						if(Mario::isWalking() && !Mario::isWalkingJump())
@@ -147,12 +148,12 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
 		gameState = Play;
 		//al_play_sample(music, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-		//TerrainStartScreen::DisplayPause();
 	}
 }
 
 void MarioBrosMain::GamePause() {
 	gameState = Pause;
+	TerrainStartScreen::CreatePause();
 }
 
 void MarioBrosMain::AnimationProgress(){
@@ -186,6 +187,7 @@ void MarioBrosMain::InitializeGame() {
 		currTime =  CurrTime();
 		Terrain::Create();
 		TerrainStartScreen::Create();
+		//TerrainStartScreen::CreatePause();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
 		SpritesHolder* lala = new SpritesHolder();
 		gameState = Start;
