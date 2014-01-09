@@ -15,6 +15,7 @@
 #include "mario\logic.h"
 #include "mario\SpritesHolder.h"
 #include "mario\Mario.h"
+#include "enemies\Enemies.h"
 #include "Objects.h"
 
 

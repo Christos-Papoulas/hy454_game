@@ -191,6 +191,8 @@ void MarioBrosMain::InitializeGame() {
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
 		SpritesHolder* lala = new SpritesHolder();
 		gameState = Start;
+
+		Enemies::CreateEnemies();
 		redraw = true;
 }
 

@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <fstream>
+#include <sstream>
 #include "../Objects.h"
 #include "../tiles/TileLayer.h" //only for the MAX_HEGHT and MAX_WIDTH of map
 #define ENEMIES_TYLES "data/enemies_1-1.txt"

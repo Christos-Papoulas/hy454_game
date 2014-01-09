@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 #include "../Objects.h"
 
