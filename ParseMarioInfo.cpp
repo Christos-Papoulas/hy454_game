@@ -16,10 +16,8 @@ void ParseMarioInfo::Create() {
 
 void ParseMarioInfo::ParseFile(const char* f) {
 		using namespace std;
-		FILE* fp = fopen(MARIO_SPRITES_INFO, "r");
 		ifstream read(MARIO_SPRITES_INFO);
 		unsigned short x = 0, y = 0, z = 0, k = 0;
-		assert(fp);
 		read >> marioInfo->totalFrames;
 		marioInfo->mariodetails = (MarioInfo_t*) malloc(sizeof(MarioInfo_t)*marioInfo->totalFrames);
 		for(unsigned short i = 0; i < marioInfo->totalFrames; ++i) {
@@ -38,8 +36,7 @@ void ParseMarioInfo::ParseFile(const char* f) {
 						marioInfo->mariodetails[i].moves[j].lengthY = k;
 				}
 		}
-
-		fclose(fp);
+		read.close();
 }
 
 void ParseMarioInfo::PrintDataToLogFile() {

@@ -1,4 +1,4 @@
-7
+9
 1
 mariowalking 3
 0 0 16 16
@@ -29,3 +29,10 @@ mariobackwalk 3
 0 225 10 16
 0 237 9 16
 0 248 13 16
+1611
+goombawalking 2
+112 0 15 16
+112 16 15 16
+1612
+goombadead 1
+121 31 15 7

@@ -97,7 +97,7 @@ bool MarioBrosMain::InitAllegro(){
 void MarioBrosMain::MainLoopOneIteration() {
 		InputManagement(); //just reads from local input queue
 		AnimationProgress();
-		//ArtificialIntelligence();
+		ArtificialIntelligence();
 		CollisionChecking();
 		//CommitDestructions();
 		//FPSCalculation();
@@ -162,7 +162,7 @@ void MarioBrosMain::AnimationProgress(){
 }
 
 void MarioBrosMain::ArtificialIntelligence(){
-		assert(0 && "Unimpemented");
+		Goumbas::ArtificialIntelligence();
 		return ;
 }
 
@@ -189,10 +189,10 @@ void MarioBrosMain::InitializeGame() {
 		TerrainStartScreen::Create();
 		//TerrainStartScreen::CreatePause();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
-		SpritesHolder* lala = new SpritesHolder();
+		SpritesHolder* sh = new SpritesHolder();
 		gameState = Start;
 
-		Enemies::CreateEnemies();
+		Enemies::Create();
 		redraw = true;
 }
 

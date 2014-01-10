@@ -15,8 +15,8 @@ Bitmap TilesBitmap::LoadTiles() {
 void TilesBitmap::PutTile(Bitmap at, Dim x, Dim y, Index tile) const {
 	assert(at);
 	if(tile > 0 && tile < TILES_COLUMNS*TILES_ROWS) {
-		Dim tiley = divIndex[tile] << 4;//TerrainUtils::TileX2(33);
-		Dim tilex = modIndex[tile] << 4;//TerrainUtils::TileY2(33);
+		Dim tiley = divIndex[tile] << 4;
+		Dim tilex = modIndex[tile] << 4;
 		al_draw_bitmap_region(tiles, tilex, tiley, 16, 16, x*16, y*16, NULL); // @todo the real values
 	}
 }

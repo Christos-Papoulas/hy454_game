@@ -16,6 +16,7 @@
 #include "mario\SpritesHolder.h"
 #include "mario\Mario.h"
 #include "enemies\Enemies.h"
+#include "enemies\Goumba.h"
 #include "Objects.h"
 
 
