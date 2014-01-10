@@ -23,6 +23,7 @@ void Enemies::ReadMap() {
 
 void Enemies::Create() { 
 		ReadMap();
+		Goumbas::Create();
 }
 
 void Enemies::MakeShortMap() {

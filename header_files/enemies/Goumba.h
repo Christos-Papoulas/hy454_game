@@ -16,9 +16,12 @@
 
 class Goumbas {
 		static std::list<MovingAnimator*> goumba;
+		static std::list<MovingAnimator*> running;
 public:
 		static void Create();
 		static void ArtificialIntelligence();
+		static void CreateGoumbaifAny();
+		static void MoveGoumbas();
 };
 
 #endif
