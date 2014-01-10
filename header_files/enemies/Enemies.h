@@ -15,10 +15,17 @@
 #define ENEMIES_TYLES "data/enemies_1-1.txt"
 #define ENEMIES_SPRITES "data/Enemies.info"
 
+#define X_INDEX 0
+#define Y_INDEX 1
+#define ISACTIVE 2
+
 class Enemies {
 		static Index	map[MAX_HEIGHT][MAX_WIDTH];
+		static Index**	shortMap;
 		static Dim totalFrames;
 		static MarioInfo_t* enemies;
+		static Index countEnemies;
+
 		Enemies(){;}
 		public:
 				static void Create();
@@ -31,6 +38,9 @@ class Enemies {
 						return map[x][y];
 				}
 				static void ReadMap();
+				static void MakeShortMap();
+				static void SetEnemyAsActive(Dim x, Dim y);
+				static bool IsEnemyActive(Dim x, Dim y);
 };
 
 #endif

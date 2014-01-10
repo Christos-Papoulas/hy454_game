@@ -7,7 +7,7 @@ void Goumbas::Create() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 1, 
-						0, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(7u)
+						-3, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(7u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -15,7 +15,7 @@ void Goumbas::Create() {
 				
 		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());			
 		//aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
-		AnimatorHolder::Register( aMovAnimr );				
+		AnimatorHolder::Register( aMovAnimr );
 }
 
 void Goumbas::ArtificialIntelligence() {
@@ -23,15 +23,20 @@ void Goumbas::ArtificialIntelligence() {
 		MovingAnimator* g = NULL;
 		for(Dim i = 0; i < 15; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_WIDTH; j++){
-						Dim x = i;
-						Dim y = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
-						
-						if(Enemies::GetFromMap(x, y) != 0) {
+						Dim y = i;
+						Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
+						Rect view = Terrain::GetTileLayer()->GetViewWindow();
+						if(Enemies::GetFromMap(y, x) == 161) {
+								
+								if(Enemies::IsEnemyActive(y, x)) 
+										continue;
+								Create();
 								g = goumba.back();
-								g->GetSprite()->SetX((x % VIEW_WINDOW_TILE_HEIGHT) * 16);
-								g->GetSprite()->SetY((y % VIEW_WINDOW_TILE_HEIGHT) * 16);
+								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
+								g->GetSprite()->SetY(y * 16);
 								AnimatorHolder::MarkAsRunning(g); goumbasCount++;
+								Enemies::SetEnemyAsActive(y,x);
 						}
 				}
-		if(!goumbasCount) AnimatorHolder::MarkAsSuspended(g);
+		//if(!goumbasCount) AnimatorHolder::MarkAsSuspended(g);
 }

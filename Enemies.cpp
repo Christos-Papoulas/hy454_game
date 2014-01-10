@@ -3,6 +3,8 @@
 Index	Enemies::map[MAX_HEIGHT][MAX_WIDTH];
 Dim Enemies::totalFrames = 0;
 MarioInfo_t* Enemies::enemies = NULL;
+Index**	Enemies::shortMap = NULL;
+Index Enemies::countEnemies = 0;
 
 void Enemies::ReadMap() {
 		using namespace std;
@@ -16,10 +18,45 @@ void Enemies::ReadMap() {
 						SetOnMap(tmp, i, j);
 				}
 		read.close();
+		MakeShortMap();
 }
 
 void Enemies::Create() { 
 		ReadMap();
-		Goumbas::Create();
 }
 
+void Enemies::MakeShortMap() {
+		countEnemies = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(map[i][j]) countEnemies++;
+
+		shortMap = (Index**) malloc(sizeof(Index)*countEnemies);
+		for(Dim i = 0; i < countEnemies; i++)
+				shortMap[i] = (Index*) malloc(sizeof(Index)*3);
+		
+		Dim en = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(map[i][j]) {
+								shortMap[en][X_INDEX] = i;
+								shortMap[en][Y_INDEX] = j;
+								shortMap[en++][ISACTIVE] = 0;
+						}
+}
+
+void Enemies::SetEnemyAsActive(Dim x, Dim y) {
+		for(Dim i = 0; i < countEnemies; i++)
+				if(shortMap[i][X_INDEX] == x && shortMap[i][Y_INDEX] == y) {
+						shortMap[i][ISACTIVE] = 1; return ;
+				}
+				assert(0);
+}
+
+bool Enemies::IsEnemyActive(Dim x, Dim y) {
+		for(Dim i = 0; i < countEnemies; i++)
+				if(shortMap[i][X_INDEX] == x && shortMap[i][Y_INDEX] == y)
+						return shortMap[i][ISACTIVE] == 1;
+		assert(0);
+		return 0;
+}

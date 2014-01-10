@@ -140,6 +140,7 @@ void MarioBrosMain::InputManagement(){
 				}else{
 						return ; // other keys...
 				}
+				al_flush_event_queue(queue);
 		}
 }
 
