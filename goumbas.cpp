@@ -33,5 +33,5 @@ void Goumbas::ArtificialIntelligence() {
 								AnimatorHolder::MarkAsRunning(g); goumbasCount++;
 						}
 				}
-		if(!goumbasCount) AnimatorHolder::MarkAsRunning(g);
+		if(!goumbasCount) AnimatorHolder::MarkAsSuspended(g);
 }

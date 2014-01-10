@@ -83,8 +83,8 @@ void Mario::MarioMovesRight() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
 	if( x > 85) {
-			(Terrain::GetTileLayer())-> ScrollHorizBy(5);
-			MarioAnimator->GetSprite()->SetX(16);
+			(Terrain::GetTileLayer())-> ScrollHorizBy(1); //5
+			MarioAnimator->GetSprite()->SetX(16*5);
 	} else 
 			MarioAnimator->GetSprite()->Move(1,0);
 	
