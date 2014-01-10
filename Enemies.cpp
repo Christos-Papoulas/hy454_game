@@ -16,15 +16,10 @@ void Enemies::ReadMap() {
 						SetOnMap(tmp, i, j);
 				}
 		read.close();
-		for(Dim i = 0; i < MAX_HEIGHT; ++i)
-				for(Dim j = 0; j < MAX_WIDTH; ++j)
-						if(map[i][j] != 0)
-								std::cout << i << ", " << j << " = " << map[i][j] << std::endl;
 }
 
 void Enemies::Create() { 
 		ReadMap();
-		//ReadSprites();
 		Goumbas::Create();
 }
 

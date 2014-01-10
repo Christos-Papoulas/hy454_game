@@ -41,6 +41,7 @@ class Mario {
 		static void CreateSjumping(MovingPathAnimator* mario_animator); //waiting and jump
 		static void CreateWjumping(MovingPathAnimator* mario_animator);
 		static MovingAnimator* GetActiveMario();
+		static Sprite* GetMarioCurrentSprite();
 		static bool isWalking() { return marioState == Walking; }
 		static bool isStandingJumping() { return marioState == Jumping; }
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
@@ -62,6 +63,7 @@ class Mario {
 		static void SetDimensions(MovingPathAnimator* source, MovingAnimator* dest);
 		static void SetDimensions(MovingAnimator* source, MovingPathAnimator* dest);
 		static void SetDimensions(MovingPathAnimator* source, MovingPathAnimator* dest);
+		static void SetDimensions(Dim x, Dim y);
 };
 
 #endif

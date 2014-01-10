@@ -7,7 +7,7 @@ MovingPathAnimator* Mario::MarioSJump = NULL;
 MovingPathAnimator* Mario::MarioWJump = NULL;
 MovingAnimator* Mario::MarioBWalk = NULL;
 
-MarioState Mario::marioState = Waiting;
+MarioState Mario::marioState = Walking;
 
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
@@ -61,6 +61,24 @@ MovingAnimator* Mario::GetActiveMario() {
 		return NULL;
 }
 
+Sprite* Mario::GetMarioCurrentSprite() {
+		switch (marioState) {
+		case Waiting:
+				return MarioWaiting->GetSprite();
+		case Walking:
+				return MarioAnimator->GetSprite();
+		case backwalk:
+				return MarioBWalk->GetSprite();
+		case Jumping:
+				return MarioSJump->GetSprite();
+		case WalkAndJump:
+				return MarioWJump->GetSprite();
+		default: 
+				assert(0);
+		}
+		return NULL;
+}
+
 void Mario::MarioFinisWaiting(Animator*, void*){ 
 		SetDimensions(MarioBWalk, MarioAnimator);
 		return ;
@@ -83,7 +101,7 @@ void Mario::MarioMovesRight() {
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
 	if( x > 85) {
-			(Terrain::GetTileLayer())-> ScrollHorizBy(1); //5
+			(Terrain::GetTileLayer())-> ScrollHorizBy(1); 
 			MarioAnimator->GetSprite()->SetX(16*5);
 	} else 
 			MarioAnimator->GetSprite()->Move(1,0);
@@ -187,6 +205,21 @@ void Mario::SetDimensions(MovingAnimator* dest) {
 		SetDimensions(MarioAnimator, dest);
 		SetDimensions(MarioWaiting, dest);
 		SetDimensions(MarioSJump, dest);
+		SetDimensions(MarioWJump, dest);
+}
+
+void Mario::SetDimensions(Dim x, Dim y) {
+		MarioAnimator->GetSprite()->SetX(x);
+		MarioAnimator->GetSprite()->SetY(y);
+
+		MarioWaiting->GetSprite()->SetX(x);
+		MarioWaiting->GetSprite()->SetY(y);
+
+		MarioSJump->GetSprite()->SetX(x);
+		MarioSJump->GetSprite()->SetY(y);
+
+		MarioWJump->GetSprite()->SetX(x);
+		MarioWJump->GetSprite()->SetY(y);
 }
 
 void Mario::SetDimensions(MovingPathAnimator* source, MovingAnimator* dest) {
