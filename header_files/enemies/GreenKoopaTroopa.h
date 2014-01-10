@@ -1,5 +1,8 @@
-#ifndef _GOUMBA_H_
-#define _GOUMBA_H_
+#ifndef _GREEN_KOOPA_TROOPA_H_
+#define _GREEN_KOOPA_TROOPA_H_
+
+#include <assert.h>
+#include <list>
 
 #include "../animator/MovingAnimator.h"
 #include "../animator/FrameRangeAnimator.h"
@@ -11,17 +14,14 @@
 #include "../terrain/terrain.h"
 #include "../tiles/TileLayer.h"
 
-#include <stdlib.h>
-#include <list>
-
-class Goumbas {
-		static std::list<MovingAnimator*> goumbaSuspending;
+class GreenKoopa {
+		static std::list<MovingAnimator*> suspending;
 		static std::list<MovingAnimator*> running;
 public:
 		static void Create();
 		static void ArtificialIntelligence();
-		static void CreateGoumbaifAny();
-		static void MoveGoumbas();
+		static void CreateGreenKoopaIfAny();
+		static void MoveGreenKoopas();
 		static void ViewWindowMove();
 };
 

@@ -11,6 +11,7 @@
 #include "../tiles/TilesBitmap.h"
 #include "../terrain/TerrainStartScreen.h"
 #include "../enemies/Goumba.h"
+#include "../enemies/GreenKoopaTroopa.h"
 
 #include <assert.h>
 

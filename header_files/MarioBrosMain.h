@@ -17,6 +17,7 @@
 #include "mario\Mario.h"
 #include "enemies\Enemies.h"
 #include "enemies\Goumba.h"
+#include "enemies\GreenKoopaTroopa.h"
 #include "Objects.h"
 
 

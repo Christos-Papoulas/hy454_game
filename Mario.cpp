@@ -104,6 +104,7 @@ void Mario::MarioMovesRight() {
 			(Terrain::GetTileLayer())-> ScrollHorizBy(1); 
 			MarioAnimator->GetSprite()->SetX(16*5);
 			Goumbas::ViewWindowMove();
+			GreenKoopa::ViewWindowMove();
 	} else 
 			MarioAnimator->GetSprite()->Move(1,0);
 	

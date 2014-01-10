@@ -1,4 +1,4 @@
-9
+10
 1
 mariowalking 3
 0 0 16 16
@@ -36,3 +36,7 @@ goombawalking 2
 1612
 goombadead 1
 121 31 15 7
+1941
+greenkoopaleft 2
+107 96 14 20 
+106 112 14 21 

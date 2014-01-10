@@ -164,6 +164,7 @@ void MarioBrosMain::AnimationProgress(){
 
 void MarioBrosMain::ArtificialIntelligence(){
 		Goumbas::ArtificialIntelligence();
+		GreenKoopa::ArtificialIntelligence();
 		return ;
 }
 
