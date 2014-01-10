@@ -22,6 +22,7 @@ public:
 		static void ArtificialIntelligence();
 		static void CreateGoumbaifAny();
 		static void MoveGoumbas();
+		static void ViewWindowMove();
 };
 
 #endif

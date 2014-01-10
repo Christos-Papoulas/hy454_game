@@ -10,6 +10,7 @@
 #include "../tiles/TileLayer.h"
 #include "../tiles/TilesBitmap.h"
 #include "../terrain/TerrainStartScreen.h"
+#include "../enemies/Goumba.h"
 
 #include <assert.h>
 

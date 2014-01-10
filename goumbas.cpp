@@ -8,7 +8,7 @@ void Goumbas::Create() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 1, 
-						0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(7u)
+						-2, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(7u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -52,13 +52,17 @@ void Goumbas::MoveGoumbas() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
 				Dim currPos = g->GetSprite()->GetX();
-				if(currPos == 0) {
+				if(currPos < 2) {
 						goumba.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
 						
 						return ;
 				}
-				g->GetSprite()->SetX(currPos - 1);
 		}
+}
+
+void Goumbas::ViewWindowMove() {
+		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
+				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 16);
 }

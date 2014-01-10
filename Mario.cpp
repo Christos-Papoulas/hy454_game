@@ -103,6 +103,7 @@ void Mario::MarioMovesRight() {
 	if( x > 85) {
 			(Terrain::GetTileLayer())-> ScrollHorizBy(1); 
 			MarioAnimator->GetSprite()->SetX(16*5);
+			Goumbas::ViewWindowMove();
 	} else 
 			MarioAnimator->GetSprite()->Move(1,0);
 	
