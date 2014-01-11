@@ -21,8 +21,10 @@ class MovingAnimator : public Animator {
 			lastTime  = t;
 			state  = ANIMATOR_RUNNING;
 		}
+		void SetLastTime(timestamp_t t) { lastTime = t; }
 		void Display(Bitmap at);
 		Sprite* GetSprite();
+		MovingAnimation* GetMovingAnimation() { return anim; }
 };
 
 #endif

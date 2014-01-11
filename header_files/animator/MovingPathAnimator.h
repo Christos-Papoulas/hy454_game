@@ -26,7 +26,7 @@ class MovingPathAnimator : public Animator {
 				void Start (Sprite* s, MovingPathAnimation* a, timestamp_t t);
 				void Display(Bitmap at);
 				//int GetCurrIndex(){return currIndex;}
-				//void SetCurrIndex(int index) { currIndex = index; }
+				void SetLastTime(timestamp_t t) { lastTime = t; }
 };
 
 #endif

@@ -48,19 +48,54 @@ void Goumbas::CreateGoumbaifAny() {
 				}
 }
 
+bool CanGoLeft(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i - 1, y + j) != 0)
+				return false;
+		return true;
+}
+
+bool CanGoRight(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i + 1, y + j) != 0)
+				return false;
+		return true;
+}
+
 void Goumbas::MoveGoumbas() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
-				Dim currPos = g->GetSprite()->GetX();
-				if(currPos < 2) {
+				Dim currPosX = g->GetSprite()->GetX();
+				Dim currPosY = g->GetSprite()->GetY();
+
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
+
+				if(currPosX < 2 || TileX > MAX_WIDTH) {
 						goumbaSuspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
-						
 						return ;
 				}
+
+				if(CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else if(!CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( !CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else
+						g->GetMovingAnimation()->SetDx(0);
 		}
 }
+
+
 
 void Goumbas::ViewWindowMove() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)

@@ -23,8 +23,8 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 	assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
-	if(Collision_map[j+x_tile+1][i+y_tile] == 1) {
-		if (Collision_map[j+x_tile][i+y_tile+1] == 34) {	//touvlo
+	if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {
+		if (Collision_map[j + x_tile][i + y_tile + 1] == 34) {	//touvlo
 			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
 		}
 		else if (Collision_map[j+x_tile][i+y_tile+1] == 298) {	//swlhnas
