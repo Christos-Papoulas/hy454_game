@@ -7,6 +7,7 @@ void MovingAnimator::Progress (timestamp_t currTime) {
 		if (!anim->GetContinuous()) {
 			state = ANIMATOR_FINISHED;
 			NotifyStopped();
+			lastTime = currTime;
 		}
 		else {
 			lastTime += anim->GetDelay();

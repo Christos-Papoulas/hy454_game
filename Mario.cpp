@@ -105,8 +105,8 @@ void Mario::MarioMovesRight() {
 			MarioAnimator->GetSprite()->SetX(16*5);
 			Goumbas::ViewWindowMove();
 			GreenKoopa::ViewWindowMove();
-	} else 
-			MarioAnimator->GetSprite()->Move(1,0);
+	} //else 
+		//	MarioAnimator->GetSprite()->Move(1,0);
 	
 	marioState = Walking;
 }
