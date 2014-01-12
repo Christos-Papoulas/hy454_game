@@ -82,6 +82,6 @@ void GreenKoopa::MoveGreenKoopas() {
 }
 
 void GreenKoopa::ViewWindowMove() {
-		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
-				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 16);
+//		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
+//				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }

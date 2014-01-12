@@ -84,5 +84,5 @@ void Goumbas::MoveGoumbas() {
 
 void Goumbas::ViewWindowMove() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
-				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 16);
+				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }

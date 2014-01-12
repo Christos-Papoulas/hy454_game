@@ -28,7 +28,7 @@ class TilesBitmap {
 		Bitmap LoadTiles (void);
 
 	public:
-		void PutTile (Bitmap at, Dim x, Dim y, Index tile) const;
+		void PutTile (Bitmap at, Dim x, Dim y, Index tile, Dim scroll) const;
 		Index GetPointedTile (Dim x, Dim y) const;
 		
 };

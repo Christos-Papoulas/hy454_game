@@ -2,6 +2,7 @@
 
 TileLayer::TileLayer() {
 		tilesBitmap = new TilesBitmap();
+		ScrollViewWindow = 0;
 }
 
 Rect TileLayer::GetViewWindow(void) /*const*/ {
@@ -59,11 +60,12 @@ bool TileLayer::CanScroll(VertScroll v) const {
 
 void TileLayer::Display(Bitmap at/*, const Rect& displayArea*/) {
 		assert(at);
-
+		Dim end = VIEW_WINDOW_TILE_HEIGHT;
 		al_set_target_bitmap(at);
 		al_clear_to_color(al_map_rgb(0,0,0));
-
-		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
+		if(ScrollViewWindow)
+				end += 1;
+		for(Dim i = 0; i < end; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++)
-						tilesBitmap->PutTile(at, i, j, GetTile(viewWindow.GetX() + i, viewWindow.GetY() + j));
+						tilesBitmap->PutTile(at, i, j, GetTile(viewWindow.GetX() + i, viewWindow.GetY() + j), ScrollViewWindow);
 }

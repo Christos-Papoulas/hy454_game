@@ -24,6 +24,7 @@ class TileLayer{
 				Index		map[MAX_HEIGHT][MAX_WIDTH];
 				Rect		viewWindow;
 				TilesBitmap* tilesBitmap;
+				Dim ScrollViewWindow;
 		public:
 				TileLayer();
 				~TileLayer();
@@ -40,6 +41,7 @@ class TileLayer{
 				//bool ProgressViewWindow(HorizScroll h);
 				void WriteMap(FILE* fp);
 				bool ReadMap(FILE* fp);
+				void SetScrollviewWindow(Dim x) { ScrollViewWindow = x; }
 };
 
 #endif

@@ -121,19 +121,31 @@ void Mario::MarioMovesLeft() {
 	//MarioAnimator->GetSprite()->MoveLeft(1);
 }
 
+Dim countScroll = 0;
 void Mario::MarioMovesRight() {
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioBWalk);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
+	
 	if( x > 85) {
-			(Terrain::GetTileLayer())-> ScrollHorizBy(1); 
-			MarioAnimator->GetSprite()->SetX(16*5);
+			//(Terrain::GetTileLayer())-> ScrollHorizBy(1); 
+			//MarioAnimator->GetSprite()->SetX(16*5);
+			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
+			MarioAnimator->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX() - 1);
 			Goumbas::ViewWindowMove();
 			GreenKoopa::ViewWindowMove();
-	} //else 
-		//	MarioAnimator->GetSprite()->Move(1,0);
+			countScroll++;
+			if(countScroll == 15) {
+				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
+				//MarioAnimator->GetSprite()->SetX(16*5);
+				(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
+				countScroll = 0;
+			}
+			
+	}  
+			
 	
 	ChangeState(Walking);
 }
