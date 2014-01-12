@@ -9,7 +9,7 @@ Dim			Collision::Collision_map[MAX_HEIGHT][MAX_WIDTH];
 
 void Collision::SetValue(Dim x, Dim y, Dim value) { 
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
-		if (value == 1 || value == 34 || value == 298 || value == 265 || value == 2)
+		if (value == 1 || value == 34 || value == 298 || value == 265 || value == 2 || value == 25)
 			Collision_map[x][y] = value;
 		//else if(value == 2 )
 			//Collision_map[x][y] = 1;
@@ -35,10 +35,18 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 
 			Mario::GetMarioCurrentSprite()->Move(0,1);
 		}
+
+		if(Collision_map[j + x_tile][i+y_tile + 1] != 0 && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
+
+			Mario::GetMarioCurrentSprite()->Move(0,1);
+		}
 		return true;
 	}
 
 	if(Mario::GetState() == WalkAndJump){
+		if(Collision_map[j + x_tile][i+y_tile] == 2) {
+			Mario::GetMarioCurrentSprite()->MoveUp(16);
+		}
 		return true;
 	}
 
