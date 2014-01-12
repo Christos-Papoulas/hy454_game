@@ -61,3 +61,30 @@ bool Enemies::IsEnemyActive(Dim x, Dim y) {
 		assert(0);
 		return 0;
 }
+
+bool Enemies::CanGoLeft(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i - 1, y + j) != 0)
+				return false;
+		return true;
+}
+
+bool Enemies::CanGoRight(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i + 1, y + j) != 0)
+				return false;
+		return true;
+}
+
+bool Enemies::IsOnAir(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i, y + j + 1) == 0)
+				return true;
+		return false;
+}

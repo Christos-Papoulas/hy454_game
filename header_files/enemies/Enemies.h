@@ -41,6 +41,9 @@ class Enemies {
 				static void MakeShortMap();
 				static void SetEnemyAsActive(Dim x, Dim y);
 				static bool IsEnemyActive(Dim x, Dim y);
+				static bool CanGoLeft(Dim x, Dim y);
+				static bool CanGoRight(Dim x, Dim y);
+				static bool IsOnAir(Dim x, Dim y);
 };
 
 #endif
