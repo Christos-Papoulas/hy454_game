@@ -26,20 +26,15 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
 	if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {
-		if (Collision_map[j + x_tile][i + y_tile + 1] == 34) {	//touvlo
+		if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
 			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
 		}
-		else if (Collision_map[j+x_tile][i+y_tile+1] == 298) {	//swlhnas
-			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
-		}
-		else if(Collision_map[j+x_tile][i+y_tile+1] == 265) {	//swlhnas 2
-			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
-		}
+		
 		return true;
 	}
 
-	if(Collision_map[j+x_tile+1][i+y_tile] == 34) {
-		if (Collision_map[j+x_tile][i+y_tile+1] == 34) {	//touvlo
+	if(Collision_map[j+x_tile+1][i+y_tile] != 0) {
+		if (Collision_map[j+x_tile][i+y_tile+1] != 0) {	//touvlo
 			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
 		}
 		return true;
@@ -56,13 +51,13 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 }
 
 void Collision::CheckGroundCollision() {
-	MovingAnimator* activeMario = Mario::GetActiveMario();
+	Sprite* activeMario = Mario::GetMarioCurrentSprite();
 	if(activeMario == NULL) return ; // NULL when mario is jumping
-	Dim x = activeMario->GetSprite()->GetTileX();
-	Dim y = activeMario->GetSprite()->GetTileY();
+	Dim x = activeMario->GetTileX();
+	Dim y = activeMario->GetTileY();
 	
 	if(!Collision::MarioCollision(x,y)){
-		Mario::GetActiveMario()->GetSprite()->Move(0,1);
+		activeMario->Move(0,1);
 		Mario::SetDimensions(Mario::GetActiveMario());
 	}
 }
