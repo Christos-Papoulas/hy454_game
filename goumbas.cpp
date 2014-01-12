@@ -35,12 +35,14 @@ void Goumbas::CreateGoumbaifAny() {
 						if(Enemies::GetFromMap(y, x) == 161) {
 								if(Enemies::IsEnemyActive(y, x)) 
 										continue;
-								if(goumbaSuspending.empty()) Create();
+								if(goumbaSuspending.empty()) 
+										Create();
 								g = goumbaSuspending.back();
 								goumbaSuspending.pop_back();
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
+								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
 								Enemies::SetEnemyAsActive(y,x);
 								running.push_back(g);

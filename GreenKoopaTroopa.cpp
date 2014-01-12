@@ -40,6 +40,7 @@ void GreenKoopa::CreateGreenKoopaIfAny() {
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
+								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
 								Enemies::SetEnemyAsActive(y,x);
 								running.push_back(g);
