@@ -214,6 +214,9 @@ void Mario::SetDimensions(Dim x, Dim y) {
 		MarioAnimator->GetSprite()->SetX(x);
 		MarioAnimator->GetSprite()->SetY(y);
 
+		MarioBWalk->GetSprite()->SetX(x);
+		MarioBWalk->GetSprite()->SetY(y);
+
 		MarioWaiting->GetSprite()->SetX(x);
 		MarioWaiting->GetSprite()->SetY(y);
 
