@@ -25,8 +25,21 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 	assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
+
+	if(Mario::GetState() == Jumping){
+		if(Collision_map[j + x_tile][i+y_tile] != 0 && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
+
+			Mario::GetMarioCurrentSprite()->Move(0,1);
+		}
+		return true;
+	}
+
+	if(Mario::GetState() == WalkAndJump){
+		return true;
+	}
+
 	if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {
-		if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
+		if (Collision_map[j + x_tile][i + y_tile + 1] == 34) {	//touvlo
 			Mario::GetMarioCurrentSprite()->MoveLeft(1);
 		}
 		
@@ -47,6 +60,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	if(Collision_map[j+x_tile+1][i+y_tile] == 266) {
 		return true;
 	}
+
 	return false;
 }
 
