@@ -68,6 +68,9 @@ class Mario {
 		static void SetDimensions(MovingAnimator* source, MovingPathAnimator* dest);
 		static void SetDimensions(MovingPathAnimator* source, MovingPathAnimator* dest);
 		static void SetDimensions(Dim x, Dim y);
+		static bool IsOnAir(Dim x, Dim y);
+		static bool CanGoLeft(Dim x, Dim y);
+		static bool CanGoRight(Dim x, Dim y);
 };
 
 #endif

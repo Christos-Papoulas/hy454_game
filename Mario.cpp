@@ -285,3 +285,30 @@ void Mario::SetDimensions(MovingPathAnimator* source, MovingPathAnimator* dest) 
 		source->GetSprite()->SetX(dest->GetSprite()->GetX());
 		source->GetSprite()->SetY(dest->GetSprite()->GetY());
 }
+
+bool Mario::IsOnAir(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i, y + j + 1) == 0)
+				return true;
+		return false;
+}
+
+bool Mario::CanGoLeft(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i - 1, y + j) != 0)
+				return false;
+		return true;
+}
+
+bool Mario::CanGoRight(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i + 1, y + j) != 0)
+				return false;
+		return true;
+}

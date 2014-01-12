@@ -95,12 +95,14 @@ bool MarioBrosMain::InitAllegro(){
 
 //game loop logic
 void MarioBrosMain::MainLoopOneIteration() {
+	if(gameState != Start){
 		InputManagement(); //just reads from local input queue
 		AnimationProgress();
 		ArtificialIntelligence();
 		CollisionChecking();
 		//CommitDestructions();
 		//FPSCalculation();
+	}
 }
 
 void MarioBrosMain::InputManagement(){
@@ -111,9 +113,15 @@ void MarioBrosMain::InputManagement(){
 		
 
 	if(1 && !Mario::isWalkingJump() && !Mario::isStandingJumping() && gameState == Play) {
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT))
-						if(Mario::isWalking() && !Mario::isWalkingJump())
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
+					if(!z_pressed){
+						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+						z_pressed = 1;
+					}
+						if(Mario::isWalking() && !Mario::isWalkingJump()){
 							return Mario::MarioWalkingJump();
+						}
+				}
 				
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)){ // up
 						return ; // @todo something
