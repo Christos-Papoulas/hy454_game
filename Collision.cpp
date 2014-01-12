@@ -26,12 +26,12 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
 
-	if(Collision_map[j + x_tile][i+y_tile] == 1) {
-		Mario::GetMarioCurrentSprite()->MoveUp(1);
+	if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {
+		//Mario::GetMarioCurrentSprite()->MoveUp(1);
 	}
 
 	if(Mario::GetState() == Jumping){
-		if(Collision_map[j + x_tile - 1][i+y_tile] != 0 && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
+		if(Collision_map[j + x_tile][i+y_tile] != 0 && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
 
 			Mario::GetMarioCurrentSprite()->Move(0,1);
 		}
