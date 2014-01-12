@@ -115,7 +115,10 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	
+	if(MarioBWalk->GetSprite()->GetX() <= 3)
+			MarioBWalk->GetMovingAnimation()->SetDx(0);
+	else
+			MarioBWalk->GetMovingAnimation()->SetDx(-3);
 	ChangeState(backwalk);
 	//Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	//MarioAnimator->GetSprite()->MoveLeft(1);
