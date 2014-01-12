@@ -34,7 +34,7 @@ class Enemies {
 						map[x][y] = value;
 				}
 				static Index GetFromMap(Dim x, Dim y) {
-						assert(x < MAX_HEIGHT && y < MAX_WIDTH);
+						assert(x < MAX_HEIGHT+1 && y < MAX_WIDTH);
 						return map[x][y];
 				}
 				static void ReadMap();

@@ -27,7 +27,7 @@ void Goumbas::ArtificialIntelligence() {
 
 void Goumbas::CreateGoumbaifAny() {
 		MovingAnimator* g = NULL;
-		for(Dim i = 0; i < 15; i++)
+		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_WIDTH; j++){
 						Dim y = i;
 						Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();

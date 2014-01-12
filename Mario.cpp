@@ -137,7 +137,7 @@ void Mario::MarioMovesRight() {
 			Goumbas::ViewWindowMove();
 			GreenKoopa::ViewWindowMove();
 			countScroll++;
-			if(countScroll == 15) {
+			if(countScroll == 16) {
 				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
 				//MarioAnimator->GetSprite()->SetX(16*5);
 				(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
