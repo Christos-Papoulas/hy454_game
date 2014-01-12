@@ -31,15 +31,11 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	}
 
 	if(Mario::GetState() == Jumping){
-		if(Collision_map[j + x_tile][i+y_tile] != 0 && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
+		if(((Collision_map[j + x_tile][i+y_tile] != 0) || (Collision_map[j + x_tile][i+y_tile + 1] != 0) ) && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
 
 			Mario::GetMarioCurrentSprite()->Move(0,1);
 		}
-
-		if(Collision_map[j + x_tile][i+y_tile + 1] != 0 && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
-
-			Mario::GetMarioCurrentSprite()->Move(0,1);
-		}
+		
 		return true;
 	}
 
@@ -47,30 +43,36 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 		if(Collision_map[j + x_tile][i+y_tile] == 2) {
 			Mario::GetMarioCurrentSprite()->MoveUp(16);
 		}
-		return true;
-	}
 
-	if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {
-		if (Collision_map[j + x_tile][i + y_tile + 1] == 34) {	//touvlo
-			Mario::GetMarioCurrentSprite()->MoveLeft(1);
+		if(Collision_map[j+x_tile+1][i+y_tile] == 34) {
+			if (Collision_map[j+x_tile][i+y_tile+1] == 34) {	//touvlo
+				//Mario::GetMarioCurrentSprite()->MoveLeft(1);
+			}
+			return false;
 		}
-		
+
 		return true;
 	}
 
-	if(Collision_map[j+x_tile+1][i+y_tile] != 0) {
-		if (Collision_map[j+x_tile][i+y_tile+1] != 0) {	//touvlo
-			Mario::GetMarioCurrentSprite()->MoveLeft(1);
+	if(Mario::GetState() == Waiting){
+		if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {		//an pataei katw
+			return true;
 		}
-		return true;
 	}
 
-	if(Collision_map[j+x_tile+1][i+y_tile] == 265) {
-		return true;
+	if(Mario::GetState() == backwalk){
+		if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {		//an pataei katw
+			return true;
+		}
 	}
 
-	if(Collision_map[j+x_tile+1][i+y_tile] == 266) {
-		return true;
+	if(Mario::GetState() == Walking){
+		if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {		//an pataei katw
+			if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
+				Mario::GetMarioCurrentSprite()->MoveLeft(1);
+			}
+			return true;
+		}
 	}
 
 	return false;

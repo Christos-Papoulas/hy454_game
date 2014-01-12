@@ -13,7 +13,7 @@ void Initializer::InitMarioWalking() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						4, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(0u)
+						8, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(0u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
