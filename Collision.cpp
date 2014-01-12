@@ -11,6 +11,8 @@ void Collision::SetValue(Dim x, Dim y, Dim value) {
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
 		if (value == 1 || value == 34 || value == 298 || value == 265)
 			Collision_map[x][y] = value;
+		else if(value == 2 )
+			Collision_map[x][y] = 1;
 		else
 			Collision_map[x][y] = 0;
 		if (value == 303)
