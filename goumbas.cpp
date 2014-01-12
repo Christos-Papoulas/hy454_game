@@ -48,33 +48,6 @@ void Goumbas::CreateGoumbaifAny() {
 				}
 }
 
-bool CanGoLeft(Dim x, Dim y) {
-		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
-		
-		if(Collision::GetValue(x + i - 1, y + j) != 0)
-				return false;
-		return true;
-}
-
-bool CanGoRight(Dim x, Dim y) {
-		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
-		
-		if(Collision::GetValue(x + i + 1, y + j) != 0)
-				return false;
-		return true;
-}
-
-bool IsOnAir(Dim x, Dim y) {
-		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
-		
-		if(Collision::GetValue(x + i, y + j + 1) == 0)
-				return true;
-		return false;
-}
-
 void Goumbas::MoveGoumbas() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
@@ -91,18 +64,18 @@ void Goumbas::MoveGoumbas() {
 						return ;
 				}
 
-				if(CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
 						g->GetMovingAnimation()->SetDx(-2);
-				else if(!CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+				else if(!Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
 						g->GetMovingAnimation()->SetDx(2);
-				else if( CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+				else if( Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
 						g->GetMovingAnimation()->SetDx(2);
-				else if( !CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+				else if( !Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
 						g->GetMovingAnimation()->SetDx(-2);
 				else
 						g->GetMovingAnimation()->SetDx(0);
 
-				if( IsOnAir(TileX, TileY) ) 
+				if( Enemies::IsOnAir(TileX, TileY) ) 
 						g->GetMovingAnimation()->SetDy(3);
 				else
 						g->GetMovingAnimation()->SetDy(0);

@@ -51,13 +51,33 @@ void GreenKoopa::MoveGreenKoopas() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
 				Dim currPos = g->GetSprite()->GetX();
-				if(currPos < 2) {
+
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
+				
+				if(currPos < 2 || TileX > MAX_WIDTH) {
 						suspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
 						
 						return ;
 				}
+
+				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else if(!Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( !Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else
+						g->GetMovingAnimation()->SetDx(0);
+
+				if( Enemies::IsOnAir(TileX, TileY) ) 
+						g->GetMovingAnimation()->SetDy(1);
+				else
+						g->GetMovingAnimation()->SetDy(0);
 		}
 }
 
