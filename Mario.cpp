@@ -79,22 +79,31 @@ Sprite* Mario::GetMarioCurrentSprite() {
 		return NULL;
 }
 
-void Mario::ChangeState() {
-	/*	switch (marioState) {
+void Mario::ChangeState(MarioState nextState) {
+		if(marioState == nextState)
+				return ;
+		unsigned int curr = CurrTime();
+		switch (nextState) {
 		case Waiting:
-				return MarioWaiting->GetSprite();
+				MarioWaiting->SetLastTime(curr);
+				break;
 		case Walking:
-				return MarioAnimator->GetSprite();
+				MarioAnimator->SetLastTime(curr);
+				break;
 		case backwalk:
-				return MarioBWalk->GetSprite();
+				MarioBWalk->SetLastTime(curr);
+				break;
 		case Jumping:
-				return MarioSJump->GetSprite();
+				MarioSJump->SetLastTime(curr);
+				break;
 		case WalkAndJump:
-				return MarioWJump->GetSprite();
+				MarioWJump->SetLastTime(curr);
+				break;
 		default: 
 				assert(0);
 		}
-		return NULL;*/
+		marioState = nextState;
+		return ;
 }
 
 void Mario::MarioFinisWaiting(Animator*, void*){ 
@@ -106,8 +115,8 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	MarioBWalk->GetSprite()->MoveLeft(2);
-	marioState = backwalk;
+	
+	ChangeState(backwalk);
 	//Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	//MarioAnimator->GetSprite()->MoveLeft(1);
 }
@@ -126,7 +135,7 @@ void Mario::MarioMovesRight() {
 	} //else 
 		//	MarioAnimator->GetSprite()->Move(1,0);
 	
-	marioState = Walking;
+	ChangeState(Walking);
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
@@ -136,7 +145,7 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 
-		marioState = Waiting;
+		ChangeState(Waiting);
 		return ;
 }
 
@@ -152,7 +161,7 @@ void Mario::MarioStandingJump() {
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
 		
-		marioState = Jumping;
+		ChangeState(Jumping);
 		return ;
 }
 
@@ -163,7 +172,7 @@ void Mario::MarioWalkingJump() {
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsRunning(MarioWJump);
 		
-		marioState = WalkAndJump;
+		ChangeState(WalkAndJump);
 		return ;
 }
 
@@ -176,7 +185,7 @@ void Mario::MarioFinishBackWalk(Animator*, void*) {
 		AnimatorHolder::MarkAsSuspended(MarioBWalk);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
-		marioState = Waiting;
+		ChangeState(Waiting);
 
 		return ;
 }
@@ -190,7 +199,7 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
-		marioState = Waiting;
+		ChangeState(Waiting);
 
 		return ;
 }
@@ -206,7 +215,7 @@ void Mario::MarioFinishWjumping(Animator*, void*) {
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
-		marioState = Waiting;
+		ChangeState(Waiting);
 
 		return ;
 }

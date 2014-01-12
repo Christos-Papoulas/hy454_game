@@ -59,7 +59,7 @@ class Mario {
 		static void MarioWalkingJump();
 		static  MovingAnimator* GetAnimator();
 		static MarioState GetState() { return marioState; }
-		static void ChangeState();
+		static void ChangeState(MarioState );
 		//copy the dest x,y to the the source
 		static void SetDimensions(MovingAnimator* source, MovingAnimator* dest);
 		//copy the dest x,y to all other mario animations
