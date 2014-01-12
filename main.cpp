@@ -165,6 +165,7 @@ void MarioBrosMain::AnimationProgress(){
 void MarioBrosMain::ArtificialIntelligence(){
 		Goumbas::ArtificialIntelligence();
 		GreenKoopa::ArtificialIntelligence();
+		Items::ArtificialIntelligence();
 		return ;
 }
 
@@ -195,6 +196,7 @@ void MarioBrosMain::InitializeGame() {
 		gameState = Start;
 
 		Enemies::Create();
+		Items::Init();
 		redraw = true;
 }
 

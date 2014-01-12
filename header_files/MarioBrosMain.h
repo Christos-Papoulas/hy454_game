@@ -18,6 +18,7 @@
 #include "enemies\Enemies.h"
 #include "enemies\Goumba.h"
 #include "enemies\GreenKoopaTroopa.h"
+#include "items\Items.h"
 #include "Objects.h"
 
 

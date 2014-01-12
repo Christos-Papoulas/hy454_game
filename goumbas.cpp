@@ -59,7 +59,7 @@ void Goumbas::MoveGoumbas() {
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || TileX > MAX_WIDTH) {
+				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
 						goumbaSuspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
