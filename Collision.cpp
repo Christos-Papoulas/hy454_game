@@ -27,7 +27,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	assert(i+y_tile < MAX_WIDTH);
 	if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {
 		if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
-			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
+			Mario::GetMarioCurrentSprite()->MoveLeft(1);
 		}
 		
 		return true;
@@ -35,7 +35,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 
 	if(Collision_map[j+x_tile+1][i+y_tile] != 0) {
 		if (Collision_map[j+x_tile][i+y_tile+1] != 0) {	//touvlo
-			Mario::GetActiveMario()->GetSprite()->MoveLeft(1);
+			Mario::GetMarioCurrentSprite()->MoveLeft(1);
 		}
 		return true;
 	}
@@ -58,6 +58,6 @@ void Collision::CheckGroundCollision() {
 	
 	if(!Collision::MarioCollision(x,y)){
 		activeMario->Move(0,1);
-		Mario::SetDimensions(Mario::GetActiveMario());
+		Mario::SetDimensions(Mario::GetMarioCurrentSprite()->GetX(),Mario::GetMarioCurrentSprite()->GetY());
 	}
 }
