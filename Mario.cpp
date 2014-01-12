@@ -79,6 +79,24 @@ Sprite* Mario::GetMarioCurrentSprite() {
 		return NULL;
 }
 
+void Mario::ChangeState() {
+	/*	switch (marioState) {
+		case Waiting:
+				return MarioWaiting->GetSprite();
+		case Walking:
+				return MarioAnimator->GetSprite();
+		case backwalk:
+				return MarioBWalk->GetSprite();
+		case Jumping:
+				return MarioSJump->GetSprite();
+		case WalkAndJump:
+				return MarioWJump->GetSprite();
+		default: 
+				assert(0);
+		}
+		return NULL;*/
+}
+
 void Mario::MarioFinisWaiting(Animator*, void*){ 
 		SetDimensions(MarioBWalk, MarioAnimator);
 		return ;
