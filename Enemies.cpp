@@ -90,7 +90,7 @@ bool Enemies::IsOnAir(Dim x, Dim y) {
 }
 
 
-bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) {
+bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
 		Dim ei = x;
 		Dim ej = y;
 
@@ -99,12 +99,17 @@ bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) {
 
 		Dim i = (ei > mi) ? ei - mi : mi - ei;
 		Dim j = (ej > mj) ? ej - mj : mj - ej;
-		std::cout << "i: " << i << " j: " << j << "\n";
+
 		if(i < COLLISION_DETECT && j < COLLISION_DETECT)
 				return true;
 		return false;
 }
 
-bool Enemies::IsMarioAbove(Dim x, Dim y) {
+bool Enemies::IsMarioAbove(Dim x, Dim y) { //x, y, is tiles
+		Dim mx = Mario::GetMarioCurrentSprite()->GetTileX();
+		Dim my = Mario::GetMarioCurrentSprite()->GetTileY();
+
+		if(x == mx && my + 1 == y)
+				return true;
 		return false;
 }

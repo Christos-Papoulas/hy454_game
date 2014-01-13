@@ -25,7 +25,7 @@ void Goumbas::Dead() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 500, true, ParseMarioInfo::GetAnimationIdOf(8u)
+						0, 0, 200, false, ParseMarioInfo::GetAnimationIdOf(8u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -87,8 +87,22 @@ void Goumbas::MoveGoumbas() {
 						return ;
 				}
 
-				if(Enemies::IsMarioAbove(TileX, TileY))
-						int x= 3;
+				if(Enemies::IsMarioAbove(TileX, TileY)){
+						MovingAnimator* d;
+						if(dead.empty()) 
+								Dead();
+						d = dead.back();
+						if(!d) return ;
+						d->GetSprite()->SetX(g->GetSprite()->GetX());
+						d->GetSprite()->SetY(g->GetSprite()->GetY() + 8);
+						d->SetLastTime(CurrTime());
+						AnimatorHolder::MarkAsRunning(d);
+
+						goumbaSuspending.push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running.erase(it);
+						return ;
+				}
 
 				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
 						g->GetMovingAnimation()->SetDx(-2);
@@ -110,6 +124,8 @@ void Goumbas::MoveGoumbas() {
 
 void Goumbas::ViewWindowMove() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
+				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
+		for (std::list<MovingAnimator*>::iterator it=dead.begin(); it != dead.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }
 
