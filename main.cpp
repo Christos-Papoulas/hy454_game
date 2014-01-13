@@ -99,6 +99,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		AnimationProgress();
 		ArtificialIntelligence();
 		CollisionChecking();
+		Mario::MoveViewWin();
 		//CommitDestructions();
 		//FPSCalculation();
 	}
@@ -111,7 +112,7 @@ void MarioBrosMain::InputManagement(){
 		space_pressed = 0;
 		
 
-	if(1 && !Mario::isWalkingJump() && !Mario::isStandingJumping() && gameState == Play) {
+	if(!Mario::isWalkingJump() && !Mario::isStandingJumping() && gameState == Play) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
 					if(!z_pressed){
 						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);

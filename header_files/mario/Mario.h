@@ -51,7 +51,7 @@ class Mario {
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
 		static void Destroy();
 		
-
+		static void MoveViewWin();
 		static void MarioFinishWalking(Animator*, void*);
 		static void MarioFinishBackWalk(Animator*, void*);
 		static void MarioFinishSjumping(Animator*, void*);

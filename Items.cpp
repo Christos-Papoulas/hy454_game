@@ -1,7 +1,7 @@
 #include "header_files\items\Items.h"
 
-std::list<MovingAnimator*> Items::suspending;
-std::list<MovingAnimator*> Items::running;
+std::map<std::string, std::list<MovingPathAnimator*> > Items::suspending;
+std::map<std::string, std::list<MovingPathAnimator*> > Items::running;
 
 Dim Items::map[MAX_HEIGHT][MAX_WIDTH];
 Index**	Items::shortMap;
@@ -58,15 +58,15 @@ void Items::CreateIfAny() {
 										continue;
 								//if(suspending.empty()) 
 									//	Create();
-								g = suspending.back();
-								suspending.pop_back();
+							//	g = suspending.back();
+							//	suspending.pop_back();
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
 								SetItemAsActive(y,x);
-								running.push_back(g);
+								//running.push_back(g);
 						}
 				}
 }
@@ -94,4 +94,39 @@ bool Items::IsItemActive(Dim x, Dim y) {
 						return shortMap[i][ISACTIVE] == 1;
 		assert(0);
 		return 0;
+}
+
+void Items::CreateScores() {
+		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("onehundred") ));
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 5u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry((i % 2) ? -4*((i+1)/2) : +4*((i+1)/2), -2, 0, 70);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(11u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator();
+		
+		suspending["onehundred"].push_back( aMovAnimr );
+
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(FinishItemAnimation, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+void Items::Throw100Coins(Dim x, Dim y) {
+		MovingPathAnimator *coin;
+		if(suspending["onehundred"].size() == 0)
+				CreateScores();
+		coin = suspending["onehundred"].back();
+		suspending["onehundred"].pop_back();
+		coin->GetSprite()->SetX(x);
+		coin->GetSprite()->SetY(y);
+		coin->SetLastTime(CurrTime());
+		AnimatorHolder::MarkAsRunning(coin);
+		running["onehundred"].push_back(coin);
+}
+
+void Items::FinishItemAnimation(Animator* a, void* l) {
+		suspending["onehundred"].push_back( (MovingPathAnimator*)  a);
+
 }

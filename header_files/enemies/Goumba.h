@@ -11,6 +11,7 @@
 #include "../terrain/terrain.h"
 #include "../tiles/TileLayer.h"
 #include "../collision/Collision.h"
+#include "../items/Items.h"
 
 #include <stdlib.h>
 #include <list>

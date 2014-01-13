@@ -13,17 +13,21 @@
 #include "../enemies/Enemies.h"
 
 #include <stdlib.h>
+#include <string>
+#include <map>
 #include <list>
 
 #define ITEMS_TYLES "data/Items_1-1.txt"
 
 class Items {
-		static std::list<MovingAnimator*> suspending;
-		static std::list<MovingAnimator*> running;
+		static std::map<std::string, std::list<MovingPathAnimator*> > suspending;
+		static std::map<std::string, std::list<MovingPathAnimator*> > running;
 
 		static Dim map[MAX_HEIGHT][MAX_WIDTH];
 		static Index**	shortMap;
 		static Index countItems;
+
+		static void CreateScores();
 
 		static Dim GetFromMap(Dim x, Dim y) { return map[x][y]; }
 		static void SetOnMap(Dim value, Dim x, Dim y) { map[x][y] = value; }
@@ -37,6 +41,8 @@ class Items {
 public:
 		static void Init();
 		static void ArtificialIntelligence();
+		static void Throw100Coins(Dim x, Dim y);
+		static void FinishItemAnimation(Animator*, void*);
 		
 };
 

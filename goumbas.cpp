@@ -52,7 +52,7 @@ void Goumbas::CreateGoumbaifAny() {
 						if(Enemies::GetFromMap(y, x) == 161) {
 								if(Enemies::IsEnemyActive(y, x)) 
 										continue;
-								if(goumbaSuspending.empty()) 
+								if(goumbaSuspending.size() == 0) 
 										Create();
 								g = goumbaSuspending.back();
 								goumbaSuspending.pop_back();
@@ -88,19 +88,21 @@ void Goumbas::MoveGoumbas() {
 				}
 
 				if(Enemies::IsMarioAbove(TileX, TileY)){
-						MovingAnimator* d;
+						MovingAnimator* d; Dim x, y;
 						if(dead.empty()) 
 								Dead();
 						d = dead.back();
 						if(!d) return ;
-						d->GetSprite()->SetX(g->GetSprite()->GetX());
-						d->GetSprite()->SetY(g->GetSprite()->GetY() + 8);
+						d->GetSprite()->SetX(x = g->GetSprite()->GetX());
+						d->GetSprite()->SetY(y = g->GetSprite()->GetY() + 8);
 						d->SetLastTime(CurrTime());
 						AnimatorHolder::MarkAsRunning(d);
 
 						goumbaSuspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
+
+						Items::Throw100Coins(x, y);
 						return ;
 				}
 

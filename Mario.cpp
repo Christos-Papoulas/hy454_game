@@ -11,6 +11,29 @@ MovingPathAnimator* Mario::MarioDeath = NULL;
 
 MarioState Mario::marioState = Walking;
 
+Dim countScroll = 0;
+static bool MoveViewWindow(Dim x) {
+		if( x > 85) {
+			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
+			
+			Goumbas::ViewWindowMove();
+			GreenKoopa::ViewWindowMove();
+			countScroll++;
+			if(countScroll == 16) {
+				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
+				(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
+				countScroll = 0;
+			}
+			return true;
+	} 
+	return false;
+}
+
+void Mario::MoveViewWin() {
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		if(MoveViewWindow(m->GetX()))
+				m->SetX(m->GetX() - 1);
+}
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
 	MarioAnimator = mario_animator;
@@ -77,6 +100,7 @@ void Mario::ChangeState(MarioState nextState) {
 		switch (nextState) {
 				case Waiting:
 						MarioWaiting->SetLastTime(curr);
+//						MoveViewWindow(MarioWaiting->GetSprite()->GetX());
 						break;
 				case Walking:
 						MarioAnimator->SetLastTime(curr);
@@ -115,36 +139,21 @@ void Mario::MarioMovesLeft() {
 	else
 			MarioBWalk->GetMovingAnimation()->SetDx(-3);
 	ChangeState(backwalk);
-	//Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
-	//MarioAnimator->GetSprite()->MoveLeft(1);
 }
 
-Dim countScroll = 0;
 void Mario::MarioMovesRight() {
+	if(marioState == WalkAndJump)
+			return ;
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioBWalk);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
 	
-	if( x > 85) {
-			//(Terrain::GetTileLayer())-> ScrollHorizBy(1); 
-			//MarioAnimator->GetSprite()->SetX(16*5);
-			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
-			MarioAnimator->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX() - 1);
-			Goumbas::ViewWindowMove();
-			GreenKoopa::ViewWindowMove();
-			countScroll++;
-			if(countScroll == 16) {
-				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
-				//MarioAnimator->GetSprite()->SetX(16*5);
-				(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
-				countScroll = 0;
-			}
+	//if( MoveViewWindow(x) )
+	//		MarioAnimator->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX() - 1);
+			  
 			
-	}  
-			
-	
 	ChangeState(Walking);
 }
 
@@ -160,6 +169,8 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
+		if(marioState == Jumping)
+				return ;
 		SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -176,10 +187,16 @@ void Mario::MarioStandingJump() {
 }
 
 void Mario::MarioWalkingJump() {
+		if(marioState == WalkAndJump){
+				return ;
+		}
+
 		SetDimensions(MarioWJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
+		AnimatorHolder::MarkAsSuspended(MarioSJump);
+		
 		AnimatorHolder::MarkAsRunning(MarioWJump);
 		
 		ChangeState(WalkAndJump);
@@ -194,6 +211,7 @@ void Mario::MarioDeading() {
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsSuspended(MarioWJump);
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
+		AnimatorHolder::MarkAsSuspended(MarioBWalk);
 
 		AnimatorHolder::MarkAsRunning(MarioDeath);
 		ChangeState(WalkAndJump);
@@ -227,7 +245,7 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		return ;
 }
 
-void Mario::MarioFinishWjumping(Animator*, void*) {
+void Mario::MarioFinishWjumping(Animator* , void* ) {
 		SetDimensions(MarioWaiting, MarioWJump);
 		SetDimensions(MarioAnimator, MarioWJump);
 		SetDimensions(MarioSJump, MarioWJump);
