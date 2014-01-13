@@ -2,6 +2,7 @@
 
 std::list<MovingAnimator*> Goumbas::goumbaSuspending;
 std::list<MovingAnimator*> Goumbas::running;
+std::list<MovingAnimator*> Goumbas::dead;
 
 void Goumbas::Create() {
 		Sprite *goumbaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("goombawalking") ));
@@ -19,10 +20,26 @@ void Goumbas::Create() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Goumbas::Dead() {
+		Sprite *goumbaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("goombadead") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 0, 
+						0, 0, 500, true, ParseMarioInfo::GetAnimationIdOf(8u)
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		Goumbas::dead.push_back( aMovAnimr );
+				
+		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(FinishWalking, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Goumbas::ArtificialIntelligence() {
 		CreateGoumbaifAny();
-		MoveGoumbas();		
-		//if(!goumbasCount) AnimatorHolder::MarkAsSuspended(g);
+		MoveGoumbas();
+		GoumbasKillMario();
 }
 
 void Goumbas::CreateGoumbaifAny() {
@@ -50,6 +67,10 @@ void Goumbas::CreateGoumbaifAny() {
 				}
 }
 
+void Goumbas::FinishWalking(Animator*, void*) {
+		; // @todo do something? view coins
+}
+
 void Goumbas::MoveGoumbas() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
@@ -65,6 +86,9 @@ void Goumbas::MoveGoumbas() {
 						running.erase(it);
 						return ;
 				}
+
+				if(Enemies::IsMarioAbove(TileX, TileY))
+						int x= 3;
 
 				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
 						g->GetMovingAnimation()->SetDx(-2);
@@ -87,4 +111,15 @@ void Goumbas::MoveGoumbas() {
 void Goumbas::ViewWindowMove() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
+}
+
+void Goumbas::GoumbasKillMario() {
+		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+				MovingAnimator* g = *it;
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+
+				if(Enemies::IsMarioLeftOrRight(x, y))
+						 Mario::MarioDeading();
+		}
 }

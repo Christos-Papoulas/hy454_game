@@ -6,6 +6,8 @@ MovingAnimator* Mario::MarioWaiting = NULL;
 MovingPathAnimator* Mario::MarioSJump = NULL;
 MovingPathAnimator* Mario::MarioWJump = NULL;
 MovingAnimator* Mario::MarioBWalk = NULL;
+MovingPathAnimator* Mario::MarioDeath = NULL;
+
 
 MarioState Mario::marioState = Walking;
 
@@ -43,22 +45,9 @@ void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
 				MarioWJump = mario_animator;
 }
 
-MovingAnimator* Mario::GetActiveMario() {
-		switch (marioState) {
-		case Waiting:
-				return MarioWaiting;
-		case Walking:
-				return MarioAnimator;
-		case backwalk:
-				return NULL;
-		case Jumping:
-				return NULL;
-		case WalkAndJump:
-				return NULL;
-		default: 
-				assert(0);
-		}
-		return NULL;
+void Mario::CreateDeath(MovingPathAnimator* mario_animator) {
+		if(!MarioDeath)
+				MarioDeath = mario_animator;
 }
 
 Sprite* Mario::GetMarioCurrentSprite() {
@@ -73,6 +62,8 @@ Sprite* Mario::GetMarioCurrentSprite() {
 				return MarioSJump->GetSprite();
 		case WalkAndJump:
 				return MarioWJump->GetSprite();
+		case Death:
+				return MarioDeath->GetSprite();
 		default: 
 				assert(0);
 		}
@@ -84,23 +75,27 @@ void Mario::ChangeState(MarioState nextState) {
 				return ;
 		unsigned int curr = CurrTime();
 		switch (nextState) {
-		case Waiting:
-				MarioWaiting->SetLastTime(curr);
-				break;
-		case Walking:
-				MarioAnimator->SetLastTime(curr);
-				break;
-		case backwalk:
-				MarioBWalk->SetLastTime(curr);
-				break;
-		case Jumping:
-				MarioSJump->SetLastTime(curr);
-				break;
-		case WalkAndJump:
-				MarioWJump->SetLastTime(curr);
-				break;
-		default: 
-				assert(0);
+				case Waiting:
+						MarioWaiting->SetLastTime(curr);
+						break;
+				case Walking:
+						MarioAnimator->SetLastTime(curr);
+						break;
+				case backwalk:
+						MarioBWalk->SetLastTime(curr);
+						break;
+				case Jumping:
+						MarioSJump->SetLastTime(curr);
+						break;
+				case WalkAndJump:
+						MarioWJump->SetLastTime(curr);
+						break;
+				case Death:
+						MarioDeath->SetLastTime(curr);
+
+						break;
+				default: 
+						assert(0);
 		}
 		marioState = nextState;
 		return ;
@@ -191,6 +186,19 @@ void Mario::MarioWalkingJump() {
 		return ;
 }
 
+void Mario::MarioDeading() {
+		if(marioState == Death) return ;
+		SetDimensions(MarioDeath, MarioAnimator);
+
+		AnimatorHolder::MarkAsSuspended(MarioAnimator);
+		AnimatorHolder::MarkAsSuspended(MarioWaiting);
+		AnimatorHolder::MarkAsSuspended(MarioWJump);
+		AnimatorHolder::MarkAsSuspended(MarioSJump);
+
+		AnimatorHolder::MarkAsRunning(MarioDeath);
+		ChangeState(WalkAndJump);
+}
+
 void Mario::MarioFinishBackWalk(Animator*, void*) {
 		SetDimensions(MarioWaiting, MarioBWalk);
 		SetDimensions(MarioAnimator, MarioBWalk);
@@ -233,6 +241,10 @@ void Mario::MarioFinishWjumping(Animator*, void*) {
 		ChangeState(Waiting);
 
 		return ;
+}
+
+void Mario::MarioFinishDeath(Animator*, void*) {
+		; //@todo finish the game
 }
 
 MovingAnimator* Mario::GetAnimator() {

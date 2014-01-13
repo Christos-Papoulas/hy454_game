@@ -90,10 +90,9 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 
 void Collision::CheckGroundCollision() {
 	Sprite* activeMario = Mario::GetMarioCurrentSprite();
-	if(activeMario == NULL) return ; // NULL when mario is jumping
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
-
+	if(Mario::GetState() == Death) return ;
 	//if(Mario::IsOnAir(x,y)){
 	//	activeMario->Move(0,1);
 	//}

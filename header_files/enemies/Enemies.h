@@ -10,10 +10,13 @@
 #include "../parsers/ParseMarioInfo.h"
 #include "../Objects.h"
 #include "../tiles/TileLayer.h" //only for the MAX_HEGHT and MAX_WIDTH of map
+#include "../mario/Mario.h"
 #include "Goumba.h"
 
 #define ENEMIES_TYLES "data/enemies_1-1.txt"
 #define ENEMIES_SPRITES "data/Enemies.info"
+
+#define COLLISION_DETECT 10
 
 #define X_INDEX 0
 #define Y_INDEX 1
@@ -44,6 +47,8 @@ class Enemies {
 				static bool CanGoLeft(Dim x, Dim y);
 				static bool CanGoRight(Dim x, Dim y);
 				static bool IsOnAir(Dim x, Dim y);
+				static bool IsMarioLeftOrRight(Dim x, Dim y);
+				static bool IsMarioAbove(Dim x, Dim y);
 };
 
 #endif

@@ -64,7 +64,7 @@ bool Enemies::IsEnemyActive(Dim x, Dim y) {
 
 bool Enemies::CanGoLeft(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		
 		if(Collision::GetValue(x + i - 1, y + j) != 0)
 				return false;
@@ -73,7 +73,7 @@ bool Enemies::CanGoLeft(Dim x, Dim y) {
 
 bool Enemies::CanGoRight(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		
 		if(Collision::GetValue(x + i + 1, y + j) != 0)
 				return false;
@@ -82,9 +82,29 @@ bool Enemies::CanGoRight(Dim x, Dim y) {
 
 bool Enemies::IsOnAir(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		
 		if(Collision::GetValue(x + i, y + j + 1) == 0)
 				return true;
+		return false;
+}
+
+
+bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) {
+		Dim ei = x;
+		Dim ej = y;
+
+		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
+
+		Dim i = (ei > mi) ? ei - mi : mi - ei;
+		Dim j = (ej > mj) ? ej - mj : mj - ej;
+		std::cout << "i: " << i << " j: " << j << "\n";
+		if(i < COLLISION_DETECT && j < COLLISION_DETECT)
+				return true;
+		return false;
+}
+
+bool Enemies::IsMarioAbove(Dim x, Dim y) {
 		return false;
 }

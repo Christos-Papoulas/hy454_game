@@ -97,10 +97,28 @@ void Initializer::InitMarioBackWalk() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Initializer::InitMarioDeath() {
+		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariodeading") ));
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i < 10u) ? -2 : 2, 0, 200);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(2u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		
+		Mario::CreateDeath(aMovAnimr);
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishDeath, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Initializer::InitMario() {
 		InitMarioWalking();
 		InitMarioWaiting();
 		InitMarioStandJump();
 		InitMarioWalkJumnp();
 		InitMarioBackWalk();
+		InitMarioDeath();
 }

@@ -85,7 +85,6 @@ bool MarioBrosMain::InitAllegro(){
 		}
 		
 		if(gameState == Pause){
-			AnimatorHolder::MarkAsSuspended(Mario::GetActiveMario());
 			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 		}
 
