@@ -64,7 +64,9 @@ class Mario {
 		static void MarioMovesLeft();
 		static void MarioMovesRight();
 		static void MarioDeading();
-
+		
+		static void EnterPipe();
+		static Dim PipeEnterScroll(Dim i);
 		static  MovingAnimator* GetAnimator();
 		static MarioState GetState() { return marioState; }
 		static void ChangeState(MarioState );

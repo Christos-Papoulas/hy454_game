@@ -20,7 +20,7 @@
 #include "enemies\GreenKoopaTroopa.h"
 #include "items\Items.h"
 #include "Objects.h"
-
+#include "collision\Collision.h"
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 

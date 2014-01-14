@@ -123,10 +123,8 @@ void MarioBrosMain::InputManagement(){
 						}
 				}
 				
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_UP)){ // up
-						return ; // @todo something
-				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
-						return ; // @todo something
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
+						return Mario::EnterPipe(); // @todo something
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
 						return Mario::MarioMovesRight();
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){ // lest

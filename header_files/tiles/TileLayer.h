@@ -15,7 +15,7 @@
 #define MAX_HEIGHT 15 
 #define MAX_WIDTH 225
 
-#define VIEW_WINDOW_TILE_WIDTH 16
+#define VIEW_WINDOW_TILE_WIDTH 15
 #define VIEW_WINDOW_TILE_HEIGHT 16
 
 //lecture9 slide53
