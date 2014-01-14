@@ -99,11 +99,12 @@ bool Items::IsItemActive(Dim x, Dim y) {
 void Items::CreateScores() {
 		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("onehundred") ));
 		std::vector<PathEntry> paths;
-		for(Dim i = 0u; i < 5u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry((i % 2) ? -4*((i+1)/2) : +4*((i+1)/2), -2, 0, 70);
+		for(Dim i = 0u; i < 8u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry((i % 2) ? -4*((i+1)/2) : +4*((i+1)/2), -2, 0, 250);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(11u));
+		aMovAnimn->SetContinuous(false);
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator();
 		
 		suspending["onehundred"].push_back( aMovAnimr );
@@ -114,19 +115,30 @@ void Items::CreateScores() {
 }
 
 void Items::Throw100Coins(Dim x, Dim y) {
-		MovingPathAnimator *coin;
+		MovingPathAnimator *coin = NULL;
 		if(suspending["onehundred"].size() == 0)
 				CreateScores();
-		coin = suspending["onehundred"].back();
-		suspending["onehundred"].pop_back();
+		coin = suspending["onehundred"].back(); assert(coin);
 		coin->GetSprite()->SetX(x);
 		coin->GetSprite()->SetY(y);
 		coin->SetLastTime(CurrTime());
+
 		AnimatorHolder::MarkAsRunning(coin);
 		running["onehundred"].push_back(coin);
+		suspending["onehundred"].pop_back();
 }
 
 void Items::FinishItemAnimation(Animator* a, void* l) {
-		suspending["onehundred"].push_back( (MovingPathAnimator*)  a);
-
+		std::list<MovingPathAnimator*>::iterator it = running["onehundred"].begin();
+		while (it != running["onehundred"].end()){
+				if((*it) == (MovingPathAnimator*)  a) {
+						suspending["onehundred"].push_back( *it );
+						AnimatorHolder::MarkAsSuspended( *it );
+						running["onehundred"].erase( it );
+						return ;
+				}
+				else
+						 ++it;
+		}
+		return ;
 }

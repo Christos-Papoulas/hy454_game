@@ -80,11 +80,11 @@ bool Enemies::CanGoRight(Dim x, Dim y) {
 		return true;
 }
 
-bool Enemies::IsOnAir(Dim x, Dim y) {
+bool Enemies::IsOnAir(Dim x, Dim y, Dim width) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		
-		if(Collision::GetValue(x + i, y + j + 1) == 0)
+		if(Collision::GetValue(x + i, y + j + 1 + (width>>4)) == 0)
 				return true;
 		return false;
 }

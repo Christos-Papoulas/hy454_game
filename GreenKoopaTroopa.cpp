@@ -74,8 +74,9 @@ void GreenKoopa::MoveGreenKoopas() {
 						g->GetMovingAnimation()->SetDx(-2);
 				else
 						g->GetMovingAnimation()->SetDx(0);
-
-				if( Enemies::IsOnAir(TileX, TileY) ) 
+				Rect r = g->GetSprite()->GetCurrFilm()->GetFrameBox(g->GetSprite()->GetFrame());
+				Dim f = r.GetHeight();
+				if( Enemies::IsOnAir(TileX, TileY, f) ) 
 						g->GetMovingAnimation()->SetDy(1);
 				else
 						g->GetMovingAnimation()->SetDy(0);

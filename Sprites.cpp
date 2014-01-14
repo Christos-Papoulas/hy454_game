@@ -121,3 +121,7 @@ void Sprite::SetFilmAndReset(AnimationFilm* flm) {
 		frameNo = currFilm->GetTotalFrames();
 		SetFrame(0u);
 }
+
+AnimationFilm* Sprite::GetCurrFilm() {
+		return currFilm;
+}

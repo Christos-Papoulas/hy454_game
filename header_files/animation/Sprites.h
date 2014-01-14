@@ -33,7 +33,8 @@ class Sprite {
 				void MoveUp(Dim y);
 				Dim GetTileX();
 				Dim GetTileY();
-				void SetFilmAndReset(AnimationFilm*);		
+				void SetFilmAndReset(AnimationFilm*);
+				AnimationFilm* GetCurrFilm();
 };
 
 #endif

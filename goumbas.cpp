@@ -25,14 +25,14 @@ void Goumbas::Dead() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 200, false, ParseMarioInfo::GetAnimationIdOf(8u)
+						0, 0, 2500, false, ParseMarioInfo::GetAnimationIdOf(8u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
 		Goumbas::dead.push_back( aMovAnimr );
 				
 		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());			
-		aMovAnimr->SetOnFinish(FinishWalking, NULL);
+		aMovAnimr->SetOnFinish(Finish, NULL);
 		AnimatorHolder::Register( aMovAnimr );
 }
 
@@ -67,8 +67,8 @@ void Goumbas::CreateGoumbaifAny() {
 				}
 }
 
-void Goumbas::FinishWalking(Animator*, void*) {
-		; // @todo do something? view coins
+void Goumbas::Finish(Animator *a, void *f) {
+		AnimatorHolder::MarkAsSuspended(a);
 }
 
 void Goumbas::MoveGoumbas() {
@@ -117,7 +117,7 @@ void Goumbas::MoveGoumbas() {
 				else
 						g->GetMovingAnimation()->SetDx(0);
 
-				if( Enemies::IsOnAir(TileX, TileY) ) 
+				if( Enemies::IsOnAir(TileX, TileY, 0) ) 
 						g->GetMovingAnimation()->SetDy(3);
 				else
 						g->GetMovingAnimation()->SetDy(0);

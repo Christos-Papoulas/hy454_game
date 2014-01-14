@@ -149,11 +149,7 @@ void Mario::MarioMovesRight() {
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
 	Dim x = MarioAnimator->GetSprite()->GetX();
-	
-	//if( MoveViewWindow(x) )
-	//		MarioAnimator->GetSprite()->SetX(MarioAnimator->GetSprite()->GetX() - 1);
-			  
-			
+		
 	ChangeState(Walking);
 }
 

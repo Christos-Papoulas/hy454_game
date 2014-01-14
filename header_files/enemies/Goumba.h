@@ -24,7 +24,7 @@ public:
 		static void Create();
 		static void Dead();
 
-		static void FinishWalking(Animator*, void*);
+		static void Finish(Animator *a, void *f);
 
 		static void ArtificialIntelligence();
 		static void CreateGoumbaifAny();
