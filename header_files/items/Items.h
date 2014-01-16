@@ -52,6 +52,8 @@ class Items {
 		static void MakeShortBricks();
 		static bool IsBrickActive(Dim x, Dim y);
 		static void SetBrickAsActive(Dim x, Dim y);
+
+		static void CreateAQuestionAnimation();
 public:
 		static void Init();
 		static void ArtificialIntelligence();

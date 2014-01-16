@@ -97,17 +97,29 @@ void Items::CreateBricks() {
 						if(brick[y][x]) {
 								if(IsBrickActive(y, x)) 
 										continue;
-								if(suspending["bricks"].size() == 0) 
-										CreateABrickAnimation();
-								g = (MovingAnimator* ) suspending["bricks"].back();
-								suspending["bricks"].pop_back();
+								if(brick[y][x] == 2){
+										if(suspending["bricks"].size() == 0) { 
+												CreateABrickAnimation();
+										}
+										g = (MovingAnimator* ) suspending["bricks"].back();
+										suspending["bricks"].pop_back();
+								}	else {
+										if(suspending["questionbrick"].size() == 0)
+												CreateAQuestionAnimation();
+										g = (MovingAnimator* ) suspending["questionbrick"].back();
+										suspending["questionbrick"].pop_back();
+								}
+								
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
 								SetBrickAsActive(y,x);
-								running["bricks"].push_back((Animator*) g);
+								if(brick[y][x] == 2)
+										running["bricks"].push_back((Animator*) g);
+								else
+										running["questionbrick"].push_back((Animator*) g);
 						}
 				}
 }
@@ -160,11 +172,30 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 						return ;
 				}
 		}
+		for (std::list<Animator*>::iterator it=running["questionbrick"].begin(); it != running["questionbrick"].end(); ++it) {
+				MovingAnimator* g = ( MovingAnimator* )*it;
+				Dim currPosX = g->GetSprite()->GetX();
+				Dim currPosY = g->GetSprite()->GetY();
+
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
+
+				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
+						suspending["questionbrick"].push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running["questionbrick"].erase(it);
+						return ;
+				}
+		}
  }
 
  void Items::ViewWindowMove() {
 		 MovingAnimator* g;
 		 for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+				g = (MovingAnimator*)(*it);
+				g->GetSprite()->SetX(g->GetSprite()->GetX() - 1);
+		 }
+		 for (std::list<Animator*>::iterator it=running["questionbrick"].begin(); it != running["questionbrick"].end(); ++it) {
 				g = (MovingAnimator*)(*it);
 				g->GetSprite()->SetX(g->GetSprite()->GetX() - 1);
 		 }
@@ -264,4 +295,19 @@ void Items::FinishItemAnimation(Animator* a, void* l) {
 						 ++it;
 		}
 		return ;
+}
+
+void Items::CreateAQuestionAnimation() {
+		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("questionbrick") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 2, 
+						0, 0, 200, true, ParseMarioInfo::GetAnimationIdOf(13u)
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		suspending["questionbrick"].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		AnimatorHolder::Register( aMovAnimr );
 }
