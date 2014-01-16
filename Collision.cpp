@@ -35,6 +35,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	}
 
 	if(Mario::GetState() == Jumping){
+		
 		return true;
 	}
 

@@ -311,3 +311,12 @@ void Items::CreateAQuestionAnimation() {
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		AnimatorHolder::Register( aMovAnimr );
 }
+
+bool Items::BrickIsHit(Dim x) {
+	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+	Dim i = (x > mi) ? x - mi : mi - x;
+	if(i < COLLISION_DETECT)
+		return true;
+	return false;
+
+}

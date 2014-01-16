@@ -54,12 +54,16 @@ class Items {
 		static void SetBrickAsActive(Dim x, Dim y);
 
 		static void CreateAQuestionAnimation();
+
+		
 public:
 		static void Init();
 		static void ArtificialIntelligence();
 		static void Throw100Coins(Dim x, Dim y);
 		static void FinishItemAnimation(Animator*, void*);
 		static void ViewWindowMove();
+
+		static bool BrickIsHit(Dim x);
 		
 };
 
