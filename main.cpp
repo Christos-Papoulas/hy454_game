@@ -96,9 +96,10 @@ bool MarioBrosMain::InitAllegro(){
 void MarioBrosMain::MainLoopOneIteration() {
 	if(gameState != Start){
 		InputManagement(); //just reads from local input queue
+		CollisionChecking();
 		AnimationProgress();
 		ArtificialIntelligence();
-		CollisionChecking();
+		
 		Mario::MoveViewWin();
 		//CommitDestructions();
 		//FPSCalculation();

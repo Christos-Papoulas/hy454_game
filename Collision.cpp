@@ -7,7 +7,7 @@ Dim			Collision::Collision_map[MAX_HEIGHT][MAX_WIDTH];
 
 void Collision::SetValue(Dim x, Dim y, Dim value) { 
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
-		if (value == 1 || value == 34 || value == 299 || value == 298 || value == 265 || value == 266 || value == 2 || value == 25)
+		if (value == 1 || value == 34 || value == 299 || value == 298 || value == 265 || value == 266)
 			Collision_map[x][y] = value;
 		//else if(value == 2 )
 			//Collision_map[x][y] = 1;
@@ -24,56 +24,37 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
 
-	if(Collision_map[j + x_tile][i+y_tile] == 1 || Collision_map[j + x_tile][i+y_tile] == 2 || Collision_map[j + x_tile][i+y_tile] == 25) {
+	if (Collision_map[j + x_tile][i + y_tile] == 1){
 		Mario::GetMarioCurrentSprite()->MoveUp(16);
-		return true;
 	}
 
-	if(Collision_map[j + x_tile + 1][i+y_tile] == 2 || Collision_map[j + x_tile + 1][i+y_tile] == 25 || Collision_map[j + x_tile + 1][i+y_tile + 1] == 2 || Collision_map[j + x_tile + 1][i+y_tile + 1] == 25) {
-		//Mario::GetMarioCurrentSprite()->MoveUp(16);
-		return true;
+	if (Collision_map[j + x_tile + 1][i + y_tile] == 298 || Collision_map[j + x_tile + 1][i + y_tile] == 299){
+		Mario::GetMarioCurrentSprite()->MoveUp(16);
 	}
-
 
 	if(Mario::GetState() == Jumping){
-
-		if(((Collision_map[j + x_tile - 1][i+y_tile] != 0) || (Collision_map[j + x_tile][i+y_tile + 1] != 0) ) && Collision_map[j + x_tile + 1][i+y_tile] != 1) {
-			//Mario::MarioFinishSjumping(Mario::GetSJumpingAnimator());
-			return false;
-
-		}
-		
 		return true;
 	}
 
 	if(Mario::GetState() == WalkAndJump){
-		if(Collision_map[j + x_tile + 1][i+y_tile] == 2) {
-			//Mario::ChangeState(Waiting);
-			Mario::GetMarioCurrentSprite()->MoveUp(16);
+		if (Collision_map[j + x_tile][i + y_tile + 1] != 0 || Collision_map[j + x_tile + 1][i+y_tile] == 265 || Collision_map[j + x_tile + 1][i+y_tile] == 266 || Collision_map[j + x_tile + 1][i+y_tile] == 34) {	//touvlo
+			Mario::MarioFinishWjumping(NULL,NULL);
+
 		}
-
-
-		/*if(Collision_map[j+x_tile+1][i+y_tile] == 34) {
-			if (Collision_map[j+x_tile][i+y_tile+1] == 34) {	//touvlo
-				//Mario::GetMarioCurrentSprite()->MoveLeft(1);
-			}
-		}*/
+		
 
 		return true;
 	}
 
 	if(Mario::GetState() == Waiting){
 		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {		//an pataei katw
+			if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
+				Mario::GetMarioCurrentSprite()->MoveLeft(1);
+			}
 			return true;
 		}
 		
 
-	}
-
-	if(Mario::GetState() == backwalk){
-		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {		//an pataei katw
-			return true;
-		}
 	}
 
 	if(Mario::GetState() == Walking){
@@ -83,7 +64,22 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 			}
 			return true;
 		}
+		if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
+				Mario::GetMarioCurrentSprite()->MoveLeft(1);
+				return true;
+		}
+		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {
+			return true;
+		}
 	}
+
+	if(Mario::GetState() == backwalk){
+		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {		//an pataei katw
+			
+			return true;
+		}
+	}
+
 
 	return false;
 }
@@ -93,9 +89,6 @@ void Collision::CheckGroundCollision() {
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
 	if(Mario::GetState() == Death) return ;
-	//if(Mario::IsOnAir(x,y)){
-	//	activeMario->Move(0,1);
-	//}
 
 	
 	if(!Collision::MarioCollision(x,y)){

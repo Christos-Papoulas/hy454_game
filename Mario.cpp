@@ -267,13 +267,13 @@ MovingAnimator* Mario::GetAnimator() {
 
 bool startScrolling = false;
 void Mario::EnterPipe() {
-		
+		return;
 }
 
 Dim scrollX = 0;
 #define PIPE_WINDOW 180
 Dim Mario::PipeEnterScroll(Dim i) {
-		
+	return 0;		
 }
 
 void Mario::SetDimensions(MovingAnimator* source, MovingAnimator* dest) {
