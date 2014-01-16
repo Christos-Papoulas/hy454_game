@@ -47,7 +47,7 @@ class Items {
 		static void SetItemAsActive(Dim x, Dim y);
 		static bool IsItemActive(Dim x, Dim y);
 
-		static void SetOnBricks(Dim value, Dim x, Dim y) { brick[x][y] = value; }
+		static void SetOnBricks(Dim value, Dim x, Dim y) { assert(x < MAX_HEIGHT && y < MAX_WIDTH); brick[x][y] = value; }
 		static Dim GetFromBricks(Dim x, Dim y) { return brick[x][y]; }
 		static void MakeShortBricks();
 		static bool IsBrickActive(Dim x, Dim y);

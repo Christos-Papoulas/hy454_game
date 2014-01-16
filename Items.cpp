@@ -169,7 +169,7 @@ void Items::MoveItems() {
 }
 
 void Items::ArtificialIntelligence() {
-		CreateBricks();
+	//	CreateBricks();
 		CreateIfAny();
 		MoveItems();	
 }
