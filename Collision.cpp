@@ -30,7 +30,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 		Mario::GetMarioCurrentSprite()->MoveUp(16);
 	}
 
-	if (Collision_map[j + x_tile + 1][i + y_tile] == 298 || Collision_map[j + x_tile + 1][i + y_tile] == 299){
+	if (Collision_map[j + x_tile + 1][i + y_tile] == 298 || Collision_map[j + x_tile + 1][i + y_tile] == 299 || Collision_map[j + x_tile][i+y_tile] == 265 || Collision_map[j + x_tile][i+y_tile] == 266){
 		Mario::GetMarioCurrentSprite()->MoveUp(16);
 	}
 
@@ -39,42 +39,39 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	}
 
 	if(Mario::GetState() == WalkAndJump){
-		if (Collision_map[j + x_tile][i + y_tile + 1] != 0 || Collision_map[j + x_tile + 1][i+y_tile] == 265 || Collision_map[j + x_tile + 1][i+y_tile] == 266) {	//touvlo
+		if (!Mario::CanGoRight(y_tile,x_tile)) {	//touvlo
 			//Mario::MarioFinishWjumping(NULL,NULL);
 			Mario::GetMarioCurrentSprite()->MoveUp(1);
 		}
 		if(Collision_map[j + x_tile + 1][i+y_tile] == 34 || Collision_map[j + x_tile][i+y_tile + 1] == 34)
-			Mario::MarioFinishWjumping(NULL,NULL);
+			Mario::GetMarioCurrentSprite()->MoveUp(1);
+			//Mario::MarioFinishWjumping(NULL,NULL);
 		return true;
 	}
 
 	if(Mario::GetState() == Waiting){
-		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {		//an pataei katw
+		if(!Mario::IsOnAir(y_tile,x_tile))
 			return true;
-		}
-		
-
 	}
 
 	if(Mario::GetState() == Walking){
-		if(Collision_map[j + x_tile + 1][i+y_tile] == 1) {		//an pataei katw
-			if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
+		if(!Mario::IsOnAir(y_tile,x_tile)) {		//an pataei katw
+			if (!Mario::CanGoRight(y_tile,x_tile)) {	//touvlo
 				Mario::GetMarioCurrentSprite()->MoveLeft(1 + Scroll);
 			}
 			return true;
 		}
-		if (Collision_map[j + x_tile][i + y_tile + 1] != 0) {	//touvlo
+		if (!Mario::CanGoRight(y_tile,x_tile)) {	//touvlo
 			Mario::GetMarioCurrentSprite()->MoveLeft(1);
 			return true;
 		}
-		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {
+		if(!Mario::IsOnAir(y_tile,x_tile))
 			return true;
-		}
 	}
 
 	if(Mario::GetState() == backwalk){
-		if(Collision_map[j + x_tile + 1][i+y_tile] != 0) {		//an pataei katw
-			if (Collision_map[j + x_tile][i + y_tile] != 0) {	//touvlo
+		if(!Mario::IsOnAir(y_tile,x_tile)) {		//an pataei katw
+			if (!Mario::CanGoLeft(y_tile,x_tile)) {	//touvlo
 				Mario::GetMarioCurrentSprite()->Move(1,0);
 			}
 			return true;
