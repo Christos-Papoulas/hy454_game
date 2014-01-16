@@ -262,13 +262,34 @@ void Mario::MarioFinishDeath(Animator*, void*) {
 		; //@todo finish the game
 }
 
-MovingAnimator* Mario::GetAnimator() {
-	return MarioAnimator;
+Animator* Mario::GetAnimator() {
+	switch (marioState) {
+		case Waiting:
+				return MarioWaiting;
+		case Walking:
+				return MarioAnimator;
+		case backwalk:
+				return MarioBWalk;
+		case Jumping:
+				return MarioSJump;
+		case WalkAndJump:
+				return MarioWJump;
+		case Death:
+				return MarioDeath;
+		default: 
+				assert(0);
+	}
+	return NULL;
 }
 
 bool startScrolling = false;
 void Mario::EnterPipe() {
-		return;
+	Sprite* activeMario = Mario::GetMarioCurrentSprite();
+	Dim x = activeMario->GetTileX();
+	Dim y = activeMario->GetTileY();
+	if(Mario::IsOnPipe(y,x))
+		Mario::CreateDeath(NULL);
+	return;
 }
 
 Dim scrollX = 0;
@@ -350,3 +371,13 @@ bool Mario::CanGoRight(Dim x, Dim y) {
 				return false;
 		return true;
 }
+
+bool Mario::IsOnPipe(Dim x, Dim y) {
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		
+		if(Collision::GetValue(x + i, y + j + 1) == 265 || Collision::GetValue(x + i, y + j + 1) == 266 || Collision::GetValue(x + i, y + j + 1) == 265)
+				return true;
+		return false;
+}
+

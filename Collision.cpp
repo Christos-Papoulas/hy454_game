@@ -9,12 +9,8 @@ void Collision::SetValue(Dim x, Dim y, Dim value) {
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
 		if (value == 1 || value == 34 || value == 299 || value == 298 || value == 265 || value == 266)
 			Collision_map[x][y] = value;
-		//else if(value == 2 )
-			//Collision_map[x][y] = 1;
 		else
 			Collision_map[x][y] = 0;
-		if (value == 303)
-			std::cout<< "(" << x << " " << y << ")";
 }
 
 bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
@@ -72,13 +68,14 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 
 	if(Mario::GetState() == backwalk){
 		if(!Mario::IsOnAir(y_tile,x_tile)) {		//an pataei katw
-			if (!Mario::CanGoLeft(y_tile,x_tile)) {	//touvlo
-				Mario::GetMarioCurrentSprite()->Move(1,0);
-			}
+			MovingAnimator* m = (MovingAnimator*) Mario::GetAnimator();
+			if (!Mario::CanGoLeft(y_tile,x_tile))	//touvlo
+				m->GetMovingAnimation()->SetDx(0);
+			else
+				m->GetMovingAnimation()->SetDx(-3);
 			return true;
 		}
 	}
-
 
 	return false;
 }

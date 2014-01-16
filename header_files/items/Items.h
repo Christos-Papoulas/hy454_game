@@ -54,7 +54,7 @@ class Items {
 		static void SetBrickAsActive(Dim x, Dim y);
 
 		static void CreateAQuestionAnimation();
-
+		static void BrickCollision();
 		
 public:
 		static void Init();
@@ -63,7 +63,8 @@ public:
 		static void FinishItemAnimation(Animator*, void*);
 		static void ViewWindowMove();
 
-		static bool BrickIsHit(Dim x);
+		static bool BrickIsHit(Dim x, Dim y);
+		
 		
 };
 

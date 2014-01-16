@@ -68,7 +68,7 @@ class Mario {
 		
 		static void EnterPipe();
 		static Dim PipeEnterScroll(Dim i);
-		static  MovingAnimator* GetAnimator();
+		static  Animator* GetAnimator();
 		static MarioState GetState() { return marioState; }
 		static void ChangeState(MarioState );
 		//copy the dest x,y to the the source
@@ -82,8 +82,10 @@ class Mario {
 		static bool IsOnAir(Dim x, Dim y);
 		static bool CanGoLeft(Dim x, Dim y);
 		static bool CanGoRight(Dim x, Dim y);
+		static bool IsOnPipe(Dim x, Dim y);
 
 		static Dim GetCountScroll(){ return countScroll;}
+
 };
 
 #endif

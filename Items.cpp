@@ -233,7 +233,8 @@ void Items::CreateIfAny() {
 void Items::ArtificialIntelligence() {
 		CreateBricks();
 		CreateIfAny();
-		MoveItems();	
+		MoveItems();
+		BrickCollision();
 }
 
 void Items::SetItemAsActive(Dim x, Dim y) {
@@ -312,11 +313,25 @@ void Items::CreateAQuestionAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-bool Items::BrickIsHit(Dim x) {
+bool Items::BrickIsHit(Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	if(i < COLLISION_DETECT)
+	Dim j = (y > mj) ? y - mj : mj - y;
+	std::cout << "i: " << i << " j: " << j << "\n";
+	if(i < COLLISION_DETECT && ((mj - y) <= 17)) //@todo the right operation is equality check
 		return true;
 	return false;
 
+}
+
+void Items::BrickCollision() {
+	for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+				MovingAnimator* g = ( MovingAnimator* )*it;
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+				if(Mario::GetState() == Jumping)
+					if(Items::BrickIsHit(x, y))
+						Mario::MarioFinishSjumping(NULL,NULL);
+		}
 }
