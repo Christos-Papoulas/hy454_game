@@ -268,7 +268,7 @@ MovingAnimator* Mario::GetAnimator() {
 
 bool startScrolling = false;
 void Mario::EnterPipe() {
-		
+		return;
 }
 
 Dim scrollX = 0;
