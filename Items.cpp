@@ -13,8 +13,8 @@ Dim Items::brick[MAX_HEIGHT][MAX_WIDTH];
 
 void Items::Init() {
 		ReadMap();
-		//ReadBrickMap();
-		//SuspendBricks();
+		ReadBrickMap();
+		SuspendBricks();
 }
 
 void Items::ReadMap() {
@@ -69,28 +69,7 @@ void Items::MakeShortMap() {
 
 
 void Items::MakeShortBricks() {
-		countBricks = 0;
-		for(Dim i = 0; i < 15; ++i) {
-				for(Dim j = 0; j < 224; ++j) {
-						if(brick[i][j]) { 
-								countBricks++;
-						}
-				}
-		}
-		shortBricks = (Index**) malloc(sizeof(Index*)*countBricks);
-		for(Dim i = 0; i < countBricks; i++)
-				shortBricks[i] = (Index*) malloc(sizeof(Index)*3);
 		
-		Dim en = 0;
-		for(Dim i = 0; i < MAX_HEIGHT; ++i) {
-				for(Dim j = 0; j < MAX_WIDTH; ++j) {
-						if(brick[i][j]) {
-								shortBricks[en][X_INDEX] = i;
-								shortBricks[en][Y_INDEX] = j;
-								shortBricks[en++][ISACTIVE] = 0;
-						}
-				}
-		}
 }
 
 void Items::CreateIfAny() {
@@ -119,29 +98,7 @@ void Items::CreateIfAny() {
 }
 
 void Items::CreateBricks() {
-		MovingAnimator *g;
-		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
-				for(Dim j = 0; j < VIEW_WINDOW_TILE_WIDTH; j++){
-						Dim y = i;
-						Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
-						Rect view = Terrain::GetTileLayer()->GetViewWindow();
-						if(GetFromBricks(x, y)) {
-								if(IsBrickActive(x, y)) 
-										continue;
-								if(suspending["bricks"].size() == 0 ) 
-										CreateABrickAnimation();
-								assert(suspending["bricks"].size() != 0);
-								g = (MovingAnimator* ) suspending["bricks"].back();
-								suspending["bricks"].pop_back();
-								assert( g );
-								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
-								g->GetSprite()->SetY(y * 16);
-								g->SetLastTime(CurrTime());
-								AnimatorHolder::MarkAsRunning(g);
-								SetBrickAsActive(x,y);
-								running["bricks"].push_back(g);
-						}
-		}
+		
 }
 
 void SuspendBricks() {
@@ -153,7 +110,7 @@ void Items::CreateABrickAnimation() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 200, true, ParseMarioInfo::GetAnimationIdOf(12u)
+						0, 0, 9000, true, ParseMarioInfo::GetAnimationIdOf(12u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -161,7 +118,7 @@ void Items::CreateABrickAnimation() {
 		
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		//aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
-		AnimatorHolder::Register( aMovAnimr );				
+			
 }
 
 void Items::MoveItems() {
@@ -169,7 +126,7 @@ void Items::MoveItems() {
 }
 
 void Items::ArtificialIntelligence() {
-	//	CreateBricks();
+		CreateBricks();
 		CreateIfAny();
 		MoveItems();	
 }
@@ -183,26 +140,14 @@ void Items::SetItemAsActive(Dim x, Dim y) {
 }
 
 void Items::SetBrickAsActive(Dim x, Dim y) {
-		for(Dim i = 0; i < countBricks; i++)
-				if(shortBricks[i][X_INDEX] == x && shortBricks[i][Y_INDEX] == y) {
-						shortBricks[i][ISACTIVE] = 1; return ;
-				}
-				//assert(0);
 }
 
 bool Items::IsItemActive(Dim x, Dim y) {
-		for(Dim i = 0; i < countItems; i++)
-				if(shortMap[i][X_INDEX] == x && shortMap[i][Y_INDEX] == y)
-						return shortMap[i][ISACTIVE] == 1;
-		assert(0);
-		return 0;
+		return false;
 }
 
 bool Items::IsBrickActive(Dim  x, Dim y) {
-		for(Dim i = 0; i < countBricks; i++)
-				if(shortBricks[i][X_INDEX] == x && shortBricks[i][X_INDEX] == y)
-						return shortBricks[i][ISACTIVE] == 1;
-//assert(0);
+
 		return false;
 }
 
@@ -254,23 +199,9 @@ void Items::FinishItemAnimation(Animator* a, void* l) {
 }
 
  void Items::SuspendBricks() {
-		for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
-				MovingPathAnimator* m = (MovingPathAnimator*)*it;
-				if(m->GetSprite()->GetX() < 3 || m->GetSprite()->GetX() > MAX_WIDTH) {
-						suspending["bricks"].push_back( (Animator*) m );
-						AnimatorHolder::MarkAsSuspended( (Animator*) m );
-						running["bricks"].erase( it );
-						return ;
-				}
-		}
+	
  }
 
  void Items::ViewWindowMove() {
-		 
-		 for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
-				MovingPathAnimator* m = (MovingPathAnimator*)*it;
-				m->GetSprite()->SetX(m->GetSprite()->GetX() - 1);
-				
-		 }
 		 
  }
