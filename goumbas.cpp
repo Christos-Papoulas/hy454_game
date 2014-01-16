@@ -39,7 +39,7 @@ void Goumbas::Dead() {
 void Goumbas::ArtificialIntelligence() {
 		CreateGoumbaifAny();
 		MoveGoumbas();
-		//GoumbasKillMario();
+		GoumbasKillMario();
 }
 
 void Goumbas::CreateGoumbaifAny() {

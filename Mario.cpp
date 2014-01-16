@@ -267,23 +267,13 @@ MovingAnimator* Mario::GetAnimator() {
 
 bool startScrolling = false;
 void Mario::EnterPipe() {
-		Sprite*m = Mario::GetMarioCurrentSprite();
-		std::cout << m->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX() <<"\n";
-		//pipe in tile 46 h' 29
-		if( m->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX() == 29)
-		{
-				AnimatorHolder::MarkAsSuspended(MarioWaiting); //@todo the others
-				
-		}
+		
 }
 
 Dim scrollX = 0;
 #define PIPE_WINDOW 180
 Dim Mario::PipeEnterScroll(Dim i) {
-		Dim retVal = 0;
-		if(!startScrolling) return 0;
-		if(i < scrollX) retVal = scrollX;
-		else retVal =  PIPE_WINDOW;
+		
 }
 
 void Mario::SetDimensions(MovingAnimator* source, MovingAnimator* dest) {

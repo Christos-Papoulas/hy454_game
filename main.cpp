@@ -214,7 +214,6 @@ void ManageGameLoop() {
 				al_wait_for_event(queue, &events);
 				al_get_keyboard_state(&keyboardState);
 				Rendering(currTime);
-				//(((Terrain::GetTerrain())->GetTileLayer())->GetViewWindow()).IncreaseY(1);
 				MainLoopOneIteration();
 		}
 }
