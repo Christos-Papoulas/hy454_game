@@ -1,4 +1,4 @@
-12
+13
 1
 mariowalking 3
 0 0 16 16
@@ -46,3 +46,6 @@ mushroom 1
 100
 onehundred 1
 18 224 23 6
+222
+brick 1
+0 280 16 16

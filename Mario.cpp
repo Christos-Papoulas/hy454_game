@@ -18,6 +18,7 @@ static bool MoveViewWindow(Dim x) {
 			
 			Goumbas::ViewWindowMove();
 			GreenKoopa::ViewWindowMove();
+			Items::ViewWindowMove();
 			countScroll++;
 			if(countScroll == 16) {
 				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
@@ -273,7 +274,7 @@ void Mario::EnterPipe() {
 Dim scrollX = 0;
 #define PIPE_WINDOW 180
 Dim Mario::PipeEnterScroll(Dim i) {
-		
+		return 0;
 }
 
 void Mario::SetDimensions(MovingAnimator* source, MovingAnimator* dest) {

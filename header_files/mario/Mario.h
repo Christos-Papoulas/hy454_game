@@ -14,6 +14,7 @@
 #include "../enemies/GreenKoopaTroopa.h"
 
 #include <assert.h>
+extern Dim countScroll;
 
 enum MarioState { 
 		Walking = 0,
@@ -81,6 +82,8 @@ class Mario {
 		static bool IsOnAir(Dim x, Dim y);
 		static bool CanGoLeft(Dim x, Dim y);
 		static bool CanGoRight(Dim x, Dim y);
+
+		static Dim GetCountScroll(){ return countScroll;}
 };
 
 #endif

@@ -172,6 +172,7 @@ void MarioBrosMain::ArtificialIntelligence(){
 		Goumbas::ArtificialIntelligence();
 		GreenKoopa::ArtificialIntelligence();
 		Items::ArtificialIntelligence();
+		
 		return ;
 }
 
@@ -196,7 +197,6 @@ void MarioBrosMain::InitializeGame() {
 		currTime =  CurrTime();
 		Terrain::Create();
 		TerrainStartScreen::Create();
-		//TerrainStartScreen::CreatePause();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
 		SpritesHolder* sh = new SpritesHolder();
 		gameState = Start;
