@@ -32,21 +32,6 @@ void Items::ReadMap() {
 		MakeShortMap();
 }
 
-void Items::ReadBrickMap() { 
-		using namespace std;
-
-		ifstream read(BRICKS_POS);
-
-		for(Dim i = 0; i < MAX_HEIGHT; ++i)
-				for(Dim j = 0; j < MAX_WIDTH; ++j){
-						Index tmp;
-						read >> tmp;
-						SetOnBricks(tmp, i, j);
-				}
-		read.close();
-		MakeShortBricks();
-}
-
 void Items::MakeShortMap() {
 		countItems = 0;
 		for(Dim i = 0; i < MAX_HEIGHT; ++i)
@@ -67,9 +52,126 @@ void Items::MakeShortMap() {
 						}
 }
 
+void Items::ReadBrickMap() { 
+		using namespace std;
+
+		ifstream read(BRICKS_POS);
+
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j){
+						Index tmp;
+						read >> tmp;
+						brick[i][j] = tmp;
+				}
+		read.close();
+		MakeShortBricks();
+}
 
 void Items::MakeShortBricks() {
+		countBricks = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(brick[i][j]) countBricks++;
+
+		shortBricks = (Index**) malloc(sizeof(Index*)*countBricks);
+		for(Dim i = 0; i < countBricks; i++)
+				shortBricks[i] = (Index*) malloc(sizeof(Index)*3);
 		
+		Dim en = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(brick[i][j] != 0) {
+								shortBricks[en][X_INDEX] = i;
+								shortBricks[en][Y_INDEX] = j;
+								shortBricks[en++][ISACTIVE] = 0;
+						}
+}
+
+void Items::CreateBricks() {
+		MovingAnimator* g = NULL;
+		for(Dim i = 0; i < VIEW_WINDOW_TILE_WIDTH; i++)
+				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++){
+						Dim y = i;
+						Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
+						Rect view = Terrain::GetTileLayer()->GetViewWindow();
+						if(brick[y][x]) {
+								if(IsBrickActive(y, x)) 
+										continue;
+								if(suspending["bricks"].size() == 0) 
+										CreateABrickAnimation();
+								g = (MovingAnimator* ) suspending["bricks"].back();
+								suspending["bricks"].pop_back();
+								if(!g) return ;
+								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
+								g->GetSprite()->SetY(y * 16);
+								g->SetLastTime(CurrTime());
+								AnimatorHolder::MarkAsRunning(g);
+								SetBrickAsActive(y,x);
+								running["bricks"].push_back((Animator*) g);
+						}
+				}
+}
+
+void Items::CreateABrickAnimation() {
+		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("brick") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 0, 
+						0, 0, 9000, true, ParseMarioInfo::GetAnimationIdOf(12u)
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		suspending["bricks"].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+bool Items::IsBrickActive(Dim  x, Dim y) {
+		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
+		for(Dim i = 0; i < countBricks; i++)
+				if(shortBricks[i][X_INDEX] == x && shortBricks[i][Y_INDEX] == y)
+						return shortBricks[i][ISACTIVE] == 1;
+		assert(0);
+		return false;
+}
+
+void Items::SetBrickAsActive(Dim x, Dim y) {
+		for(Dim i = 0; i < countBricks; i++)
+				if(shortBricks[i][X_INDEX] == x && shortBricks[i][Y_INDEX] == y) {
+						shortBricks[i][ISACTIVE] = 1; return ;
+				}
+				assert(0);
+}
+
+ void Items::SuspendBricks() {
+		for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+				MovingAnimator* g = ( MovingAnimator* )*it;
+				Dim currPosX = g->GetSprite()->GetX();
+				Dim currPosY = g->GetSprite()->GetY();
+
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
+
+				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
+						suspending["bricks"].push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running["bricks"].erase(it);
+						return ;
+				}
+		}
+ }
+
+ void Items::ViewWindowMove() {
+		 MovingAnimator* g;
+		 for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+				g = (MovingAnimator*)(*it);
+				g->GetSprite()->SetX(g->GetSprite()->GetX() - 1);
+		 }
+ }
+
+void Items::MoveItems() {
+		;
 }
 
 void Items::CreateIfAny() {
@@ -97,34 +199,6 @@ void Items::CreateIfAny() {
 				}
 }
 
-void Items::CreateBricks() {
-		
-}
-
-void SuspendBricks() {
-		;
-}
-
-void Items::CreateABrickAnimation() {
-		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("brick") ));
-		
-		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
-						0, 0, 
-						0, 0, 9000, true, ParseMarioInfo::GetAnimationIdOf(12u)
-						);
-		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
-		
-		suspending["bricks"].push_back( (Animator*) aMovAnimr );
-		
-		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
-		//aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
-			
-}
-
-void Items::MoveItems() {
-		;
-}
-
 void Items::ArtificialIntelligence() {
 		CreateBricks();
 		CreateIfAny();
@@ -139,17 +213,11 @@ void Items::SetItemAsActive(Dim x, Dim y) {
 				assert(0);
 }
 
-void Items::SetBrickAsActive(Dim x, Dim y) {
-}
-
 bool Items::IsItemActive(Dim x, Dim y) {
 		return false;
 }
 
-bool Items::IsBrickActive(Dim  x, Dim y) {
 
-		return false;
-}
 
 void Items::CreateScores() {
 		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("onehundred") ));
@@ -197,11 +265,3 @@ void Items::FinishItemAnimation(Animator* a, void* l) {
 		}
 		return ;
 }
-
- void Items::SuspendBricks() {
-	
- }
-
- void Items::ViewWindowMove() {
-		 
- }
