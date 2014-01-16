@@ -19,8 +19,7 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 	assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
-	Dim Scroll = Mario::GetCountScroll();
-	assert(Scroll < 16);
+
 
 	if (Collision_map[j + x_tile][i + y_tile] == 1){
 		Mario::GetMarioCurrentSprite()->MoveUp(16);
@@ -53,9 +52,11 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 
 	if(Mario::GetState() == Walking){
 		if(!Mario::IsOnAir(y_tile,x_tile)) {		//an pataei katw
-			if (!Mario::CanGoRight(y_tile,x_tile)) {	//touvlo
-				Mario::GetMarioCurrentSprite()->MoveLeft(1 + Scroll);
-			}
+			MovingAnimator* m = (MovingAnimator*) Mario::GetAnimator();
+			if (!Mario::CanGoRight(y_tile,x_tile)) 	//touvlo
+				m->GetMovingAnimation()->SetDx(0);
+			else
+				m->GetMovingAnimation()->SetDx(4);
 			return true;
 		}
 		if (!Mario::CanGoRight(y_tile,x_tile)) {	//touvlo
