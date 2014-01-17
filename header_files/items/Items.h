@@ -9,6 +9,7 @@
 #include "../Objects.h"
 #include "../terrain/terrain.h"
 #include "../tiles/TileLayer.h"
+#include "../tiles/TilesBitmap.h"
 #include "../collision/Collision.h"
 #include "../enemies/Enemies.h"
 

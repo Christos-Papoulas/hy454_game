@@ -14,7 +14,6 @@ Dim Items::brick[MAX_HEIGHT][MAX_WIDTH];
 void Items::Init() {
 		ReadMap();
 		ReadBrickMap();
-		SuspendBricks();
 }
 
 void Items::ReadMap() {
@@ -165,7 +164,7 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
+				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
 						suspending["bricks"].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running["bricks"].erase(it);
@@ -180,7 +179,7 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
+				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
 						suspending["questionbrick"].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running["questionbrick"].erase(it);
@@ -235,6 +234,7 @@ void Items::ArtificialIntelligence() {
 		CreateIfAny();
 		MoveItems();
 		BrickCollision();
+		SuspendBricks();
 }
 
 void Items::SetItemAsActive(Dim x, Dim y) {
