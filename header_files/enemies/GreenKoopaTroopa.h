@@ -17,12 +17,17 @@
 class GreenKoopa {
 		static std::list<MovingAnimator*> suspending;
 		static std::list<MovingAnimator*> running;
+		static std::list<MovingAnimator*> dead;
+		static void Dead();
+		
 public:
 		static void Create();
 		static void ArtificialIntelligence();
 		static void CreateGreenKoopaIfAny();
 		static void MoveGreenKoopas();
 		static void ViewWindowMove();
+
+		static void ComeOutFromShell(Animator* a, void* v);
 };
 
 #endif

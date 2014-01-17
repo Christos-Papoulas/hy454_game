@@ -2,6 +2,7 @@
 
 std::list<MovingAnimator*> GreenKoopa::suspending;
 std::list<MovingAnimator*> GreenKoopa::running;
+std::list<MovingAnimator*> GreenKoopa::dead;
 
 void GreenKoopa::Create() {
 		Sprite *greenKoopaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("greenkoopaleft") ));
@@ -48,6 +49,41 @@ void GreenKoopa::CreateGreenKoopaIfAny() {
 				}
 }
 
+void GreenKoopa::ComeOutFromShell(Animator* a, void* v) {
+		MovingAnimator* g;
+
+		AnimatorHolder::MarkAsSuspended(a);
+		AnimatorHolder::Cancel(a);
+		dead.push_back((MovingAnimator*)a);
+
+		if(suspending.empty()) Create();
+		g = suspending.back();
+		suspending.pop_back();
+		assert(g);
+		g->GetSprite()->SetX( ((MovingAnimator*) a)->GetSprite()->GetX() );
+		g->GetSprite()->SetY( ((MovingAnimator*) a)->GetSprite()->GetY() - 16 );
+		g->SetLastTime(CurrTime());
+		AnimatorHolder::MarkAsRunning(g);
+
+		running.push_back(g);
+}
+
+void GreenKoopa::Dead() {
+		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("greenkoopahit") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 0, 
+						0, 0, 3000, false, ParseMarioInfo::GetAnimationIdOf(14u)
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		dead.push_back( aMovAnimr );
+				
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(ComeOutFromShell, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void GreenKoopa::MoveGreenKoopas() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
@@ -61,6 +97,24 @@ void GreenKoopa::MoveGreenKoopas() {
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
 						
+						return ;
+				}
+
+				if(Enemies::IsMarioAbove(TileX, TileY)){
+						MovingAnimator* d; Dim x, y;
+						if(dead.size() == 0) 
+								Dead();
+						d = dead.back();
+						if(!d) return ;
+						d->GetSprite()->SetX(x = g->GetSprite()->GetX());
+						d->GetSprite()->SetY(y = g->GetSprite()->GetY() + 16);
+						d->SetLastTime(CurrTime());
+						AnimatorHolder::MarkAsRunning(d);
+
+						suspending.push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running.erase(it);
+
 						return ;
 				}
 

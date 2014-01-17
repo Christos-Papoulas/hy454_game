@@ -89,7 +89,7 @@ void Goumbas::MoveGoumbas() {
 
 				if(Enemies::IsMarioAbove(TileX, TileY)){
 						MovingAnimator* d; Dim x, y;
-						if(dead.empty()) 
+						if(dead.size() == 0) 
 								Dead();
 						d = dead.back();
 						if(!d) return ;
