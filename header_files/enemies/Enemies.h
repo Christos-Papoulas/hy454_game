@@ -49,6 +49,7 @@ class Enemies {
 				static bool IsOnAir(Dim x, Dim y, Dim width);
 				static bool IsMarioLeftOrRight(Dim x, Dim y);
 				static bool IsMarioAbove(Dim x, Dim y);
+				static bool IsMarioLeft(Dim x, Dim y);
 };
 
 #endif

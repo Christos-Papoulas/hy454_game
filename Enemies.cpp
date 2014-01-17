@@ -89,16 +89,22 @@ bool Enemies::IsOnAir(Dim x, Dim y, Dim width) {
 		return false;
 }
 
-
-bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
-		Dim ei = x;
-		Dim ej = y;
-
+bool Enemies::IsMarioLeft(Dim x, Dim y) {
 		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 
-		Dim i = (ei > mi) ? ei - mi : mi - ei;
-		Dim j = (ej > mj) ? ej - mj : mj - ej;
+		Dim j = (y > mj) ? y - mj : mj - y;
+		if(x > mi && x - mi < COLLISION_DETECT && j < COLLISION_DETECT)
+				return true;
+		return false;
+}
+
+bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
+		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
+
+		Dim i = (x > mi) ? x - mi : mi - x;
+		Dim j = (y > mj) ? y - mj : mj - y;
 
 		if(i < COLLISION_DETECT && j < COLLISION_DETECT)
 				return true;

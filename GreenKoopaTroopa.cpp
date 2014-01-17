@@ -2,7 +2,8 @@
 
 std::list<MovingAnimator*> GreenKoopa::suspending;
 std::list<MovingAnimator*> GreenKoopa::running;
-std::list<MovingAnimator*> GreenKoopa::dead;
+std::list<MovingAnimator*> GreenKoopa::suspendingdead;
+std::list<MovingAnimator*> GreenKoopa::runningdead;
 
 void GreenKoopa::Create() {
 		Sprite *greenKoopaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("greenkoopaleft") ));
@@ -22,6 +23,7 @@ void GreenKoopa::Create() {
 
 void GreenKoopa::ArtificialIntelligence() {
 		CreateGreenKoopaIfAny();
+		MoveKoopasInShells();
 		MoveGreenKoopas();
 }
 
@@ -49,14 +51,25 @@ void GreenKoopa::CreateGreenKoopaIfAny() {
 				}
 }
 
+void GreenKoopa::MoveKoopasInShells() {
+		for (std::list<MovingAnimator*>::iterator it=runningdead.begin(); it != runningdead.end(); ++it) {
+				MovingAnimator* g = *it;
+				Dim currPosX = g->GetSprite()->GetX();
+				Dim currPosY = g->GetSprite()->GetY();
+				if(Enemies::IsMarioLeft(currPosX, currPosY)) {
+						g->GetMovingAnimation()->SetDx(5);
+						g->GetMovingAnimation()->SetDelay(100);
+				}
+		}
+}
 void GreenKoopa::ComeOutFromShell(Animator* a, void* v) {
 		MovingAnimator* g;
 
 		AnimatorHolder::MarkAsSuspended(a);
 		AnimatorHolder::Cancel(a);
-		dead.push_back((MovingAnimator*)a);
+		suspendingdead.push_back((MovingAnimator*)a);
 
-		if(suspending.empty()) Create();
+		if(suspending.size() == 0) Create();
 		g = suspending.back();
 		suspending.pop_back();
 		assert(g);
@@ -77,7 +90,7 @@ void GreenKoopa::Dead() {
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
-		dead.push_back( aMovAnimr );
+		suspendingdead.push_back( aMovAnimr );
 				
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(ComeOutFromShell, NULL);
@@ -100,17 +113,18 @@ void GreenKoopa::MoveGreenKoopas() {
 						return ;
 				}
 
-				if(Enemies::IsMarioAbove(TileX, TileY)){
+				if(Enemies::IsMarioAbove(TileX, TileY + 1)){
 						MovingAnimator* d; Dim x, y;
-						if(dead.size() == 0) 
+						if(suspendingdead.size() == 0) 
 								Dead();
-						d = dead.back();
-						if(!d) return ;
+						d = suspendingdead.back();
+						suspendingdead.pop_back();
+						assert(d);
 						d->GetSprite()->SetX(x = g->GetSprite()->GetX());
 						d->GetSprite()->SetY(y = g->GetSprite()->GetY() + 16);
 						d->SetLastTime(CurrTime());
 						AnimatorHolder::MarkAsRunning(d);
-
+						runningdead.push_back(d);
 						suspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
@@ -139,5 +153,7 @@ void GreenKoopa::MoveGreenKoopas() {
 
 void GreenKoopa::ViewWindowMove() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
+				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
+		for (std::list<MovingAnimator*>::iterator it=runningdead.begin(); it != runningdead.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }
