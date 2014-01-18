@@ -86,6 +86,8 @@ void Items::MakeShortBricks() {
 						}
 }
 
+
+
 void Items::CreateBricks() {
 		MovingAnimator* g = NULL;
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_WIDTH; i++)
@@ -107,8 +109,12 @@ void Items::CreateBricks() {
 												CreateAQuestionAnimation();
 										g = (MovingAnimator* ) suspending["questionbrick"].back();
 										suspending["questionbrick"].pop_back();
-								} 
-								
+								} //else if(brick[y][x] == 265) {
+									//	if(suspending["questionbrick"].size() == 0)
+									//			CreateSprite("questionbrick", 16);
+									//	g = (MovingAnimator* ) suspending["leftuppipe"].back();
+									//	suspending["leftuppipe"].pop_back();								
+							//	}
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
@@ -117,8 +123,10 @@ void Items::CreateBricks() {
 								SetBrickAsActive(y,x);
 								if(brick[y][x] == 2)
 										running["bricks"].push_back((Animator*) g);
-								else
+								else if(brick[y][x] == 25)
 										running["questionbrick"].push_back((Animator*) g);
+							//	 else if(brick[y][x] == 265)
+							//			running["leftuppipe"].push_back((Animator*) g);
 						}
 				}
 }
@@ -138,7 +146,7 @@ void Items::CreateABrickAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-void Items::CreateSprite(char* id, Dim index) {
+void Items::CreateSprite(char* id, const Dim index) {
 		Sprite *sprite = new Sprite(20, 100,
 				AnimationFilmHolder::GetFilm( std::string(id) ));
 		
@@ -204,7 +212,7 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 		}
  }
 
- void Items::ViewWindowMove(char* id) {
+ void Items::ViewWindowMove(const char* id) {
 		MovingAnimator* g;
 		 for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
 				g = (MovingAnimator*)(*it);
@@ -214,6 +222,7 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
  void Items::ViewWindowMove() {
 		 ViewWindowMove("bricks");
 		 ViewWindowMove("questionbrick");
+		 ViewWindowMove("leftuppipe");
  }
 
 void Items::MoveItems() {

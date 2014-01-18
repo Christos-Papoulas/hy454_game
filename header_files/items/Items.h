@@ -35,7 +35,7 @@ class Items {
 
 		static void CreateScores();
 		static void CreateABrickAnimation();
-		static void CreateSprite(char* id, Dim index);
+		static void CreateSprite(char* id, const Dim index);
 		static void CreateBricks();
 		static void SuspendBricks();
 		static Dim GetFromMap(Dim x, Dim y) { return map[x][y]; }
@@ -58,7 +58,7 @@ class Items {
 		static void CreateAQuestionAnimation();
 		static void BrickCollision();
 		static bool IsOnBrick(const char* id);
-		static ViewWindowMove(char* id);
+		static void ViewWindowMove(const char* id);
 public:
 		static void Init();
 		static void ArtificialIntelligence();
