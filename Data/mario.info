@@ -1,4 +1,4 @@
-16
+20
 1
 mariowalking 3
 0 0 16 16
@@ -60,3 +60,15 @@ greenkoopahit 1
 8
 mariobackjump 1
 0 346 16 16 
+265
+leftuppipe 1
+305 61 16 16
+266
+rightuppipe 1
+321 61 16 16
+267
+leftpipe 1
+305 77 16 16
+268 
+rightpipe 1
+321 77 16 16

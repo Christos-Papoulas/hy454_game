@@ -16,7 +16,7 @@ MarioState Mario::marioState = Walking;
 
 Dim countScroll = 0;
 static bool MoveViewWindow(Dim x) {
-		if( x > 85 || countScroll) {
+		if( x > 85) {
 			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
 			Goumbas::ViewWindowMove();

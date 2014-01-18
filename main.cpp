@@ -207,10 +207,12 @@ void MarioBrosMain::InitializeGame() {
 		Terrain::Create();
 		TerrainStartScreen::Create();
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
+		
 		SpritesHolder* sh = new SpritesHolder();
+		Enemies::Create();
 		gameState = Start;
 
-		Enemies::Create();
+		
 		Items::Init();
 		redraw = true;
 }
