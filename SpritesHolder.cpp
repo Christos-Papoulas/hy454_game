@@ -81,6 +81,29 @@ void Initializer::InitMarioWalkJumnp() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Initializer::BackWalkJump() {
+		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariobackjump") ));
+		std::vector<PathEntry> paths;
+		
+		for(offset_t i = 0, j= 16; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, -j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 6; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(15u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		Sprite::CollisionCheck(spriteMario);
+		Mario::CreateBackAndJump( aMovAnimr );
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Initializer::InitMarioBackWalk() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariobackwalk") ));
 		
@@ -121,4 +144,5 @@ void Initializer::InitMario() {
 		InitMarioWalkJumnp();
 		InitMarioBackWalk();
 		InitMarioDeath();
+		BackWalkJump();
 }

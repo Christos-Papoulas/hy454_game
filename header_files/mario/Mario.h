@@ -22,6 +22,7 @@ enum MarioState {
 		Waiting,
 		Jumping,
 		WalkAndJump,
+		BackAndJump,
 		Death
 };
 
@@ -33,6 +34,7 @@ class Mario {
 		static MovingAnimator* MarioBWalk;
 		static MovingPathAnimator* MarioSJump;
 		static MovingPathAnimator* MarioWJump;
+		static MovingPathAnimator* BackJump;
 		static MovingPathAnimator* MarioDeath;
 		
 		static MarioState marioState;
@@ -46,10 +48,15 @@ class Mario {
 		static void CreateSjumping(MovingPathAnimator* mario_animator); //waiting and jump
 		static void CreateWjumping(MovingPathAnimator* mario_animator);
 		static void CreateDeath(MovingPathAnimator* mario_animator);
+		static void CreateBackAndJump(MovingPathAnimator* mario_animator);
+
 		static Sprite* GetMarioCurrentSprite();
+		static  Animator* GetAnimator();
+
 		static bool isWalking() { return marioState == Walking; }
 		static bool isStandingJumping() { return marioState == Jumping; }
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
+		static bool isBackWalk() { return marioState == backwalk; }
 		static void Destroy();
 		
 		static void MoveViewWin();
@@ -59,16 +66,17 @@ class Mario {
 		static void MarioFinisWaiting(Animator*, void*);
 		static void MarioFinishWjumping(Animator*, void*);
 		static void MarioFinishDeath(Animator*, void*);
-
+		static void MarioFinishBackJump(Animator*, void*);
 		static void MarioStandingJump();
 		static void MarioWalkingJump();
 		static void MarioMovesLeft();
 		static void MarioMovesRight();
+		static void BackWalkAndJump();
 		static void MarioDeading();
 		
 		static void EnterPipe();
 		static Dim PipeEnterScroll(Dim i);
-		static  Animator* GetAnimator();
+		
 		static MarioState GetState() { return marioState; }
 		static void ChangeState(MarioState );
 		//copy the dest x,y to the the source

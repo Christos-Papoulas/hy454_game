@@ -23,6 +23,7 @@ namespace Initializer {
 		extern void InitMarioWalkJumnp();
 		extern void InitMarioBackWalk();
 		extern void InitMarioDeath();
+		extern void BackWalkJump();
 };
 
 class SpritesHolder {

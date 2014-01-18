@@ -6,6 +6,7 @@ MovingAnimator* Mario::MarioWaiting = NULL;
 MovingPathAnimator* Mario::MarioSJump = NULL;
 MovingPathAnimator* Mario::MarioWJump = NULL;
 MovingAnimator* Mario::MarioBWalk = NULL;
+MovingPathAnimator* Mario::BackJump = NULL;
 MovingPathAnimator* Mario::MarioDeath = NULL;
 
 
@@ -69,6 +70,11 @@ void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
 				MarioWJump = mario_animator;
 }
 
+void Mario::CreateBackAndJump(MovingPathAnimator* mario_animator) {
+		if(!BackJump)
+				BackJump = mario_animator;
+}
+
 void Mario::CreateDeath(MovingPathAnimator* mario_animator) {
 		if(!MarioDeath)
 				MarioDeath = mario_animator;
@@ -86,6 +92,8 @@ Sprite* Mario::GetMarioCurrentSprite() {
 				return MarioSJump->GetSprite();
 		case WalkAndJump:
 				return MarioWJump->GetSprite();
+		case BackAndJump:
+				return BackJump->GetSprite();
 		case Death:
 				return MarioDeath->GetSprite();
 		default: 
@@ -101,7 +109,6 @@ void Mario::ChangeState(MarioState nextState) {
 		switch (nextState) {
 				case Waiting:
 						MarioWaiting->SetLastTime(curr);
-//						MoveViewWindow(MarioWaiting->GetSprite()->GetX());
 						break;
 				case Walking:
 						MarioAnimator->SetLastTime(curr);
@@ -115,6 +122,8 @@ void Mario::ChangeState(MarioState nextState) {
 				case WalkAndJump:
 						MarioWJump->SetLastTime(curr);
 						break;
+				case BackAndJump:
+						return BackJump->SetLastTime(curr);
 				case Death:
 						MarioDeath->SetLastTime(curr);
 
@@ -200,6 +209,23 @@ void Mario::MarioWalkingJump() {
 		return ;
 }
 
+void Mario::BackWalkAndJump() {
+		if(marioState == BackAndJump){
+				return ;
+		}
+
+		SetDimensions(BackJump, MarioAnimator);
+
+		AnimatorHolder::MarkAsSuspended(MarioAnimator);
+		AnimatorHolder::MarkAsSuspended(MarioWaiting);
+		AnimatorHolder::MarkAsSuspended(MarioSJump);
+		AnimatorHolder::MarkAsSuspended(MarioBWalk);
+		AnimatorHolder::MarkAsRunning(BackJump);
+		
+		ChangeState(WalkAndJump);
+		return ;
+}
+
 void Mario::MarioDeading() {
 		if(marioState == Death) return ;
 		SetDimensions(MarioDeath, MarioAnimator);
@@ -256,6 +282,19 @@ void Mario::MarioFinishWjumping(Animator* , void* ) {
 		ChangeState(Waiting);
 
 		return ;
+}
+
+void Mario::MarioFinishBackJump(Animator*, void*) {
+		SetDimensions(MarioWaiting, BackJump);
+		SetDimensions(MarioAnimator, BackJump);
+		SetDimensions(MarioSJump, BackJump);
+		SetDimensions(MarioBWalk, BackJump);
+		SetDimensions(MarioWJump, BackJump);
+
+		AnimatorHolder::MarkAsSuspended(BackJump);
+		AnimatorHolder::MarkAsRunning(MarioWaiting);
+		
+		ChangeState(Waiting);
 }
 
 void Mario::MarioFinishDeath(Animator*, void*) {
