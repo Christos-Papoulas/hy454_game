@@ -330,7 +330,7 @@ void Items::BrickCollision() {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
-				if(Mario::GetState() == Jumping)
+				if(Mario::GetState() == Jumping || Mario::isWalkingJump())
 					if(Items::BrickIsHit(x, y))
 						Mario::MarioFinishSjumping(NULL,NULL);
 		}
