@@ -96,8 +96,8 @@ bool MarioBrosMain::InitAllegro(){
 void MarioBrosMain::MainLoopOneIteration() {
 	if(gameState != Start){
 		InputManagement(); //just reads from local input queue
-		CollisionChecking();
 		AnimationProgress();
+		CollisionChecking();
 		ArtificialIntelligence();
 		
 		Mario::MoveViewWin();
@@ -113,7 +113,7 @@ void MarioBrosMain::InputManagement(){
 		space_pressed = 0;
 		
 
-	if(!Mario::isWalkingJump() && !Mario::isStandingJumping() && gameState == Play) {
+	if(!Mario::isWalkingJump() &&  gameState == Play) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
 					if(!z_pressed){
 						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
@@ -183,7 +183,7 @@ void MarioBrosMain::ArtificialIntelligence(){
 
 
 void MarioBrosMain::CollisionChecking(){
-		Collision::CheckGroundCollision();
+		Collision::CheckCollision();
 		return ;
 }
 

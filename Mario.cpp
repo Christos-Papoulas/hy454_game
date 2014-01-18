@@ -8,13 +8,15 @@ MovingPathAnimator* Mario::MarioWJump = NULL;
 MovingAnimator* Mario::MarioBWalk = NULL;
 MovingPathAnimator* Mario::BackJump = NULL;
 MovingPathAnimator* Mario::MarioDeath = NULL;
+bool Mario::isOnBrick = false;
 
 
+std::vector<PathEntry> Mario::paths;
 MarioState Mario::marioState = Walking;
 
 Dim countScroll = 0;
 static bool MoveViewWindow(Dim x) {
-		if( x > 85) {
+		if( x > 85 || countScroll) {
 			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
 			Goumbas::ViewWindowMove();
@@ -66,8 +68,19 @@ void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
 } 
 
 void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
-		if(!MarioWJump)
+		if(!MarioWJump) {
 				MarioWJump = mario_animator;
+
+				for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
+						PathEntry pathEntry(5, -j, 0, 100);
+						paths.push_back( pathEntry );
+				}
+				printf("\n");
+				for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
+						PathEntry pathEntry(5, j, 0, 100);
+						paths.push_back( pathEntry );
+				}
+		}
 }
 
 void Mario::CreateBackAndJump(MovingPathAnimator* mario_animator) {
@@ -141,8 +154,11 @@ void Mario::MarioFinisWaiting(Animator*, void*){
 }
 
 void Mario::MarioMovesLeft() {
+	if(isStandingJumping())
+			MarioFinishSjumping(0, 0);
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
+	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
 	if(MarioBWalk->GetSprite()->GetX() <= 3)
 			MarioBWalk->GetMovingAnimation()->SetDx(0);
@@ -154,18 +170,21 @@ void Mario::MarioMovesLeft() {
 void Mario::MarioMovesRight() {
 	if(marioState == WalkAndJump)
 			return ;
+	else if(isStandingJumping())
+			MarioFinishSjumping(0, 0);
+	
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioBWalk);
+	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
-	Rect vw = (Terrain::GetTileLayer())->GetViewWindow();
-	Dim x = MarioAnimator->GetSprite()->GetX();
 		
 	ChangeState(Walking);
 }
 
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 		SetDimensions(MarioWaiting, MarioAnimator);
-		
+		SetDimensions(MarioSJump, MarioAnimator);
+
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
@@ -200,6 +219,7 @@ void Mario::MarioWalkingJump() {
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		
+		MarioWJump->GetAnimation()->SetPath(paths);
 		AnimatorHolder::MarkAsRunning(MarioWJump);
 		
 		ChangeState(WalkAndJump);
@@ -259,7 +279,7 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
-		
+		MarioSJump->SetCurrIndex(0);
 		ChangeState(Waiting);
 
 		return ;
@@ -275,7 +295,7 @@ void Mario::MarioFinishWjumping(Animator* , void* ) {
 		AnimatorHolder::MarkAsSuspended(MarioWJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
-		
+		MarioWJump->SetCurrIndex(0);
 		ChangeState(Waiting);
 
 		return ;
@@ -387,7 +407,7 @@ bool Mario::IsOnAir(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
 		
-		if(Collision::GetValue(x + i, y + j + 1) == 0)
+		if(Collision::GetValue(x + i - 0, y + j + 1) == 0 || Collision::GetValue(x + i, y + j + 1) == 0 || Collision::GetValue(x + i + 1, y + j + 1) == 0)
 				return true;
 		return false;
 }
@@ -414,7 +434,7 @@ bool Mario::IsOnPipe(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
 		
-		if(Collision::GetValue(x + i, y + j + 1) == 265 || Collision::GetValue(x + i, y + j + 1) == 266 || Collision::GetValue(x + i, y + j + 1) == 265)
+		if(Collision::GetValue(x + i, y + j + 1) == 1 || Collision::GetValue(x + i, y + j + 1) == 1 || Collision::GetValue(x + i, y + j + 1) == 1)
 				return true;
 		return false;
 }

@@ -60,13 +60,13 @@ void Initializer::InitMarioWalkJumnp() {
 		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariojumping") ));
 		std::vector<PathEntry> paths;
 		
-		for(offset_t i = 0, j= 16; i < 6; ++i, j-=2) { // @todo make the code better!		
+		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
 				PathEntry pathEntry(5, -j, 0, 100);
 				printf("%d ", -j);
 				paths.push_back( pathEntry );
 		}
 		printf("\n");
-		for(offset_t i = 0, j= 6; i < 6; ++i, j+=2) { // @todo make the code better!		
+		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
 				PathEntry pathEntry(5, j, 0, 100);
 				printf("%d ", j);
 				paths.push_back( pathEntry );

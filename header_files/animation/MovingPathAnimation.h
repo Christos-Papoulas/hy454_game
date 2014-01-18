@@ -34,6 +34,9 @@ class MovingPathAnimation : public Animation {
 				}
 				bool GetContinuous() const { return continuous; }
 				void SetContinuous(bool v) { continuous = v; }
+				void SetOnPath(int _c, offset_t dx){
+						path[_c] = PathEntry(dx, path[_c].dy, path[_c].frame, path[_c].delay);
+				}
 };
 
 #endif

@@ -56,6 +56,7 @@ class Items {
 
 		static void CreateAQuestionAnimation();
 		static void BrickCollision();
+		static bool IsOnBrick(const char* id);
 		
 public:
 		static void Init();

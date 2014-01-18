@@ -317,34 +317,63 @@ bool Items::BrickIsHit(Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	Dim j = (y > mj) ? y - mj : mj - y;
-	std::cout << "i: " << i << " j: " << j << "\n";
-	if(i < COLLISION_DETECT && ((mj - y) <= 17)) //@todo the right operation is equality check
+	
+	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)) //@todo the right operation is equality check
 		return true;
 	return false;
 
 }
 
 bool Items::IsMarioAboveBrick(Dim x, Dim y) {
-	Sprite* activeMario = Mario::GetMarioCurrentSprite();
-	Dim mi = activeMario->GetX();
-	Dim mj = activeMario->GetY();
-	if(mj + 16 == y && (mi > x && mi - x < 16))
+	Sprite* m = Mario::GetMarioCurrentSprite();
+	Dim mi = m->GetX();
+	Dim mj = m->GetY();
+	Dim i = (x > mi) ? x - mi : mi - x;
+	if((mj < y && y - mj < 16) && ( i < 16 )){ 
 		return true;
+	}
 	return false;
 }
 
-void Items::BrickCollision() {
-	for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
+	Sprite* m = Mario::GetMarioCurrentSprite();
+	Dim mi = m->GetX();
+	Dim mj = m->GetY();
+	Dim i = (x > mi) ? x - mi : mi - x;
+	if((mj < y && y - mj < 25) && ( i < 16 )){ 
+		return true;
+	}
+	return false;
+}
+
+bool Items::IsOnBrick(const char* id) {
+	bool active = false;
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
-				if(Mario::GetState() == Jumping)
+				if(Mario::GetState() == Jumping){
 					if(Items::BrickIsHit(x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
-				if(Items::IsMarioAboveBrick(x,y))
-					Collision::SetGravity(false);
-				else
-					Collision::SetGravity(true);
+				}
+				if(IsMarioAboveBrickPrivate(x, y) && 
+						Mario::isWalkingJump() &&
+						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
+						Mario::MarioFinishWjumping(0, 0);
+				}
+
+				if(Items::IsMarioAboveBrick(x,y)) {
+					Mario::SetOnBrick(true);
+					active = true;
+				}
 		}
+	return active;
+//	if(active) 
+//			Mario::SetOnBrick(false);
 }
+void Items::BrickCollision() {
+	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick"))
+			Mario::SetOnBrick(false);
+	
+}
+

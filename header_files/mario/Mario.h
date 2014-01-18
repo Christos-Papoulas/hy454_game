@@ -14,6 +14,8 @@
 #include "../enemies/GreenKoopaTroopa.h"
 
 #include <assert.h>
+#include < vector>
+
 extern Dim countScroll;
 
 enum MarioState { 
@@ -40,7 +42,8 @@ class Mario {
 		static MarioState marioState;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
-
+		static std::vector<PathEntry> paths;
+		static bool isOnBrick;
 	public:
 		static void CreateWalking(MovingAnimator* mario_animator);
 		static void CreateWaiting(MovingAnimator* mario_animator);
@@ -94,6 +97,8 @@ class Mario {
 
 		static Dim GetCountScroll(){ return countScroll;}
 		static MovingPathAnimator* GetStandJump() { return MarioSJump; }
+		static bool IsOnBrick() { return isOnBrick; }
+		static void SetOnBrick(bool x) { isOnBrick = x; }
 
 };
 
