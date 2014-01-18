@@ -24,6 +24,7 @@ class AnimatorHolder {
 		static void MarkAsSuspended (Animator* a);
 		static void Progress (timestamp_t currTime);
 		static void Display(Bitmap at);
+		static void SetTime(timestamp_t currTime);
 };
 
 #endif

@@ -7,6 +7,11 @@ void AnimatorHolder::Progress(timestamp_t currTime) {
 				running[i]->Progress(currTime);
 }
 
+void AnimatorHolder::SetTime(timestamp_t currTime) {
+		for (Dim i=0; i<running.size(); ++i)
+				running[i]->SetLastTime(currTime);
+}
+
 void AnimatorHolder::Display(Bitmap at) {
 		for (Dim i=0; i<running.size(); ++i)
 				running[i]->Display(at);

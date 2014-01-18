@@ -75,7 +75,7 @@ namespace MarioBrosMain {
 		extern void StartScreen(timestamp_t now); 
 		extern void InitializeGame();
 
-		extern void GamePause();
+		extern void GamePause(timestamp_t now);
 
 		int z_pressed = 0;
 		int space_pressed = 0;

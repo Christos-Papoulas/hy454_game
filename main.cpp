@@ -94,8 +94,9 @@ bool MarioBrosMain::InitAllegro(){
 
 //game loop logic
 void MarioBrosMain::MainLoopOneIteration() {
-	if(gameState != Start){
-		InputManagement(); //just reads from local input queue
+	InputManagement(); //just reads from local input queue
+	if(gameState == Play){
+		
 		AnimationProgress();
 		CollisionChecking();
 		ArtificialIntelligence();
@@ -111,6 +112,17 @@ void MarioBrosMain::InputManagement(){
 		z_pressed = 0;
 	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
 		space_pressed = 0;
+
+	if(gameState == Pause){
+		if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
+			if(!space_pressed){
+				al_play_sample(pause, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+				GamePause(currTime);
+				space_pressed = 1;
+			}
+		}
+		return ;
+	}
 		
 
 	if(!Mario::isWalkingJump() &&  gameState == Play) {
@@ -137,7 +149,7 @@ void MarioBrosMain::InputManagement(){
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
 					if(!space_pressed){
 						al_play_sample(pause, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
-						GamePause();
+						GamePause(currTime);
 						space_pressed = 1;
 					}
 					return ;
@@ -163,12 +175,13 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 	}
 }
 
-void MarioBrosMain::GamePause() {
+void MarioBrosMain::GamePause(timestamp_t now) {
 	if(gameState == Play){
 		gameState = Pause;
 		TerrainStartScreen::CreatePause();
 	}else if(gameState == Pause){
 		gameState = Play;
+		AnimatorHolder::SetTime(now);
 	}
 }
 
