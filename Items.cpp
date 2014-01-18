@@ -325,13 +325,26 @@ bool Items::BrickIsHit(Dim x, Dim y) {
 
 }
 
+bool Items::IsMarioAboveBrick(Dim x, Dim y) {
+	Sprite* activeMario = Mario::GetMarioCurrentSprite();
+	Dim mi = activeMario->GetX();
+	Dim mj = activeMario->GetY();
+	if(mj + 16 == y && (mi > x && mi - x < 16))
+		return true;
+	return false;
+}
+
 void Items::BrickCollision() {
 	for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
-				if(Mario::GetState() == Jumping || Mario::isWalkingJump())
-					if(Items::BrickIsHit(x, y))
+				if(Mario::GetState() == Jumping)
+					if(Items::BrickIsHit(x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
+				if(Items::IsMarioAboveBrick(x,y))
+					Collision::SetGravity(false);
+				else
+					Collision::SetGravity(true);
 		}
 }

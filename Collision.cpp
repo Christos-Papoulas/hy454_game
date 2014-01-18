@@ -4,6 +4,7 @@
 #include "header_files\mario\Mario.h"
 
 Dim			Collision::Collision_map[MAX_HEIGHT][MAX_WIDTH];
+bool Collision::IsGravityAddicted = true;
 
 void Collision::SetValue(Dim x, Dim y, Dim value) { 
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
@@ -91,13 +92,14 @@ void Collision::CheckGroundCollision() {
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
 
-	std::cout << "GetTileX=" << x << "GetTileY=" << y << "\n";
+	//std::cout << "GetTileX=" << x << "GetTileY=" << y << "\n";
 
 	if(Mario::GetState() == Death || Mario::GetState() == BackAndJump) return ;
 
 
 	if(!Collision::MarioCollision(x,y)){
-		activeMario->Move(0,1);
+		if(Collision::GetGravity() == true)
+			activeMario->Move(0,1);
 	}
 	Mario::SetDimensions(Mario::GetMarioCurrentSprite()->GetX(),Mario::GetMarioCurrentSprite()->GetY());
 }

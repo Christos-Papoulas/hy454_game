@@ -65,6 +65,7 @@ public:
 		static void ViewWindowMove();
 
 		static bool BrickIsHit(Dim x, Dim y);
+		static bool IsMarioAboveBrick(Dim x, Dim y);
 		
 		
 };
