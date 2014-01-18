@@ -32,7 +32,7 @@ void Enemies::MakeShortMap() {
 				for(Dim j = 0; j < MAX_WIDTH; ++j)
 						if(map[i][j]) countEnemies++;
 
-		shortMap = (Index**) malloc(sizeof(Index)*countEnemies);
+		shortMap = (Index**) malloc(sizeof(Index*)*countEnemies);
 		for(Dim i = 0; i < countEnemies; i++)
 				shortMap[i] = (Index*) malloc(sizeof(Index)*3);
 		
