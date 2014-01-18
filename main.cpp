@@ -123,7 +123,11 @@ void MarioBrosMain::InputManagement(){
 							return Mario::MarioWalkingJump();
 						}
 				}
-				
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){
+						if(Mario::isBackWalk()){
+							return Mario::BackWalkAndJump();
+						}
+				}
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
 						return Mario::EnterPipe(); // @todo something
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right

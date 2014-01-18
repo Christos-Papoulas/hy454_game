@@ -85,7 +85,7 @@ void Collision::CheckGroundCollision() {
 	Sprite* activeMario = Mario::GetMarioCurrentSprite();
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
-	if(Mario::GetState() == Death) return ;
+	if(Mario::GetState() == Death || Mario::GetState() == BackAndJump) return ;
 
 	
 	if(!Collision::MarioCollision(x,y)){
