@@ -42,6 +42,8 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 		if(Collision_map[j + x_tile + 1][i+y_tile] == 34 || Collision_map[j + x_tile][i+y_tile + 1] == 34)
 			Mario::GetMarioCurrentSprite()->MoveUp(1);
 			//Mario::MarioFinishWjumping(NULL,NULL);
+
+		
 		return true;
 	}
 
@@ -51,18 +53,21 @@ bool Collision::MarioCollision(Dim y_tile, Dim x_tile) {
 	}
 
 	if(Mario::GetState() == Walking){
+		MovingAnimator* m = (MovingAnimator*) Mario::GetAnimator();
 		if(!Mario::IsOnAir(y_tile,x_tile)) {		//an pataei katw
-			MovingAnimator* m = (MovingAnimator*) Mario::GetAnimator();
+			//MovingAnimator* m = (MovingAnimator*) Mario::GetAnimator();
 			if (!Mario::CanGoRight(y_tile,x_tile)) 	//touvlo
 				m->GetMovingAnimation()->SetDx(0);
 			else
 				m->GetMovingAnimation()->SetDx(4);
 			return true;
 		}
-		if (!Mario::CanGoRight(y_tile,x_tile)) {	//touvlo
-			Mario::GetMarioCurrentSprite()->MoveLeft(1);
-			return true;
-		}
+
+		if (!Mario::CanGoRight(y_tile,x_tile)) 	//touvlo
+				m->GetMovingAnimation()->SetDx(0);
+		else
+				m->GetMovingAnimation()->SetDx(4);
+
 		if(!Mario::IsOnAir(y_tile,x_tile))
 			return true;
 	}
@@ -86,7 +91,7 @@ void Collision::CheckGroundCollision() {
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
 	if(Mario::GetState() == Death) return ;
-
+	std::cout << "GetTileX=" << x << "GetTileY=" << y << "\n";
 	
 	if(!Collision::MarioCollision(x,y)){
 		activeMario->Move(0,1);
