@@ -92,8 +92,11 @@ void Collision::CheckGroundCollision() {
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
 
+<<<<<<< HEAD
 	//std::cout << "GetTileX=" << x << "GetTileY=" << y << "\n";
 
+=======
+>>>>>>> 26b08a1939ec80a476c53a5d7b324ef6b7e70389
 	if(Mario::GetState() == Death || Mario::GetState() == BackAndJump) return ;
 
 

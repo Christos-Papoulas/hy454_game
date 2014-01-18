@@ -182,9 +182,6 @@ void Mario::MarioStandingJump() {
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsRunning(MarioSJump);
-		
-		//MarioMovesUp();
-		
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
 		
@@ -313,6 +310,8 @@ Animator* Mario::GetAnimator() {
 				return MarioSJump;
 		case WalkAndJump:
 				return MarioWJump;
+		case BackAndJump:
+				return BackJump;
 		case Death:
 				return MarioDeath;
 		default: 

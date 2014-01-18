@@ -39,6 +39,7 @@ void GreenKoopa::CreateGreenKoopaIfAny() {
 										continue;
 								if(suspending.empty()) Create();
 								g = suspending.back();
+
 								suspending.pop_back();
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
@@ -59,6 +60,14 @@ void GreenKoopa::MoveKoopasInShells() {
 				if(Enemies::IsMarioLeft(currPosX, currPosY)) {
 						g->GetMovingAnimation()->SetDx(5);
 						g->GetMovingAnimation()->SetDelay(100);
+						g->GetMovingAnimation()->SetContinuous(true);
+						g->SetLastTime(currTime);
+				}
+				else if(Enemies::IsMarioRight(currPosX, currPosY)) {
+						g->GetMovingAnimation()->SetDx(-5);
+						g->GetMovingAnimation()->SetDelay(100);
+						g->GetMovingAnimation()->SetContinuous(true);
+						g->SetLastTime(currTime);
 				}
 		}
 }
@@ -86,7 +95,7 @@ void GreenKoopa::Dead() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 3000, false, ParseMarioInfo::GetAnimationIdOf(14u)
+						0, 0, 10000, false, ParseMarioInfo::GetAnimationIdOf(14u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -118,6 +127,10 @@ void GreenKoopa::MoveGreenKoopas() {
 						if(suspendingdead.size() == 0) 
 								Dead();
 						d = suspendingdead.back();
+						d->GetMovingAnimation()->SetDx(0);
+						d->GetMovingAnimation()->SetDelay(10000);
+						d->GetMovingAnimation()->SetContinuous(false);
+						d->SetLastTime(currTime);
 						suspendingdead.pop_back();
 						assert(d);
 						d->GetSprite()->SetX(x = g->GetSprite()->GetX());
@@ -128,6 +141,18 @@ void GreenKoopa::MoveGreenKoopas() {
 						suspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
+
+						//jump mario:
+						Dim mx = Mario::GetMarioCurrentSprite()->GetX();
+						Dim my = Mario::GetMarioCurrentSprite()->GetY();
+						Mario::SetDimensions(mx, my);
+
+						AnimatorHolder::MarkAsSuspended( Mario::GetAnimator());
+						Mario::SetDimensions(mx, my);
+						Mario::ChangeState(Jumping);
+						MovingPathAnimator* g = Mario::GetStandJump();
+						g->SetCurrIndex(0);
+						AnimatorHolder::MarkAsRunning(g);
 
 						return ;
 				}
