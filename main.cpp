@@ -164,8 +164,12 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 }
 
 void MarioBrosMain::GamePause() {
-	gameState = Pause;
-	TerrainStartScreen::CreatePause();
+	if(gameState == Play){
+		gameState = Pause;
+		TerrainStartScreen::CreatePause();
+	}else if(gameState == Pause){
+		gameState = Play;
+	}
 }
 
 void MarioBrosMain::AnimationProgress(){
