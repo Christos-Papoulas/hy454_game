@@ -93,6 +93,7 @@ class Mario {
 		static bool IsOnPipe(Dim x, Dim y);
 
 		static Dim GetCountScroll(){ return countScroll;}
+		static MovingPathAnimator* GetStandJump() { return MarioSJump; }
 
 };
 

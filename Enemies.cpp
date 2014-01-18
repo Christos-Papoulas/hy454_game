@@ -99,6 +99,16 @@ bool Enemies::IsMarioLeft(Dim x, Dim y) {
 		return false;
 }
 
+bool Enemies::IsMarioRight(Dim x, Dim y) {
+		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
+
+		Dim j = (y > mj) ? y - mj : mj - y;
+		if(x < mi && mi - x < COLLISION_DETECT && j < COLLISION_DETECT)
+				return true;
+		return false;
+}
+
 bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
 		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
