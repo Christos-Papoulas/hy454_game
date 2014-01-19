@@ -421,7 +421,10 @@ bool Items::IsOnBrick(const char* id) {
 }
 
 void Items::BrickCollision() {
-	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick"))
+	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick") && 
+			!IsOnBrick("leftuppipe") && !IsOnBrick("leftpipe") &&
+		  !IsOnBrick("rightuppipe") && !IsOnBrick("rightpipe")
+		)
 			Mario::SetOnBrick(false);
 	
 }
