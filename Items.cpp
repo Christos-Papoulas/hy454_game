@@ -109,12 +109,32 @@ void Items::CreateBricks() {
 												CreateAQuestionAnimation();
 										g = (MovingAnimator* ) suspending["questionbrick"].back();
 										suspending["questionbrick"].pop_back();
-								} //else if(brick[y][x] == 265) {
-									//	if(suspending["questionbrick"].size() == 0)
-									//			CreateSprite("questionbrick", 16);
-									//	g = (MovingAnimator* ) suspending["leftuppipe"].back();
-									//	suspending["leftuppipe"].pop_back();								
-							//	}
+								} else if(brick[y][x] == 265) {
+										if(suspending["leftuppipe"].size() == 0)
+												CreateSprite("leftuppipe", 16);
+										g = (MovingAnimator* ) suspending["leftuppipe"].back();
+										suspending["leftuppipe"].pop_back();								
+								} else if(brick[y][x] == 298) {
+										if(suspending["leftpipe"].size() == 0)
+												CreateSprite("leftpipe", 16);
+										g = (MovingAnimator* ) suspending["leftpipe"].back();
+										suspending["leftpipe"].pop_back();								
+								} else if(brick[y][x] == 266) {
+										if(suspending["rightuppipe"].size() == 0)
+												CreateSprite("rightuppipe", 16);
+										g = (MovingAnimator* ) suspending["rightuppipe"].back();
+										suspending["rightuppipe"].pop_back();								
+								} else if(brick[y][x] == 267) {
+										if(suspending["leftpipe"].size() == 0)
+												CreateSprite("leftpipe", 16);
+										g = (MovingAnimator* ) suspending["leftpipe"].back();
+										suspending["leftpipe"].pop_back();								
+								} else if(brick[y][x] == 299) {
+										if(suspending["rightpipe"].size() == 0)
+												CreateSprite("rightpipe", 16);
+										g = (MovingAnimator* ) suspending["rightpipe"].back();
+										suspending["rightpipe"].pop_back();								
+								}
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
@@ -125,8 +145,16 @@ void Items::CreateBricks() {
 										running["bricks"].push_back((Animator*) g);
 								else if(brick[y][x] == 25)
 										running["questionbrick"].push_back((Animator*) g);
-							//	 else if(brick[y][x] == 265)
-							//			running["leftuppipe"].push_back((Animator*) g);
+								else if(brick[y][x] == 265)
+										running["leftuppipe"].push_back((Animator*) g);
+								else if(brick[y][x] == 266)
+										running["rightuppipe"].push_back((Animator*) g);
+								else if(brick[y][x] == 267)
+										running["leftpipe"].push_back((Animator*) g);
+								else if(brick[y][x] == 299)
+										running["rightpipe"].push_back((Animator*) g);
+								else 
+										running["rightpipe"].push_back((Animator*) g);
 						}
 				}
 }
@@ -146,13 +174,13 @@ void Items::CreateABrickAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-void Items::CreateSprite(char* id, const Dim index) {
+void Items::CreateSprite(char* id, Dim index) {
 		Sprite *sprite = new Sprite(20, 100,
 				AnimationFilmHolder::GetFilm( std::string(id) ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 100000, true, ParseMarioInfo::GetAnimationIdOf(index)
+						0, 0, 10000, true, ParseMarioInfo::GetAnimationIdOf(index)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -179,8 +207,8 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 				assert(0);
 }
 
- void Items::SuspendBricks() {
-		for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+void Items::SuspendBricks(const char* id) {
+		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim currPosX = g->GetSprite()->GetX();
 				Dim currPosY = g->GetSprite()->GetY();
@@ -189,27 +217,21 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 				Dim TileY = g->GetSprite()->GetTileY();
 
 				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
-						suspending["bricks"].push_back(*it);
+						suspending[id].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
-						running["bricks"].erase(it);
+						running[id].erase(it);
 						return ;
 				}
-		}
-		for (std::list<Animator*>::iterator it=running["questionbrick"].begin(); it != running["questionbrick"].end(); ++it) {
-				MovingAnimator* g = ( MovingAnimator* )*it;
-				Dim currPosX = g->GetSprite()->GetX();
-				Dim currPosY = g->GetSprite()->GetY();
+		}		
+}
 
-				Dim TileX = g->GetSprite()->GetTileX();
-				Dim TileY = g->GetSprite()->GetTileY();
-
-				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
-						suspending["questionbrick"].push_back(*it);
-						AnimatorHolder::MarkAsSuspended(*it);
-						running["questionbrick"].erase(it);
-						return ;
-				}
-		}
+void Items::SuspendBricks() {
+		SuspendBricks("bricks");
+		SuspendBricks("questionbrick");
+		SuspendBricks("leftuppipe");
+		SuspendBricks("leftpipe");
+		SuspendBricks("rightuppipe");
+		SuspendBricks("rightpipe");
  }
 
  void Items::ViewWindowMove(const char* id) {
@@ -223,6 +245,9 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 		 ViewWindowMove("bricks");
 		 ViewWindowMove("questionbrick");
 		 ViewWindowMove("leftuppipe");
+		 ViewWindowMove("leftpipe");
+		 ViewWindowMove("rightuppipe");
+		 ViewWindowMove("rightpipe");
  }
 
 void Items::MoveItems() {
