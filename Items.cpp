@@ -91,7 +91,7 @@ const char* strItems[] = {"bricks", "questionbrick", "leftuppipe", "leftpipe", "
 												"solidbrick"}; // unused
 void Items::CreateBricks() {
 		MovingAnimator* g = NULL;
-		Dim id;
+		
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_WIDTH; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++){
 						Dim y = i;
