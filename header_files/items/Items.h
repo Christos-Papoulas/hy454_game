@@ -25,7 +25,7 @@ class Items {
 		static std::map<std::string, std::list<Animator*> > suspending;
 		static std::map<std::string, std::list<Animator*> > running;
 
-		static Dim map[MAX_HEIGHT][MAX_WIDTH];
+		static Dim map[MAX_HEIGHT][MAX_WIDTH]; //Items
 		static Dim brick[MAX_HEIGHT][MAX_WIDTH];
 		static Index**	shortMap;
 		static Index** shortBricks;
@@ -35,7 +35,7 @@ class Items {
 
 		static void CreateScores();
 		static void CreateABrickAnimation();
-		static void CreateSprite(char* id, Dim index);
+		static void CreateSprite(char* id, Dim index, offset_t dx, offset_t dy, Dim delay);
 		static void CreateBricks();
 		static void SuspendBricks(const char* id);
 		static void SuspendBricks();
@@ -60,15 +60,17 @@ class Items {
 		static void BrickCollision();
 		static bool IsOnBrick(const char* id);
 		static void ViewWindowMove(const char* id);
-		static void NotifyHit(Dim x, Dim y);
+		static void NotifyHit(const char* id, Dim x, Dim y);
+		static void CreateCoinSprite(char* id);
 public:
 		static void Init();
 		static void ArtificialIntelligence();
 		static void Throw100Coins(Dim x, Dim y);
 		static void FinishItemAnimation(Animator*, void*);
+		static void FinishCoinAmimation(Animator *g, void *a);
 		static void ViewWindowMove();
 
-		static bool BrickIsHit(Dim x, Dim y);
+		static bool BrickIsHit(const char* id, Dim x, Dim y);
 		static bool IsMarioAboveBrick(Dim x, Dim y);
 		
 		
