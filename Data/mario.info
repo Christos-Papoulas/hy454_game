@@ -1,4 +1,4 @@
-20
+21
 1
 mariowalking 3
 0 0 16 16
@@ -72,3 +72,6 @@ leftpipe 1
 299 
 rightpipe 1
 77 321 16 16
+34
+solidbrick
+61 375 16 16

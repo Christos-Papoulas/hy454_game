@@ -134,6 +134,11 @@ void Items::CreateBricks() {
 												CreateSprite("rightpipe", 16);
 										g = (MovingAnimator* ) suspending["rightpipe"].back();
 										suspending["rightpipe"].pop_back();								
+								} else if(brick[y][x] == 34) {
+										if(suspending["solidbrick"].size() == 0)
+												CreateSprite("solidbrick", 20);
+										g = (MovingAnimator* ) suspending["solidbrick"].back();
+										suspending["solidbrick"].pop_back();		
 								}
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
@@ -153,6 +158,8 @@ void Items::CreateBricks() {
 										running["leftpipe"].push_back((Animator*) g);
 								else if(brick[y][x] == 299)
 										running["rightpipe"].push_back((Animator*) g);
+								else if(brick[y][x] == 34)
+										running["solidbrick"].push_back((Animator*) g);
 								else 
 										running["rightpipe"].push_back((Animator*) g);
 						}
@@ -232,6 +239,7 @@ void Items::SuspendBricks() {
 		SuspendBricks("leftpipe");
 		SuspendBricks("rightuppipe");
 		SuspendBricks("rightpipe");
+		SuspendBricks("solidbrick");
  }
 
  void Items::ViewWindowMove(const char* id) {
@@ -249,6 +257,7 @@ void Items::SuspendBricks() {
 		 ViewWindowMove("rightuppipe");
 		 ViewWindowMove("rightpipe");
 		 ViewWindowMove("mushroom");
+		 ViewWindowMove("solidbrick");
  }
 
 void Items::MoveItems() {
