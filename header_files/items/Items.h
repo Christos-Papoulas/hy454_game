@@ -60,7 +60,7 @@ class Items {
 		static void BrickCollision();
 		static bool IsOnBrick(const char* id);
 		static void ViewWindowMove(const char* id);
-
+		static void NotifyHit(Dim x, Dim y);
 public:
 		static void Init();
 		static void ArtificialIntelligence();

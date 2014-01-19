@@ -248,6 +248,7 @@ void Items::SuspendBricks() {
 		 ViewWindowMove("leftpipe");
 		 ViewWindowMove("rightuppipe");
 		 ViewWindowMove("rightpipe");
+		 ViewWindowMove("mushroom");
  }
 
 void Items::MoveItems() {
@@ -298,8 +299,6 @@ void Items::SetItemAsActive(Dim x, Dim y) {
 bool Items::IsItemActive(Dim x, Dim y) {
 		return false;
 }
-
-
 
 void Items::CreateScores() {
 		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("onehundred") ));
@@ -363,13 +362,29 @@ void Items::CreateAQuestionAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Items::NotifyHit(Dim x, Dim y) {
+		MovingAnimator *g;
+		if(suspending["mushroom"].size() == 0)
+				CreateSprite("mushroom", 10);
+		g = (MovingAnimator* ) suspending["mushroom"].back();
+		suspending["mushroom"].pop_back();	
+		g->GetSprite()->SetX(x);
+		g->GetSprite()->SetY(y - 16);
+		g->SetLastTime(CurrTime());
+		AnimatorHolder::MarkAsRunning(g);
+		running["mushroom"].push_back(g);
+}
+
 bool Items::BrickIsHit(Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	
-	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)) //@todo the right operation is equality check
+	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
+		NotifyHit(x, y);
 		return true;
+	}
+		
 	return false;
 
 }
