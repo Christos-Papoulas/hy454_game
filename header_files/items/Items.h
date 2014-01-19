@@ -60,13 +60,13 @@ class Items {
 		static void BrickCollision();
 		static bool IsOnBrick(const char* id);
 		static void ViewWindowMove(const char* id);
-<<<<<<< HEAD
+
 		static void NotifyHit(Dim x, Dim y);
 		static void IsByTube(const char* id);
-=======
+
 		static void NotifyHit(const char* id, Dim x, Dim y);
 		static void CreateCoinSprite(char* id);
->>>>>>> 7d9d76958aea56238f9cba76777a7546ab7b8de5
+
 public:
 		static void Init();
 		static void ArtificialIntelligence();
