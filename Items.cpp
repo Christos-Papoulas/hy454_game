@@ -87,9 +87,11 @@ void Items::MakeShortBricks() {
 }
 
 
-
+const char* strItems[] = {"bricks", "questionbrick", "leftuppipe", "leftpipe", "rightuppipe", "rightpipe",
+												"solidbrick"}; // unused
 void Items::CreateBricks() {
 		MovingAnimator* g = NULL;
+		Dim id;
 		for(Dim i = 0; i < VIEW_WINDOW_TILE_WIDTH; i++)
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++){
 						Dim y = i;
@@ -111,29 +113,34 @@ void Items::CreateBricks() {
 										suspending["questionbrick"].pop_back();
 								} else if(brick[y][x] == 265) {
 										if(suspending["leftuppipe"].size() == 0)
-												CreateSprite("leftuppipe", 16);
+												CreateSprite("leftuppipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["leftuppipe"].back();
 										suspending["leftuppipe"].pop_back();								
 								} else if(brick[y][x] == 298) {
 										if(suspending["leftpipe"].size() == 0)
-												CreateSprite("leftpipe", 16);
+												CreateSprite("leftpipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["leftpipe"].back();
 										suspending["leftpipe"].pop_back();								
 								} else if(brick[y][x] == 266) {
 										if(suspending["rightuppipe"].size() == 0)
-												CreateSprite("rightuppipe", 16);
+												CreateSprite("rightuppipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["rightuppipe"].back();
 										suspending["rightuppipe"].pop_back();								
 								} else if(brick[y][x] == 267) {
 										if(suspending["leftpipe"].size() == 0)
-												CreateSprite("leftpipe", 16);
+												CreateSprite("leftpipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["leftpipe"].back();
 										suspending["leftpipe"].pop_back();								
 								} else if(brick[y][x] == 299) {
 										if(suspending["rightpipe"].size() == 0)
-												CreateSprite("rightpipe", 16);
+												CreateSprite("rightpipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["rightpipe"].back();
 										suspending["rightpipe"].pop_back();								
+								} else if(brick[y][x] == 34) {
+										if(suspending["solidbrick"].size() == 0)
+												CreateSprite("solidbrick", 20, 0, 0, 0);
+										g = (MovingAnimator* ) suspending["solidbrick"].back();
+										suspending["solidbrick"].pop_back();		
 								}
 								if(!g) return ;
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
@@ -153,6 +160,8 @@ void Items::CreateBricks() {
 										running["leftpipe"].push_back((Animator*) g);
 								else if(brick[y][x] == 299)
 										running["rightpipe"].push_back((Animator*) g);
+								else if(brick[y][x] == 34)
+										running["solidbrick"].push_back((Animator*) g);
 								else 
 										running["rightpipe"].push_back((Animator*) g);
 						}
@@ -174,13 +183,13 @@ void Items::CreateABrickAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-void Items::CreateSprite(char* id, Dim index) {
+void Items::CreateSprite(char* id, Dim index, offset_t dx, offset_t dy, Dim delay) {
 		Sprite *sprite = new Sprite(20, 100,
 				AnimationFilmHolder::GetFilm( std::string(id) ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 10000, true, ParseMarioInfo::GetAnimationIdOf(index)
+						dx, dy, (delay)?delay:10000, true, ParseMarioInfo::GetAnimationIdOf(index)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -188,6 +197,41 @@ void Items::CreateSprite(char* id, Dim index) {
 		
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		AnimatorHolder::Register( aMovAnimr );
+}
+
+void Items::CreateCoinSprite(char* id) {
+		Sprite * sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string(id) ));
+		std::vector<PathEntry> paths;
+		
+		for(Dim i = 0u; i < 10u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i < 5u) ? -6 : 6, 0, 70);
+				paths.push_back( pathEntry );
+		}
+		
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(21u));
+		aMovAnimn->SetContinuous(false);
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+
+		suspending[id].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());
+		aMovAnimr->SetOnFinish( FinishCoinAmimation );
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+void Items::FinishCoinAmimation(Animator *g, void *a) {
+		std::list<Animator*>::iterator it = running["coinanimation"].begin();
+		while (it != running["coinanimation"].end()){
+				if((*it) == (MovingPathAnimator*)  g) {
+						suspending["coinanimation"].push_back( *it );
+						AnimatorHolder::MarkAsSuspended( *it );
+						running["coinanimation"].erase( it );
+						return ;
+				}
+				else
+						 ++it;
+		}
+		return ;
 }
 
 bool Items::IsBrickActive(Dim  x, Dim y) {
@@ -232,6 +276,7 @@ void Items::SuspendBricks() {
 		SuspendBricks("leftpipe");
 		SuspendBricks("rightuppipe");
 		SuspendBricks("rightpipe");
+		SuspendBricks("solidbrick");
  }
 
  void Items::ViewWindowMove(const char* id) {
@@ -249,6 +294,8 @@ void Items::SuspendBricks() {
 		 ViewWindowMove("rightuppipe");
 		 ViewWindowMove("rightpipe");
 		 ViewWindowMove("mushroom");
+		 ViewWindowMove("solidbrick");
+		 ViewWindowMove("coinanimation");
  }
 
 void Items::MoveItems() {
@@ -357,31 +404,52 @@ void Items::CreateAQuestionAnimation() {
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
 		suspending["questionbrick"].push_back( (Animator*) aMovAnimr );
-		
+		aMovAnimn->SetContinuous(false);
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		AnimatorHolder::Register( aMovAnimr );
 }
-
-void Items::NotifyHit(Dim x, Dim y) {
-		MovingAnimator *g;
-		if(suspending["mushroom"].size() == 0)
-				CreateSprite("mushroom", 10);
-		g = (MovingAnimator* ) suspending["mushroom"].back();
-		suspending["mushroom"].pop_back();	
-		g->GetSprite()->SetX(x);
-		g->GetSprite()->SetY(y - 16);
-		g->SetLastTime(CurrTime());
-		AnimatorHolder::MarkAsRunning(g);
-		running["mushroom"].push_back(g);
+ 
+void Items::NotifyHit(const char* id, Dim x, Dim y) {
+		
+		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
+		Dim xi = i + (x >> 4) + 1;
+		Dim xj = j + (y >> 4);
+		Dim res = GetFromMap(xj, xi);
+		if( res == 323){
+				MovingAnimator *g;
+				if(suspending["mushroom"].size() == 0)
+						CreateSprite("mushroom", 10, 3, 0, 120);
+				g = (MovingAnimator* ) suspending["mushroom"].back();
+				suspending["mushroom"].pop_back();	
+				g->GetSprite()->SetX(x);
+				g->GetSprite()->SetY(y - 16);
+				g->SetLastTime(CurrTime());
+				AnimatorHolder::MarkAsRunning(g);
+				running["mushroom"].push_back(g);
+				SetOnMap(0, xj, xi);
+		} else if(!strcmp(id, "questionbrick")){
+				MovingPathAnimator* g;
+				if(suspending["coinanimation"].size() == 0)
+						CreateCoinSprite("coinanimation");
+				g = (MovingPathAnimator* ) suspending["coinanimation"].back();
+				suspending["coinanimation"].pop_back();	
+				g->GetSprite()->SetX(x);
+				g->GetSprite()->SetY(y - 16);
+				g->SetLastTime(CurrTime());
+				AnimatorHolder::MarkAsRunning(g);
+				running["coinanimation"].push_back(g);
+				SetOnMap(0, xj, xi); //throw coin
+		}
 }
 
-bool Items::BrickIsHit(Dim x, Dim y) {
+bool Items::BrickIsHit(const char* id, Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	
 	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
-		NotifyHit(x, y);
+		NotifyHit(id, x, y);
 		return true;
 	}
 		
@@ -418,7 +486,7 @@ bool Items::IsOnBrick(const char* id) {
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 				if(Mario::GetState() == Jumping){
-					if(Items::BrickIsHit(x, y) && !Items::IsMarioAboveBrick(x,y))
+					if(Items::BrickIsHit(id, x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
 				}
 				if(IsMarioAboveBrickPrivate(x, y) && 
