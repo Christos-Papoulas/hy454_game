@@ -277,6 +277,8 @@ void Items::SuspendBricks() {
 		SuspendBricks("rightuppipe");
 		SuspendBricks("rightpipe");
 		SuspendBricks("solidbrick");
+		SuspendBricks("coinanimation");
+		SuspendBricks("questionfinish");
  }
 
  void Items::ViewWindowMove(const char* id) {
@@ -296,6 +298,7 @@ void Items::SuspendBricks() {
 		 ViewWindowMove("mushroom");
 		 ViewWindowMove("solidbrick");
 		 ViewWindowMove("coinanimation");
+		 ViewWindowMove("questionfinish");
  }
 
 void Items::MoveItems() {
@@ -408,15 +411,41 @@ void Items::CreateAQuestionAnimation() {
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		AnimatorHolder::Register( aMovAnimr );
 }
- 
-void Items::NotifyHit(const char* id, Dim x, Dim y) {
-		
+
+void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
+		MovingAnimator *g;
+		if(suspending["questionfinish"].size() == 0)
+				CreateSprite("questionfinish", 22, 0, 0, 0);
+		g = (MovingAnimator* ) suspending["questionfinish"].back();
+		suspending["questionfinish"].pop_back();	
+		g->GetSprite()->SetX(x);
+		g->GetSprite()->SetY(y);
+		g->SetLastTime(CurrTime());
+		AnimatorHolder::MarkAsRunning(g);
+		running["questionfinish"].push_back(g);
+		AnimatorHolder::MarkAsSuspended(prevAnim);
+		std::list<Animator*>::iterator it = running["questionbrick"].begin();
+		while (it != running["questionbrick"].end()){
+				if((*it) == (MovingPathAnimator*)  g) {
+						suspending["questionbrick"].push_back( *it );
+						AnimatorHolder::MarkAsSuspended( *it );
+						running["questionbrick"].erase( it );
+						return ;
+				}
+				else
+						 ++it;
+		}
+		suspending["questionbrick"].push_back(prevAnim);
+
+}
+
+void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		Dim xi = i + (x >> 4) + 1;
 		Dim xj = j + (y >> 4);
 		Dim res = GetFromMap(xj, xi);
-		if( res == 323){
+		if(res == 323){
 				MovingAnimator *g;
 				if(suspending["mushroom"].size() == 0)
 						CreateSprite("mushroom", 10, 3, 0, 120);
@@ -428,28 +457,29 @@ void Items::NotifyHit(const char* id, Dim x, Dim y) {
 				AnimatorHolder::MarkAsRunning(g);
 				running["mushroom"].push_back(g);
 				SetOnMap(0, xj, xi);
+				ShowSolidQuestion(prevAnim, x, y);
 		} else if(!strcmp(id, "questionbrick")){
 				MovingPathAnimator* g;
 				if(suspending["coinanimation"].size() == 0)
 						CreateCoinSprite("coinanimation");
 				g = (MovingPathAnimator* ) suspending["coinanimation"].back();
 				suspending["coinanimation"].pop_back();	
-				g->GetSprite()->SetX(x);
+				g->GetSprite()->SetX(x + 3);
 				g->GetSprite()->SetY(y - 16);
 				g->SetLastTime(CurrTime());
 				AnimatorHolder::MarkAsRunning(g);
 				running["coinanimation"].push_back(g);
-				SetOnMap(0, xj, xi); //throw coin
+				ShowSolidQuestion(prevAnim, x, y);
 		}
 }
 
-bool Items::BrickIsHit(const char* id, Dim x, Dim y) {
+bool Items::BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	
 	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
-		NotifyHit(id, x, y);
+		NotifyHit(g, id, x, y);
 		return true;
 	}
 		
@@ -486,7 +516,7 @@ bool Items::IsOnBrick(const char* id) {
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 				if(Mario::GetState() == Jumping){
-					if(Items::BrickIsHit(id, x, y) && !Items::IsMarioAboveBrick(x,y))
+					if(Items::BrickIsHit(g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
 				}
 				if(IsMarioAboveBrickPrivate(x, y) && 

@@ -61,12 +61,11 @@ class Items {
 		static bool IsOnBrick(const char* id);
 		static void ViewWindowMove(const char* id);
 
-		static void NotifyHit(Dim x, Dim y);
 		static void IsByTube(const char* id);
 
-		static void NotifyHit(const char* id, Dim x, Dim y);
+		static void NotifyHit(MovingAnimator* g, const char* id, Dim x, Dim y);
 		static void CreateCoinSprite(char* id);
-
+		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
 public:
 		static void Init();
 		static void ArtificialIntelligence();
@@ -75,7 +74,7 @@ public:
 		static void FinishCoinAmimation(Animator *g, void *a);
 		static void ViewWindowMove();
 
-		static bool BrickIsHit(const char* id, Dim x, Dim y);
+		static bool BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y);
 		static bool IsMarioAboveBrick(Dim x, Dim y);
 		static bool IsMarioLeft(Dim x, Dim y);
 		static bool IsMarioRight(Dim x, Dim y);
