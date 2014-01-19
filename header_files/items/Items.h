@@ -61,6 +61,7 @@ class Items {
 		static bool IsOnBrick(const char* id);
 		static void ViewWindowMove(const char* id);
 		static void NotifyHit(Dim x, Dim y);
+		static void IsByTube(const char* id);
 public:
 		static void Init();
 		static void ArtificialIntelligence();
@@ -70,7 +71,9 @@ public:
 
 		static bool BrickIsHit(Dim x, Dim y);
 		static bool IsMarioAboveBrick(Dim x, Dim y);
-		
+		static bool IsMarioLeft(Dim x, Dim y);
+		static bool IsMarioRight(Dim x, Dim y);
+
 		
 };
 

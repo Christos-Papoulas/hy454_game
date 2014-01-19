@@ -435,12 +435,64 @@ bool Items::IsOnBrick(const char* id) {
 	return active;
 }
 
+void Items::IsByTube(const char* id) {
+	bool active = false;
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+				MovingAnimator* g = ( MovingAnimator* )*it;
+				Animator* marioAnimator = Mario::GetAnimator();
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+				if(Mario::GetState() == Walking){
+					if(Items::IsMarioLeft(x, y)){
+						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
+						break;
+					}
+					else{
+						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(4);
+					}
+					
+				}
+				else if(Mario::GetState() == backwalk){
+					if(Items::IsMarioRight(x, y)){
+						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
+						break;
+					}
+					else {
+						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(-3);
+					}
+				}
+		}
+}
+
+bool Items::IsMarioLeft(Dim x, Dim y) {
+	Sprite* m = Mario::GetMarioCurrentSprite();
+	Dim mi = m->GetX();
+	Dim mj = m->GetY();
+	Dim i = (x > mi) ? x - mi : mi - x;
+	if((mi < x && x - mi < 16) && ( i < 16 )){ 
+		return true;
+	}
+	return false;
+}
+
+bool Items::IsMarioRight(Dim x, Dim y) {
+	Sprite* m = Mario::GetMarioCurrentSprite();
+	Dim mi = m->GetX();
+	Dim mj = m->GetY();
+	Dim i = (x > mi) ? x - mi : mi - x;
+	if((mi > x && mi - x < 16) && ( i < 16 )){ 
+		return true;
+	}
+	return false;
+}
+
 void Items::BrickCollision() {
 	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick") && 
 			!IsOnBrick("leftuppipe") && !IsOnBrick("leftpipe") &&
 		  !IsOnBrick("rightuppipe") && !IsOnBrick("rightpipe")
 		)
 			Mario::SetOnBrick(false);
-	
+	Items::IsByTube("leftpipe");
+	Items::IsByTube("rightpipe");
 }
 
