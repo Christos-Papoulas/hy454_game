@@ -492,7 +492,8 @@ bool Items::IsMarioAboveBrick(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	if((mj < y && y - mj < 16) && ( i < 16 )){ 
+	Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight();
+	if((mj < y && y - mj < mheight) && ( i < 16 )){ 
 		return true;
 	}
 	return false;
@@ -503,14 +504,14 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	
+	Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight();
 	if(Mario::isWalkingJump()){
-		if(y + 16 <= mj && i < 16){
+		if(y + mheight <= mj && i < 16){
 			return true;
 		}
 	}
-
-	if((mj < y && y - mj < 25) && ( i < 16 )){ 
+	
+	if((mj < y && y - mj < 9+mheight) && ( i < 16 )){ 
 		return true;
 	}
 	return false;
@@ -531,7 +532,11 @@ bool Items::IsOnBrick(const char* id) {
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
 							Mario::MarioFinishWjumping(NULL,NULL);
 				}
-
+				if(Items::BrickIsHit(g, id, x, y) && 
+						Mario::isWalkingJump() && 
+						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
+							Mario::MarioFinishWjumping(NULL,NULL);
+				}
 				if(Items::IsMarioAboveBrick(x,y)) {
 					Mario::SetOnBrick(true);
 					active = true;

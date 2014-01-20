@@ -35,6 +35,7 @@ class Sprite {
 				Dim GetTileY();
 				void SetFilmAndReset(AnimationFilm*);
 				AnimationFilm* GetCurrFilm();
+				Rect GetFrameBox() { return frameBox; }
 };
 
 #endif

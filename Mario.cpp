@@ -400,8 +400,9 @@ void Mario::SetDimensions(MovingPathAnimator* source, MovingPathAnimator* dest) 
 bool Mario::IsOnAir(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
-		
-		if(Collision::GetValue(x + i - 0, y + j + 1) == 0 || Collision::GetValue(x + i, y + j + 1) == 0 || Collision::GetValue(x + i + 1, y + j + 1) == 0)
+		Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight() >> 4;
+
+		if(Collision::GetValue(x + i, y + j + mheight) == 0 || Collision::GetValue(x + i + 1, y + j + mheight) == 0)
 				return true;
 		return false;
 }
