@@ -12,6 +12,7 @@
 #include "../terrain/TerrainStartScreen.h"
 #include "../enemies/Goumba.h"
 #include "../enemies/GreenKoopaTroopa.h"
+#include "SpritesHolder.h"
 
 #include <assert.h>
 #include < vector>
@@ -28,9 +29,16 @@ enum MarioState {
 		Death
 };
 
+enum MarioLevel {
+		MarioSmall = 0,
+		SuperMario,
+		InvincibleMario
+};
+
 class Mario {
 	private:
 		static Mario* mario;
+		static Mario* super;
 		static MovingAnimator* MarioAnimator;
 		static MovingAnimator* MarioWaiting;
 		static MovingAnimator* MarioBWalk;
@@ -40,12 +48,15 @@ class Mario {
 		static MovingPathAnimator* MarioDeath;
 		
 		static MarioState marioState;
+		static MarioLevel marioLevel;
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 		static std::vector<PathEntry> paths;
 		static bool isOnBrick;
 	public:
+		static void SuperMario();
 		static void CreateWalking(MovingAnimator* mario_animator);
+
 		static void CreateWaiting(MovingAnimator* mario_animator);
 		static void CreateBackWalking(MovingAnimator* mario_animator);
 		static void CreateSjumping(MovingPathAnimator* mario_animator); //waiting and jump
@@ -99,7 +110,6 @@ class Mario {
 		static MovingPathAnimator* GetStandJump() { return MarioSJump; }
 		static bool IsOnBrick() { return isOnBrick; }
 		static void SetOnBrick(bool x) { isOnBrick = x; }
-
 };
 
 #endif

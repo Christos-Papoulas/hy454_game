@@ -66,6 +66,7 @@ class Items {
 		static void NotifyHit(MovingAnimator* g, const char* id, Dim x, Dim y);
 		static void CreateCoinSprite(char* id);
 		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
+		static void CollisionMarioWithMushroom();
 public:
 		static void Init();
 		static void ArtificialIntelligence();
