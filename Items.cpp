@@ -567,7 +567,7 @@ bool Items::IsMarioLeft(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	if((mi < x && x - mi < 16) && ( i < 16 )){ 
+	if((mi < x && x - mi < 16) && ( i < 16 ) && mj >= y){ 
 		return true;
 	}
 	return false;
@@ -578,7 +578,7 @@ bool Items::IsMarioRight(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	if((mi > x && mi - x < 16) && ( i < 16 )){ 
+	if((mi > x && mi - x < 16) && ( i < 16 ) && mj >= y){ 
 		return true;
 	}
 	return false;
