@@ -83,13 +83,11 @@ void Initializer::InitMarioWalkJumnp() {
 		
 		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
 				PathEntry pathEntry(5, -j, 0, 100);
-				printf("%d ", -j);
 				paths.push_back( pathEntry );
 		}
-		printf("\n");
+
 		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
 				PathEntry pathEntry(5, j, 0, 100);
-				printf("%d ", j);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));
@@ -103,8 +101,12 @@ void Initializer::InitMarioWalkJumnp() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-
+MovingPathAnimator* backWalkJump = NULL;
 void Initializer::BackWalkJump() {
+		if(backWalkJump) {
+				Mario::CreateBackAndJump( backWalkJump );
+				return ;
+		}
 		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariobackjump") ));
 		std::vector<PathEntry> paths;
 		
@@ -121,6 +123,7 @@ void Initializer::BackWalkJump() {
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateBackAndJump( aMovAnimr );
+		backWalkJump = aMovAnimr;
 		aMovAnimn->SetContinuous(false);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
@@ -171,7 +174,8 @@ void Initializer::SuperWaiting() {
 				Mario::CreateWaiting(superWaiting);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superwaiting") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superwaiting") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
@@ -192,7 +196,8 @@ void Initializer::SuperWalking() {
 				Mario::CreateWalking(superWalking);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superwalking") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superwalking") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
@@ -214,20 +219,104 @@ void Initializer::SuperBackWalk() {
 				Mario::CreateBackWalking(superBackWalk);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superbackwalk") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superbackwalk") ));
 		
-		/*MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						-3, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(6u)
+						-3, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(25u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
 		Mario::CreateBackWalking(aMovAnimr);
 		superBackWalk = aMovAnimr;
-		marioBackWalk  = aMovAnimr;
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinishBackWalk, NULL);
-		AnimatorHolder::Register( aMovAnimr );*/
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+MovingPathAnimator* superWalkJump = NULL;
+void Initializer::SuperWalkJump() {
+		if(superWalkJump) {
+				Mario::CreateWjumping(superWalkJump);
+				return ;
+		}
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superjumping") ));
+		std::vector<PathEntry> paths;
+		
+		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(5, -j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(5, j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(26u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		Sprite::CollisionCheck(spriteMario);
+		Mario::CreateWjumping(aMovAnimr);
+		superWalkJump = aMovAnimr;
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishWjumping, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+MovingPathAnimator* superStandJump = NULL;
+void Initializer::SuperStandJump() {
+		if(superStandJump) {
+				Mario::CreateSjumping(superStandJump);
+				return ;
+		}
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superjumping") ));
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 70);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(26u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		Sprite::CollisionCheck(spriteMario);
+		Mario::CreateSjumping(aMovAnimr);
+		superStandJump = aMovAnimr;
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishSjumping, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+MovingPathAnimator* superBackWalkJump = NULL;
+void Initializer::SuperBackWalkJump() {
+		if(superBackWalkJump) {
+				Mario::CreateBackAndJump( superBackWalkJump );
+				return ;
+		}
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superbackjump") ));
+		std::vector<PathEntry> paths;
+		
+		for(offset_t i = 0, j= 16; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, -j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 6; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(27u));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		Sprite::CollisionCheck(spriteMario);
+		Mario::CreateBackAndJump( aMovAnimr );
+		superBackWalkJump = aMovAnimr;
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
+		AnimatorHolder::Register( aMovAnimr );
 }
 
 void Initializer::InitMario() {

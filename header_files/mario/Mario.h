@@ -53,6 +53,7 @@ class Mario {
 		~Mario();
 		static std::vector<PathEntry> paths;
 		static bool isOnBrick;
+		friend void ChangeLevel(Animator* prev);
 	public:
 		static void SuperMario();
 		static void CreateWalking(MovingAnimator* mario_animator);
