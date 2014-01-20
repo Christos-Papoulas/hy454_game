@@ -503,7 +503,13 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
+	if(!Mario::isWalkingJump()){
 	if((mj < y && y - mj < 25) && ( i < 16 )){ 
+		return true;
+	}
+	}
+	if(Mario::isWalkingJump()){
+	if(y + 16 == mj && i < 16)
 		return true;
 	}
 	return false;
@@ -520,9 +526,9 @@ bool Items::IsOnBrick(const char* id) {
 						Mario::MarioFinishSjumping(NULL,NULL);
 				}
 				if(IsMarioAboveBrickPrivate(x, y) && 
-						Mario::isWalkingJump() &&
+						Mario::isWalkingJump() && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
-						Mario::MarioFinishWjumping(0, 0);
+							Mario::MarioFinishWjumping(NULL,NULL);
 				}
 
 				if(Items::IsMarioAboveBrick(x,y)) {
@@ -586,8 +592,8 @@ bool Items::IsMarioRight(Dim x, Dim y) {
 
 void Items::BrickCollision() {
 	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick") && 
-			!IsOnBrick("leftuppipe") && !IsOnBrick("leftpipe") &&
-		  !IsOnBrick("rightuppipe") && !IsOnBrick("rightpipe") && !IsOnBrick("solidbrick")
+		!IsOnBrick("leftuppipe") &&
+		 !IsOnBrick("rightuppipe") && !IsOnBrick("solidbrick")
 		)
 			Mario::SetOnBrick(false);
 	IsByTube("leftpipe");
