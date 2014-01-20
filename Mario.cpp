@@ -1,6 +1,7 @@
 #include "header_files\mario\Mario.h"
 
 Mario* Mario::mario = NULL;
+Mario* Mario::super;
 MovingAnimator* Mario::MarioAnimator = NULL;
 MovingAnimator* Mario::MarioWaiting = NULL;
 MovingPathAnimator* Mario::MarioSJump = NULL;
@@ -13,6 +14,7 @@ bool Mario::isOnBrick = false;
 
 std::vector<PathEntry> Mario::paths;
 MarioState Mario::marioState = Walking;
+MarioLevel Mario::marioLevel = MarioSmall;
 
 Dim countScroll = 0;
 static bool MoveViewWindow(Dim x) {
@@ -48,44 +50,37 @@ Mario::~Mario() {
 }
 
 void Mario::CreateWalking(MovingAnimator* mario_animator) {
-		if(!mario)
 				mario = new Mario(mario_animator);
 }
 
 void Mario::CreateWaiting(MovingAnimator* mario_animator) {
-		if(!MarioWaiting)
-				MarioWaiting = mario_animator;
+		MarioWaiting = mario_animator;
 }
 
 void Mario::CreateBackWalking(MovingAnimator* mario_animator) {
-		if(!MarioBWalk)
-				MarioBWalk = mario_animator;
+		MarioBWalk = mario_animator;
 }
 
 void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
-		if(!MarioSJump)
-				MarioSJump = mario_animator;
+		MarioSJump = mario_animator;
 } 
 
 void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
-		if(!MarioWJump) {
-				MarioWJump = mario_animator;
+		MarioWJump = mario_animator;
 
-				for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
-						PathEntry pathEntry(5, -j, 0, 100);
-						paths.push_back( pathEntry );
-				}
-				printf("\n");
-				for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
-						PathEntry pathEntry(5, j, 0, 100);
-						paths.push_back( pathEntry );
-				}
+		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(5, -j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		printf("\n");
+		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(5, j, 0, 100);
+				paths.push_back( pathEntry );
 		}
 }
 
 void Mario::CreateBackAndJump(MovingPathAnimator* mario_animator) {
-		if(!BackJump)
-				BackJump = mario_animator;
+		BackJump = mario_animator;
 }
 
 void Mario::CreateDeath(MovingPathAnimator* mario_animator) {
@@ -439,3 +434,7 @@ bool Mario::IsOnPipe(Dim x, Dim y) {
 		return false;
 }
 
+void Mario::SuperMario() {
+		Initializer::SuperWaiting();
+		Initializer::SuperWalking();
+}

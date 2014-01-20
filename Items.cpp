@@ -596,9 +596,26 @@ void Items::BrickCollision() {
 		 !IsOnBrick("rightuppipe") && !IsOnBrick("solidbrick")
 		)
 			Mario::SetOnBrick(false);
-	Items::IsByTube("leftpipe");
-	Items::IsByTube("rightpipe");
-	Items::IsByTube("solidbrick");
-	
+	IsByTube("leftpipe");
+	IsByTube("rightpipe");
+	IsByTube("solidbrick");
+
+	CollisionMarioWithMushroom();
 }
 
+void Items::CollisionMarioWithMushroom() {
+		for (std::list<Animator*>::iterator it=running["mushroom"].begin(); it != running["mushroom"].end(); ++it) {
+				MovingAnimator* g = (MovingAnimator*)*it;
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+
+				if(Enemies::IsMarioLeftOrRight(x, y)){
+						suspending["mushroom"].push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running["mushroom"].erase(it);
+
+						Mario::SuperMario();
+						return ;
+				}
+		}
+}
