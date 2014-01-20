@@ -11,7 +11,6 @@ MovingPathAnimator* Mario::BackJump = NULL;
 MovingPathAnimator* Mario::MarioDeath = NULL;
 bool Mario::isOnBrick = false;
 
-
 std::vector<PathEntry> Mario::paths;
 MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
@@ -434,11 +433,41 @@ bool Mario::IsOnPipe(Dim x, Dim y) {
 		return false;
 }
 
+void ChangeLevel(Animator* prev) {
+		AnimatorHolder::MarkAsSuspended(prev);
+		switch (Mario::marioState) {
+		case Waiting:
+				Mario::MarioFinisWaiting(0,0);
+				break;
+		case Walking:
+				Mario::MarioFinishWalking(0,0);
+				break;
+		case backwalk:
+				Mario::MarioFinishBackWalk(0,0);
+				break;
+		case Jumping:
+				Mario::MarioFinishSjumping(0,0);
+				break;
+		case WalkAndJump:
+				Mario::MarioFinishWjumping(0, 0);
+				break;
+		case BackAndJump:
+				Mario::MarioFinishBackJump(0,0);
+				break;
+		case Death:
+				break;
+		default: 
+				assert(0);
+	}
+	return ;
+}
 void Mario::SuperMario() {
-		Initializer::SuperWaiting();
-		Initializer::SuperWalking();
+		Animator* prev = GetAnimator();
 		Initializer::SuperBackWalk();
 		Initializer::SuperWalkJump();
 		Initializer::SuperStandJump();
 		Initializer::SuperBackWalkJump();
+		Initializer::SuperWaiting();
+		Initializer::SuperWalking();
+		ChangeLevel(prev);
 }

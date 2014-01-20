@@ -174,7 +174,8 @@ void Initializer::SuperWaiting() {
 				Mario::CreateWaiting(superWaiting);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superwaiting") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superwaiting") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
@@ -195,7 +196,8 @@ void Initializer::SuperWalking() {
 				Mario::CreateWalking(superWalking);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superwalking") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superwalking") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
@@ -217,7 +219,8 @@ void Initializer::SuperBackWalk() {
 				Mario::CreateBackWalking(superBackWalk);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superbackwalk") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superbackwalk") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
@@ -238,7 +241,8 @@ void Initializer::SuperWalkJump() {
 				Mario::CreateWjumping(superWalkJump);
 				return ;
 		}
-		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superjumping") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superjumping") ));
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
@@ -267,7 +271,8 @@ void Initializer::SuperStandJump() {
 				Mario::CreateSjumping(superStandJump);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superjumping") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superjumping") ));
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
 				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 70);
@@ -290,7 +295,8 @@ void Initializer::SuperBackWalkJump() {
 				Mario::CreateBackAndJump( superBackWalkJump );
 				return ;
 		}
-		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superbackjump") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superbackjump") ));
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 16; i < 6; ++i, j-=2) { // @todo make the code better!		
