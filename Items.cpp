@@ -503,13 +503,14 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	if(!Mario::isWalkingJump()){
-	if((mj < y && y - mj < 25) && ( i < 16 )){ 
-		return true;
-	}
-	}
+	
 	if(Mario::isWalkingJump()){
-	if(y + 16 == mj && i < 16)
+		if(y + 16 <= mj && i < 16){
+			return true;
+		}
+	}
+
+	if((mj < y && y - mj < 25) && ( i < 16 )){ 
 		return true;
 	}
 	return false;
