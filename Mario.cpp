@@ -160,10 +160,10 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	if(MarioBWalk->GetSprite()->GetX() <= 3)
-			MarioBWalk->GetMovingAnimation()->SetDx(0);
-	else
-			MarioBWalk->GetMovingAnimation()->SetDx(-3);
+	//if(MarioBWalk->GetSprite()->GetX() <= 3)
+			//MarioBWalk->GetMovingAnimation()->SetDx(0);
+	//else
+			//MarioBWalk->GetMovingAnimation()->SetDx(-3);
 	ChangeState(backwalk);
 }
 
