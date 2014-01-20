@@ -504,13 +504,7 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight();
-	if(Mario::isWalkingJump()){
-		if(y + mheight <= mj && i < 16){
-			return true;
-		}
-	}
-	
+	Dim mheight = m->GetFrameBox().GetHeight();
 	if((mj < y && y - mj < 9+mheight) && ( i < 16 )){ 
 		return true;
 	}
