@@ -437,4 +437,8 @@ bool Mario::IsOnPipe(Dim x, Dim y) {
 void Mario::SuperMario() {
 		Initializer::SuperWaiting();
 		Initializer::SuperWalking();
+		Initializer::SuperBackWalk();
+		Initializer::SuperWalkJump();
+		Initializer::SuperStandJump();
+		Initializer::SuperBackWalkJump();
 }
