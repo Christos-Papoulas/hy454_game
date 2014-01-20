@@ -16,8 +16,9 @@ MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
 
 Dim countScroll = 0;
+bool isUnderGround = false;
 static bool MoveViewWindow(Dim x) {
-		if( x > 85) {
+		if( x > 85 && !isUnderGround) {
 			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
 			Goumbas::ViewWindowMove();
@@ -337,10 +338,18 @@ Animator* Mario::GetAnimator() {
 bool startScrolling = false;
 void Mario::EnterPipe() {
 	Sprite* activeMario = Mario::GetMarioCurrentSprite();
-	Dim x = activeMario->GetTileX();
+	Dim x = activeMario->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX();
 	Dim y = activeMario->GetTileY();
-	if(Mario::IsOnPipe(y,x))
-		Mario::CreateDeath(NULL);
+	if(x == 47 || x == 48){
+			Rect viewWin;
+			viewWin.SetX(209);
+			countScroll = 0;
+			viewWin.SetY(0);
+			viewWin.SetHeight(15);
+			viewWin.SetWidth(16);
+			Terrain::GetTileLayer()->SetViewWindow(viewWin);
+			isUnderGround = true;
+	}
 	return;
 }
 
@@ -399,7 +408,7 @@ void Mario::SetDimensions(MovingPathAnimator* source, MovingPathAnimator* dest) 
 
 bool Mario::IsOnAir(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight() >> 4;
 
 		if(Collision::GetValue(x + i, y + j + mheight) == 0 || Collision::GetValue(x + i + 1, y + j + mheight) == 0)

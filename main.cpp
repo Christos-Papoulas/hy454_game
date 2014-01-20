@@ -96,11 +96,9 @@ bool MarioBrosMain::InitAllegro(){
 void MarioBrosMain::MainLoopOneIteration() {
 	InputManagement(); //just reads from local input queue
 	if(gameState == Play){
-		
 		AnimationProgress();
 		CollisionChecking();
 		ArtificialIntelligence();
-		
 		Mario::MoveViewWin();
 		//CommitDestructions();
 		//FPSCalculation();
@@ -123,7 +121,6 @@ void MarioBrosMain::InputManagement(){
 		}
 		return ;
 	}
-		
 
 	if(!Mario::isWalkingJump() &&  gameState == Play) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){

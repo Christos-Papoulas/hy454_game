@@ -64,3 +64,7 @@ void TileLayer::Display(Bitmap at/*, const Rect& displayArea*/) {
 				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++)
 						tilesBitmap->PutTile(at, i, j, GetTile(viewWindow.GetX() + i, viewWindow.GetY() + j), ScrollViewWindow);
 }
+
+void TileLayer::SetViewWindow(const Rect& rect){
+		viewWindow = rect;
+}
