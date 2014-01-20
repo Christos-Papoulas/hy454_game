@@ -587,10 +587,12 @@ bool Items::IsMarioRight(Dim x, Dim y) {
 void Items::BrickCollision() {
 	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick") && 
 			!IsOnBrick("leftuppipe") && !IsOnBrick("leftpipe") &&
-		  !IsOnBrick("rightuppipe") && !IsOnBrick("rightpipe")
+		  !IsOnBrick("rightuppipe") && !IsOnBrick("rightpipe") && !IsOnBrick("solidbrick")
 		)
 			Mario::SetOnBrick(false);
 	Items::IsByTube("leftpipe");
 	Items::IsByTube("rightpipe");
+	Items::IsByTube("solidbrick");
+	
 }
 
