@@ -37,9 +37,31 @@ static bool MoveViewWindow(Dim x) {
 
 void Mario::MoveViewWin() {
 		Sprite* m = Mario::GetMarioCurrentSprite();
+		KeepInsideViewWin();
 		if(MoveViewWindow(m->GetX()))
 				m->SetX(m->GetX() - 1);
 }
+
+void Mario::KeepInsideViewWin() {
+		Sprite* m = GetMarioCurrentSprite();
+		Animator* mAnim = GetAnimator();
+		Dim x = m->GetX();
+		Dim y = m->GetY();
+		if(x < 4){
+			switch (marioState) {
+				case backwalk:
+						MarioBWalk->GetMovingAnimation()->SetDx(0);
+						break;
+				case BackAndJump:
+						MarioFinishBackJump(0, 0);
+						break;
+				}
+		} else {
+				MarioBWalk->GetMovingAnimation()->SetDx(-3);
+		}
+
+}
+
 Mario::Mario(MovingAnimator* mario_animator){
 	assert(mario_animator);
 	MarioAnimator = mario_animator;
@@ -155,10 +177,7 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	//if(MarioBWalk->GetSprite()->GetX() <= 3)
-			//MarioBWalk->GetMovingAnimation()->SetDx(0);
-	//else
-			//MarioBWalk->GetMovingAnimation()->SetDx(-3);
+	
 	ChangeState(backwalk);
 }
 
@@ -179,6 +198,9 @@ void Mario::MarioMovesRight() {
 void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 		SetDimensions(MarioWaiting, MarioAnimator);
 		SetDimensions(MarioSJump, MarioAnimator);
+		SetDimensions(MarioBWalk, MarioAnimator);
+		SetDimensions(MarioWJump, MarioAnimator);
+		SetDimensions(BackJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -257,7 +279,7 @@ void Mario::MarioFinishBackWalk(Animator*, void*) {
 		SetDimensions(MarioAnimator, MarioBWalk);
 		SetDimensions(MarioSJump, MarioBWalk);
 		SetDimensions(MarioWJump, MarioBWalk);
-
+		SetDimensions(BackJump,MarioBWalk);
 		AnimatorHolder::MarkAsSuspended(MarioBWalk);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
@@ -270,6 +292,7 @@ void Mario::MarioFinishSjumping(Animator*, void*) {
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
 		SetDimensions(MarioBWalk, MarioSJump);
+		SetDimensions(BackJump, MarioSJump);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -285,6 +308,7 @@ void Mario::MarioFinishWjumping(Animator* , void* ) {
 		SetDimensions(MarioAnimator, MarioWJump);
 		SetDimensions(MarioSJump, MarioWJump);
 		SetDimensions(MarioBWalk, MarioWJump);
+		SetDimensions(BackJump, MarioWJump);
 
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioWJump);
