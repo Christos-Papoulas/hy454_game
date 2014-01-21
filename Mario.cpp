@@ -376,6 +376,7 @@ void Mario::EnterPipe() {
 			activeMario->SetX(20);
 			activeMario->SetY(20);
 			Items::KillPipes();
+			Goumbas::KillGoumbas();
 	}
 	return;
 }
