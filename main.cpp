@@ -36,7 +36,7 @@ bool MarioBrosMain::InitAllegro(){
 				return false;
 		}
 
-		if (!al_reserve_samples(3)){
+		if (!al_reserve_samples(7)){
 			fprintf(stderr, "failed to reserve samples!\n");
 			return false;
 		}
@@ -44,15 +44,11 @@ bool MarioBrosMain::InitAllegro(){
 		music = al_load_sample(MUSIC_PATH);
 		jump_small = al_load_sample(JUMP_SMALL_PATH);
 		pause = al_load_sample(PAUSE_PATH);
-		if (!music) {
-			printf( "Audio clip sample not loaded!\n" ); 
-			return false;
-		}
-		if (!jump_small) {
-			printf( "Audio clip sample not loaded!\n" ); 
-			return false;
-		}
-		if (!pause) {
+		hit_brick = al_load_sample(HIT_BRICK);
+		red_mushroom_spawn = al_load_sample(RED_MUSHROOM_SPAWN);
+		red_mushroom_get = al_load_sample(RED_MUSROOM_GET);
+		mario_death = al_load_sample(MARIO_DEATH);
+		if (!music || !jump_small || !pause || !hit_brick || !red_mushroom_spawn || !red_mushroom_get || !mario_death) {
 			printf( "Audio clip sample not loaded!\n" ); 
 			return false;
 		}
