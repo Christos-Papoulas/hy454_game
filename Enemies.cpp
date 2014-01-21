@@ -80,6 +80,15 @@ bool Enemies::CanGoRight(Dim x, Dim y) {
 		return true;
 }
 
+bool Enemies::IsOnBrick(Dim x, Dim y) {
+		return Items::IsEnemyOnBrick("bricks", x, y) ||
+				Items::IsEnemyOnBrick("questionbrick", x, y) ||
+				Items::IsEnemyOnBrick("leftuppipe", x, y) ||
+				Items::IsEnemyOnBrick("rightuppipe", x, y) ||
+				Items::IsEnemyOnBrick("solidbrick", x, y) ||
+				Items::IsEnemyOnBrick("questionfinish", x, y);
+}
+
 bool Enemies::IsOnAir(Dim x, Dim y, Dim width) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();

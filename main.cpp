@@ -100,7 +100,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		CollisionChecking();
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
-		//CommitDestructions();
+		CommitDestructions();
 		//FPSCalculation();
 	}
 }
@@ -202,7 +202,8 @@ void MarioBrosMain::CollisionChecking(){
 }
 
 void MarioBrosMain::CommitDestructions(){
-		assert(0 && "Unimpemented");
+		Goumbas::SuspendGoumbas();
+		Items::SuspendBricks();
 		return ;
 }
 

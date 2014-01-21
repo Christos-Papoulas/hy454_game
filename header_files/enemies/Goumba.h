@@ -20,6 +20,10 @@ class Goumbas {
 		static std::list<MovingAnimator*> goumbaSuspending;
 		static std::list<MovingAnimator*> running;
 		static std::list<MovingAnimator*> dead;
+
+		static void GoumbasKillMario();
+		static void CreateGoumbaifAny();
+		static void MoveGoumbas();
 public:
 		static void Create();
 		static void Dead();
@@ -27,10 +31,10 @@ public:
 		static void Finish(Animator *a, void *f);
 
 		static void ArtificialIntelligence();
-		static void CreateGoumbaifAny();
-		static void MoveGoumbas();
+			
 		static void ViewWindowMove();
-		static void GoumbasKillMario();
+		static void SuspendGoumbas();
+		
 };
 
 #endif

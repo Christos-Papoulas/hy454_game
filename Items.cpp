@@ -301,9 +301,6 @@ void Items::SuspendBricks() {
 		 ViewWindowMove("questionfinish");
  }
 
-void Items::MoveItems() {
-		;
-}
 
 void Items::CreateIfAny() {
 		MovingAnimator* g = NULL;
@@ -333,9 +330,7 @@ void Items::CreateIfAny() {
 void Items::ArtificialIntelligence() {
 		CreateBricks();
 		CreateIfAny();
-		MoveItems();
 		BrickCollision();
-		SuspendBricks();
 }
 
 void Items::SetItemAsActive(Dim x, Dim y) {
@@ -412,6 +407,7 @@ void Items::CreateAQuestionAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+bool deleteItem = false;
 void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
 		MovingAnimator *g;
 		if(suspending["questionfinish"].size() == 0)
@@ -426,17 +422,17 @@ void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
 		AnimatorHolder::MarkAsSuspended(prevAnim);
 		std::list<Animator*>::iterator it = running["questionbrick"].begin();
 		while (it != running["questionbrick"].end()){
-				if((*it) == (MovingPathAnimator*)  g) {
+				if((*it) == (MovingPathAnimator*)  prevAnim) {
 						suspending["questionbrick"].push_back( *it );
 						AnimatorHolder::MarkAsSuspended( *it );
 						running["questionbrick"].erase( it );
+						suspending["questionbrick"].push_back(prevAnim);
+						deleteItem=true;
 						return ;
 				}
 				else
 						 ++it;
 		}
-		suspending["questionbrick"].push_back(prevAnim);
-
 }
 
 void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
@@ -521,6 +517,7 @@ bool Items::IsOnBrick(const char* id) {
 					if(Items::BrickIsHit(g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
 				}
+				if(deleteItem) { deleteItem = false; return active;}
 				if(IsMarioAboveBrickPrivate(x, y) && 
 						Mario::isWalkingJump() && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
@@ -592,7 +589,7 @@ bool Items::IsMarioRight(Dim x, Dim y) {
 
 void Items::BrickCollision() {
 	if( !IsOnBrick("bricks") && !IsOnBrick("questionbrick") && 
-		!IsOnBrick("leftuppipe") &&
+		!IsOnBrick("leftuppipe") && !IsOnBrick("questionfinish") &&
 		 !IsOnBrick("rightuppipe") && !IsOnBrick("solidbrick")
 		)
 			Mario::SetOnBrick(false);
@@ -601,6 +598,20 @@ void Items::BrickCollision() {
 	IsByTube("solidbrick");
 
 	CollisionMarioWithMushroom();
+}
+
+bool Items::IsEnemyOnBrick(const char* id, Dim x, Dim y){
+		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+				MovingAnimator *g = (MovingAnimator *) (*it);
+				Dim gx = g->GetSprite()->GetX();
+				Dim gy = g->GetSprite()->GetY();
+
+				Dim i = (x > gx) ? x - gx : gx - x;
+				if(y < gy && y - gy < 16 && i < 16)
+						return true;
+		}
+		return false;
+		
 }
 
 void Items::CollisionMarioWithMushroom() {
