@@ -43,6 +43,7 @@ class ParseMarioInfo {
 				static unsigned short GetTotalFrames();
 
 				static unsigned short GetAnimationIdOf(unsigned short i);
+				static Dim GetIndexOf(const char* f);
 };
 
 #endif
