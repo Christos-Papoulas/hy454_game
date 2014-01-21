@@ -12,6 +12,7 @@
 #include "../terrain/TerrainStartScreen.h"
 #include "../enemies/Goumba.h"
 #include "../enemies/GreenKoopaTroopa.h"
+#include "FlushMarioHolder.h"
 #include "SpritesHolder.h"
 
 #include <assert.h>
@@ -52,12 +53,14 @@ class Mario {
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 		static std::vector<PathEntry> paths;
+		static std::vector<PathEntry> backpaths;
 		static bool isOnBrick;
 		static void KeepInsideViewWin();
 		friend void ChangeLevel(Animator* prev);
 
 	public:
 		static void SuperMario();
+		static void FlashMario();
 		static void CreateWalking(MovingAnimator* mario_animator);
 
 		static void CreateWaiting(MovingAnimator* mario_animator);
@@ -73,6 +76,7 @@ class Mario {
 		static bool isWalking() { return marioState == Walking; }
 		static bool isStandingJumping() { return marioState == Jumping; }
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
+		static bool isBackJumping() { return marioState == BackAndJump; }
 		static bool isBackWalk() { return marioState == backwalk; }
 		static void Destroy();
 		

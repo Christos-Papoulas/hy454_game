@@ -36,6 +36,7 @@ class Items {
 		static void CreateScores();
 		static void CreateABrickAnimation();
 		static void CreateSprite(char* id, Dim index, offset_t dx, offset_t dy, Dim delay);
+		static void CreateSprite(char* id, Dim start, Dim end, offset_t dx, offset_t dy, Dim delay);
 		static void CreateBricks();
 		static void SuspendBricks(const char* id);
 
@@ -68,6 +69,7 @@ class Items {
 		static void CreateCoinSprite(char* id);
 		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
 		static void CollisionMarioWithMushroom();
+		static void CollisionMarioWithStar();
 public:
 		static void Init();
 		static void ArtificialIntelligence();

@@ -12,6 +12,8 @@ MovingPathAnimator* Mario::MarioDeath = NULL;
 bool Mario::isOnBrick = false;
 
 std::vector<PathEntry> Mario::paths;
+std::vector<PathEntry> Mario::backpaths;
+
 MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
 
@@ -47,17 +49,28 @@ void Mario::KeepInsideViewWin() {
 		Animator* mAnim = GetAnimator();
 		Dim x = m->GetX();
 		Dim y = m->GetY();
-		if(x < 4){
+
+		if(x < 5){
 			switch (marioState) {
 				case backwalk:
 						MarioBWalk->GetMovingAnimation()->SetDx(0);
 						break;
 				case BackAndJump:
-						MarioFinishBackJump(0, 0);
+						int currIndex = ((MovingPathAnimator*) mAnim)->GetCurrIndex();
+						((MovingPathAnimator*) mAnim)->GetAnimation()->SetOnPath(currIndex, 0);
 						break;
 				}
 		} else {
 				MarioBWalk->GetMovingAnimation()->SetDx(-3);
+		}
+		if(y < 18){
+				switch (marioState) {
+						case WalkAndJump:
+						case BackAndJump:
+								int currIndex = ((MovingPathAnimator*) mAnim)->GetCurrIndex();
+								((MovingPathAnimator*) mAnim)->GetAnimation()->SetDyOnPath(currIndex, 0);
+								break;
+				}
 		}
 
 }
@@ -94,7 +107,7 @@ void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
 				PathEntry pathEntry(5, -j, 0, 100);
 				paths.push_back( pathEntry );
 		}
-		printf("\n");
+
 		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
 				PathEntry pathEntry(5, j, 0, 100);
 				paths.push_back( pathEntry );
@@ -103,6 +116,16 @@ void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
 
 void Mario::CreateBackAndJump(MovingPathAnimator* mario_animator) {
 		BackJump = mario_animator;
+
+		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, -j, 0, 100);
+				backpaths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, j, 0, 100);
+				backpaths.push_back( pathEntry );
+		}
 }
 
 void Mario::CreateDeath(MovingPathAnimator* mario_animator) {
@@ -254,9 +277,11 @@ void Mario::BackWalkAndJump() {
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioBWalk);
+		BackJump->GetAnimation()->SetPath(backpaths);
 		AnimatorHolder::MarkAsRunning(BackJump);
 		
-		ChangeState(WalkAndJump);
+		ChangeState(BackAndJump);
+		marioState = BackAndJump;
 		return ;
 }
 
@@ -280,6 +305,7 @@ void Mario::MarioFinishBackWalk(Animator*, void*) {
 		SetDimensions(MarioSJump, MarioBWalk);
 		SetDimensions(MarioWJump, MarioBWalk);
 		SetDimensions(BackJump,MarioBWalk);
+
 		AnimatorHolder::MarkAsSuspended(MarioBWalk);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		
@@ -329,7 +355,7 @@ void Mario::MarioFinishBackJump(Animator*, void*) {
 
 		AnimatorHolder::MarkAsSuspended(BackJump);
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
-		
+		BackJump->SetCurrIndex(0);
 		ChangeState(Waiting);
 }
 
@@ -527,5 +553,11 @@ void Mario::SuperMario() {
 		Initializer::SuperBackWalkJump();
 		Initializer::SuperWaiting();
 		Initializer::SuperWalking();
+		ChangeLevel(prev);
+}
+
+void Mario::FlashMario() {
+		Animator* prev = GetAnimator();
+		FlushMario::InitMario();
 		ChangeLevel(prev);
 }

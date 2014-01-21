@@ -110,12 +110,12 @@ void Initializer::BackWalkJump() {
 		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariobackjump") ));
 		std::vector<PathEntry> paths;
 		
-		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
+		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
 				PathEntry pathEntry(-5, -j, 0, 100);
 				paths.push_back( pathEntry );
 		}
 
-		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
+		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
 				PathEntry pathEntry(-5, j, 0, 100);
 				paths.push_back( pathEntry );
 		}

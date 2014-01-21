@@ -183,13 +183,30 @@ void Items::CreateABrickAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+//index is unused
 void Items::CreateSprite(char* id, Dim index, offset_t dx, offset_t dy, Dim delay) {
 		Sprite *sprite = new Sprite(20, 100,
 				AnimationFilmHolder::GetFilm( std::string(id) ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						dx, dy, (delay)?delay:10000, true, ParseMarioInfo::GetAnimationIdOf(index)
+						dx, dy, (delay)?delay:10000, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf(id))
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		suspending[id].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+void Items::CreateSprite(char* id, Dim start, Dim end, offset_t dx, offset_t dy, Dim delay) {
+		Sprite *sprite = new Sprite(20, 100,
+				AnimationFilmHolder::GetFilm( std::string(id) ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						start, end, 
+						dx, dy, (delay)?delay:10000, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf(id))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -260,7 +277,7 @@ void Items::SuspendBricks(const char* id) {
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
+				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY > MAX_HEIGHT) {
 						suspending[id].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running[id].erase(it);
@@ -294,6 +311,8 @@ void Items::SuspendBricks() {
 		SuspendBricks("solidbrick");
 		SuspendBricks("coinanimation");
 		SuspendBricks("questionfinish");
+		SuspendBricks("mushroom");
+		SuspendBricks("star");
  }
 
  void Items::ViewWindowMove(const char* id) {
@@ -314,6 +333,7 @@ void Items::SuspendBricks() {
 		 ViewWindowMove("solidbrick");
 		 ViewWindowMove("coinanimation");
 		 ViewWindowMove("questionfinish");
+		 ViewWindowMove("star");
  }
 
 
@@ -469,7 +489,17 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				running["mushroom"].push_back(g);
 				SetOnMap(0, xj, xi);
 				ShowSolidQuestion(prevAnim, x, y);
-		} else if(!strcmp(id, "questionbrick")){
+		}else if(res == 29){
+				CreateSprite("star", 0, 3, 0, 0, 100);
+				MovingAnimator* star = (MovingAnimator*) suspending["star"].back();
+				assert(star);
+				star->GetSprite()->SetX(x+3);
+				star->GetSprite()->SetY(y-16);
+				suspending["star"].pop_back();
+				running["star"].push_back(star);
+				AnimatorHolder::MarkAsRunning(star);
+				SetOnMap(0, xj, xi);
+		}else if(!strcmp(id, "questionbrick")){
 				MovingPathAnimator* g;
 				if(suspending["coinanimation"].size() == 0)
 						CreateCoinSprite("coinanimation");
@@ -482,6 +512,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				running["coinanimation"].push_back(g);
 				ShowSolidQuestion(prevAnim, x, y);
 		}
+		
 }
 
 bool Items::BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y) {
@@ -525,13 +556,15 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 
 bool Items::IsOnBrick(const char* id) {
 	bool active = false;
-	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+	// this function genarates segmentation fault
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); it != running[id].end() && ++it != running[id].end()) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 				if(Mario::GetState() == Jumping){
 					if(Items::BrickIsHit(g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
+						break;
 				}
 				if(deleteItem) { deleteItem = false; return active;}
 				if(IsMarioAboveBrickPrivate(x, y) && 
@@ -543,6 +576,7 @@ bool Items::IsOnBrick(const char* id) {
 						Mario::isWalkingJump() && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
 							Mario::MarioFinishWjumping(NULL,NULL);
+							break;
 				}
 				if(Items::IsMarioAboveBrick(x,y)) {
 					Mario::SetOnBrick(true);
@@ -614,6 +648,7 @@ void Items::BrickCollision() {
 	IsByTube("solidbrick");
 
 	CollisionMarioWithMushroom();
+	CollisionMarioWithStar();
 }
 
 bool Items::IsEnemyOnBrick(const char* id, Dim x, Dim y){
@@ -642,6 +677,23 @@ void Items::CollisionMarioWithMushroom() {
 						running["mushroom"].erase(it);
 
 						Mario::SuperMario();
+						return ;
+				}
+		}
+}
+
+void Items::CollisionMarioWithStar() {
+		for (std::list<Animator*>::iterator it=running["star"].begin(); it != running["star"].end(); ++it) {
+				MovingAnimator* g = (MovingAnimator*)*it;
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+
+				if(Enemies::IsMarioLeftOrRight(x, y)){
+						suspending["star"].push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running["star"].erase(it);
+
+						Mario::FlashMario();
 						return ;
 				}
 		}
