@@ -378,7 +378,7 @@ void Mario::EnterPipe() {
 	return;
 }
 
-/*void Mario::GetOutFromPipe() {
+void Mario::GetOutFromPipe() {
 	if(isUnderGround) {
 		Sprite* activeMario = Mario::GetMarioCurrentSprite();
 		Dim x = activeMario->GetTileX();
@@ -393,7 +393,7 @@ void Mario::EnterPipe() {
 			isUnderGround = false;
 		}
 	}
-}*/
+}
 
 Dim scrollX = 0;
 #define PIPE_WINDOW 180
