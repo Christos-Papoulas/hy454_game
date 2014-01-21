@@ -97,7 +97,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
 		CommitDestructions();
-		//FPSCalculation();
+		FPSCalculation();
 	}
 }
 
@@ -204,8 +204,21 @@ void MarioBrosMain::CommitDestructions(){
 		return ;
 }
 
+unsigned int prevMili = 0;
+unsigned int fps = 0;
 void MarioBrosMain::FPSCalculation(){
-		assert(0 && "Unimpemented");
+		SYSTEMTIME st; GetSystemTime(&st);
+		unsigned int mili = st.wMilliseconds;
+		
+		fps++;
+		
+		if(prevMili == 0){
+				prevMili = mili;
+		}
+		else if(mili - prevMili > 1000) {
+				prevMili = 0;
+				fps = 0;
+		}
 		return ;
 }
 
