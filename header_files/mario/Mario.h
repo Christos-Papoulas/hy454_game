@@ -12,6 +12,7 @@
 #include "../terrain/TerrainStartScreen.h"
 #include "../enemies/Goumba.h"
 #include "../enemies/GreenKoopaTroopa.h"
+#include "FlushMarioHolder.h"
 #include "SpritesHolder.h"
 
 #include <assert.h>
@@ -58,6 +59,7 @@ class Mario {
 
 	public:
 		static void SuperMario();
+		static void FlashMario();
 		static void CreateWalking(MovingAnimator* mario_animator);
 
 		static void CreateWaiting(MovingAnimator* mario_animator);

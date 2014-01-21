@@ -523,3 +523,9 @@ void Mario::SuperMario() {
 		Initializer::SuperWalking();
 		ChangeLevel(prev);
 }
+
+void Mario::FlashMario() {
+		Animator* prev = GetAnimator();
+		FlushMario::InitMario();
+		ChangeLevel(prev);
+}
