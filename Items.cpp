@@ -522,6 +522,7 @@ bool Items::BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y) {
 	
 	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
 		NotifyHit(g, id, x, y);
+
 		return true;
 	}
 		

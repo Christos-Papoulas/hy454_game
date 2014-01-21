@@ -373,6 +373,8 @@ void Mario::EnterPipe() {
 			viewWin.SetWidth(16);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
 			isUnderGround = true;
+			activeMario->SetX(20);
+			activeMario->SetY(20);
 			Items::KillPipes();
 	}
 	return;
@@ -389,8 +391,11 @@ void Mario::GetOutFromPipe() {
 			viewWin.SetY(0);
 			viewWin.SetHeight(15);
 			viewWin.SetWidth(16);
+			activeMario->SetX(76);
+			activeMario->SetY(129);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
 			isUnderGround = false;
+			
 		}
 	}
 }
