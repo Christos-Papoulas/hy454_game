@@ -151,3 +151,11 @@ void Goumbas::SuspendGoumbas(){
 				}
 		}
 }
+
+void Goumbas::KillGoumbas(){
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+						goumbaSuspending.push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+		}	
+	running.clear();
+}

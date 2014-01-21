@@ -34,6 +34,7 @@ public:
 			
 		static void ViewWindowMove();
 		static void SuspendGoumbas();
+		static void KillGoumbas();
 		
 };
 
