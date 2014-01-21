@@ -24,7 +24,7 @@
 class Items {
 		static std::map<std::string, std::list<Animator*> > suspending;
 		static std::map<std::string, std::list<Animator*> > running;
-
+		static std::list<Animator*> toDesrtuct;
 		static Dim map[MAX_HEIGHT][MAX_WIDTH]; //Items
 		static Dim brick[MAX_HEIGHT][MAX_WIDTH];
 		static Index**	shortMap;
@@ -88,6 +88,8 @@ public:
 
 		static bool IsOnBrick(const char* id);
 		static bool IsEnemyOnBrick(const char* id, Dim x, Dim y);
+
+		static void CommitDestructions();
 };
 
 #endif

@@ -2,6 +2,7 @@
 
 std::map<std::string, std::list<Animator*> > Items::suspending;
 std::map<std::string, std::list<Animator*> > Items::running;
+std::list<Animator*> Items::toDesrtuct;
 
 Dim Items::map[MAX_HEIGHT][MAX_WIDTH];
 Index**	Items::shortMap;
@@ -442,7 +443,24 @@ void Items::CreateAQuestionAnimation() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-bool deleteItem = false;
+void Items::CommitDestructions() {
+		for (std::list<Animator*>::iterator del=toDesrtuct.begin(); del != toDesrtuct.end(); ++del) {
+				std::list<Animator*>::iterator it = running["questionbrick"].begin();
+				while (it != running["questionbrick"].end()){
+						if((*it) == (MovingPathAnimator*)  *del) {
+								suspending["questionbrick"].push_back( *it );
+								AnimatorHolder::MarkAsSuspended( *it );
+								running["questionbrick"].erase( it );
+								return ;
+						}
+						else
+								 ++it;
+				}
+		}
+		toDesrtuct.clear();
+}
+
+
 void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
 		MovingAnimator *g;
 		if(suspending["questionfinish"].size() == 0)
@@ -455,19 +473,7 @@ void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
 		AnimatorHolder::MarkAsRunning(g);
 		running["questionfinish"].push_back(g);
 		AnimatorHolder::MarkAsSuspended(prevAnim);
-		std::list<Animator*>::iterator it = running["questionbrick"].begin();
-		while (it != running["questionbrick"].end()){
-				if((*it) == (MovingPathAnimator*)  prevAnim) {
-						suspending["questionbrick"].push_back( *it );
-						AnimatorHolder::MarkAsSuspended( *it );
-						running["questionbrick"].erase( it );
-						suspending["questionbrick"].push_back(prevAnim);
-						deleteItem=true;
-						return ;
-				}
-				else
-						 ++it;
-		}
+		toDesrtuct.push_back(prevAnim);
 }
 
 void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
@@ -564,9 +570,9 @@ bool Items::IsOnBrick(const char* id) {
 				if(Mario::GetState() == Jumping){
 					if(Items::BrickIsHit(g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
-						break;
+						return active;
 				}
-				if(deleteItem) { deleteItem = false; return active;}
+
 				if(IsMarioAboveBrickPrivate(x, y) && 
 						Mario::isWalkingJump() && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
@@ -576,7 +582,7 @@ bool Items::IsOnBrick(const char* id) {
 						Mario::isWalkingJump() && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
 							Mario::MarioFinishWjumping(NULL,NULL);
-							break;
+							return active;
 				}
 				if(Items::IsMarioAboveBrick(x,y)) {
 					Mario::SetOnBrick(true);

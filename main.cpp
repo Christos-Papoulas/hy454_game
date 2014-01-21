@@ -154,8 +154,6 @@ void MarioBrosMain::InputManagement(){
 					}
 					if(!Mario::isStandingJumping())
 						return Mario::MarioStandingJump();
-				}else{
-						return ; // other keys...
 				}
 				al_flush_event_queue(queue);
 		}
@@ -201,6 +199,7 @@ void MarioBrosMain::CollisionChecking(){
 void MarioBrosMain::CommitDestructions(){
 		Goumbas::SuspendGoumbas();
 		Items::SuspendBricks();
+		Items::CommitDestructions();
 		return ;
 }
 
