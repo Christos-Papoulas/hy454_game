@@ -58,3 +58,10 @@ unsigned short ParseMarioInfo::GetTotalFrames() {
 unsigned short ParseMarioInfo::GetAnimationIdOf(unsigned short i) {
 		return marioInfo->mariodetails[i].iid;
 }
+
+Dim ParseMarioInfo::GetIndexOf(const char* f) {
+		for(Dim i = 0; i < marioInfo->totalFrames; i++)
+				if(!strncmp(marioInfo->mariodetails[i].cid, f, 20))
+						return i;
+		assert(0);
+}

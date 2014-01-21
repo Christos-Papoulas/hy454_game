@@ -18,7 +18,7 @@ void Initializer::InitMarioWalking() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						4, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(0u)
+						4, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariowalking"))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -38,7 +38,7 @@ void Initializer::InitMarioWaiting() {
 		}
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariowaiting") ));
 		
-		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(3u));
+		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariowaiting")));
 		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateWaiting(aMovAnimr);
@@ -61,7 +61,7 @@ void Initializer::InitMarioStandJump() {
 				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 70);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariojumping")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateSjumping(aMovAnimr);
@@ -90,7 +90,7 @@ void Initializer::InitMarioWalkJumnp() {
 				PathEntry pathEntry(5, j, 0, 100);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(1u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariojumping")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateWjumping(aMovAnimr);
@@ -119,7 +119,7 @@ void Initializer::BackWalkJump() {
 				PathEntry pathEntry(-5, j, 0, 100);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(15u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariobackjump")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateBackAndJump( aMovAnimr );
@@ -140,7 +140,7 @@ void Initializer::InitMarioBackWalk() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						-3, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(6u)
+						-3, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariobackwalk"))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -158,7 +158,7 @@ void Initializer::InitMarioDeath() {
 				PathEntry pathEntry(0, (i < 10u) ? -2 : 2, 0, 200);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(2u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariodeading")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		
 		Mario::CreateDeath(aMovAnimr);
@@ -179,7 +179,7 @@ void Initializer::SuperWaiting() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(23u)
+						0, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superwaiting"))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -201,7 +201,7 @@ void Initializer::SuperWalking() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						4, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(25u)
+						4, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superwalking"))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -224,7 +224,7 @@ void Initializer::SuperBackWalk() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 2, 
-						-3, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(25u)
+						-3, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superbackwalk"))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -254,7 +254,7 @@ void Initializer::SuperWalkJump() {
 				PathEntry pathEntry(5, j, 0, 100);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(26u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superjumping")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateWjumping(aMovAnimr);
@@ -278,7 +278,7 @@ void Initializer::SuperStandJump() {
 				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 70);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(26u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superjumping")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateSjumping(aMovAnimr);
@@ -308,7 +308,7 @@ void Initializer::SuperBackWalkJump() {
 				PathEntry pathEntry(-5, j, 0, 100);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(27u));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superbackjump")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateBackAndJump( aMovAnimr );
