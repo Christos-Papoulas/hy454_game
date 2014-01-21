@@ -556,7 +556,8 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 
 bool Items::IsOnBrick(const char* id) {
 	bool active = false;
-	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+	// this function genarates segmentation fault
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); it != running[id].end() && ++it != running[id].end()) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();

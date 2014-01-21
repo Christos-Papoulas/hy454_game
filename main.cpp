@@ -118,7 +118,7 @@ void MarioBrosMain::InputManagement(){
 		return ;
 	}
 
-	if(!Mario::isWalkingJump() &&  gameState == Play) {
+	if(!Mario::isWalkingJump() && !Mario::isBackJumping() &&  gameState == Play) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
 					if(!z_pressed){
 						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
@@ -129,7 +129,7 @@ void MarioBrosMain::InputManagement(){
 						}
 				}
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){
-						if(Mario::isBackWalk()){
+						if(Mario::isBackWalk() && !Mario::isBackJumping() ){
 							return Mario::BackWalkAndJump();
 						}
 				}

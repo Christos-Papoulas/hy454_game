@@ -53,6 +53,7 @@ class Mario {
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 		static std::vector<PathEntry> paths;
+		static std::vector<PathEntry> backpaths;
 		static bool isOnBrick;
 		static void KeepInsideViewWin();
 		friend void ChangeLevel(Animator* prev);
@@ -75,6 +76,7 @@ class Mario {
 		static bool isWalking() { return marioState == Walking; }
 		static bool isStandingJumping() { return marioState == Jumping; }
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
+		static bool isBackJumping() { return marioState == BackAndJump; }
 		static bool isBackWalk() { return marioState == backwalk; }
 		static void Destroy();
 		

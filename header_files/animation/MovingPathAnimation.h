@@ -37,6 +37,9 @@ class MovingPathAnimation : public Animation {
 				void SetOnPath(int _c, offset_t dx){
 						path[_c] = PathEntry(dx, path[_c].dy, path[_c].frame, path[_c].delay);
 				}
+				void SetDyOnPath(int _c, offset_t _dy){
+						path[_c] = PathEntry(path[_c].dx, _dy, path[_c].frame, path[_c].delay);
+				}
 };
 
 #endif
