@@ -39,7 +39,7 @@ void Goumbas::Dead() {
 void Goumbas::ArtificialIntelligence() {
 		CreateGoumbaifAny();
 		MoveGoumbas();
-		//GoumbasKillMario();
+		GoumbasKillMario();
 }
 
 void Goumbas::CreateGoumbaifAny() {
@@ -80,13 +80,6 @@ void Goumbas::MoveGoumbas() {
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
-						goumbaSuspending.push_back(*it);
-						AnimatorHolder::MarkAsSuspended(*it);
-						running.erase(it);
-						return ;
-				}
-
 				if(Enemies::IsMarioAbove(TileX, TileY)){
 						MovingAnimator* d; Dim x, y;
 						if(dead.size() == 0) 
@@ -117,7 +110,7 @@ void Goumbas::MoveGoumbas() {
 				else
 						g->GetMovingAnimation()->SetDx(0);
 
-				if( Enemies::IsOnAir(TileX, TileY, 0) ) 
+				if( Enemies::IsOnAir(TileX, TileY, 0) && !Enemies::IsOnBrick(currPosX, currPosY)) 
 						g->GetMovingAnimation()->SetDy(3);
 				else
 						g->GetMovingAnimation()->SetDy(0);
@@ -139,5 +132,22 @@ void Goumbas::GoumbasKillMario() {
 
 				if(Enemies::IsMarioLeftOrRight(x, y))
 						 Mario::MarioDeading();
+		}
+}
+
+void Goumbas::SuspendGoumbas(){
+		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+				Dim currPosX = (*it)->GetSprite()->GetX();
+				Dim currPosY = (*it)->GetSprite()->GetY();
+
+				Dim TileX = (*it)->GetSprite()->GetTileX();
+				Dim TileY = (*it)->GetSprite()->GetTileY();
+
+				if(currPosX < 2 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
+						goumbaSuspending.push_back(*it);
+						AnimatorHolder::MarkAsSuspended(*it);
+						running.erase(it);
+						return ;
+				}
 		}
 }

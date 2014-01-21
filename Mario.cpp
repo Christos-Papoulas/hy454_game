@@ -354,6 +354,23 @@ void Mario::EnterPipe() {
 	return;
 }
 
+/*void Mario::GetOutFromPipe() {
+	if(isUnderGround) {
+		Sprite* activeMario = Mario::GetMarioCurrentSprite();
+		Dim x = activeMario->GetTileX();
+		if(x == 12){
+			Rect viewWin;
+			viewWin.SetX(159);
+			countScroll = 0;
+			viewWin.SetY(0);
+			viewWin.SetHeight(15);
+			viewWin.SetWidth(16);
+			Terrain::GetTileLayer()->SetViewWindow(viewWin);
+			isUnderGround = false;
+		}
+	}
+}*/
+
 Dim scrollX = 0;
 #define PIPE_WINDOW 180
 Dim Mario::PipeEnterScroll(Dim i) {

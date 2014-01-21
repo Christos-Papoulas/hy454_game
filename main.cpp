@@ -100,7 +100,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		CollisionChecking();
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
-		//CommitDestructions();
+		CommitDestructions();
 		//FPSCalculation();
 	}
 }
@@ -140,6 +140,7 @@ void MarioBrosMain::InputManagement(){
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
 						return Mario::EnterPipe(); // @todo something
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
+						Mario::GetOutFromPipe();
 						return Mario::MarioMovesRight();
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){ // lest
 						return Mario::MarioMovesLeft();
@@ -202,7 +203,8 @@ void MarioBrosMain::CollisionChecking(){
 }
 
 void MarioBrosMain::CommitDestructions(){
-		assert(0 && "Unimpemented");
+		Goumbas::SuspendGoumbas();
+		Items::SuspendBricks();
 		return ;
 }
 

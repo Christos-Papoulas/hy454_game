@@ -14,6 +14,9 @@ void Collision::SetValue(Dim x, Dim y, Dim value) {
 				value == 298 ||
 				value == 265 ||
 				value == 67  ||
+				value == 364 ||
+				value == 268 ||
+				value == 69  ||
 				value == 266)
 			Collision_map[x][y] = 1;
 		else

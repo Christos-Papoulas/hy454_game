@@ -90,6 +90,7 @@ class Mario {
 		static void MarioDeading();
 		
 		static void EnterPipe();
+		static void GetOutFromPipe();
 		static Dim PipeEnterScroll(Dim i);
 		
 		static MarioState GetState() { return marioState; }

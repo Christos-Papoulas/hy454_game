@@ -38,11 +38,11 @@ class Items {
 		static void CreateSprite(char* id, Dim index, offset_t dx, offset_t dy, Dim delay);
 		static void CreateBricks();
 		static void SuspendBricks(const char* id);
-		static void SuspendBricks();
+
 		static void KillSprites(const char* id);
+
 		static Dim GetFromMap(Dim x, Dim y) { return map[x][y]; }
 		static void SetOnMap(Dim value, Dim x, Dim y) { map[x][y] = value; }
-		static void MoveItems();
 
 		static void ReadMap();
 		static void ReadBrickMap();
@@ -59,7 +59,7 @@ class Items {
 
 		static void CreateAQuestionAnimation();
 		static void BrickCollision();
-		static bool IsOnBrick(const char* id);
+		
 		static void ViewWindowMove(const char* id);
 
 		static void IsByTube(const char* id);
@@ -74,14 +74,18 @@ public:
 		static void Throw100Coins(Dim x, Dim y);
 		static void FinishItemAnimation(Animator*, void*);
 		static void FinishCoinAmimation(Animator *g, void *a);
+		
 		static void ViewWindowMove();
-
+		static void SuspendBricks();
+		
 		static bool BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y);
 		static bool IsMarioAboveBrick(Dim x, Dim y);
 		static bool IsMarioLeft(Dim x, Dim y);
 		static bool IsMarioRight(Dim x, Dim y);
 		static void KillPipes();
-		
+
+		static bool IsOnBrick(const char* id);
+		static bool IsEnemyOnBrick(const char* id, Dim x, Dim y);
 };
 
 #endif

@@ -28,8 +28,9 @@ class Enemies {
 		static Dim totalFrames;
 		static MarioInfo_t* enemies;
 		static Index countEnemies;
-
+		
 		Enemies(){;}
+
 		public:
 				static void Create();
 				static void SetOnMap(Index value, Dim x, Dim y) {
@@ -46,7 +47,10 @@ class Enemies {
 				static bool IsEnemyActive(Dim x, Dim y);
 				static bool CanGoLeft(Dim x, Dim y);
 				static bool CanGoRight(Dim x, Dim y);
+				
 				static bool IsOnAir(Dim x, Dim y, Dim width);
+				static bool IsOnBrick(Dim x, Dim y);
+
 				static bool IsMarioLeftOrRight(Dim x, Dim y);
 				static bool IsMarioAbove(Dim x, Dim y);
 				static bool IsMarioLeft(Dim x, Dim y);
