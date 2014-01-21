@@ -269,6 +269,21 @@ void Items::SuspendBricks(const char* id) {
 		}		
 }
 
+void Items::KillSprites(const char* id) {
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+				suspending[id].push_back(*it);
+				AnimatorHolder::MarkAsSuspended(*it);
+	}
+	running[id].clear();
+}
+
+void Items::KillPipes() {
+	KillSprites("leftuppipe");
+	KillSprites("leftpipe");
+	KillSprites("rightuppipe");
+	KillSprites("rightpipe");
+}
+
 void Items::SuspendBricks() {
 		SuspendBricks("bricks");
 		SuspendBricks("questionbrick");

@@ -39,6 +39,7 @@ class Items {
 		static void CreateBricks();
 		static void SuspendBricks(const char* id);
 		static void SuspendBricks();
+		static void KillSprites(const char* id);
 		static Dim GetFromMap(Dim x, Dim y) { return map[x][y]; }
 		static void SetOnMap(Dim value, Dim x, Dim y) { map[x][y] = value; }
 		static void MoveItems();
@@ -79,7 +80,7 @@ public:
 		static bool IsMarioAboveBrick(Dim x, Dim y);
 		static bool IsMarioLeft(Dim x, Dim y);
 		static bool IsMarioRight(Dim x, Dim y);
-
+		static void KillPipes();
 		
 };
 

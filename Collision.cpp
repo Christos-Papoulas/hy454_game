@@ -9,10 +9,11 @@ bool Collision::IsGravityAddicted = true;
 void Collision::SetValue(Dim x, Dim y, Dim value) { 
 		assert(x < MAX_HEIGHT && y < MAX_WIDTH);
 		if (value == 1 || //edafos
-				value == 34 || //toublo
+				value == 34  || //toublo
 				value == 299 || //swlinas
 				value == 298 ||
 				value == 265 ||
+				value == 67  ||
 				value == 266)
 			Collision_map[x][y] = 1;
 		else

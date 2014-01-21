@@ -349,6 +349,7 @@ void Mario::EnterPipe() {
 			viewWin.SetWidth(16);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
 			isUnderGround = true;
+			Items::KillPipes();
 	}
 	return;
 }
