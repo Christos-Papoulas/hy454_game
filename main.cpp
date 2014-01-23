@@ -96,6 +96,9 @@ void MarioBrosMain::MainLoopOneIteration() {
 		CollisionChecking();
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
+		NumbersHolder::PrintNumberTime(400);
+		NumbersHolder::PrintNumberCoins(0);
+		NumbersHolder::PrintScore(0);
 		CommitDestructions();
 		FPSCalculation();
 	}
@@ -200,6 +203,7 @@ void MarioBrosMain::CommitDestructions(){
 		Goumbas::SuspendGoumbas();
 		Items::SuspendBricks();
 		Items::CommitDestructions();
+
 		return ;
 }
 
@@ -239,7 +243,7 @@ void MarioBrosMain::InitializeGame() {
 		NumbersHolder::InitWorld();
 		NumbersHolder::InitEpi();
 		NumbersHolder::InitCoin();
-		NumbersHolder::PrintNumberTime(300);
+		
 		redraw = true;
 }
 

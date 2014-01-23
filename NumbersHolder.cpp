@@ -12,13 +12,18 @@ MovingAnimator* NumbersHolder::World;
 MovingAnimator* NumbersHolder::Epi;
 MovingAnimator* NumbersHolder::Coin;
 MovingAnimator* NumbersHolder::time1=NULL,*NumbersHolder::time2=NULL,*NumbersHolder::time3=NULL;
+Dim NumbersHolder::t1,NumbersHolder::t2,NumbersHolder::t3;
+MovingAnimator* NumbersHolder::coin1=NULL,*NumbersHolder::coin2=NULL;
+Dim NumbersHolder::c1,NumbersHolder::c2;
+MovingAnimator* NumbersHolder::score1=NULL,*NumbersHolder::score2=NULL,*NumbersHolder::score3=NULL,*NumbersHolder::score4=NULL,*NumbersHolder::score5=NULL,*NumbersHolder::score6=NULL;
+Dim NumbersHolder::sc1,NumbersHolder::sc2,NumbersHolder::sc3,NumbersHolder::sc4,NumbersHolder::sc5,NumbersHolder::sc6;
 
 void NumbersHolder::Init() {
 		Dim i = 0;
 		
 		for(i=0; i < N_MAX; i++){
 			names.push_back(name[i]);
-			Sprite *sprite = new Sprite(213, 20, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
+			Sprite *sprite = new Sprite(218, 20, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
 		
 			MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 							0, 0, 
@@ -29,13 +34,11 @@ void NumbersHolder::Init() {
 			suspending[i].push_back( aMovAnimr );
 
 			aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
-		
-			AnimatorHolder::Register( aMovAnimr );
 		}
 }
 
 void NumbersHolder::CreateNumber(Dim i) {
-		Sprite *sprite = new Sprite(213, 20, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
+		Sprite *sprite = new Sprite(218, 20, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
@@ -45,8 +48,7 @@ void NumbersHolder::CreateNumber(Dim i) {
 		
 		suspending[i].push_back( aMovAnimr );
 
-		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
-		AnimatorHolder::Register( aMovAnimr );
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());
 }
 
 void NumbersHolder::InitTime() {
@@ -95,7 +97,7 @@ void NumbersHolder::InitWorld() {
 }
 
 void NumbersHolder::InitEpi() {
-	Sprite *sprite = new Sprite(100, 10, AnimationFilmHolder::GetFilm( std::string("epi") ));
+	Sprite *sprite = new Sprite(100, 20, AnimationFilmHolder::GetFilm( std::string("epi") ));
 	MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 					0, 0, 
 					0, 0, 1000, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("epi"))
@@ -110,7 +112,7 @@ void NumbersHolder::InitEpi() {
 }
 
 void NumbersHolder::InitCoin() {
-	Sprite *sprite = new Sprite(85, 7, AnimationFilmHolder::GetFilm( std::string("coinanimation") ));
+	Sprite *sprite = new Sprite(85, 15, AnimationFilmHolder::GetFilm( std::string("coinanimation") ));
 	MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 					0, 2, 
 					0, 0, 200, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("coinanimation"))
@@ -137,26 +139,57 @@ void NumbersHolder::DisplayNumber(Dim number, Dim x){
 	g->GetSprite()->SetX(x);
 
 	running[number].push_back(g);
+	AnimatorHolder::Register( g );
 	AnimatorHolder::MarkAsRunning(g);
 	suspending[number].pop_back();
-	assert(suspending[number].size() == 0);
 }
 
-void NumbersHolder::SuspendNumbers(){
-		for(Dim id = 0; id < N_MAX; ++id){
-				for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) 
-						suspending[id].push_back(*it);
-				running[id].clear();
+void NumbersHolder::SuspendNumbers(Dim number, MovingAnimator* g){
+	std::list<MovingAnimator*>::iterator it;
+	while (it != running[number].end()){
+				if((*it) == (MovingAnimator*)  g) {
+						suspending[number].push_back( *it );
+						AnimatorHolder::MarkAsSuspended( *it );
+						running[number].erase( it );
+						return ;
+				}
+				else
+						 ++it;
 		}
-		return ;		
+	return ;
 }
 
 void NumbersHolder::PrintNumberTime(Dim num) {
 	Dim first = num / 100;
 	Dim second = (num % 100) / 10;
 	Dim third = num % 10;
-	SuspendNumbers();
-	DisplayNumber(first, 214);
-	DisplayNumber(second, 221);
-	DisplayNumber(third, 227);
+	
+	DisplayNumber(first, 218);
+	DisplayNumber(second, 225);
+	DisplayNumber(third, 231);
+}
+
+void NumbersHolder::PrintNumberCoins(Dim num) {
+	Dim first = num / 10;
+	Dim second = num % 10;
+	
+	DisplayNumber(first, 110);
+	DisplayNumber(second, 117);
+}
+
+void NumbersHolder::PrintScore(Dim num) {
+	Dim first = num / 100000;
+	Dim second = (num % 100000) / 10000;
+	Dim third = (num % 10000) / 1000;
+	Dim fourth = (num % 1000) / 100;
+	Dim fifth = (num % 100) / 10;
+	Dim sixth = num % 10;
+
+	DisplayNumber(first, 20);
+	DisplayNumber(second, 27);
+	DisplayNumber(third, 33);
+	DisplayNumber(fourth, 40);
+	DisplayNumber(fifth, 47);
+	DisplayNumber(sixth, 54);
+
 }

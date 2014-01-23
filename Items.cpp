@@ -38,7 +38,7 @@ void Items::MakeShortMap() {
 				for(Dim j = 0; j < MAX_WIDTH; ++j)
 						if(map[i][j]) countItems++;
 
-		shortMap = (Index**) malloc(sizeof(Index)*countItems);
+		shortMap = (Index**) malloc(sizeof(Index*)*countItems);
 		for(Dim i = 0; i < countItems; i++)
 				shortMap[i] = (Index*) malloc(sizeof(Index)*3);
 		
