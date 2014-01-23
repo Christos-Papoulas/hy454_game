@@ -6,12 +6,16 @@
 #include "../animation/AnimationFilmHolder.h"
 #include "../animator/FrameRangeAnimator.h"
 #include "../parsers/ParseMarioInfo.h"
-#include<vector>
+#include <map>
+#include <list>
+#include <vector>
 
 #define N_MAX 10
 
-namespace NumbersHolder{ 
-		extern MovingAnimator* Numbers[N_MAX];
+namespace NumbersHolder{
+		extern std::map<Dim, std::list<MovingAnimator*> > suspending;
+		extern std::map<Dim, std::list<MovingAnimator*> > running;
+
 		extern MovingAnimator* Time;
 		extern MovingAnimator* Mario;
 		extern MovingAnimator* World;
@@ -20,6 +24,9 @@ namespace NumbersHolder{
 		extern MovingAnimator* time1,*time2,*time3;
 
 		extern void Init();
+		extern void CreateNumber(Dim i);
+		extern void DisplayNumber(Dim number, Dim x);
+		extern void SuspendNumbers();
 		extern void InitTime();
 		extern void InitMario();
 		extern void InitWorld();

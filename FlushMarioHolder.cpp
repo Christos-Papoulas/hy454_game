@@ -176,6 +176,10 @@ MovingAnimator* FlushMario::SuperFlushBackWalk = NULL;
 void FlushMario::InitSuperMario() {
 		SuperWaiting();
 		SuperWalking();
+		SuperBackWalk();
+		SuperWalkJump();
+		SuperStandJump();
+		SuperBackWalkJump();
 }
 
 void FlushMario::SuperWaiting() {
@@ -224,17 +228,111 @@ void FlushMario::SuperWalking() {
 }
 
 void FlushMario::SuperBackWalk() {
-		;
+		if(SuperFlushBackWalk) {
+				Mario::CreateBackWalking(SuperFlushBackWalk);
+				return ;
+		}
+		Sprite *spriteMario = new Sprite(20, 100, 
+				AnimationFilmHolder::GetFilm( std::string("superflushbwalk") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 2, 
+						-3, 0, 90, false, 
+						ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superflushbwalk"))
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		Mario::CreateBackWalking(aMovAnimr);
+		SuperFlushBackWalk  = aMovAnimr;
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishBackWalk, NULL);
+		AnimatorHolder::Register( aMovAnimr );
 }
 
 void FlushMario::SuperWalkJump() {
-		;
+		if(SuperFlushWalkJump) {
+				Mario::CreateBackAndJump( SuperFlushWalkJump );
+				return ;
+		}
+		Sprite * spriteMario = new Sprite(20, 100, 
+				AnimationFilmHolder::GetFilm( std::string("superflushjump") ));
+		std::vector<PathEntry> paths;
+		
+		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, -j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(
+				paths, 
+				ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superflushjump"))
+		);
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		
+		Mario::CreateBackAndJump( aMovAnimr );
+
+		SuperFlushWalkJump = aMovAnimr;
+
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
+		AnimatorHolder::Register( aMovAnimr );
 }
 
 void FlushMario::SuperStandJump() {
-		;
+		if(SuperFlushStandJump) {
+				Mario::CreateSjumping(SuperFlushStandJump);
+				return ;
+		}
+
+		Sprite *spriteMario = new Sprite(20, 100, 
+				AnimationFilmHolder::GetFilm( std::string("superflushjump") ));
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 70);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superflushjump")));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		
+		Mario::CreateSjumping(aMovAnimr);
+		SuperFlushStandJump = aMovAnimr;
+		aMovAnimn->SetContinuous(false);
+
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishSjumping, NULL);
+		AnimatorHolder::Register( aMovAnimr );
 }
 
 void FlushMario::SuperBackWalkJump() {
-		;
+		if(SuperFlushbackWalkJump) {
+				Mario::CreateBackAndJump( SuperFlushbackWalkJump );
+				return ;
+		}
+		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariobackjump") ));
+		std::vector<PathEntry> paths;
+		
+		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, -j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry(-5, j, 0, 100);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariobackjump")));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+		
+		Mario::CreateBackAndJump( aMovAnimr );
+		SuperFlushbackWalkJump = aMovAnimr;
+
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
+		AnimatorHolder::Register( aMovAnimr );
 }

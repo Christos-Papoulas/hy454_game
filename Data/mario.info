@@ -1,4 +1,4 @@
-51
+54
 1
 mariowalking 3
 0 0 16 16
@@ -194,7 +194,19 @@ flushsuperwalking 6
 superflushwaiting 2
 32 96 16 32
 65 96 16 32
+1028
 superflushbwalk 6
 100 225 16 32
+133 225 16 32
 100 243 12 32
+133 243 12 32
 100 257 16 32
+133 257 16 32
+1029
+superflushjump 2
+32 49 16 32
+66 49 16 32
+1030
+superflushnjump 2
+100 273 16 32
+133 273 16 32

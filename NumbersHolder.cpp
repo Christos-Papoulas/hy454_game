@@ -1,6 +1,11 @@
 #include "header_files/mario/NumbersHolder.h"
 
-MovingAnimator* NumbersHolder::Numbers[N_MAX];
+std::map<Dim, std::list<MovingAnimator*>> NumbersHolder::suspending;
+std::map<Dim, std::list<MovingAnimator*>> NumbersHolder::running;
+
+std::vector<std::string> names;
+char * name[N_MAX] = {"zero","one","two","three","four","five","six","seven","eight","nine"};
+
 MovingAnimator* NumbersHolder::Time;
 MovingAnimator* NumbersHolder::Mario;
 MovingAnimator* NumbersHolder::World;
@@ -10,11 +15,10 @@ MovingAnimator* NumbersHolder::time1=NULL,*NumbersHolder::time2=NULL,*NumbersHol
 
 void NumbersHolder::Init() {
 		Dim i = 0;
-		std::vector<std::string> names;
-		char * name[N_MAX] = {"zero","one","two","three","four","five","six","seven","eight","nine"};
+		
 		for(i=0; i < N_MAX; i++){
 			names.push_back(name[i]);
-			Sprite *sprite = new Sprite(180, 30, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
+			Sprite *sprite = new Sprite(213, 20, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
 		
 			MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 							0, 0, 
@@ -22,11 +26,27 @@ void NumbersHolder::Init() {
 							);
 			MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
-			Numbers[i] = aMovAnimr;
+			suspending[i].push_back( aMovAnimr );
+
 			aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		
 			AnimatorHolder::Register( aMovAnimr );
 		}
+}
+
+void NumbersHolder::CreateNumber(Dim i) {
+		Sprite *sprite = new Sprite(213, 20, AnimationFilmHolder::GetFilm( std::string(names.at(i)) ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 0, 
+						0, 0, 1000, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf(name[i]))
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		suspending[i].push_back( aMovAnimr );
+
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		AnimatorHolder::Register( aMovAnimr );
 }
 
 void NumbersHolder::InitTime() {
@@ -104,25 +124,39 @@ void NumbersHolder::InitCoin() {
 	AnimatorHolder::MarkAsRunning(Coin);
 }
 
+void NumbersHolder::DisplayNumber(Dim number, Dim x){
+	MovingAnimator* g;
+	if(suspending[number].size() == 0) 
+			CreateNumber(number);
+
+	assert(suspending[number].size());
+	
+	g = suspending[number].back();
+	
+
+	g->GetSprite()->SetX(x);
+
+	running[number].push_back(g);
+	AnimatorHolder::MarkAsRunning(g);
+	suspending[number].pop_back();
+	assert(suspending[number].size() == 0);
+}
+
+void NumbersHolder::SuspendNumbers(){
+		for(Dim id = 0; id < N_MAX; ++id){
+				for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) 
+						suspending[id].push_back(*it);
+				running[id].clear();
+		}
+		return ;		
+}
+
 void NumbersHolder::PrintNumberTime(Dim num) {
 	Dim first = num / 100;
 	Dim second = (num % 100) / 10;
 	Dim third = num % 10;
-	if(time1) AnimatorHolder::MarkAsSuspended(time1);
-	if(time2) AnimatorHolder::MarkAsSuspended(time2);
-	if(time3) AnimatorHolder::MarkAsSuspended(time3);
-	Numbers[first]->GetSprite()->SetX(180);
-
-	AnimatorHolder::MarkAsRunning(Numbers[first]);
-	Numbers[second]->GetSprite()->SetX(186);
-
-	AnimatorHolder::MarkAsRunning(Numbers[second]);
-	Numbers[third]->GetSprite()->SetX(192);
-
-	AnimatorHolder::MarkAsRunning(Numbers[third]);
-
-	time1 = Numbers[first];
-	time2 = Numbers[second];
-	time3 = Numbers[third];
-
+	SuspendNumbers();
+	DisplayNumber(first, 214);
+	DisplayNumber(second, 221);
+	DisplayNumber(third, 227);
 }
