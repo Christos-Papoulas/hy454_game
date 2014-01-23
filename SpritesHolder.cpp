@@ -38,7 +38,11 @@ void Initializer::InitMarioWaiting() {
 		}
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariowaiting") ));
 		
-		MovingAnimation* aMovAnimn = new MovingAnimation(0, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariowaiting")));
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 1, 
+						0, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariowaiting"))
+						);
+		
 		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
 		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateWaiting(aMovAnimr);

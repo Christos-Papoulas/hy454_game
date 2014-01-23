@@ -96,9 +96,9 @@ void MarioBrosMain::MainLoopOneIteration() {
 		CollisionChecking();
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
-		NumbersHolder::PrintNumberTime(400);
-		NumbersHolder::PrintNumberCoins(0);
-		NumbersHolder::PrintScore(0);
+		//NumbersHolder::PrintNumberTime(400);
+		//NumbersHolder::PrintNumberCoins(0);
+		//NumbersHolder::PrintScore(0);
 		CommitDestructions();
 		FPSCalculation();
 	}
