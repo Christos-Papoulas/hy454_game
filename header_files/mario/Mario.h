@@ -120,6 +120,10 @@ class Mario {
 		static MovingPathAnimator* GetStandJump() { return MarioSJump; }
 		static bool IsOnBrick() { return isOnBrick; }
 		static void SetOnBrick(bool x) { isOnBrick = x; }
+
+		//functions for marioLevel
+		static void SetMarioAsInvincible();
+		static bool IsInvincible();
 };
 
 #endif

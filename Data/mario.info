@@ -207,6 +207,6 @@ superflushjump 2
 32 49 16 32
 66 49 16 32
 1030
-superflushnjump 2
+superflushbjump 2
 100 273 16 32
 133 273 16 32

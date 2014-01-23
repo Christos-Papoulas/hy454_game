@@ -698,7 +698,7 @@ void Items::CollisionMarioWithStar() {
 						suspending["star"].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running["star"].erase(it);
-
+						Mario::SetMarioAsInvincible();
 						Mario::FlashMario();
 						return ;
 				}

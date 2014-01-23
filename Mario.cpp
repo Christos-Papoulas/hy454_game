@@ -86,7 +86,7 @@ Mario::~Mario() {
 }
 
 void Mario::CreateWalking(MovingAnimator* mario_animator) {
-				mario = new Mario(mario_animator);
+			MarioAnimator = mario_animator;
 }
 
 void Mario::CreateWaiting(MovingAnimator* mario_animator) {
@@ -103,28 +103,32 @@ void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
 
 void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
 		MarioWJump = mario_animator;
-
+		paths.clear();
 		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, -j, 0, 100);
+				PathEntry pathEntry(5, -j, 
+						IsInvincible() ? i%2 : 0, 100);
 				paths.push_back( pathEntry );
 		}
 
 		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, j, 0, 100);
+				PathEntry pathEntry(5, j, 
+						IsInvincible() ? i%2 : 0, 100);
 				paths.push_back( pathEntry );
 		}
 }
 
 void Mario::CreateBackAndJump(MovingPathAnimator* mario_animator) {
 		BackJump = mario_animator;
-
+		backpaths.clear();
 		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(-5, -j, 0, 100);
+				PathEntry pathEntry(-5, -j, 
+						IsInvincible() ? i%2 : 0, 100);
 				backpaths.push_back( pathEntry );
 		}
 
 		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(-5, j, 0, 100);
+				PathEntry pathEntry(-5, j, 
+						marioLevel == InvincibleMario? i%2 : 0, 100);
 				backpaths.push_back( pathEntry );
 		}
 }
@@ -562,4 +566,12 @@ void Mario::FlashMario() {
 		Animator* prev = GetAnimator();
 		FlushMario::InitSuperMario();
 		ChangeLevel(prev);
+}
+
+void Mario::SetMarioAsInvincible() {
+		marioLevel = InvincibleMario;
+}
+
+bool Mario::IsInvincible() {
+		return marioLevel == InvincibleMario;
 }
