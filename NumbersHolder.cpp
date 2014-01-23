@@ -187,7 +187,7 @@ void NumbersHolder::PrintNumberCoins(Dim num) {
 	SuspendNumbers(c2, coin2);
 	
 	coin1 = DisplayNumber(first, 110);
-	coin2 = DisplayNumber(second, 117);
+	coin2 = DisplayNumber(second, 118);
 
 	c1 = first;
 	c2 = second;
@@ -209,11 +209,11 @@ void NumbersHolder::PrintScore(Dim num) {
 	SuspendNumbers(sc6, score6);
 
 	score1 = DisplayNumber(first, 20);
-	score2 = DisplayNumber(second, 27);
-	score3 = DisplayNumber(third, 33);
-	score4 = DisplayNumber(fourth, 40);
-	score5 = DisplayNumber(fifth, 47);
-	score6 = DisplayNumber(sixth, 54);
+	score2 = DisplayNumber(second, 28);
+	score3 = DisplayNumber(third, 36);
+	score4 = DisplayNumber(fourth, 44);
+	score5 = DisplayNumber(fifth, 52);
+	score6 = DisplayNumber(sixth, 60);
 
 	sc1 = first;
 	sc2 = second;
