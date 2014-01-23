@@ -13,6 +13,7 @@
 #include "../collision/Collision.h"
 #include "../enemies/Enemies.h"
 #include "../mario/Score.h"
+#include "../sounds/Sounds.h"
 
 #include <stdlib.h>
 #include <string>

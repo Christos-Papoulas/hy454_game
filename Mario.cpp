@@ -21,9 +21,9 @@ MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
 
 Dim countScroll = 0;
-bool isUnderGround = false;
+bool  Mario::isUnderGround = false;
 static bool MoveViewWindow(Dim x) {
-		if( x > 85 && !isUnderGround) {
+		if( x > 85 && !Mario::isUnderGround) {
 			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
 			Goumbas::ViewWindowMove();
@@ -305,6 +305,7 @@ void Mario::MarioDeading() {
 
 		AnimatorHolder::MarkAsRunning(MarioDeath);
 		ChangeState(WalkAndJump);
+		Sounds::Play("mario_death");
 }
 
 void Mario::MarioFinishBackWalk(Animator*, void*) {
@@ -399,6 +400,9 @@ void Mario::EnterPipe() {
 	Dim x = activeMario->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX();
 	Dim y = activeMario->GetTileY();
 	if(x == 47 || x == 48){
+			Sounds::Play("enter_pipe");
+			Sounds::Pause("music");
+			Sounds::Play("underground");
 			Rect viewWin;
 			viewWin.SetX(209);
 			countScroll = 0;
@@ -407,7 +411,7 @@ void Mario::EnterPipe() {
 			viewWin.SetHeight(15);
 			viewWin.SetWidth(16);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
-			isUnderGround = true;
+			Mario::isUnderGround = true;
 			activeMario->SetX(20);
 			activeMario->SetY(20);
 			Items::KillPipes();
@@ -417,10 +421,13 @@ void Mario::EnterPipe() {
 }
 
 void Mario::GetOutFromPipe() {
-	if(isUnderGround) {
+	if(Mario::isUnderGround) {
 		Sprite* activeMario = Mario::GetMarioCurrentSprite();
 		Dim x = activeMario->GetTileX();
 		if(x == 12){
+			Sounds::Play("enter_pipe");
+			Sounds::Pause("underground");
+			Sounds::Play("music");
 			Rect viewWin;
 			viewWin.SetX(159);
 			countScroll = 0;
@@ -430,7 +437,7 @@ void Mario::GetOutFromPipe() {
 			activeMario->SetX(76);
 			activeMario->SetY(129);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
-			isUnderGround = false;
+			Mario::isUnderGround = false;
 			
 		}
 	}

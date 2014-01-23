@@ -496,6 +496,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				running["mushroom"].push_back(g);
 				SetOnMap(0, xj, xi);
 				ShowSolidQuestion(prevAnim, x, y);
+				Sounds::Play("powerup_appears");
 		}else if(res == 29){
 				CreateSprite("star", 0, 3, 0, 0, 100);
 				MovingAnimator* star = (MovingAnimator*) suspending["star"].back();
@@ -506,6 +507,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				running["star"].push_back(star);
 				AnimatorHolder::MarkAsRunning(star);
 				SetOnMap(0, xj, xi);
+				Sounds::Play("powerup_appears");
 		}else if(!strcmp(id, "questionbrick")){
 				MovingPathAnimator* g;
 				if(suspending["coinanimation"].size() == 0)
@@ -520,6 +522,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				ShowSolidQuestion(prevAnim, x, y);
 				Coins::CheckCoins();
 				Score::ScoreAdd(200);
+				Sounds::Play("coin");
 		}
 		
 }
@@ -531,7 +534,7 @@ bool Items::BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y) {
 	
 	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
 		NotifyHit(g, id, x, y);
-
+		Sounds::Play("hit_brick");
 		return true;
 	}
 		
@@ -687,6 +690,7 @@ void Items::CollisionMarioWithMushroom() {
 
 						Mario::SuperMario();
 						Score::ScoreAdd(1000);
+						Sounds::Play("powerup");
 						return ;
 				}
 		}
@@ -705,6 +709,9 @@ void Items::CollisionMarioWithStar() {
 						Mario::SetMarioAsInvincible();
 						Mario::FlashMario();
 						Score::ScoreAdd(1000);
+						Sounds::Play("powerup");
+						Sounds::Pause("music");
+						Sounds::Play("Invincible");
 						return ;
 				}
 		}

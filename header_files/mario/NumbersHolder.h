@@ -6,6 +6,7 @@
 #include "../animation/AnimationFilmHolder.h"
 #include "../animator/FrameRangeAnimator.h"
 #include "../parsers/ParseMarioInfo.h"
+#include "sounds\Sounds.h"
 #include <map>
 #include <list>
 #include <vector>

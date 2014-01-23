@@ -36,22 +36,8 @@ bool MarioBrosMain::InitAllegro(){
 				return false;
 		}
 
-		if (!al_reserve_samples(7)){
-			fprintf(stderr, "failed to reserve samples!\n");
+		if(!Sounds::InitSounds())
 			return false;
-		}
-
-		music = al_load_sample(MUSIC_PATH);
-		jump_small = al_load_sample(JUMP_SMALL_PATH);
-		pause = al_load_sample(PAUSE_PATH);
-		hit_brick = al_load_sample(HIT_BRICK);
-		red_mushroom_spawn = al_load_sample(RED_MUSHROOM_SPAWN);
-		red_mushroom_get = al_load_sample(RED_MUSROOM_GET);
-		mario_death = al_load_sample(MARIO_DEATH);
-		if (!music || !jump_small || !pause || !hit_brick || !red_mushroom_spawn || !red_mushroom_get || !mario_death) {
-			printf( "Audio clip sample not loaded!\n" ); 
-			return false;
-		}
 
 		queue = al_create_event_queue();
 		if(!queue) {
@@ -82,6 +68,7 @@ bool MarioBrosMain::InitAllegro(){
 		
 		if(gameState == Pause){
 			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
+			AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
 		}
 
 		
@@ -108,7 +95,17 @@ void MarioBrosMain::MainLoopOneIteration() {
 
 void MarioBrosMain::ManageTime() {
 	Time::clock();
-	
+	if(Time::time == 100) {
+		if(!Mario::isUnderGround){
+			Sounds::Pause("music");
+			Sounds::Play("warning");
+			Sounds::Play("hurry_up");
+		}else{
+			Sounds::Pause("music");
+			Sounds::Play("warning");
+			Sounds::Play("underground_hurry_up");
+		}
+	}
 	NumbersHolder::PrintNumberTime(Time::time);
 }
 
@@ -121,7 +118,7 @@ void MarioBrosMain::InputManagement(){
 	if(gameState == Pause){
 		if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
 			if(!space_pressed){
-				al_play_sample(pause, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+				Sounds::Play("pause");
 				GamePause(currTime);
 				space_pressed = 1;
 			}
@@ -132,7 +129,7 @@ void MarioBrosMain::InputManagement(){
 	if(!Mario::isWalkingJump() && !Mario::isBackJumping() &&  gameState == Play) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
 					if(!z_pressed){
-						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+						Sounds::Play("jump_small");
 						z_pressed = 1;
 					}
 						if(Mario::isWalking() && !Mario::isWalkingJump()){
@@ -153,14 +150,14 @@ void MarioBrosMain::InputManagement(){
 						return Mario::MarioMovesLeft();
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
 					if(!space_pressed){
-						al_play_sample(pause, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+						Sounds::Play("pause");
 						GamePause(currTime);
 						space_pressed = 1;
 					}
 					return ;
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
 					if(!z_pressed){
-						al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+						Sounds::Play("jump_small");
 						z_pressed = 1;
 					}
 					if(!Mario::isStandingJumping())
@@ -174,7 +171,7 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
 		gameState = Play;
-		//al_play_sample(music, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+		Sounds::Play("music");
 	}
 }
 

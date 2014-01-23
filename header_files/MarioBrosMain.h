@@ -25,6 +25,7 @@
 #include "items\Items.h"
 #include "Objects.h"
 #include "collision\Collision.h"
+#include "sounds\Sounds.h"
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 
@@ -45,23 +46,23 @@ ALLEGRO_EVENT events;
 ALLEGRO_KEYBOARD_STATE keyboardState;
 bool redraw = true;
 
-ALLEGRO_SAMPLE *music=NULL;
+/*ALLEGRO_SAMPLE *music=NULL;
 ALLEGRO_SAMPLE *jump_small=NULL;
 ALLEGRO_SAMPLE *pause=NULL;
 ALLEGRO_SAMPLE *hit_brick=NULL;
 ALLEGRO_SAMPLE *red_mushroom_spawn=NULL;
 ALLEGRO_SAMPLE *red_mushroom_get=NULL;
-ALLEGRO_SAMPLE *mario_death=NULL;
+ALLEGRO_SAMPLE *mario_death=NULL;*/
 
 const float FPS = 90;
 /* Our Defines */
-#define MUSIC_PATH "Data\\Sounds\\smb_music.ogg"
+/*#define MUSIC_PATH "Data\\Sounds\\smb_music.ogg"
 #define JUMP_SMALL_PATH "Data\\Sounds\\smb_jump-small.wav"
 #define PAUSE_PATH "Data\\Sounds\\smb_pause.wav"
 #define HIT_BRICK "Data\\Sounds\\smb_bump.wav"
 #define RED_MUSHROOM_SPAWN "Data\\Sounds\\smb_powerup_appears.wav"
 #define RED_MUSROOM_GET "Data\\Sounds\\smb_powerup.wav"
-#define MARIO_DEATH "Data\\Sounds\\smb_mariodie.wav"
+#define MARIO_DEATH "Data\\Sounds\\smb_mariodie.wav"*/
 
 enum GameState {
 	Start = 0,

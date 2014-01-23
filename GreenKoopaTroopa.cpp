@@ -141,6 +141,7 @@ void GreenKoopa::MoveGreenKoopas() {
 						suspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
+						Sounds::Play("stomp");
 
 						//jump mario:
 						Dim mx = Mario::GetMarioCurrentSprite()->GetX();

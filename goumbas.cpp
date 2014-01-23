@@ -94,7 +94,7 @@ void Goumbas::MoveGoumbas() {
 						goumbaSuspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
-
+						Sounds::Play("stomp");
 						Items::Throw100Coins(x, y);
 						return ;
 				}

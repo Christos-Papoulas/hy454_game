@@ -17,6 +17,7 @@
 #include "SpritesHolder.h"
 #include "../items/Coins.h"
 #include "Score.h"
+#include "sounds\Sounds.h"
 
 #include <assert.h>
 #include < vector>
@@ -126,6 +127,7 @@ class Mario {
 		//functions for marioLevel
 		static void SetMarioAsInvincible();
 		static bool IsInvincible();
+		static bool isUnderGround;
 };
 
 #endif
