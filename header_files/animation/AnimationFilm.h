@@ -21,6 +21,11 @@ public:
 				assert(boxes.size() > frameNo);
 				return boxes[frameNo];
 		}
+		void SetHeightToFrame(byte frameNo, Dim height) {
+				assert(boxes.size() > frameNo);
+				boxes[frameNo].SetHeight(height);
+		}
+		byte GetFrameBoxSize(){ return boxes.size(); }
 		void DisplayFrame(Bitmap dest, const Point& at, byte frameNo) const;
 };
 
