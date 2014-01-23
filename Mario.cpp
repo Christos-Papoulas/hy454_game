@@ -395,6 +395,7 @@ void Mario::EnterPipe() {
 			Rect viewWin;
 			viewWin.SetX(209);
 			countScroll = 0;
+			Terrain::GetTileLayer()->SetScrollviewWindow(0);
 			viewWin.SetY(0);
 			viewWin.SetHeight(15);
 			viewWin.SetWidth(16);

@@ -73,9 +73,9 @@ void Items::MakeShortBricks() {
 				for(Dim j = 0; j < MAX_WIDTH; ++j)
 						if(brick[i][j]) countBricks++;
 
-		shortBricks = (Index**) malloc(sizeof(Index*)*countBricks);
+		shortBricks = (Index**) malloc(sizeof(Index**)*countBricks);
 		for(Dim i = 0; i < countBricks; i++)
-				shortBricks[i] = (Index*) malloc(sizeof(Index)*3);
+				shortBricks[i] = (Index*) malloc(sizeof(Index*)*3);
 		
 		Dim en = 0;
 		for(Dim i = 0; i < MAX_HEIGHT; ++i)
