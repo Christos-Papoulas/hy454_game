@@ -12,11 +12,16 @@
 
 namespace NumbersHolder{ 
 		extern MovingAnimator* Numbers[N_MAX];
-		//extern MovingAnimator* Time;
-		//extern MovingAnimator* Mario;
+		extern MovingAnimator* Time;
+		extern MovingAnimator* Mario;
+		extern MovingAnimator* World;
+		extern MovingAnimator* Epi;
 
 		extern void Init();
-		//extern void InitTime();
+		extern void InitTime();
+		extern void InitMario();
+		extern void InitWorld();
+		extern void InitEpi();
 };
 
 #endif
