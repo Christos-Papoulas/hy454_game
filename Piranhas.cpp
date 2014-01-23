@@ -36,7 +36,7 @@ void Piranhas::Create() {
 		
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 14u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, (i < 7u) ? -3 : 3, i%2, 1000);
+				PathEntry pathEntry(0, (i < 7u) ? -3 : 3, i%2, 165);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("piranhaplant")));
