@@ -170,8 +170,8 @@ void NumbersHolder::PrintNumberTime(Dim num) {
 	SuspendNumbers(t2, time2);
 	SuspendNumbers(t3, time3);
 
-	time1 = DisplayNumber(first, 218);
-	time2 = DisplayNumber(second, 225);
+	time1 = DisplayNumber(first, 215);
+	time2 = DisplayNumber(second, 223);
 	time3 = DisplayNumber(third, 231);
 
 	t1 = first;
