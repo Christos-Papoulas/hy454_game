@@ -96,12 +96,20 @@ void MarioBrosMain::MainLoopOneIteration() {
 		CollisionChecking();
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
-		NumbersHolder::PrintNumberTime(400);
+
 		NumbersHolder::PrintNumberCoins(0);
 		NumbersHolder::PrintScore(0);
+		ManageTime();
+
 		CommitDestructions();
 		FPSCalculation();
 	}
+}
+
+void MarioBrosMain::ManageTime() {
+	Time::clock();
+	
+	NumbersHolder::PrintNumberTime(Time::time);
 }
 
 void MarioBrosMain::InputManagement(){

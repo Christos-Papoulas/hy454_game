@@ -30,7 +30,7 @@ namespace NumbersHolder{
 
 		extern void Init();
 		extern void CreateNumber(Dim i);
-		extern void DisplayNumber(Dim number, Dim x);
+		extern MovingAnimator* DisplayNumber(Dim number, Dim x);
 		extern void SuspendNumbers(Dim number, MovingAnimator* g);
 		extern void InitTime();
 		extern void InitMario();
@@ -40,6 +40,15 @@ namespace NumbersHolder{
 		extern void PrintNumberTime(Dim num);
 		extern void PrintNumberCoins(Dim num);
 		extern void PrintScore(Dim num);
+};
+
+class Time{
+public:
+	static Dim time;
+	static void setTime(Dim t){ time = t; }
+	static Dim getTime(){ return time; }
+	static void clock();
+
 };
 
 #endif
