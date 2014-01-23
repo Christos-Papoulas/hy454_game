@@ -32,7 +32,16 @@ namespace FlushMario{
 		extern void BackWalk();
 		extern void BackWalkJump();
 
-		
+
+		extern void InitSuperMario();
+
+		extern MovingAnimator* SuperFlushWalking;
+		extern MovingAnimator* SuperFlushWaiting;
+		extern MovingPathAnimator* SuperFlushStandJump;
+		extern MovingPathAnimator* SuperFlushWalkJump;
+		extern MovingPathAnimator* SuperFlushbackWalkJump;
+		extern MovingAnimator* SuperFlushBackWalk;
+
 		extern void SuperWaiting();
 		extern void SuperWalking();
 		extern void SuperBackWalk();

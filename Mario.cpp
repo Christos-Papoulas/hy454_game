@@ -560,6 +560,6 @@ void Mario::SuperMario() {
 
 void Mario::FlashMario() {
 		Animator* prev = GetAnimator();
-		FlushMario::InitMario();
+		FlushMario::InitSuperMario();
 		ChangeLevel(prev);
 }

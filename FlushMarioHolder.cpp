@@ -165,3 +165,76 @@ void FlushMario::BackWalk() {
 		aMovAnimr->SetOnFinish(Mario::MarioFinishBackWalk, NULL);
 		AnimatorHolder::Register( aMovAnimr );
 }
+
+MovingAnimator* FlushMario::SuperFlushWalking = NULL;
+MovingAnimator* FlushMario::SuperFlushWaiting = NULL;
+MovingPathAnimator* FlushMario::SuperFlushStandJump = NULL;
+MovingPathAnimator* FlushMario::SuperFlushWalkJump = NULL;
+MovingPathAnimator* FlushMario::SuperFlushbackWalkJump = NULL;
+MovingAnimator* FlushMario::SuperFlushBackWalk = NULL;
+
+void FlushMario::InitSuperMario() {
+		SuperWaiting();
+		SuperWalking();
+}
+
+void FlushMario::SuperWaiting() {
+		if(SuperFlushWaiting){ 
+				Mario::CreateWaiting(SuperFlushWaiting);
+				return ;
+		}
+		Sprite *spriteMario = new Sprite(20, 100, 
+				AnimationFilmHolder::GetFilm( std::string("superflushwaiting") ));
+		
+		MovingAnimation* aMovAnimn =new FrameRangeAnimation(
+						0, 1, 
+						0, 0, 90, false, 
+						ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superflushwaiting"))
+		);
+		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
+		
+		Mario::CreateWaiting(aMovAnimr);
+		SuperFlushWaiting = aMovAnimr;
+
+		aMovAnimn->SetContinuous(false);
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinisWaiting, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+void FlushMario::SuperWalking() {
+		if(SuperFlushWalking){
+				Mario::CreateWalking(SuperFlushWalking);
+				return ;
+		} 
+		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushsuperwalking") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 5, 
+						4, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("flushsuperwalking"))
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		Mario::CreateWalking(aMovAnimr);
+		SuperFlushWalking = aMovAnimr;
+
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+void FlushMario::SuperBackWalk() {
+		;
+}
+
+void FlushMario::SuperWalkJump() {
+		;
+}
+
+void FlushMario::SuperStandJump() {
+		;
+}
+
+void FlushMario::SuperBackWalkJump() {
+		;
+}
