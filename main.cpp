@@ -239,6 +239,7 @@ void MarioBrosMain::InitializeGame() {
 		NumbersHolder::InitWorld();
 		NumbersHolder::InitEpi();
 		NumbersHolder::InitCoin();
+		NumbersHolder::PrintNumberTime(301);
 		redraw = true;
 }
 

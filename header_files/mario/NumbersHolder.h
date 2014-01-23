@@ -17,6 +17,7 @@ namespace NumbersHolder{
 		extern MovingAnimator* World;
 		extern MovingAnimator* Epi;
 		extern MovingAnimator* Coin;
+		extern MovingAnimator* time1,*time2,*time3;
 
 		extern void Init();
 		extern void InitTime();
@@ -24,6 +25,7 @@ namespace NumbersHolder{
 		extern void InitWorld();
 		extern void InitEpi();
 		extern void InitCoin();
+		extern void PrintNumberTime(Dim num);
 };
 
 #endif
