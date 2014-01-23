@@ -16,6 +16,8 @@
 #include "mario\SpritesHolder.h"
 #include "mario\Mario.h"
 #include "mario/NumbersHolder.h"
+#include "items\Coins.h"
+#include "mario\Score.h"
 #include "enemies\Enemies.h"
 #include "enemies\Goumba.h"
 #include "enemies\Piranhas.h"

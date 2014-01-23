@@ -517,6 +517,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				AnimatorHolder::MarkAsRunning(g);
 				running["coinanimation"].push_back(g);
 				ShowSolidQuestion(prevAnim, x, y);
+				Coins::CheckCoins();
 		}
 		
 }

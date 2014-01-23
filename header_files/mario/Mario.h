@@ -15,6 +15,7 @@
 #include "../enemies/GreenKoopaTroopa.h"
 #include "FlushMarioHolder.h"
 #include "SpritesHolder.h"
+#include "../items/Coins.h"
 
 #include <assert.h>
 #include < vector>

@@ -10,6 +10,8 @@ MovingAnimator* Mario::MarioBWalk = NULL;
 MovingPathAnimator* Mario::BackJump = NULL;
 MovingPathAnimator* Mario::MarioDeath = NULL;
 bool Mario::isOnBrick = false;
+Dim Coins::coins = 0;
+Dim Coins::lifes = 3;
 
 std::vector<PathEntry> Mario::paths;
 std::vector<PathEntry> Mario::backpaths;

@@ -97,7 +97,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		ArtificialIntelligence();
 		Mario::MoveViewWin();
 
-		NumbersHolder::PrintNumberCoins(0);
+		NumbersHolder::PrintNumberCoins(Coins::coins);
 		NumbersHolder::PrintScore(0);
 		ManageTime();
 
