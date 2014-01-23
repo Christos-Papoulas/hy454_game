@@ -2,15 +2,15 @@
 
 // lecture11 slide28
 void HiddenAnimator::Progress (timestamp_t currTime) {
-		
 		assert(anim->GetPath().size());
-		sprite->GetFrameBox().SetHeight(5);//show -  anim->GetPath()[currIndex].dy);
-		sprite->GetFrameBox().SetWidth(5);
 		while (currTime > lastTime && currTime - lastTime >= anim->GetPath()[currIndex].delay){
 				sprite->Move(anim->GetPath()[currIndex].dx, anim->GetPath()[currIndex].dy);
 
 				sprite->SetFrame(anim->GetPath()[currIndex].frame);
 				lastTime += anim->GetPath()[currIndex].delay;
+				
+				sprite->GetCurrFilm()->SetHeightToFrame(0, show += -anim->GetPath()[currIndex].dy);
+				sprite->GetCurrFilm()->SetHeightToFrame(1, show);
 				currIndex +=1;
 				if (currIndex == anim->GetPath().size()){
 						if(!anim->GetContinuous()){
@@ -21,6 +21,7 @@ void HiddenAnimator::Progress (timestamp_t currTime) {
 								return;
 						}else
 								currIndex = 0;
+						show = 0;
 				}
 		}
 }
