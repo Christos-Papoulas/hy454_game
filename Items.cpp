@@ -686,6 +686,7 @@ void Items::CollisionMarioWithMushroom() {
 						running["mushroom"].erase(it);
 
 						Mario::SuperMario();
+						Score::ScoreAdd(1000);
 						return ;
 				}
 		}
@@ -703,6 +704,7 @@ void Items::CollisionMarioWithStar() {
 						running["star"].erase(it);
 						Mario::SetMarioAsInvincible();
 						Mario::FlashMario();
+						Score::ScoreAdd(1000);
 						return ;
 				}
 		}
