@@ -16,12 +16,14 @@ namespace NumbersHolder{
 		extern MovingAnimator* Mario;
 		extern MovingAnimator* World;
 		extern MovingAnimator* Epi;
+		extern MovingAnimator* Coin;
 
 		extern void Init();
 		extern void InitTime();
 		extern void InitMario();
 		extern void InitWorld();
 		extern void InitEpi();
+		extern void InitCoin();
 };
 
 #endif

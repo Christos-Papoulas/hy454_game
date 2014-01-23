@@ -5,6 +5,7 @@ MovingAnimator* NumbersHolder::Time;
 MovingAnimator* NumbersHolder::Mario;
 MovingAnimator* NumbersHolder::World;
 MovingAnimator* NumbersHolder::Epi;
+MovingAnimator* NumbersHolder::Coin;
 
 void NumbersHolder::Init() {
 		Dim i = 0;
@@ -86,4 +87,19 @@ void NumbersHolder::InitEpi() {
 		
 	AnimatorHolder::Register( aMovAnimr );				
 	AnimatorHolder::MarkAsRunning(Epi);
+}
+
+void NumbersHolder::InitCoin() {
+	Sprite *sprite = new Sprite(85, 7, AnimationFilmHolder::GetFilm( std::string("coinanimation") ));
+	MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+					0, 2, 
+					0, 0, 200, true, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("coinanimation"))
+					);
+	MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+	Coin = aMovAnimr;
+	aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		
+	AnimatorHolder::Register( aMovAnimr );				
+	AnimatorHolder::MarkAsRunning(Coin);
 }
