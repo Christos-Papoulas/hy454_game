@@ -186,7 +186,7 @@ void MarioBrosMain::ArtificialIntelligence(){
 		Goumbas::ArtificialIntelligence();
 		GreenKoopa::ArtificialIntelligence();
 		Items::ArtificialIntelligence();
-		
+		Piranhas::CreateIfAny();
 		return ;
 }
 
@@ -232,8 +232,8 @@ void MarioBrosMain::InitializeGame() {
 		Enemies::Create();
 		gameState = Start;
 
-		
 		Items::Init();
+		NumbersHolder::Init();
 		redraw = true;
 }
 

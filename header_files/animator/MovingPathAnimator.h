@@ -23,7 +23,7 @@ class MovingPathAnimator : public Animator {
 				Sprite* GetSprite();
 
 				void Progress (timestamp_t currTime);
-				void Start (Sprite* s, MovingPathAnimation* a, timestamp_t t);
+				void Start(Sprite* s, MovingPathAnimation* a, timestamp_t t);
 				void Display(Bitmap at);
 				void SetCurrIndex(int i) { assert( i >= 0); currIndex = i; }
 				int GetCurrIndex(){return currIndex;}

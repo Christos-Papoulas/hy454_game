@@ -15,7 +15,8 @@ void FlushMario::Walking() {
 				Mario::CreateWalking(marioWalking);
 				return ;
 		} 
-		Sprite *spriteMario = new Sprite(20, 100, 
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(),
 																		AnimationFilmHolder::GetFilm( std::string("flushmariowalking") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
@@ -38,7 +39,8 @@ void FlushMario::Waiting() {
 				Mario::CreateWaiting(FlushMario::marioWaiting);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushmariowaiting") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("flushmariowaiting") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 1, 
@@ -56,14 +58,15 @@ void FlushMario::Waiting() {
 
 MovingPathAnimator* FlushMario::MarioStandJump = NULL;
 void FlushMario::StandJump() {
-		if(MarioStandJump) {
-				Mario::CreateSjumping(MarioStandJump);
+		if(FlushMario::MarioStandJump) {
+				Mario::CreateSjumping(FlushMario::MarioStandJump);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushmariojump") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("flushmariojump") ));
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, 0, 70);
+				PathEntry pathEntry(0, (i < 10u) ? -5 : 5, i % 2, 70);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, 
@@ -80,20 +83,21 @@ void FlushMario::StandJump() {
 
 MovingPathAnimator* FlushMario::MarioWalkJump = NULL;
 void FlushMario::WalkJumnp() {
-		if(MarioWalkJump) {
-				Mario::CreateWjumping(MarioWalkJump);
+		if(FlushMario::MarioWalkJump) {
+				Mario::CreateWjumping(FlushMario::MarioWalkJump);
 				return ;
 		}
-		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushmariojump") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("flushmariojump") ));
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, -j, 0, 100);
+				PathEntry pathEntry(5, -j, i % 2, 100);
 				paths.push_back( pathEntry );
 		}
 
 		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, j, 0, 100);
+				PathEntry pathEntry(5, j, i % 2, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, 
@@ -114,16 +118,17 @@ void FlushMario::BackWalkJump() {
 				Mario::CreateBackAndJump( backWalkJump );
 				return ;
 		}
-		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushmariobjump") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("flushmariobjump") ));
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(-5, -j, 0, 100);
+				PathEntry pathEntry(-5, -j, i % 2, 100);
 				paths.push_back( pathEntry );
 		}
 
 		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(-5, j, 0, 100);
+				PathEntry pathEntry(-5, j, i % 2, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, 
@@ -145,7 +150,8 @@ void FlushMario::BackWalk() {
 				Mario::CreateBackWalking(marioBackWalk);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushmariobwalk") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("flushmariobwalk") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 5, 
