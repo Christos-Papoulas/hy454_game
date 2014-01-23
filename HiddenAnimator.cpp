@@ -4,7 +4,8 @@
 void HiddenAnimator::Progress (timestamp_t currTime) {
 		
 		assert(anim->GetPath().size());
-		sprite->GetFrameBox().SetHeight(show -  anim->GetPath()[currIndex].dy);
+		sprite->GetFrameBox().SetHeight(5);//show -  anim->GetPath()[currIndex].dy);
+		sprite->GetFrameBox().SetWidth(5);
 		while (currTime > lastTime && currTime - lastTime >= anim->GetPath()[currIndex].delay){
 				sprite->Move(anim->GetPath()[currIndex].dx, anim->GetPath()[currIndex].dy);
 

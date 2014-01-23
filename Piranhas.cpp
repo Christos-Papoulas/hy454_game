@@ -21,7 +21,7 @@ void Piranhas::CreateIfAny() {
 								g = suspending.back();
 								suspending.pop_back();
 								if(!g) return ;
-								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
+								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16 + 8);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
@@ -36,7 +36,7 @@ void Piranhas::Create() {
 		
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 14u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, (i < 7u) ? -3 : 3, 0, 70);
+				PathEntry pathEntry(0, (i < 7u) ? -3 : 3, i%2, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("piranhaplant")));
@@ -50,4 +50,9 @@ void Piranhas::Create() {
 
 void Piranhas::ArtificialIntelligence(){
 		CreateIfAny();
+}
+
+void Piranhas::ViewWindowMove() {
+		for (std::list<HiddenAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
+				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }

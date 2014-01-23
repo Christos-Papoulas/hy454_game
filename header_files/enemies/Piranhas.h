@@ -31,7 +31,7 @@ public:
 		static void Finish(Animator *a, void *f);
 
 		static void ArtificialIntelligence();
-			static void CreateIfAny();
+		static void CreateIfAny();
 		static void ViewWindowMove();
 		static void Suspend();
 		static void Kill();

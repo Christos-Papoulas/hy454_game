@@ -26,6 +26,7 @@ static bool MoveViewWindow(Dim x) {
 			Goumbas::ViewWindowMove();
 			GreenKoopa::ViewWindowMove();
 			Items::ViewWindowMove();
+			Piranhas::ViewWindowMove();
 			countScroll++;
 			if(countScroll == 16) {
 				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
