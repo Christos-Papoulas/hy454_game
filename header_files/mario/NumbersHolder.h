@@ -6,6 +6,7 @@
 #include "../animation/AnimationFilmHolder.h"
 #include "../animator/FrameRangeAnimator.h"
 #include "../parsers/ParseMarioInfo.h"
+#include<vector>
 
 #define N_MAX 10
 

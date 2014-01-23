@@ -64,4 +64,5 @@ Dim ParseMarioInfo::GetIndexOf(const char* f) {
 				if(!strncmp(marioInfo->mariodetails[i].cid, f, 20))
 						return i;
 		assert(0);
+		return 0;
 }
