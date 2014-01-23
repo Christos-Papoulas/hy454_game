@@ -16,6 +16,7 @@
 #include "FlushMarioHolder.h"
 #include "SpritesHolder.h"
 #include "../items/Coins.h"
+#include "Score.h"
 
 #include <assert.h>
 #include < vector>

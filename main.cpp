@@ -98,7 +98,7 @@ void MarioBrosMain::MainLoopOneIteration() {
 		Mario::MoveViewWin();
 
 		NumbersHolder::PrintNumberCoins(Coins::coins);
-		NumbersHolder::PrintScore(0);
+		NumbersHolder::PrintScore(Score::score);
 		ManageTime();
 
 		CommitDestructions();

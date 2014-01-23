@@ -411,6 +411,7 @@ void Items::Throw100Coins(Dim x, Dim y) {
 		AnimatorHolder::MarkAsRunning(coin);
 		running["onehundred"].push_back(coin);
 		suspending["onehundred"].pop_back();
+		Score::ScoreAdd(100);
 }
 
 void Items::FinishItemAnimation(Animator* a, void* l) {
@@ -518,6 +519,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				running["coinanimation"].push_back(g);
 				ShowSolidQuestion(prevAnim, x, y);
 				Coins::CheckCoins();
+				Score::ScoreAdd(200);
 		}
 		
 }
