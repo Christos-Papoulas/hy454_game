@@ -39,6 +39,18 @@ void TerrainStartScreen::CreatePause() {
 	CalculateTilesPositionStartScreen();
 }
 
+void TerrainStartScreen::CreateLifeScreen() {
+	FILE* fp_new;
+	terrainStartScreen = new TerrainStartScreen();
+	terrainStartScreen->tileLayerStartScreen = new TileLayerStartScreen();
+
+	fp_new = fopen(LIFE_SCREEN_MAP, "r");
+	if(!tileLayerStartScreen->ReadMap(fp_new))
+		fprintf(stderr, "cannot read start_screen file\n");
+	fclose(fp_new);
+	CalculateTilesPositionStartScreen();
+}
+
 void TerrainStartScreen::CleanUp() {
 		delete terrainStartScreen;
 }

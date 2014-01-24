@@ -157,22 +157,35 @@ void MarioBrosMain::InputManagement(){
 					return ;
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
 					if(!z_pressed){
-						Sounds::Play("jump_small");
+						
 						z_pressed = 1;
 					}
-					if(!Mario::isStandingJumping())
+					if(!Mario::isStandingJumping()){
+						Sounds::Play("jump_small");
 						return Mario::MarioStandingJump();
+					}
 				}
 				al_flush_event_queue(queue);
 		}
 }
 
+clock_t wait;
 void MarioBrosMain::StartScreen(timestamp_t now) {
 	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
-		gameState = Play;
-		Sounds::Play("music");
+		TerrainStartScreen::CreateLifeScreen();
+		TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
+		al_flip_display();
+		wait = clock();
+	while( clock() != wait + 3000 );
+		GameStarting();
 	}
+}
+
+
+void MarioBrosMain::GameStarting() {
+	gameState = Play;
+	Sounds::Play("music");
 }
 
 void MarioBrosMain::GamePause(timestamp_t now) {
