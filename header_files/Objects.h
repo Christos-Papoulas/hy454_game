@@ -17,6 +17,7 @@
 #define LIFE_SCREEN_MAP		"data\\Lifes_Screen.txt"
 #define LIFE_SCREEN2_MAP	"data\\Lifes_Screen2.txt"
 #define LIFE_SCREEN1_MAP	"data\\Lifes_Screen1.txt"
+#define BLACK_SCREEN_MAP		"data\\Black_Screen.txt"
 
 typedef unsigned char byte;
 typedef unsigned short Dim;

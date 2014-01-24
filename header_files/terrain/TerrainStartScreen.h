@@ -21,6 +21,7 @@ class TerrainStartScreen {
 		static void CreateLifeScreen();
 		static void CreateLifeScreen2();
 		static void CreateLifeScreen1();
+		static void CreateBlackScreen();
 		static void CleanUp();
 		static void DisplayTerrain(Bitmap, timestamp_t);
 		static TileLayerStartScreen* GetTileLayer() { return tileLayerStartScreen; }
