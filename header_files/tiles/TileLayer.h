@@ -30,6 +30,7 @@ class TileLayer{
 				~TileLayer();
 				void SetTile(Dim col, Dim row, Index index);
 				Index GetTile(Dim col, Dim row);
+				Index GetExactTile(Dim col, Dim row) { return map[col][row]; }
 				const std::pair<Dim, Dim> GetTileCoordinates(Dim mx, Dim my) const;
 				Rect GetViewWindow(void) /*const*/;
 				void SetViewWindow(const Rect& rect);

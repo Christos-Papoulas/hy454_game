@@ -18,7 +18,6 @@ void Enemies::ReadMap() {
 						SetOnMap(tmp, i, j);
 				}
 		read.close();
-		MakeShortMap();
 }
 
 void Enemies::Create() { 

@@ -136,7 +136,7 @@ void Goumbas::GoumbasKillMario() {
 }
 
 void Goumbas::SuspendGoumbas(){
-		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end();) {
 				Dim currPosX = (*it)->GetSprite()->GetX();
 				Dim currPosY = (*it)->GetSprite()->GetY();
 
@@ -144,11 +144,12 @@ void Goumbas::SuspendGoumbas(){
 				Dim TileY = (*it)->GetSprite()->GetTileY();
 
 				if(currPosX < 2 || currPosX > 16*16 || TileX > MAX_WIDTH || TileY >= MAX_HEIGHT -1) {
-						goumbaSuspending.push_back(*it);
-						AnimatorHolder::MarkAsSuspended(*it);
-						running.erase(it);
-						return ;
-				}
+						std::list<MovingAnimator*>::iterator prev = it++;
+						goumbaSuspending.push_back(*prev);
+						AnimatorHolder::MarkAsSuspended(*prev);
+						running.erase(prev);
+				} else
+						++it;
 		}
 }
 

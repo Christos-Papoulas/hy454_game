@@ -278,7 +278,8 @@ void MarioBrosMain::InitializeGame() {
 		NumbersHolder::InitWorld();
 		NumbersHolder::InitEpi();
 		NumbersHolder::InitCoin();
-		
+		new Configurator("mario.conf");
+		Enemies::MakeShortMap();		
 		redraw = true;
 }
 
@@ -297,8 +298,7 @@ void ManageGameLoop() {
 
 int main() {
 		using namespace MarioBrosMain;
-		using namespace std;
-
+		
 		if(InitAllegro()){
 				InitializeGame();
 				ManageGameLoop();

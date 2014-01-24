@@ -27,6 +27,7 @@
 #include "Objects.h"
 #include "collision\Collision.h"
 #include "sounds\Sounds.h"
+#include "conf\parser.h"
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 

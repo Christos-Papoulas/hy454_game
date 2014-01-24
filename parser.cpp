@@ -2,21 +2,48 @@
 
 using namespace std;
 
-struct ConfigItems {
-        std::string key;
-        std::string value;
-};
 ConfigItems* iniItem[1024];
-
 int i = 0;
 
-void parseIniFile(char *fileName) {
+Configurator::Configurator(char *f) {
+		parseFile(f);
+		Dim moregoumbas = getOptionToInt(MORE_GOUBLAS);
+		PutGoumbasOnMap(moregoumbas);
+		
+}
+
+void Configurator::PutGoumbasOnMap(Dim n) {
+		Dim x;
+		Dim y;
+		int tries = 0;
+		srand((unsigned)time(0)); 
+
+		for(int i = 0; i < n; ++i){
+				tries = 0;
+				while(1) {
+						x = rand() % MAX_HEIGHT;
+						y = 15 + (rand() % (MAX_WIDTH - 15));
+						if( Enemies::GetFromMap(x, y) == 0 && Items::GetFromBricks(x, y) == 0 
+								&& Terrain::GetTileLayer()->GetExactTile(x, y) ==282){
+								Enemies::SetOnMap(161, x, y);
+								Enemies::IncreaseEnemies();
+								break;
+						}
+						
+						if(++tries > 1000) 
+								break;
+				}
+				
+		}
+}
+
+bool parseFile(char *fileName) {
 		std::string optionValue;
 		ifstream infile;
 		infile.open(fileName);
 
 		if (infile.is_open() != true)
-				return;
+				return false;
 
 		std::string key;
 
@@ -38,6 +65,7 @@ void parseIniFile(char *fileName) {
 
 		//i--;
 		infile.close();
+		return true;
 }
 
 void cleanupIniReader() {
@@ -47,7 +75,7 @@ void cleanupIniReader() {
         i = 0;
 }
 
-std::string getOptionToString(std::string key) {
+string getOptionToString(std::string key) {
         if (i == 0)
             return "";
 
@@ -80,7 +108,7 @@ int getOptionToInt(std::string key) {
         return 0;
 }
 
-std::string parseOptionName(std::string value){
+string parseOptionName(std::string value){
         size_t found;
 
         found = value.find('=');
@@ -94,7 +122,7 @@ std::string parseOptionName(std::string value){
         return key;
 }
 
-std::string parseOptionValue(std::string value) {
+string parseOptionValue(std::string value) {
         size_t found;
 
         found = value.find('=');
@@ -109,16 +137,16 @@ std::string parseOptionValue(std::string value) {
         return keyValue;
 }
 
-std::string trim(std::string s) {
+string trim(std::string s) {
         return ltrim(rtrim(s));
 }
 
-std::string ltrim(std::string s) {
+string ltrim(std::string s) {
         s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
         return s;
 }
 
-std::string rtrim(std::string s) {
+string rtrim(std::string s) {
         s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
         return s;
 }

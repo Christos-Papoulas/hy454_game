@@ -56,7 +56,7 @@ class Items {
 		static bool IsItemActive(Dim x, Dim y);
 
 		static void SetOnBricks(Dim value, Dim x, Dim y) { assert(x < MAX_HEIGHT && y < MAX_WIDTH); brick[x][y] = value; }
-		static Dim GetFromBricks(Dim x, Dim y) { return brick[x][y]; }
+		
 		static void MakeShortBricks();
 		static bool IsBrickActive(Dim x, Dim y);
 		static void SetBrickAsActive(Dim x, Dim y);
@@ -83,6 +83,8 @@ public:
 		
 		static void ViewWindowMove();
 		static void SuspendBricks();
+
+		static Dim GetFromBricks(Dim x, Dim y) { return brick[x][y]; }
 		
 		static bool BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y);
 		static bool IsMarioAboveBrick(Dim x, Dim y);
