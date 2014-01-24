@@ -187,7 +187,8 @@ void FlushMario::SuperWaiting() {
 				Mario::CreateWaiting(SuperFlushWaiting);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, 
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(),
 				AnimationFilmHolder::GetFilm( std::string("superflushwaiting") ));
 		
 		MovingAnimation* aMovAnimn =new FrameRangeAnimation(
@@ -211,7 +212,9 @@ void FlushMario::SuperWalking() {
 				Mario::CreateWalking(SuperFlushWalking);
 				return ;
 		} 
-		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("flushsuperwalking") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(),
+				AnimationFilmHolder::GetFilm( std::string("flushsuperwalking") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 5, 
@@ -232,7 +235,8 @@ void FlushMario::SuperBackWalk() {
 				Mario::CreateBackWalking(SuperFlushBackWalk);
 				return ;
 		}
-		Sprite *spriteMario = new Sprite(20, 100, 
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), 
 				AnimationFilmHolder::GetFilm( std::string("superflushbwalk") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
@@ -254,8 +258,8 @@ void FlushMario::SuperWalkJump() {
 				Mario::CreateWjumping( SuperFlushWalkJump );
 				return ;
 		}
-		
-		Sprite * spriteMario = new Sprite(20, 100, 
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(),
 				AnimationFilmHolder::GetFilm( std::string("superflushjump") ));
 		std::vector<PathEntry> paths;
 		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
@@ -289,7 +293,8 @@ void FlushMario::SuperStandJump() {
 				return ;
 		}
 
-		Sprite *spriteMario = new Sprite(20, 100, 
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(),
 				AnimationFilmHolder::GetFilm( std::string("superflushjump") ));
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
@@ -313,7 +318,8 @@ void FlushMario::SuperBackWalkJump() {
 				Mario::CreateBackAndJump( SuperFlushbackWalkJump );
 				return ;
 		}
-		Sprite * spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("superflushbjump") ));
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(), AnimationFilmHolder::GetFilm( std::string("superflushbjump") ));
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		

@@ -742,7 +742,6 @@ void Items::CollisionMarioWithStar() {
 						AnimatorHolder::MarkAsSuspended(*it);
 						running["star"].erase(it);
 						Mario::SetMarioAsInvincible();
-						Mario::FlashMario();
 						Score::ScoreAdd(1000);
 						Sounds::Play("powerup");
 						Sounds::Pause("music");
@@ -757,25 +756,24 @@ void Items::MoveStars() {
 				MovingPathAnimator* g = (MovingPathAnimator*)*it;
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+
 				Dim dx = g->GetSprite()->GetX();
 
 				int currIndex = g->GetCurrIndex();
-						
+				break;		
 				if(Enemies::CanGoLeft(TileX, TileY) && dx < 0)
 						g->GetAnimation()->SetOnPath(currIndex, -2);
 				else if(!Enemies::CanGoLeft(TileX, TileY) && dx < 0)
 						g->GetAnimation()->SetOnPath(currIndex, 2);
-				else if( Enemies::CanGoRight(TileX, TileY) && dx >= 0)
+				else if( Enemies::CanGoRight(TileX, TileY) && dx > 0)
 						g->GetAnimation()->SetOnPath(currIndex, 2);
 				else if( !Enemies::CanGoRight(TileX, TileY) && dx > 0)
 						g->GetAnimation()->SetOnPath(currIndex, -2);
 				else
 						g->GetAnimation()->SetOnPath(currIndex, 0);
-				/*if(currIndex == 0) {
-						if( Enemies::IsOnAir(TileX, TileY, 0) && !Enemies::IsOnBrick(g->GetSprite()->GetX(), g->GetSprite()->GetY()) )
-								g->GetAnimation()->SetDyOnPath(currIndex, -3);
-						else
-								g->GetAnimation()->SetDyOnPath(currIndex, 3);
-				}*/
+				
+				
 		}
 }

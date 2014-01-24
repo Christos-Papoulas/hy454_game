@@ -14,6 +14,8 @@ Dim Coins::coins = 0;
 Dim Coins::lifes = 3;
 Dim Score::score = 0;
 
+bool Mario::isRunningNow = false;
+
 std::vector<PathEntry> Mario::paths;
 std::vector<PathEntry> Mario::backpaths;
 
@@ -212,12 +214,13 @@ void Mario::MarioMovesLeft() {
 	ChangeState(backwalk);
 }
 
+
 void Mario::MarioMovesRight() {
 	if(marioState == WalkAndJump)
 			return ;
 	else if(isStandingJumping())
 			MarioFinishSjumping(0, 0);
-	
+
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioBWalk);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
@@ -563,6 +566,7 @@ void ChangeLevel(Animator* prev) {
 	return ;
 }
 void Mario::SuperMario() {
+		marioLevel = Super_Mario;
 		Animator* prev = GetAnimator();
 		Initializer::SuperBackWalk();
 		Initializer::SuperWalkJump();
@@ -580,9 +584,42 @@ void Mario::FlashMario() {
 }
 
 void Mario::SetMarioAsInvincible() {
-		marioLevel = InvincibleMario;
+		Animator* prev = GetAnimator();
+		switch (marioLevel) {
+				case MarioSmall:
+						marioLevel = InvincibleMario;
+						FlushMario::InitMario();
+						break;
+				case Super_Mario:
+						marioLevel = InvincibleSuper;
+						FlushMario::InitSuperMario();	
+						break;
+		}
+		ChangeLevel(prev);
 }
 
 bool Mario::IsInvincible() {
 		return marioLevel == InvincibleMario;
 }
+
+
+unsigned long startPressButton = 0; 
+void Mario::Run() {
+		SYSTEMTIME st; GetSystemTime(&st);
+		unsigned int mili = st.wMilliseconds;
+		isRunningNow = true;
+		if(mili - startPressButton > RUNNING_DELAY) {
+				startPressButton = mili;
+				delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
+				if(delay >= 50)
+						MarioAnimator->GetMovingAnimation()->SetDelay(delay-10);
+		}
+}
+
+ void Mario::isNotRunning(){
+		isRunningNow = false;
+		delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
+		if( delay < 90)
+				MarioAnimator->GetMovingAnimation()->SetDelay(delay + 10);
+	
+ }

@@ -24,6 +24,8 @@
 
 extern Dim countScroll;
 
+#define RUNNING_DELAY		500
+
 enum MarioState { 
 		Walking = 0,
 		backwalk,
@@ -36,8 +38,9 @@ enum MarioState {
 
 enum MarioLevel {
 		MarioSmall = 0,
-		SuperMario,
-		InvincibleMario
+		Super_Mario,
+		InvincibleMario,
+		InvincibleSuper
 };
 
 class Mario {
@@ -61,7 +64,7 @@ class Mario {
 		static bool isOnBrick;
 		static void KeepInsideViewWin();
 		friend void ChangeLevel(Animator* prev);
-
+		static bool isRunningNow;
 	public:
 		static void SuperMario();
 		static void FlashMario();
@@ -82,6 +85,7 @@ class Mario {
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
 		static bool isBackJumping() { return marioState == BackAndJump; }
 		static bool isBackWalk() { return marioState == backwalk; }
+		static bool isRunning() {return isRunningNow; }
 		static void Destroy();
 		
 		static void MoveViewWin();
@@ -99,7 +103,8 @@ class Mario {
 		static void MarioMovesRight();
 		static void BackWalkAndJump();
 		static void MarioDeading();
-		
+		static void Run();
+		static void isNotRunning();
 		static void EnterPipe();
 		static void GetOutFromPipe();
 		static Dim PipeEnterScroll(Dim i);

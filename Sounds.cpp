@@ -80,9 +80,9 @@ bool Sounds::InitSounds() {
 }
 
 void Sounds::Play(const char* id) {
-	if(id == "music"){
+	/*if(id == "music"){
 		al_play_sample(music, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_music);
-	}else if(id == "jump_small") {
+	}else*/ if(id == "jump_small") {
 		al_play_sample(jump_small, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_jump_small);
 	}else if(id == "pause") {
 		al_play_sample(pause, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_pause);

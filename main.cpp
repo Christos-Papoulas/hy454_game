@@ -149,6 +149,13 @@ void MarioBrosMain::InputManagement(){
 							return Mario::BackWalkAndJump();
 						}
 				}
+
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_X) && Mario::isWalking()){
+						Mario::Run();
+				}
+				if(!al_key_down(&keyboardState, ALLEGRO_KEY_X))
+						Mario::isNotRunning();
+
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
 						return Mario::EnterPipe(); // @todo something
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
