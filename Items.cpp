@@ -217,6 +217,24 @@ void Items::CreateSprite(char* id, Dim start, Dim end, offset_t dx, offset_t dy,
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Items::CreateSpriteWithPath(char* id, Dim start, Dim end, offset_t dx, offset_t dy, Dim delay) {
+		Sprite *sprite = new Sprite(20, 100,
+				AnimationFilmHolder::GetFilm( std::string(id) ));
+		
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i < 10u) ? -3 : 3, i%4, 70);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf(id)));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator();
+		
+		suspending[id].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		AnimatorHolder::Register( aMovAnimr );
+}
+
 void Items::CreateCoinSprite(char* id) {
 		Sprite * sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string(id) ));
 		std::vector<PathEntry> paths;
@@ -367,6 +385,7 @@ void Items::ArtificialIntelligence() {
 		CreateBricks();
 		CreateIfAny();
 		BrickCollision();
+		MoveStars();
 }
 
 void Items::SetItemAsActive(Dim x, Dim y) {
@@ -498,8 +517,8 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				ShowSolidQuestion(prevAnim, x, y);
 				Sounds::Play("powerup_appears");
 		}else if(res == 29){
-				CreateSprite("star", 0, 3, 0, 0, 100);
-				MovingAnimator* star = (MovingAnimator*) suspending["star"].back();
+				CreateSpriteWithPath("star", 0, 3, 0, 0, 100);
+				MovingPathAnimator* star = (MovingPathAnimator*) suspending["star"].back();
 				assert(star);
 				star->GetSprite()->SetX(x+3);
 				star->GetSprite()->SetY(y-16);
@@ -730,5 +749,33 @@ void Items::CollisionMarioWithStar() {
 						Sounds::Play("Invincible");
 						return ;
 				}
+		}
+}
+
+void Items::MoveStars() {
+		for (std::list<Animator*>::iterator it=running["star"].begin(); it != running["star"].end(); ++it){
+				MovingPathAnimator* g = (MovingPathAnimator*)*it;
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
+				Dim dx = g->GetSprite()->GetX();
+
+				int currIndex = g->GetCurrIndex();
+						
+				if(Enemies::CanGoLeft(TileX, TileY) && dx < 0)
+						g->GetAnimation()->SetOnPath(currIndex, -2);
+				else if(!Enemies::CanGoLeft(TileX, TileY) && dx < 0)
+						g->GetAnimation()->SetOnPath(currIndex, 2);
+				else if( Enemies::CanGoRight(TileX, TileY) && dx >= 0)
+						g->GetAnimation()->SetOnPath(currIndex, 2);
+				else if( !Enemies::CanGoRight(TileX, TileY) && dx > 0)
+						g->GetAnimation()->SetOnPath(currIndex, -2);
+				else
+						g->GetAnimation()->SetOnPath(currIndex, 0);
+				/*if(currIndex == 0) {
+						if( Enemies::IsOnAir(TileX, TileY, 0) && !Enemies::IsOnBrick(g->GetSprite()->GetX(), g->GetSprite()->GetY()) )
+								g->GetAnimation()->SetDyOnPath(currIndex, -3);
+						else
+								g->GetAnimation()->SetDyOnPath(currIndex, 3);
+				}*/
 		}
 }
