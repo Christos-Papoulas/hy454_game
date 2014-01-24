@@ -184,6 +184,7 @@ void MarioBrosMain::StartScreen(timestamp_t now) {
 
 
 void MarioBrosMain::GameStarting() {
+
 	gameState = Play;
 	Sounds::Play("music");
 }

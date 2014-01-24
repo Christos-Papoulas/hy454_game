@@ -15,6 +15,8 @@
 #define START_SCREEN_MAP	"data\\Game_Start.txt"
 #define PAUSE_SCREEN_MAP	"data\\Game_Pause.txt"
 #define LIFE_SCREEN_MAP		"data\\Lifes_Screen.txt"
+#define LIFE_SCREEN2_MAP	"data\\Lifes_Screen2.txt"
+#define LIFE_SCREEN1_MAP	"data\\Lifes_Screen1.txt"
 
 typedef unsigned char byte;
 typedef unsigned short Dim;
