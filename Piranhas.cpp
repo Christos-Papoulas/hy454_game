@@ -24,7 +24,7 @@ void Piranhas::CreateIfAny() {
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16 + 8);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
-								AnimatorHolder::MarkAsRunning(g);
+								AnimatorHolder::MarkAsFirstRunning(g);
 								Enemies::SetEnemyAsActive(y,x);
 								running.push_back(g);
 						}

@@ -35,6 +35,13 @@ void AnimatorHolder::MarkAsRunning(Animator* a) {
 		running.push_back(a); 
 }
 
+void AnimatorHolder::MarkAsFirstRunning (Animator* a){ 
+		std::vector<Animator*>::iterator it = std::find(suspended.begin(), suspended.end(), a);
+		if( it == suspended.end() ) return ; 
+		suspended.erase(it); 
+		running.insert(running.begin(), sizeof(a), a); 
+}
+
 void AnimatorHolder::MarkAsSuspended (Animator* a) { 
 		std::vector<Animator*>::iterator it = std::find(running.begin(), running.end(), a);
 		if( it == running.end() ) return ; 

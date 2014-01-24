@@ -682,7 +682,8 @@ void Items::CollisionMarioWithMushroom() {
 				MovingAnimator* g = (MovingAnimator*)*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
-
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
 				if(Enemies::IsMarioLeftOrRight(x, y)){
 						suspending["mushroom"].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
@@ -693,6 +694,21 @@ void Items::CollisionMarioWithMushroom() {
 						Sounds::Play("powerup");
 						return ;
 				}
+				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else if(!Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( !Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else
+						g->GetMovingAnimation()->SetDx(0);
+
+				if( Enemies::IsOnAir(TileX, TileY, 0) && !Enemies::IsOnBrick(x, y)) 
+						g->GetMovingAnimation()->SetDy(3);
+				else
+						g->GetMovingAnimation()->SetDy(0);
 		}
 }
 

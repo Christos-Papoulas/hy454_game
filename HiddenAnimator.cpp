@@ -9,8 +9,6 @@ void HiddenAnimator::Progress (timestamp_t currTime) {
 				sprite->SetFrame(anim->GetPath()[currIndex].frame);
 				lastTime += anim->GetPath()[currIndex].delay;
 				
-				sprite->GetCurrFilm()->SetHeightToFrame(0, show += -anim->GetPath()[currIndex].dy);
-				sprite->GetCurrFilm()->SetHeightToFrame(1, show);
 				currIndex +=1;
 				if (currIndex == anim->GetPath().size()){
 						if(!anim->GetContinuous()){
@@ -21,7 +19,6 @@ void HiddenAnimator::Progress (timestamp_t currTime) {
 								return;
 						}else
 								currIndex = 0;
-						show = 0;
 				}
 		}
 }
