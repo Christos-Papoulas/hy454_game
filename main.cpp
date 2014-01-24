@@ -61,7 +61,15 @@ bool MarioBrosMain::InitAllegro(){
 		 
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
 		StartScreen(now);
-		if(gameState == Play){
+
+		if(Coins::lifes == 0){
+			TerrainStartScreen::CreateGameOver();
+			Sounds::Pause("music");
+			Sounds::Play("game_over");
+			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
+		}
+
+		if(gameState == Play && Coins::lifes > 0){
 			Terrain::DisplayTerrain(al_get_backbuffer(display), now);
 			AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
 		}

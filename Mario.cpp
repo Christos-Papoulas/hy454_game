@@ -306,6 +306,7 @@ void Mario::MarioDeading() {
 		AnimatorHolder::MarkAsRunning(MarioDeath);
 		ChangeState(WalkAndJump);
 		Sounds::Play("mario_death");
+		Coins::lifes = 0;
 }
 
 void Mario::MarioFinishBackWalk(Animator*, void*) {
