@@ -13,7 +13,7 @@ void HiddenAnimator::Progress (timestamp_t currTime) {
 				if (currIndex == anim->GetPath().size()){
 						if(!anim->GetContinuous()){
 								state = ANIMATOR_FINISHED;
-								lastTime = currTime; //@todo working?
+								lastTime = currTime; 
 								currIndex = 0;
 								NotifyStopped();
 								return;
