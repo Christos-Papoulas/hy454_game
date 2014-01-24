@@ -1,4 +1,5 @@
 #include "header_files\MarioBrosMain.h"
+
 GameState gameState = Start;
 
 bool MarioBrosMain::InitAllegro(){
@@ -293,8 +294,10 @@ void ManageGameLoop() {
 		}
 }
 
+
 int main() {
 		using namespace MarioBrosMain;
+		using namespace std;
 
 		if(InitAllegro()){
 				InitializeGame();
