@@ -603,23 +603,19 @@ bool Mario::IsInvincible() {
 }
 
 
-unsigned long startPressButton = 0; 
 void Mario::Run() {
-		SYSTEMTIME st; GetSystemTime(&st);
-		unsigned int mili = st.wMilliseconds;
 		isRunningNow = true;
-		if(mili - startPressButton > RUNNING_DELAY) {
-				startPressButton = mili;
-				delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
-				if(delay >= 50)
-						MarioAnimator->GetMovingAnimation()->SetDelay(delay-10);
-		}
+
+		delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
+		if(delay >= 50)
+				MarioAnimator->GetMovingAnimation()->SetDelay(--delay);
+
 }
 
  void Mario::isNotRunning(){
 		isRunningNow = false;
 		delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
 		if( delay < 90)
-				MarioAnimator->GetMovingAnimation()->SetDelay(delay + 10);
+				MarioAnimator->GetMovingAnimation()->SetDelay(++delay);
 	
  }

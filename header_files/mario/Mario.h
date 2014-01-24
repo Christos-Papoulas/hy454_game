@@ -24,7 +24,7 @@
 
 extern Dim countScroll;
 
-#define RUNNING_DELAY		500
+#define RUNNING_DELAY		100
 
 enum MarioState { 
 		Walking = 0,
