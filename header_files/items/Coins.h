@@ -13,6 +13,7 @@ class Coins{
 		static void SetLife(Dim num){lifes = num;}
 		static Dim GetLife(){return lifes;}
 		static void AddLife(){lifes += 1;}
+		static void RemoveLife(){lifes -= 1;}
 };
 
 #endif

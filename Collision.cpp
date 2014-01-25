@@ -79,7 +79,7 @@ void Collision::CheckCollision() {
 	Sprite* activeMario = Mario::GetMarioCurrentSprite();
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
-
+	MarioState gg = Mario::GetState();
 	if(Mario::GetState() == Death || Mario::GetState() == BackAndJump) 
 			return ;
 

@@ -15,18 +15,11 @@
 #include "../enemies/GreenKoopaTroopa.h"
 #include "FlushMarioHolder.h"
 #include "SpritesHolder.h"
-#include "../items/Coins.h"
-#include "Score.h"
-#include "sounds\Sounds.h"
-#include "MarioBrosMain.h"
 
 #include <assert.h>
 #include < vector>
-#include <time.h>
 
 extern Dim countScroll;
-
-#define RUNNING_DELAY		100
 
 enum MarioState { 
 		Walking = 0,
@@ -40,9 +33,8 @@ enum MarioState {
 
 enum MarioLevel {
 		MarioSmall = 0,
-		Super_Mario,
-		InvincibleMario,
-		InvincibleSuper
+		SuperMario,
+		InvincibleMario
 };
 
 class Mario {
@@ -66,8 +58,7 @@ class Mario {
 		static bool isOnBrick;
 		static void KeepInsideViewWin();
 		friend void ChangeLevel(Animator* prev);
-		static bool isRunningNow;
-		
+
 	public:
 		static void SuperMario();
 		static void FlashMario();
@@ -88,8 +79,6 @@ class Mario {
 		static bool isWalkingJump() { return marioState == WalkAndJump; }
 		static bool isBackJumping() { return marioState == BackAndJump; }
 		static bool isBackWalk() { return marioState == backwalk; }
-		static bool isRunning() {return isRunningNow; }
-		static bool isDead() { return marioState == Death; }
 		static void Destroy();
 		
 		static void MoveViewWin();
@@ -98,7 +87,7 @@ class Mario {
 		static void MarioFinishSjumping(Animator*, void*);
 		static void MarioFinisWaiting(Animator*, void*);
 		static void MarioFinishWjumping(Animator*, void*);
-		static void MarioFinishDeath(Animator*a, void*v);
+		static void MarioFinishDeath(Animator*, void*);
 		static void MarioFinishBackJump(Animator*, void*);
 
 		static void MarioStandingJump();
@@ -107,8 +96,7 @@ class Mario {
 		static void MarioMovesRight();
 		static void BackWalkAndJump();
 		static void MarioDeading();
-		static void Run();
-		static void isNotRunning();
+		
 		static void EnterPipe();
 		static void GetOutFromPipe();
 		static Dim PipeEnterScroll(Dim i);
@@ -135,14 +123,7 @@ class Mario {
 
 		//functions for marioLevel
 		static void SetMarioAsInvincible();
-		static bool IsMarioSmall();
 		static bool IsInvincible();
-		static bool IsSuperMario();
-		static bool IsInvincibleSuperMario();
-		static bool isUnderGround;
-		static void Hited();
-		static Dim checkpoints[3];
-		static void RestoreCheckpoint(Dim x);
 };
 
 #endif

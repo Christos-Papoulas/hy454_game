@@ -89,6 +89,7 @@ void Goumbas::Finish(Animator *a, void *f) {
 }
 
 void Goumbas::MoveGoumbas() {
+		Goumbas::SuspendGoumbas();
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
 				Dim currPosX = g->GetSprite()->GetX();

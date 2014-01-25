@@ -10,12 +10,6 @@ MovingAnimator* Mario::MarioBWalk = NULL;
 MovingPathAnimator* Mario::BackJump = NULL;
 MovingPathAnimator* Mario::MarioDeath = NULL;
 bool Mario::isOnBrick = false;
-Dim Coins::coins = 0;
-Dim Coins::lifes = 3;
-Dim Score::score = 0;
-Dim Mario::checkpoints[3] = {0, 960, 2320};
-
-bool Mario::isRunningNow = false;
 
 std::vector<PathEntry> Mario::paths;
 std::vector<PathEntry> Mario::backpaths;
@@ -24,9 +18,9 @@ MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
 
 Dim countScroll = 0;
-bool  Mario::isUnderGround = false;
+bool isUnderGround = false;
 static bool MoveViewWindow(Dim x) {
-		if( x > 85 && !Mario::isUnderGround) {
+		if( x > 85 && !isUnderGround) {
 			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
 			Goumbas::ViewWindowMove();
@@ -205,8 +199,6 @@ void Mario::MarioFinisWaiting(Animator*, void*){
 }
 
 void Mario::MarioMovesLeft() {
-	if(isDead()) 
-		return ;
 	if(isStandingJumping())
 			MarioFinishSjumping(0, 0);
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
@@ -217,13 +209,12 @@ void Mario::MarioMovesLeft() {
 	ChangeState(backwalk);
 }
 
-
 void Mario::MarioMovesRight() {
-	if(marioState == WalkAndJump || isDead())
+	if(marioState == WalkAndJump)
 			return ;
 	else if(isStandingJumping())
 			MarioFinishSjumping(0, 0);
-
+	
 	AnimatorHolder::MarkAsSuspended(MarioWaiting);
 	AnimatorHolder::MarkAsSuspended(MarioBWalk);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
@@ -248,7 +239,7 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 }
 
 void Mario::MarioStandingJump() {
-		if(marioState == Jumping || isDead())
+		if(marioState == Jumping)
 				return ;
 		SetDimensions(MarioSJump, MarioWaiting);
 
@@ -263,7 +254,7 @@ void Mario::MarioStandingJump() {
 }
 
 void Mario::MarioWalkingJump() {
-		if(marioState == WalkAndJump  || isDead()){
+		if(marioState == WalkAndJump){
 				return ;
 		}
 
@@ -281,7 +272,7 @@ void Mario::MarioWalkingJump() {
 }
 
 void Mario::BackWalkAndJump() {
-		if(marioState == BackAndJump || isDead()){
+		if(marioState == BackAndJump){
 				return ;
 		}
 
@@ -308,12 +299,9 @@ void Mario::MarioDeading() {
 		AnimatorHolder::MarkAsSuspended(MarioWJump);
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioBWalk);
-		MarioDeath->SetLastTime(currTime);
+
 		AnimatorHolder::MarkAsRunning(MarioDeath);
 		ChangeState(WalkAndJump);
-		Sounds::Play("mario_death");
-		Hited();
-		marioState = Death;
 }
 
 void Mario::MarioFinishBackWalk(Animator*, void*) {
@@ -376,40 +364,8 @@ void Mario::MarioFinishBackJump(Animator*, void*) {
 		ChangeState(Waiting);
 }
 
-clock_t wai;
-void Mario::MarioFinishDeath(Animator*a, void*v) {
-
-	if(Coins::lifes == 2)
-		TerrainStartScreen::CreateLifeScreen2();
-	else if (Coins::lifes == 1)
-		TerrainStartScreen::CreateLifeScreen1();
-	else if (Coins::lifes == 0)
-		TerrainStartScreen::CreateGameOver();
-
-	MarioBrosMain::DeathRender();
-	if(MarioBrosMain::GameIsPlay())
-		MarioBrosMain::SetGamePause();
-	wai = clock();
-	while( clock() != wai + 3000 );
-	MarioBrosMain::SetGamePlay();
-	
-	AnimatorHolder::MarkAsSuspended(a);
-	if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[1]))
-		RestoreCheckpoint(checkpoints[0]);
-}
-
-void Mario::RestoreCheckpoint(Dim x) {
-	Sprite * activeMario = Mario::GetMarioCurrentSprite();
-	Rect viewWin;
-	viewWin.SetX(x);
-	countScroll = 0;
-	viewWin.SetY(0);
-	viewWin.SetHeight(15);
-	viewWin.SetWidth(16);
-	activeMario->SetX(76);
-	activeMario->SetY(129);
-	AnimatorHolder::MarkAsRunning(MarioAnimator);
-	Terrain::GetTileLayer()->SetViewWindow(viewWin);
+void Mario::MarioFinishDeath(Animator*, void*) {
+		; //@todo finish the game
 }
 
 Animator* Mario::GetAnimator() {
@@ -440,9 +396,6 @@ void Mario::EnterPipe() {
 	Dim x = activeMario->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX();
 	Dim y = activeMario->GetTileY();
 	if(x == 47 || x == 48){
-			Sounds::Play("enter_pipe");
-			Sounds::Pause("music");
-			Sounds::Play("underground");
 			Rect viewWin;
 			viewWin.SetX(209);
 			countScroll = 0;
@@ -451,7 +404,7 @@ void Mario::EnterPipe() {
 			viewWin.SetHeight(15);
 			viewWin.SetWidth(16);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
-			Mario::isUnderGround = true;
+			isUnderGround = true;
 			activeMario->SetX(20);
 			activeMario->SetY(20);
 			Items::KillPipes();
@@ -461,13 +414,10 @@ void Mario::EnterPipe() {
 }
 
 void Mario::GetOutFromPipe() {
-	if(Mario::isUnderGround) {
+	if(isUnderGround) {
 		Sprite* activeMario = Mario::GetMarioCurrentSprite();
 		Dim x = activeMario->GetTileX();
 		if(x == 12){
-			Sounds::Play("enter_pipe");
-			Sounds::Pause("underground");
-			Sounds::Play("music");
 			Rect viewWin;
 			viewWin.SetX(159);
 			countScroll = 0;
@@ -477,7 +427,7 @@ void Mario::GetOutFromPipe() {
 			activeMario->SetX(76);
 			activeMario->SetY(129);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
-			Mario::isUnderGround = false;
+			isUnderGround = false;
 			
 		}
 	}
@@ -602,7 +552,6 @@ void ChangeLevel(Animator* prev) {
 	return ;
 }
 void Mario::SuperMario() {
-		marioLevel = Super_Mario;
 		Animator* prev = GetAnimator();
 		Initializer::SuperBackWalk();
 		Initializer::SuperWalkJump();
@@ -620,62 +569,9 @@ void Mario::FlashMario() {
 }
 
 void Mario::SetMarioAsInvincible() {
-		Animator* prev = GetAnimator();
-		switch (marioLevel) {
-				case MarioSmall:
-						marioLevel = InvincibleMario;
-						FlushMario::InitMario();
-						break;
-				case Super_Mario:
-						marioLevel = InvincibleSuper;
-						FlushMario::InitSuperMario();	
-						break;
-		}
-		ChangeLevel(prev);
-}
-
-bool Mario::IsMarioSmall() {
-	return marioLevel == MarioSmall;
+		marioLevel = InvincibleMario;
 }
 
 bool Mario::IsInvincible() {
 		return marioLevel == InvincibleMario;
 }
-
-bool Mario::IsSuperMario() {
-	return marioLevel == Super_Mario;
-}
-
-bool Mario::IsInvincibleSuperMario() {
-	return marioLevel == InvincibleSuper;
-}
-
-
-void Mario::Run() {
-		isRunningNow = true;
-
-		delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
-		if(delay >= 50)
-				MarioAnimator->GetMovingAnimation()->SetDelay(--delay);
-
-}
-
- void Mario::isNotRunning(){
-		isRunningNow = false;
-		delay_t delay = MarioAnimator->GetMovingAnimation()->GetDelay();
-		if( delay < 90)
-				MarioAnimator->GetMovingAnimation()->SetDelay(++delay);
-	
- }
-
- void Mario::Hited() {
-	 if(IsMarioSmall()) {
-		 Coins::RemoveLife();
-	 }else if(IsInvincible()) {
-
-	 }else if(IsSuperMario()) {
-
-	 }else if(IsInvincibleSuperMario()) {
-		
-	 }
- }
