@@ -18,12 +18,12 @@ class GreenKoopa {
 		static std::list<MovingAnimator*> suspending;
 		static std::list<MovingAnimator*> running;
 		static std::list<MovingAnimator*> suspendingdead;
-		static std::list<MovingAnimator*> runningdead;
+		static std::list<MovingAnimator*> walkingdead;
 		static void Dead();
 		static void MoveKoopasInShells();
 		static Dim delay;
 public:
-		static void Create();
+		static void Create(const char* id);
 		static void ArtificialIntelligence();
 		static void CreateGreenKoopaIfAny();
 		static void MoveGreenKoopas();

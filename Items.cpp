@@ -197,6 +197,11 @@ void Items::CreateAJumpingBrick(MovingPathAnimator* mpa) {
 		mpa->SetOnFinish(FinishMoveBrick);
 }
 
+
+void Items::DestroyBrick(MovingPathAnimator* prevAnim) {
+		;
+}
+
 void Items::FinishMoveBrick(Animator* a, void* v) {
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 1u; ++i) { // @todo make the code better!		
@@ -566,7 +571,10 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				Score::ScoreAdd(200);
 				Sounds::Play("coin");
 		} else if(brick == 2) {
-			CreateAJumpingBrick((MovingPathAnimator*)prevAnim);
+				if(Mario::IsSuperMario() || Mario::IsInvincibleSuper()){
+						DestroyBrick( (MovingPathAnimator*) prevAnim);
+				} else
+						CreateAJumpingBrick((MovingPathAnimator*)prevAnim);
 		}
 		
 }

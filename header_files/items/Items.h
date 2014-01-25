@@ -101,7 +101,9 @@ public:
 
 		static void CommitDestructions();
 
-		static void FinishMoveBrick(Animator* a, void* v); 
+		static void FinishMoveBrick(Animator* a, void* v);
+
+		static void DestroyBrick(MovingPathAnimator* prevAnim);
 };
 
 #endif

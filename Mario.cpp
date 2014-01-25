@@ -602,6 +602,10 @@ bool Mario::IsInvincible() {
 		return marioLevel == InvincibleMario;
 }
 
+bool Mario::IsSuperMario() {
+		return marioLevel == Super_Mario;
+}
+
 
 void Mario::Run() {
 		isRunningNow = true;

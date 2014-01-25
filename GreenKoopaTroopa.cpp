@@ -3,15 +3,15 @@
 std::list<MovingAnimator*> GreenKoopa::suspending;
 std::list<MovingAnimator*> GreenKoopa::running;
 std::list<MovingAnimator*> GreenKoopa::suspendingdead;
-std::list<MovingAnimator*> GreenKoopa::runningdead;
+std::list<MovingAnimator*> GreenKoopa::walkingdead;
 Dim GreenKoopa::delay = 100;
 
-void GreenKoopa::Create() {
-		Sprite *greenKoopaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("greenkoopaleft") ));
+void GreenKoopa::Create(const char* id) {
+		Sprite *greenKoopaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string(id) ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 1, 
-						-2, 0, delay, true, ParseMarioInfo::GetAnimationIdOf(9u)
+						-2, 0, delay, true, ParseMarioInfo::GetIndexOf(id)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -38,7 +38,21 @@ void GreenKoopa::CreateGreenKoopaIfAny() {
 						if(Enemies::GetFromMap(y, x) == 194) {
 								if(Enemies::IsEnemyActive(y, x)) 
 										continue;
-								if(suspending.empty()) Create();
+								if(suspending.empty()) Create("greenkoopaleft");
+								g = suspending.back();
+
+								suspending.pop_back();
+								if(!g) return ;
+								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
+								g->GetSprite()->SetY(y * 16);
+								g->SetLastTime(CurrTime());
+								AnimatorHolder::MarkAsRunning(g);
+								Enemies::SetEnemyAsActive(y,x);
+								running.push_back(g);
+						} else if(Enemies::GetFromMap(y, x) == 195) {
+								if(Enemies::IsEnemyActive(y, x)) 
+										continue;
+								if(suspending.empty()) Create("redkoopaleft");
 								g = suspending.back();
 
 								suspending.pop_back();
@@ -54,10 +68,12 @@ void GreenKoopa::CreateGreenKoopaIfAny() {
 }
 
 void GreenKoopa::MoveKoopasInShells() {
-		for (std::list<MovingAnimator*>::iterator it=runningdead.begin(); it != runningdead.end(); ++it) {
+		for (std::list<MovingAnimator*>::iterator it=walkingdead.begin(); it != walkingdead.end(); ++it) {
 				MovingAnimator* g = *it;
 				Dim currPosX = g->GetSprite()->GetX();
 				Dim currPosY = g->GetSprite()->GetY();
+				if(g->GetMovingAnimation()->GetDx() != 0)
+						Goumbas::CollicionWithKoopaInShells(currPosX, currPosY);
 				if(Enemies::IsMarioLeft(currPosX, currPosY)) {
 						g->GetMovingAnimation()->SetDx(5);
 						g->GetMovingAnimation()->SetDelay(100);
@@ -79,7 +95,7 @@ void GreenKoopa::ComeOutFromShell(Animator* a, void* v) {
 		AnimatorHolder::Cancel(a);
 		suspendingdead.push_back((MovingAnimator*)a);
 
-		if(suspending.size() == 0) Create();
+		if(suspending.size() == 0) Create("greenkoopaleft");
 		g = suspending.back();
 		suspending.pop_back();
 		assert(g);
@@ -132,7 +148,7 @@ void GreenKoopa::MoveGreenKoopas() {
 						d->GetSprite()->SetY(y = g->GetSprite()->GetY() + 16);
 						d->SetLastTime(CurrTime());
 						AnimatorHolder::MarkAsRunning(d);
-						runningdead.push_back(d);
+						walkingdead.push_back(d);
 						suspending.push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running.erase(it);
@@ -175,7 +191,7 @@ void GreenKoopa::MoveGreenKoopas() {
 void GreenKoopa::ViewWindowMove() {
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
-		for (std::list<MovingAnimator*>::iterator it=runningdead.begin(); it != runningdead.end(); ++it)
+		for (std::list<MovingAnimator*>::iterator it=walkingdead.begin(); it != walkingdead.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }
 

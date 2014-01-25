@@ -132,6 +132,8 @@ class Mario {
 		//functions for marioLevel
 		static void SetMarioAsInvincible();
 		static bool IsInvincible();
+		static bool IsInvincibleSuper() { return marioLevel == InvincibleSuper; }
+		static bool IsSuperMario();
 		static bool isUnderGround;
 };
 

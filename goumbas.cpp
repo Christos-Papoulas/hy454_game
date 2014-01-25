@@ -17,7 +17,7 @@ void Goumbas::Create() {
 		Goumbas::goumbaSuspending.push_back( aMovAnimr );
 				
 		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());			
-		//aMovAnimr->SetOnFinish(Mario::MarioFinishWalking, NULL);
+		
 		AnimatorHolder::Register( aMovAnimr );
 }
 
@@ -37,20 +37,24 @@ void Goumbas::Dead() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-void Goumbas::BadDeath() {
-		Sprite *goumbaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("goumbabaddeath") ));
+void Goumbas::BadDeath(Dim x, Dim y) {
+		Sprite *goumbaSprite = new Sprite(x, y, AnimationFilmHolder::GetFilm( std::string("goumbabaddeath") ));
 		
-		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
-						0, 0, 
-						0, 0, 2500, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("goumbabaddeath"))
-						);
-		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i < 6u) ? -5 : 5, 0, 70);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariojumping")));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator();
 		
-		Goumbas::dead.push_back( aMovAnimr );
+		Goumbas::dead.push_back( (MovingAnimator*)aMovAnimr );
 				
-		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());			
+		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());		
+		aMovAnimr->GetAnimation()->SetContinuous(false);
 		aMovAnimr->SetOnFinish(Finish, NULL);
 		AnimatorHolder::Register( aMovAnimr );
+		AnimatorHolder::MarkAsRunning( aMovAnimr );
 }
 
 void Goumbas::ArtificialIntelligence() {
@@ -176,4 +180,21 @@ void Goumbas::KillGoumbas(){
 						AnimatorHolder::MarkAsSuspended(*it);
 		}	
 	running.clear();
+}
+
+void Goumbas::CollicionWithKoopaInShells(Dim kx, Dim ky) {
+	Dim gx, gy, dx, dy;
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+			gx = (*it)->GetSprite()->GetX();
+			gy = (*it)->GetSprite()->GetY();
+			dx = (kx > gx) ? kx - gx : gx - kx;
+			dy = (ky > gy) ? ky - gy : gy - ky;
+			if(dx < COLLISION_DETECT && dy < COLLISION_DETECT){
+					BadDeath(gx, gy);
+					AnimatorHolder::MarkAsSuspended(*it);
+					goumbaSuspending.push_back(*it);
+					running.erase(it);
+					return ;
+			}
+	}
 }
