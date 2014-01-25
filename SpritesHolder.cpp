@@ -155,7 +155,11 @@ void Initializer::InitMarioBackWalk() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+MovingPathAnimator* marioDeathkeeper = NULL;
 void Initializer::InitMarioDeath() {
+		if(marioDeathkeeper)
+				return ;
+
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariodeading") ));
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 20u; ++i) { // @todo make the code better!		

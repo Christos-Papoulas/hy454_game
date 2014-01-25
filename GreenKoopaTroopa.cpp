@@ -72,20 +72,33 @@ void GreenKoopa::MoveKoopasInShells() {
 				MovingAnimator* g = *it;
 				Dim currPosX = g->GetSprite()->GetX();
 				Dim currPosY = g->GetSprite()->GetY();
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
 				if(g->GetMovingAnimation()->GetDx() != 0)
 						Goumbas::CollicionWithKoopaInShells(currPosX, currPosY);
 				if(Enemies::IsMarioLeft(currPosX, currPosY)) {
-						g->GetMovingAnimation()->SetDx(5);
-						g->GetMovingAnimation()->SetDelay(100);
+						g->GetMovingAnimation()->SetDx(4);
+						g->GetMovingAnimation()->SetDelay(40);
 						g->GetMovingAnimation()->SetContinuous(true);
 						g->SetLastTime(currTime);
 				}
 				else if(Enemies::IsMarioRight(currPosX, currPosY)) {
-						g->GetMovingAnimation()->SetDx(-5);
-						g->GetMovingAnimation()->SetDelay(100);
+						g->GetMovingAnimation()->SetDx(-4);
+						g->GetMovingAnimation()->SetDelay(40);
 						g->GetMovingAnimation()->SetContinuous(true);
 						g->SetLastTime(currTime);
 				}
+
+				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else if(!Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(2);
+				else if( !Enemies::CanGoRight(TileX, TileY) && g->GetMovingAnimation()->GetDx() > 0)
+						g->GetMovingAnimation()->SetDx(-2);
+				else
+						g->GetMovingAnimation()->SetDx(0);
 		}
 }
 void GreenKoopa::ComeOutFromShell(Animator* a, void* v) {
@@ -208,6 +221,21 @@ void GreenKoopa::CommitDestructions() {
 						suspending.push_back(*prev);
 						AnimatorHolder::MarkAsSuspended(*prev);
 						running.erase(prev);
+				} else
+						++it;
+		}
+		for (std::list<MovingAnimator*>::iterator it=walkingdead.begin(); it != walkingdead.end();) {
+				Dim currPosX = (*it)->GetSprite()->GetX();
+				Dim currPosY = (*it)->GetSprite()->GetY();
+
+				Dim TileX = (*it)->GetSprite()->GetTileX();
+				Dim TileY = (*it)->GetSprite()->GetTileY();
+
+				if(currPosX < 2 || currPosX > 16*16 || TileX > MAX_WIDTH || TileY > MAX_HEIGHT) {
+						std::list<MovingAnimator*>::iterator prev = it++;
+						suspendingdead.push_back(*prev);
+						AnimatorHolder::MarkAsSuspended(*prev);
+						walkingdead.erase(prev);
 				} else
 						++it;
 		}

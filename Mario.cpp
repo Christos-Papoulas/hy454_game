@@ -312,7 +312,7 @@ void Mario::MarioDeading() {
 		AnimatorHolder::MarkAsRunning(MarioDeath);
 		ChangeState(WalkAndJump);
 		Sounds::Play("mario_death");
-		Hited();
+		
 		marioState = Death;
 }
 
@@ -671,13 +671,13 @@ void Mario::Run() {
  }
 
  void Mario::Hited() {
-	 if(IsMarioSmall()) {
+	 if(IsMarioSmall()){
 		 Coins::RemoveLife();
-	 }else if(IsInvincible()) {
-
-	 }else if(IsSuperMario()) {
-
-	 }else if(IsInvincibleSuper()) {
-		
+		 MarioDeading();
+	 } else if(IsSuperMario()) {
+			 marioLevel = MarioSmall;
+			 Animator* prev = GetAnimator();
+			 Initializer::InitMario();
+			 ChangeLevel(prev);
 	 }
  }

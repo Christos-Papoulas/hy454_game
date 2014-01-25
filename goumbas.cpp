@@ -153,7 +153,7 @@ void Goumbas::GoumbasKillMario() {
 				Dim y = g->GetSprite()->GetY();
 
 				if(Enemies::IsMarioLeftOrRight(x, y))
-						 Mario::MarioDeading();
+						 Mario::Hited();
 		}
 }
 
