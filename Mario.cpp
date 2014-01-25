@@ -396,6 +396,10 @@ void Mario::MarioFinishDeath(Animator*a, void*v) {
 	AnimatorHolder::MarkAsSuspended(a);
 	if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[1]))
 		RestoreCheckpoint(checkpoints[0]);
+	else if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[1]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[2]))
+		RestoreCheckpoint(checkpoints[1]);
+	else if(Mario::GetMarioCurrentSprite()->GetX() > checkpoints[2])
+		RestoreCheckpoint(checkpoints[2]);
 }
 
 void Mario::RestoreCheckpoint(Dim x) {
