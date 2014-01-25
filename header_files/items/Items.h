@@ -3,8 +3,10 @@
 
 #include "../animator/MovingAnimator.h"
 #include "../animator/FrameRangeAnimator.h"
+#include "../animator/MovingPathAnimator.h"
 #include "../animator/AnimatorHolder.h"
 #include "../animation/AnimationFilmHolder.h"
+#include "../animation/MovingPathAnimation.h"
 #include "../animation/FrameRangeAnimation.h"
 #include "../Objects.h"
 #include "../terrain/terrain.h"
@@ -68,12 +70,14 @@ class Items {
 
 		static void IsByTube(const char* id);
 
-		static void NotifyHit(MovingAnimator* g, const char* id, Dim x, Dim y);
+		static void NotifyHit(Animator* g, const char* id, Dim x, Dim y);
 		static void CreateCoinSprite(char* id);
 		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
 		static void CollisionMarioWithMushroom();
 		static void CollisionMarioWithStar();
 		static void MoveStars();
+
+		static void CreateAJumpingBrick(MovingPathAnimator* mpa);
 public:
 		static void Init();
 		static void ArtificialIntelligence();
@@ -86,7 +90,7 @@ public:
 
 		static Dim GetFromBricks(Dim x, Dim y) { return brick[x][y]; }
 		
-		static bool BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y);
+		static bool BrickIsHit(Animator* g, const char* id, Dim x, Dim y);
 		static bool IsMarioAboveBrick(Dim x, Dim y);
 		static bool IsMarioLeft(Dim x, Dim y);
 		static bool IsMarioRight(Dim x, Dim y);
@@ -96,6 +100,8 @@ public:
 		static bool IsEnemyOnBrick(const char* id, Dim x, Dim y);
 
 		static void CommitDestructions();
+
+		static void FinishMoveBrick(Animator* a, void* v); 
 };
 
 #endif

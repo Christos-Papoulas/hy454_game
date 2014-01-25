@@ -172,16 +172,38 @@ void Items::CreateBricks() {
 void Items::CreateABrickAnimation() {
 		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("brick") ));
 		
-		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
-						0, 0, 
-						0, 0, 9000, true, ParseMarioInfo::GetAnimationIdOf(12u)
-						);
-		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 1u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, 0, 0, 1000);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariojumping")));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 		
 		suspending["bricks"].push_back( (Animator*) aMovAnimr );
 		
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
 		AnimatorHolder::Register( aMovAnimr );
+}
+
+void Items::CreateAJumpingBrick(MovingPathAnimator* mpa) {
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 10u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, (i<5) ? -2 : 2, 0, 40);
+				paths.push_back( pathEntry );
+		}
+		mpa->GetAnimation()->SetPath(paths);
+		mpa->GetAnimation()->SetContinuous(false);
+		mpa->SetOnFinish(FinishMoveBrick);
+}
+
+void Items::FinishMoveBrick(Animator* a, void* v) {
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 1u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, 0, 0, 1000);
+				paths.push_back( pathEntry );
+		}
+		((MovingPathAnimator*)a)->GetAnimation()->SetPath(paths);
 }
 
 //index is unused
@@ -496,12 +518,13 @@ void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
 		toDesrtuct.push_back(prevAnim);
 }
 
-void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
+void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		Dim xi = i + (x >> 4) + 1;
 		Dim xj = j + (y >> 4);
 		Dim res = GetFromMap(xj, xi);
+		Dim brick =  GetFromBricks(xj, xi - 1);
 		if(res == 323){
 				MovingAnimator *g;
 				if(suspending["mushroom"].size() == 0)
@@ -514,7 +537,7 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				AnimatorHolder::MarkAsRunning(g);
 				running["mushroom"].push_back(g);
 				SetOnMap(0, xj, xi);
-				ShowSolidQuestion(prevAnim, x, y);
+				ShowSolidQuestion((MovingAnimator*)prevAnim, x, y);
 				Sounds::Play("powerup_appears");
 		}else if(res == 29){
 				CreateSpriteWithPath("star", 0, 3, 0, 0, 100);
@@ -538,20 +561,22 @@ void Items::NotifyHit(MovingAnimator* prevAnim, const char* id, Dim x, Dim y) {
 				g->SetLastTime(CurrTime());
 				AnimatorHolder::MarkAsRunning(g);
 				running["coinanimation"].push_back(g);
-				ShowSolidQuestion(prevAnim, x, y);
+				ShowSolidQuestion((MovingAnimator*)prevAnim, x, y);
 				Coins::CheckCoins();
 				Score::ScoreAdd(200);
 				Sounds::Play("coin");
+		} else if(brick == 2) {
+			CreateAJumpingBrick((MovingPathAnimator*)prevAnim);
 		}
 		
 }
 
-bool Items::BrickIsHit(MovingAnimator* g, const char* id, Dim x, Dim y) {
+bool Items::BrickIsHit(Animator* g, const char* id, Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	
-	if(mj > y && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
+	if(mj > y && x > mi && x - mi <= 16/*i < COLLISION_DETECT*/ && ((mj - y) <= 17)){ //@todo the right operation is equality check
 		NotifyHit(g, id, x, y);
 		Sounds::Play("hit_brick");
 		return true;
@@ -593,7 +618,7 @@ bool Items::IsOnBrick(const char* id) {
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 				if(Mario::GetState() == Jumping){
-					if(Items::BrickIsHit(g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
+					if(Items::BrickIsHit((Animator*)g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
 						Mario::MarioFinishSjumping(NULL,NULL);
 						return active;
 				}
