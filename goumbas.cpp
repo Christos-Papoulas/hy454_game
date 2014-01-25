@@ -26,7 +26,23 @@ void Goumbas::Dead() {
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 0, 
-						0, 0, 2500, false, ParseMarioInfo::GetAnimationIdOf(8u)
+						0, 0, 2500, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("goombadead"))
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		Goumbas::dead.push_back( aMovAnimr );
+				
+		aMovAnimr->Start( goumbaSprite, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Finish, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+void Goumbas::BadDeath() {
+		Sprite *goumbaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("goumbabaddeath") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 0, 
+						0, 0, 2500, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("goumbabaddeath"))
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		

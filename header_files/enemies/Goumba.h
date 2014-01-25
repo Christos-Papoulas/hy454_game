@@ -28,6 +28,7 @@ class Goumbas {
 public:
 		static void Create();
 		static void Dead();
+		static void BadDeath();
 
 		static void Finish(Animator *a, void *f);
 

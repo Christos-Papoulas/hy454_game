@@ -1,4 +1,4 @@
-54
+55
 1
 mariowalking 3
 0 0 16 16
@@ -210,3 +210,6 @@ superflushjump 2
 superflushbjump 2
 100 273 16 32
 133 273 16 32
+999
+goumbabaddeath 1
+32 97 15 15
