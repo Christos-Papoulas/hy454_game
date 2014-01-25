@@ -13,7 +13,7 @@ bool Mario::isOnBrick = false;
 Dim Coins::coins = 0;
 Dim Coins::lifes = 3;
 Dim Score::score = 0;
-Dim Mario::checkpoints[3] = {0, 960, 2320};
+Dim Mario::checkpoints[3] = {0, 60, 145};
 
 bool Mario::isRunningNow = false;
 
@@ -26,6 +26,12 @@ MarioLevel Mario::marioLevel = MarioSmall;
 Dim countScroll = 0;
 bool  Mario::isUnderGround = false;
 static bool MoveViewWindow(Dim x) {
+	if(Mario::GetMarioCurrentSprite()->GetTileX()
+		+ Terrain::GetTileLayer()->GetViewWindow().GetX() >= 198){
+		countScroll = 0;
+		(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
+		return false;
+	}
 		if( x > 85 && !Mario::isUnderGround) {
 			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
@@ -378,31 +384,29 @@ void Mario::MarioFinishBackJump(Animator*, void*) {
 
 clock_t wai;
 void Mario::MarioFinishDeath(Animator*a, void*v) {
-	if(Coins::lifes < 3){
-		if(Coins::lifes == 2)
-			TerrainStartScreen::CreateLifeScreen2();
-		else if (Coins::lifes == 1)
-			TerrainStartScreen::CreateLifeScreen1();
-		else if (Coins::lifes == 0)
-			TerrainStartScreen::CreateGameOver();
+	if(Coins::lifes == 2)
+		TerrainStartScreen::CreateLifeScreen2();
+	else if (Coins::lifes == 1)
+		TerrainStartScreen::CreateLifeScreen1();
+	else if (Coins::lifes == 0)
+		TerrainStartScreen::CreateGameOver();
 
-		MarioBrosMain::DeathRender();
-		if(MarioBrosMain::GameIsPlay())
-			MarioBrosMain::SetGamePause();
-		wai = clock();
-		while( clock() != wai + 3000 );
-		if (Coins::lifes == 0)
-			exit(0);
-		MarioBrosMain::SetGamePlay();
+	MarioBrosMain::DeathRender();
+	if(MarioBrosMain::GameIsPlay())
+		MarioBrosMain::SetGamePause();
+	wai = clock();
+	while( clock() != wai + 3000 );
+	if (Coins::lifes == 0)
+		exit(0);
+	MarioBrosMain::SetGamePlay();
 	
-		AnimatorHolder::MarkAsSuspended(a);
-		if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[1]))
-			RestoreCheckpoint(checkpoints[0]);
-		else if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[1]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[2]))
-			RestoreCheckpoint(checkpoints[1]);
-		else if(Mario::GetMarioCurrentSprite()->GetX() > checkpoints[2])
-			RestoreCheckpoint(checkpoints[2]);
-	}
+	AnimatorHolder::MarkAsSuspended(a);
+	if((Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetTileX() < checkpoints[1]))
+		RestoreCheckpoint(checkpoints[0]);
+	else if((Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[1]) && (Mario::GetMarioCurrentSprite()->GetTileX() < checkpoints[2]))
+		RestoreCheckpoint(checkpoints[1]);
+	else if(Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[2])
+		RestoreCheckpoint(checkpoints[2]);
 }
 
 void Mario::RestoreCheckpoint(Dim x) {

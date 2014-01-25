@@ -82,7 +82,6 @@ void Collision::CheckCollision() {
 
 	if(Mario::GetState() == Death || Mario::GetState() == BackAndJump) 
 			return ;
-
 	Collision::MarioCollision(x,y);
 	Mario::SetDimensions(Mario::GetMarioCurrentSprite()->GetX(),Mario::GetMarioCurrentSprite()->GetY());
 
