@@ -16,18 +16,26 @@
 #include "../enemies/Enemies.h"
 #include "../mario/Score.h"
 #include "../sounds/Sounds.h"
+#include "DestructionAnimation.h"
 
 #include <stdlib.h>
 #include <string>
 #include <map>
 #include <list>
 
+
 #define ITEMS_TYLES "data/Items_1-1.txt"
 #define BRICKS_POS "data/bricks_1-1.txt"
+
+#define DESTROY_BRICK "brickbreak"
 
 class Items {
 		static std::map<std::string, std::list<Animator*> > suspending;
 		static std::map<std::string, std::list<Animator*> > running;
+
+		static std::list<Destruction*> suspendingDestruction;
+		static std::list<Destruction*> runningDestruction;
+
 		static std::list<Animator*> toDesrtuct;
 		static Dim map[MAX_HEIGHT][MAX_WIDTH]; //Items
 		static Dim brick[MAX_HEIGHT][MAX_WIDTH];
@@ -43,6 +51,7 @@ class Items {
 		static void CreateSprite(char* id, Dim start, Dim end, offset_t dx, offset_t dy, Dim delay);
 		static void CreateSpriteWithPath(char* id, Dim start, Dim end, offset_t dx, offset_t dy, Dim delay);
 		static void CreateBricks();
+		static void CreateDestroyBrick(Dim x, Dim y);
 		static void SuspendBricks(const char* id);
 
 		static void KillSprites(const char* id);
@@ -78,6 +87,7 @@ class Items {
 		static void MoveStars();
 
 		static void CreateAJumpingBrick(MovingPathAnimator* mpa);
+		friend void Destruction::FinishDestroy(Animator* a, void* v);
 public:
 		static void Init();
 		static void ArtificialIntelligence();
@@ -104,6 +114,7 @@ public:
 		static void FinishMoveBrick(Animator* a, void* v);
 
 		static void DestroyBrick(MovingPathAnimator* prevAnim);
+		static void FinishDestroy(Animator* a, void* v);
 };
 
 #endif
