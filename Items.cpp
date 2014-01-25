@@ -12,6 +12,9 @@ Index Items::countItems;
 Index Items::countBricks;
 Dim Items::brick[MAX_HEIGHT][MAX_WIDTH];
 
+std::list<Destruction*> Items::suspendingDestruction;
+std::list<Destruction*> Items::runningDestruction;
+
 void Items::Init() {
 		ReadMap();
 		ReadBrickMap();
@@ -197,15 +200,32 @@ void Items::CreateAJumpingBrick(MovingPathAnimator* mpa) {
 		mpa->SetOnFinish(FinishMoveBrick);
 }
 
+void Items::CreateDestroyBrick(Dim x, Dim y) {
+		Destruction* destr;
+		suspendingDestruction.push_back( destr = new Destruction(x, y));
+		AnimatorHolder::Register( destr );
+}
+
 
 void Items::DestroyBrick(MovingPathAnimator* prevAnim) {
-		for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
-				if(*it == prevAnim){
-						suspending["bricks"].push_back( (Animator*) prevAnim );
-						AnimatorHolder::MarkAsSuspended( (Animator*) prevAnim);
+		if(suspendingDestruction.size() == 0)
+				CreateDestroyBrick(prevAnim->GetSprite()->GetX(), prevAnim->GetSprite()->GetY());
+		Destruction* destr = suspendingDestruction.back();
+		destr->Reset(prevAnim->GetSprite()->GetX(), prevAnim->GetSprite()->GetY());
+		suspendingDestruction.pop_back();
+		runningDestruction.push_back(destr);
+		destr->SetLastTime(currTime);
+		AnimatorHolder::MarkAsRunning( destr );
+		std::list<Animator*>::iterator it = running["bricks"].begin();
+		while (it != running["bricks"].end()){
+				if((*it) == (MovingPathAnimator*)  prevAnim) {
+						suspending["bricks"].push_back( *it );
+						AnimatorHolder::MarkAsSuspended( *it );
 						running["bricks"].erase( it );
 						return ;
 				}
+				else
+						 ++it;
 		}
 }
 
@@ -580,7 +600,7 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				Coins::CheckCoins();
 				Score::ScoreAdd(200);
 				Sounds::Play("coin");
-		} else if(mpa && brick == 2) {
+		} else if(mpa ) {
 				if(Mario::IsSuperMario() || Mario::IsInvincibleSuper()){
 						DestroyBrick( (MovingPathAnimator*) prevAnim);
 				} else
@@ -818,5 +838,20 @@ void Items::MoveStars() {
 						g->GetAnimation()->SetOnPath(currIndex, 0);
 				
 				
+		}
+}
+ 
+void Destruction::FinishDestroy(Animator* a, void* v) {
+		AnimatorHolder::MarkAsSuspended(a);
+		Items::suspendingDestruction.push_back((Destruction*) a);
+		((Destruction*) a)->SetCurrIndex(0);
+		std::list<Destruction*>::iterator it = Items::runningDestruction.begin();
+		while (it != Items::runningDestruction.end()){
+				if((*it) == (Destruction*)  a) {
+						Items::runningDestruction.erase( it );
+						return ;
+				}
+				else
+						 ++it;
 		}
 }
