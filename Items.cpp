@@ -199,7 +199,14 @@ void Items::CreateAJumpingBrick(MovingPathAnimator* mpa) {
 
 
 void Items::DestroyBrick(MovingPathAnimator* prevAnim) {
-		;
+		for (std::list<Animator*>::iterator it=running["bricks"].begin(); it != running["bricks"].end(); ++it) {
+				if(*it == prevAnim){
+						suspending["bricks"].push_back( (Animator*) prevAnim );
+						AnimatorHolder::MarkAsSuspended( (Animator*) prevAnim);
+						running["bricks"].erase( it );
+						return ;
+				}
+		}
 }
 
 void Items::FinishMoveBrick(Animator* a, void* v) {
@@ -530,6 +537,9 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 		Dim xj = j + (y >> 4);
 		Dim res = GetFromMap(xj, xi);
 		Dim brick =  GetFromBricks(xj, xi - 1);
+		FrameRangeAnimator* fra = dynamic_cast<FrameRangeAnimator*>(prevAnim);
+		MovingPathAnimator* mpa = dynamic_cast<MovingPathAnimator*>(prevAnim);
+
 		if(res == 323){
 				MovingAnimator *g;
 				if(suspending["mushroom"].size() == 0)
@@ -570,7 +580,7 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				Coins::CheckCoins();
 				Score::ScoreAdd(200);
 				Sounds::Play("coin");
-		} else if(brick == 2) {
+		} else if(mpa && brick == 2) {
 				if(Mario::IsSuperMario() || Mario::IsInvincibleSuper()){
 						DestroyBrick( (MovingPathAnimator*) prevAnim);
 				} else
@@ -584,7 +594,7 @@ bool Items::BrickIsHit(Animator* g, const char* id, Dim x, Dim y) {
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	
-	if(mj > y && x > mi && x - mi <= 16/*i < COLLISION_DETECT*/ && ((mj - y) <= 17)){ //@todo the right operation is equality check
+	if(mj > y && x > mi && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
 		NotifyHit(g, id, x, y);
 		Sounds::Play("hit_brick");
 		return true;
