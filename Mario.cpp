@@ -391,6 +391,8 @@ void Mario::MarioFinishDeath(Animator*a, void*v) {
 		MarioBrosMain::SetGamePause();
 	wai = clock();
 	while( clock() != wai + 3000 );
+	if (Coins::lifes == 0)
+		exit(0);
 	MarioBrosMain::SetGamePlay();
 	
 	AnimatorHolder::MarkAsSuspended(a);
