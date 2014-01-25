@@ -378,30 +378,31 @@ void Mario::MarioFinishBackJump(Animator*, void*) {
 
 clock_t wai;
 void Mario::MarioFinishDeath(Animator*a, void*v) {
+	if(Coins::lifes < 3){
+		if(Coins::lifes == 2)
+			TerrainStartScreen::CreateLifeScreen2();
+		else if (Coins::lifes == 1)
+			TerrainStartScreen::CreateLifeScreen1();
+		else if (Coins::lifes == 0)
+			TerrainStartScreen::CreateGameOver();
 
-	if(Coins::lifes == 2)
-		TerrainStartScreen::CreateLifeScreen2();
-	else if (Coins::lifes == 1)
-		TerrainStartScreen::CreateLifeScreen1();
-	else if (Coins::lifes == 0)
-		TerrainStartScreen::CreateGameOver();
-
-	MarioBrosMain::DeathRender();
-	if(MarioBrosMain::GameIsPlay())
-		MarioBrosMain::SetGamePause();
-	wai = clock();
-	while( clock() != wai + 3000 );
-	if (Coins::lifes == 0)
-		exit(0);
-	MarioBrosMain::SetGamePlay();
+		MarioBrosMain::DeathRender();
+		if(MarioBrosMain::GameIsPlay())
+			MarioBrosMain::SetGamePause();
+		wai = clock();
+		while( clock() != wai + 3000 );
+		if (Coins::lifes == 0)
+			exit(0);
+		MarioBrosMain::SetGamePlay();
 	
-	AnimatorHolder::MarkAsSuspended(a);
-	if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[1]))
-		RestoreCheckpoint(checkpoints[0]);
-	else if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[1]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[2]))
-		RestoreCheckpoint(checkpoints[1]);
-	else if(Mario::GetMarioCurrentSprite()->GetX() > checkpoints[2])
-		RestoreCheckpoint(checkpoints[2]);
+		AnimatorHolder::MarkAsSuspended(a);
+		if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[1]))
+			RestoreCheckpoint(checkpoints[0]);
+		else if((Mario::GetMarioCurrentSprite()->GetX() > checkpoints[1]) && (Mario::GetMarioCurrentSprite()->GetX() < checkpoints[2]))
+			RestoreCheckpoint(checkpoints[1]);
+		else if(Mario::GetMarioCurrentSprite()->GetX() > checkpoints[2])
+			RestoreCheckpoint(checkpoints[2]);
+	}
 }
 
 void Mario::RestoreCheckpoint(Dim x) {
