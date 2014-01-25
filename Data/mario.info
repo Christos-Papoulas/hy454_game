@@ -1,4 +1,4 @@
-55
+57
 1
 mariowalking 3
 0 0 16 16
@@ -212,4 +212,11 @@ superflushbjump 2
 133 273 16 32
 999
 goumbabaddeath 1
-32 97 15 15
+97 32 15 15
+1951
+redkoopaleft 2
+133 96 14 32 
+133 112 14 32 
+223
+brickbreak 1
+0 280 8 8

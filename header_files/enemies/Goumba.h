@@ -28,7 +28,7 @@ class Goumbas {
 public:
 		static void Create();
 		static void Dead();
-		static void BadDeath();
+		static void BadDeath(Dim x, Dim y);
 
 		static void Finish(Animator *a, void *f);
 
@@ -39,6 +39,8 @@ public:
 		static void KillGoumbas();
 		
 		static void SetDelay(Dim _delay) { delay = _delay; }
+
+		static void CollicionWithKoopaInShells(Dim kx, Dim ky);
 };
 
 #endif

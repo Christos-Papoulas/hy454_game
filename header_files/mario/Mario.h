@@ -137,8 +137,11 @@ class Mario {
 		static void SetMarioAsInvincible();
 		static bool IsMarioSmall();
 		static bool IsInvincible();
+
 		static bool IsSuperMario();
-		static bool IsInvincibleSuperMario();
+
+		static bool IsInvincibleSuper() { return marioLevel == InvincibleSuper; }
+
 		static bool isUnderGround;
 		static void Hited();
 		static Dim checkpoints[3];
