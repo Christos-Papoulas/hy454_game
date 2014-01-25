@@ -3,13 +3,14 @@
 std::list<MovingAnimator*> Goumbas::goumbaSuspending;
 std::list<MovingAnimator*> Goumbas::running;
 std::list<MovingAnimator*> Goumbas::dead;
+Dim Goumbas::delay = 100;
 
 void Goumbas::Create() {
 		Sprite *goumbaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("goombawalking") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 1, 
-						-2, 0, 90, true, ParseMarioInfo::GetAnimationIdOf(7u)
+						-2, 0, Goumbas::delay, true, ParseMarioInfo::GetAnimationIdOf(7u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		

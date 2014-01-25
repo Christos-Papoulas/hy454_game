@@ -2,17 +2,36 @@
 
 using namespace std;
 
-ConfigItems* iniItem[1024];
+ConfigItems* iniItem[128];
 int i = 0;
 
 Configurator::Configurator(char *f) {
 		parseFile(f);
-		Dim moregoumbas = getOptionToInt(MORE_GOUBLAS);
-		PutGoumbasOnMap(moregoumbas);
+		char value[10];
+		Dim number = getOptionToInt(MORE_GOUBLAS);
+		PutGoumbasOnMap(161, number);
 		
+		number = getOptionToInt(MORE_KOOPAS);
+		PutKoopasOnMap(194, number);
+		
+		number = getOptionToInt(TIME_PLAY);
+		if(number) Time::setTime(number);
+		
+		strncpy(value, getOptionToChar(SPEED_KOOPA), 10);
+		if(!strncmp(value,"fast", 10))
+				GreenKoopa::SetDelay(60);
+
+		strncpy(value, getOptionToChar(SPEED_GOUMBA), 10);
+		if(!strncmp(value,"fast", 10))
+				Goumbas::SetDelay(60);
 }
 
-void Configurator::PutGoumbasOnMap(Dim n) {
+static bool CanPutEnemyAt(Dim x, Dim y) {
+		return Enemies::GetFromMap(x, y) == 0 && Items::GetFromBricks(x, y) == 0 
+								&& Terrain::GetTileLayer()->GetExactTile(x, y) ==282;
+}
+
+void Configurator::PutKoopasOnMap(Dim enemy, Dim n){
 		Dim x;
 		Dim y;
 		int tries = 0;
@@ -23,9 +42,34 @@ void Configurator::PutGoumbasOnMap(Dim n) {
 				while(1) {
 						x = rand() % MAX_HEIGHT;
 						y = 15 + (rand() % (MAX_WIDTH - 15));
-						if( Enemies::GetFromMap(x, y) == 0 && Items::GetFromBricks(x, y) == 0 
-								&& Terrain::GetTileLayer()->GetExactTile(x, y) ==282){
-								Enemies::SetOnMap(161, x, y);
+	
+						if( CanPutEnemyAt(x, y) && CanPutEnemyAt(x, y + 1)){
+								Enemies::SetOnMap(enemy, x, y);
+								Enemies::IncreaseEnemies();
+								break;
+						}
+						
+						if(++tries > 1000) 
+								break;
+				}
+				
+		}
+}
+
+void Configurator::PutGoumbasOnMap(Dim enemy, Dim n) {
+		Dim x;
+		Dim y;
+		int tries = 0;
+		srand((unsigned)time(0)); 
+
+		for(int i = 0; i < n; ++i){
+				tries = 0;
+				while(1) {
+						x = rand() % MAX_HEIGHT;
+						y = 15 + (rand() % (MAX_WIDTH - 15));
+	
+						if( CanPutEnemyAt(x, y) ){
+								Enemies::SetOnMap(enemy, x, y);
 								Enemies::IncreaseEnemies();
 								break;
 						}

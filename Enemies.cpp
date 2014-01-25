@@ -22,7 +22,6 @@ void Enemies::ReadMap() {
 
 void Enemies::Create() { 
 		ReadMap();
-		Goumbas::Create();
 }
 
 void Enemies::MakeShortMap() {
@@ -64,7 +63,8 @@ bool Enemies::IsEnemyActive(Dim x, Dim y) {
 bool Enemies::CanGoLeft(Dim x, Dim y) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
-		
+		if(x + i == 0) 
+				return true;
 		if(Collision::GetValue(x + i - 1, y + j) != 0)
 				return false;
 		return true;
@@ -91,8 +91,9 @@ bool Enemies::IsOnBrick(Dim x, Dim y) {
 bool Enemies::IsOnAir(Dim x, Dim y, Dim width) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
-		
-		if(Collision::GetValue(x + i, y + j + 1 + (width>>4)) == 0)
+		Dim shift = (width>>4);
+		Dim value = Collision::GetValue(x + i, y + j + 1 + shift);
+		if(value == 0)
 				return true;
 		return false;
 }

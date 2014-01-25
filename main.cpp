@@ -238,7 +238,7 @@ void MarioBrosMain::CommitDestructions(){
 		Goumbas::SuspendGoumbas();
 		Items::SuspendBricks();
 		Items::CommitDestructions();
-
+		GreenKoopa::CommitDestructions();
 		return ;
 }
 
@@ -268,7 +268,7 @@ void MarioBrosMain::InitializeGame() {
 		AnimationFilmHolder::Create(MARIO_SPRITES_BMP);
 		
 		SpritesHolder* sh = new SpritesHolder();
-		Enemies::Create();
+		
 		gameState = Start;
 
 		Items::Init();
@@ -278,6 +278,7 @@ void MarioBrosMain::InitializeGame() {
 		NumbersHolder::InitWorld();
 		NumbersHolder::InitEpi();
 		NumbersHolder::InitCoin();
+		Enemies::Create();
 		new Configurator("mario.conf");
 		Enemies::MakeShortMap();		
 		redraw = true;

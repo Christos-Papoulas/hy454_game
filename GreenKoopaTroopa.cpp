@@ -4,13 +4,14 @@ std::list<MovingAnimator*> GreenKoopa::suspending;
 std::list<MovingAnimator*> GreenKoopa::running;
 std::list<MovingAnimator*> GreenKoopa::suspendingdead;
 std::list<MovingAnimator*> GreenKoopa::runningdead;
+Dim GreenKoopa::delay = 100;
 
 void GreenKoopa::Create() {
 		Sprite *greenKoopaSprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("greenkoopaleft") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
 						0, 1, 
-						-2, 0, 100, true, ParseMarioInfo::GetAnimationIdOf(9u)
+						-2, 0, delay, true, ParseMarioInfo::GetAnimationIdOf(9u)
 						);
 		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
 		
@@ -107,21 +108,15 @@ void GreenKoopa::Dead() {
 }
 
 void GreenKoopa::MoveGreenKoopas() {
+		CommitDestructions(); // to destroy the lost koopas
 		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 				MovingAnimator* g = *it;
-				Dim currPos = g->GetSprite()->GetX();
+				Dim currPosX = g->GetSprite()->GetX();
+				Dim currPosY = g->GetSprite()->GetY();
 
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 				
-				if(currPos < 2 || TileX > MAX_WIDTH) {
-						suspending.push_back(*it);
-						AnimatorHolder::MarkAsSuspended(*it);
-						running.erase(it);
-						
-						return ;
-				}
-
 				if(Enemies::IsMarioAbove(TileX, TileY + 1)){
 						MovingAnimator* d; Dim x, y;
 						if(suspendingdead.size() == 0) 
@@ -170,8 +165,8 @@ void GreenKoopa::MoveGreenKoopas() {
 						g->GetMovingAnimation()->SetDx(0);
 				Rect r = g->GetSprite()->GetCurrFilm()->GetFrameBox(g->GetSprite()->GetFrame());
 				Dim f = r.GetHeight();
-				if( Enemies::IsOnAir(TileX, TileY, f) ) 
-						g->GetMovingAnimation()->SetDy(1);
+				if( Enemies::IsOnAir(TileX, TileY, f-1) && !Enemies::IsOnBrick(currPosX, currPosY))  
+						g->GetMovingAnimation()->SetDy(3);
 				else
 						g->GetMovingAnimation()->SetDy(0);
 		}
@@ -182,4 +177,22 @@ void GreenKoopa::ViewWindowMove() {
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 		for (std::list<MovingAnimator*>::iterator it=runningdead.begin(); it != runningdead.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
+}
+
+void GreenKoopa::CommitDestructions() {
+		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end();) {
+				Dim currPosX = (*it)->GetSprite()->GetX();
+				Dim currPosY = (*it)->GetSprite()->GetY();
+
+				Dim TileX = (*it)->GetSprite()->GetTileX();
+				Dim TileY = (*it)->GetSprite()->GetTileY();
+
+				if(currPosX < 2 || currPosX > 16*16 || TileX > MAX_WIDTH || TileY > MAX_HEIGHT) {
+						std::list<MovingAnimator*>::iterator prev = it++;
+						suspending.push_back(*prev);
+						AnimatorHolder::MarkAsSuspended(*prev);
+						running.erase(prev);
+				} else
+						++it;
+		}
 }

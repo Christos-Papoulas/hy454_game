@@ -21,14 +21,16 @@ class GreenKoopa {
 		static std::list<MovingAnimator*> runningdead;
 		static void Dead();
 		static void MoveKoopasInShells();
+		static Dim delay;
 public:
 		static void Create();
 		static void ArtificialIntelligence();
 		static void CreateGreenKoopaIfAny();
 		static void MoveGreenKoopas();
 		static void ViewWindowMove();
-
+		static void CommitDestructions();
 		static void ComeOutFromShell(Animator* a, void* v);
+		static void SetDelay(Dim _delay) { delay = _delay; }
 };
 
 #endif

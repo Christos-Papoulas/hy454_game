@@ -689,7 +689,7 @@ bool Items::IsEnemyOnBrick(const char* id, Dim x, Dim y){
 				Dim gy = g->GetSprite()->GetY();
 
 				Dim i = (x > gx) ? x - gx : gx - x;
-				if(y < gy && y - gy < 16 && i < 16)
+				if(y < gy && gy - y < 16 && i < 16)
 						return true;
 		}
 		return false;

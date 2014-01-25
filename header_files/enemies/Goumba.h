@@ -24,6 +24,7 @@ class Goumbas {
 		static void GoumbasKillMario();
 		static void CreateGoumbaifAny();
 		static void MoveGoumbas();
+		static Dim delay;
 public:
 		static void Create();
 		static void Dead();
@@ -36,6 +37,7 @@ public:
 		static void SuspendGoumbas();
 		static void KillGoumbas();
 		
+		static void SetDelay(Dim _delay) { delay = _delay; }
 };
 
 #endif
