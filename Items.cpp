@@ -506,7 +506,7 @@ void Items::CreateAQuestionAnimation() {
 		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("questionbrick") ));
 		
 		std::vector<PathEntry> paths;
-		for(Dim i = 0u; i < 1u; ++i) { // @todo make the code better!		
+		for(Dim i = 0u; i < 3u; ++i) { // @todo make the code better!		
 				PathEntry pathEntry(0, 0, i%3, 1000);
 				paths.push_back( pathEntry );
 		}
@@ -615,8 +615,8 @@ bool Items::BrickIsHit(Animator* g, const char* id, Dim x, Dim y) {
 	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
-	
-	if(mj > y && x > mi && i < COLLISION_DETECT && ((mj - y) <= 17)){ //@todo the right operation is equality check
+	Dim j = (y > mj) ? y - mj : mj - y;
+	if(mj > y && i < COLLISION_DETECT && (j <= 17)){ //@todo the right operation is equality check
 		NotifyHit(g, id, x, y);
 		Sounds::Play("hit_brick");
 		return true;
