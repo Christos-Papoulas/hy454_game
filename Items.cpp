@@ -706,9 +706,6 @@ void Items::IsByTube(const char* id) {
 							((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
 							break;
 						}
-						else {
-							((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(-3);
-						}
 					}
 				}
 		}
@@ -735,7 +732,7 @@ bool Items::IsMarioRight(Dim x, Dim y) {
 	Dim mj = m->GetY();
 	if(Mario::IsSuperMario()){
 		mj += 16;
-		mi -= 30;
+		mi -= 8;
 	}
 	Dim i = (x > mi) ? x - mi : mi - x;
 	if((mi > x && mi - x < 16) && ( i < 16 ) && mj >= y){ 

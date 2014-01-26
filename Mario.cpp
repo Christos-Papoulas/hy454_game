@@ -219,7 +219,7 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	
+	MarioBWalk->GetMovingAnimation()->SetDx(-3);
 	ChangeState(backwalk);
 }
 
@@ -234,7 +234,7 @@ void Mario::MarioMovesRight() {
 	AnimatorHolder::MarkAsSuspended(MarioBWalk);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
-		
+	
 	ChangeState(Walking);
 }
 

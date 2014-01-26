@@ -92,9 +92,10 @@ bool MarioBrosMain::InitAllegro(){
 void MarioBrosMain::MainLoopOneIteration() {
 	InputManagement(); //just reads from local input queue
 	if(gameState == Play){
+		ArtificialIntelligence(); // to stop mario at pipes
 		AnimationProgress();
 		CollisionChecking();
-		ArtificialIntelligence();
+		
 		Mario::MoveViewWin();
 
 		NumbersHolder::PrintNumberCoins(Coins::coins);
