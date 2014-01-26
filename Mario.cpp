@@ -570,12 +570,12 @@ bool Mario::CanGoLeft(Dim x, Dim y) {
 }
 
 bool Mario::CanGoRight(Dim x, Dim y) {
-		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
-		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();;
+	Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		
-		if(Collision::GetValue(x + i + 1, y + j) != 0)
-				return false;
-		return true;
+	x += (GetMarioCurrentSprite()->GetFrameBox().GetHeight() >> 4) - 1 ;
+	if(Collision::GetValue(x + i + 1, y) != 0)
+			return false;
+	return true;
 }
 
 bool Mario::IsOnPipe(Dim x, Dim y) {
