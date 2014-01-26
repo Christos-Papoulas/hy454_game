@@ -687,6 +687,7 @@ void Items::IsByTube(const char* id) {
 				Animator* marioAnimator = Mario::GetAnimator();
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
+				Dim mi = Mario::GetMarioCurrentSprite()->GetX();
 				if(Mario::GetState() == Walking){
 					if(Items::IsMarioLeft(x, y)){
 						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
@@ -698,12 +699,14 @@ void Items::IsByTube(const char* id) {
 					
 				}
 				else if(Mario::GetState() == backwalk){
-					if(Items::IsMarioRight(x, y)){
-						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
-						break;
-					}
-					else {
-						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(-3);
+					if(mi > x){
+						if(Items::IsMarioRight(x, y)){
+							((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
+							break;
+						}
+						else {
+							((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(-3);
+						}
 					}
 				}
 		}
@@ -745,8 +748,8 @@ void Items::BrickCollision() {
 		 !IsOnBrick("rightuppipe") && !IsOnBrick("solidbrick")
 		)
 			Mario::SetOnBrick(false);
-	IsByTube("leftpipe");
-	IsByTube("rightpipe");
+		IsByTube("leftpipe");
+		IsByTube("rightpipe");
 	IsByTube("solidbrick");
 
 	CollisionMarioWithMushroom();
