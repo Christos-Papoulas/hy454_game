@@ -505,12 +505,14 @@ void Items::FinishItemAnimation(Animator* a, void* l) {
 void Items::CreateAQuestionAnimation() {
 		Sprite *sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("questionbrick") ));
 		
-		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
-						0, 2, 
-						0, 0, 200, true, ParseMarioInfo::GetAnimationIdOf(13u)
-						);
-		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
-		
+		std::vector<PathEntry> paths;
+		for(Dim i = 0u; i < 1u; ++i) { // @todo make the code better!		
+				PathEntry pathEntry(0, 0, i%3, 1000);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariojumping")));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
+				
 		suspending["questionbrick"].push_back( (Animator*) aMovAnimr );
 		aMovAnimn->SetContinuous(false);
 		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
