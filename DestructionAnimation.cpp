@@ -6,7 +6,7 @@ Destruction::Destruction(Dim x, Dim y) {
 		s3 = new Sprite(x+16, y, AnimationFilmHolder::GetFilm( std::string(BRICK_NAME) ));
 		s4 = new Sprite(x+16, y+16, AnimationFilmHolder::GetFilm( std::string(BRICK_NAME) ));
 
-		delay_t delay = 100;
+		delay_t delay = 70;
 		//p1
 		Dim start1 = 12, start2 = 0;
 		Dim xp = 5;
@@ -101,4 +101,11 @@ void Destruction::Display(Bitmap at) {
 		s2->Display(at);
 		s3->Display(at);
 		s4->Display(at);
+}
+
+void Destruction::Reset(Dim x, Dim y) {
+		s1->SetX(x-8);	s2->SetX(x-8);
+		s3->SetX(x+16); s4->SetX(x+16);
+		s1->SetY(y);		s2->SetY(y+16);
+		s3->SetY(y);		s4->SetY(y+16);
 }

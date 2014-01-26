@@ -679,9 +679,12 @@ void Mario::Run() {
 		 Coins::RemoveLife();
 		 MarioDeading();
 	 } else if(IsSuperMario()) {
+			 Dim x = Mario::GetMarioCurrentSprite()->GetX();
+			 Dim y = Mario::GetMarioCurrentSprite()->GetY();
 			 marioLevel = MarioSmall;
 			 Animator* prev = GetAnimator();
 			 Initializer::InitMario();
 			 ChangeLevel(prev);
+			 Mario::SetDimensions(x, y);
 	 }
  }

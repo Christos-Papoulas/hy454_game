@@ -29,13 +29,7 @@ class Destruction : public Animator {
 				void Display(Bitmap at);
 				void SetCurrIndex(Dim _c) { currIndex = _c; }
 				static void FinishDestroy(Animator* a, void* v);
-				void Reset(Dim x, Dim y) {
-						s1->SetX(x-8);s2->SetX(x-8);
-						s3->SetX(x+16);s4->SetX(x+16);
-						s1->SetY(y);s2->SetY(y+16);
-						s3->SetY(y);s4->SetY(y+16);
-				}
-
+				void Reset(Dim x, Dim y);
 };
 
 #endif
