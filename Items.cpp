@@ -147,11 +147,13 @@ void Items::CreateBricks() {
 										suspending["solidbrick"].pop_back();		
 								}
 								if(!g) return ;
+
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
 								SetBrickAsActive(y,x);
+
 								if(brick[y][x] == 2)
 										running["bricks"].push_back((Animator*) g);
 								else if(brick[y][x] == 25)
@@ -657,10 +659,10 @@ bool Items::IsOnBrick(const char* id) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
-				if(Mario::GetState() == Jumping){
-					if(Items::BrickIsHit((Animator*)g, id, x, y) && !Items::IsMarioAboveBrick(x,y))
+				if(Mario::GetState() == Jumping ){
+					if(Items::BrickIsHit(g, id, x, y))
 						Mario::MarioFinishSjumping(NULL,NULL);
-						return active;
+					return active;
 				}
 
 				if(IsMarioAboveBrickPrivate(x, y) && 
