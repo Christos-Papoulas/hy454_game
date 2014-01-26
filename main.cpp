@@ -191,6 +191,9 @@ void MarioBrosMain::InputManagement(){
 					}
 				}
 				al_flush_event_queue(queue);
+
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_C))
+					Mario::SuperMario();
 		}
 }
 
