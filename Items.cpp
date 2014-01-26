@@ -745,6 +745,15 @@ void Items::BrickCollision() {
 	CollisionMarioWithStar();
 }
 
+bool Items::IsMarioOnBrick(){
+		if( IsOnBrick("bricks") || IsOnBrick("questionbrick") || 
+		IsOnBrick("leftuppipe") || IsOnBrick("questionfinish") ||
+		  IsOnBrick("rightuppipe") || IsOnBrick("solidbrick")
+		)
+				return true;
+		return false;
+}
+
 bool Items::IsEnemyOnBrick(const char* id, Dim x, Dim y){
 		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
 				MovingAnimator *g = (MovingAnimator *) (*it);
@@ -854,4 +863,27 @@ void Destruction::FinishDestroy(Animator* a, void* v) {
 				else
 						 ++it;
 		}
+}
+
+void Items::ReactivateItems(Dim x) {
+		Dim en = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(map[i][j]) {
+								shortMap[en][X_INDEX] = i;
+								shortMap[en][Y_INDEX] = j;
+								shortMap[en++][ISACTIVE] = 0;
+						}
+		en = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(brick[i][j] != 0) {
+								shortBricks[en][X_INDEX] = i;
+								shortBricks[en][Y_INDEX] = j;
+								shortBricks[en++][ISACTIVE] = 0;
+						}
+		KillPipes();
+		KillSprites("bricks");
+		KillSprites("questionbrick");
+		KillSprites("solidbrick");
 }

@@ -144,3 +144,16 @@ bool Enemies::IsMarioAbove(Dim x, Dim y) { //x, y, is tiles
 				return true;
 		return false;
 }
+
+void Enemies::Reactivate(Dim x) {
+		Dim en = 0;
+		for(Dim i = 0; i < MAX_HEIGHT; ++i)
+				for(Dim j = 0; j < MAX_WIDTH; ++j)
+						if(map[i][j]) {
+								shortMap[en][X_INDEX] = i;
+								shortMap[en][Y_INDEX] = j;
+								shortMap[en++][ISACTIVE] = 0;
+						}
+
+		// @todo deactivate active enemies
+}

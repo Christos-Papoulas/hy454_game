@@ -115,6 +115,9 @@ public:
 
 		static void DestroyBrick(MovingPathAnimator* prevAnim);
 		static void FinishDestroy(Animator* a, void* v);
+
+		static void ReactivateItems(Dim x);
+		static bool IsMarioOnBrick();
 };
 
 #endif

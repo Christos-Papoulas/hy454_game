@@ -272,7 +272,8 @@ void Mario::MarioWalkingJump() {
 		if(marioState == WalkAndJump  || isDead()){
 				return ;
 		}
-
+		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
+				return ;
 		SetDimensions(MarioWJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -401,12 +402,12 @@ void Mario::MarioFinishDeath(Animator*a, void*v) {
 	MarioBrosMain::SetGamePlay();
 	
 	AnimatorHolder::MarkAsSuspended(a);
-	if((Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[0]) && (Mario::GetMarioCurrentSprite()->GetTileX() < checkpoints[1]))
-		RestoreCheckpoint(checkpoints[0]);
-	else if((Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[1]) && (Mario::GetMarioCurrentSprite()->GetTileX() < checkpoints[2]))
+	if( Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[2] )
+			RestoreCheckpoint(checkpoints[2]);
+	if( Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[1] )
 		RestoreCheckpoint(checkpoints[1]);
-	else if(Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[2])
-		RestoreCheckpoint(checkpoints[2]);
+	else 
+		RestoreCheckpoint(checkpoints[0]);
 }
 
 void Mario::RestoreCheckpoint(Dim x) {
@@ -421,6 +422,8 @@ void Mario::RestoreCheckpoint(Dim x) {
 	activeMario->SetY(129);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Terrain::GetTileLayer()->SetViewWindow(viewWin);
+	Items::ReactivateItems(x);
+	Enemies::Reactivate(x);
 }
 
 Animator* Mario::GetAnimator() {

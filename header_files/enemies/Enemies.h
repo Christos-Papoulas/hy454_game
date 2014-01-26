@@ -57,6 +57,8 @@ class Enemies {
 				static bool IsMarioRight(Dim x, Dim y);
 
 				static void IncreaseEnemies(){ countEnemies++; }
+
+				static void Reactivate(Dim x);
 };
 
 #endif

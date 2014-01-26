@@ -291,7 +291,6 @@ void MarioBrosMain::InitializeGame() {
 		new Configurator("mario.conf");
 		Enemies::MakeShortMap();		
 		redraw = true;
-		Mario::SuperMario();
 }
 
 void ManageGameLoop() {
