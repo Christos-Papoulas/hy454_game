@@ -666,14 +666,20 @@ bool Items::IsOnBrick(const char* id) {
 				}
 
 				if(IsMarioAboveBrickPrivate(x, y) && 
-						Mario::isWalkingJump() && 
+						(Mario::isWalkingJump() || Mario::isBackJumping()) && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
-							Mario::MarioFinishWjumping(NULL,NULL);
+							if(Mario::isWalkingJump())
+									Mario::MarioFinishWjumping(NULL,NULL);
+							else
+								Mario::MarioFinishBackJump(0, 0);
 				}
 				if(Items::BrickIsHit(g, id, x, y) && 
-						Mario::isWalkingJump() && 
+						(Mario::isWalkingJump() || Mario::isBackJumping()) && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
-							Mario::MarioFinishWjumping(NULL,NULL);
+							if(Mario::isWalkingJump())
+									Mario::MarioFinishWjumping(NULL,NULL);
+							else
+								Mario::MarioFinishBackJump(0, 0);
 							return active;
 				}
 				if(Items::IsMarioAboveBrick(x,y)) {

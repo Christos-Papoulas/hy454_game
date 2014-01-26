@@ -93,8 +93,9 @@ void MarioBrosMain::MainLoopOneIteration() {
 	InputManagement(); //just reads from local input queue
 	if(gameState == Play){
 		ArtificialIntelligence(); // to stop mario at pipes
+		CollisionChecking(); // to stop mario at tiles
 		AnimationProgress();
-		CollisionChecking();
+		
 		
 		Mario::MoveViewWin();
 

@@ -63,9 +63,6 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 				if (!Mario::CanGoLeft(y_tile, x_tile)){
 					((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
 				}
-				else{
-					((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(-3);
-				}
 				break;
 		case WalkAndJump:
 				if (!Mario::CanGoRight(y_tile, x_tile)){
