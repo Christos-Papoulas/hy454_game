@@ -47,12 +47,12 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 				break;
 		case Walking:
 				CheckGravity(x_tile, y_tile);
-				if (!Mario::CanGoRight(y_tile, x_tile)){
+				/*if (!Mario::CanGoRight(y_tile, x_tile)){
 					((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
 				}
 				else{
 					((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(4);
-				}
+				}*/
 				break;
 		case backwalk:
 				CheckGravity(x_tile, y_tile);

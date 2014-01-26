@@ -713,6 +713,10 @@ bool Items::IsMarioLeft(Dim x, Dim y) {
 	Sprite* m = Mario::GetMarioCurrentSprite();
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
+	if(Mario::IsSuperMario()){
+		mj += 16;
+		mi +=5;
+	}
 	Dim i = (x > mi) ? x - mi : mi - x;
 	if((mi < x && x - mi < 16) && ( i < 16 ) && mj >= y){ 
 		return true;
