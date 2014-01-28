@@ -130,7 +130,7 @@ bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
 
 		if(Mario::IsSuperMario()){
 				Dim j = (y + 16 > mj) ? y - 16 - mj : mj - 16 - y;
-				if(i < COLLISION_DETECT  + 2 & j < COLLISION_DETECT)
+				if(i < (COLLISION_DETECT  + 2) & j < COLLISION_DETECT)
 						return true;
 		}
 		return false;
@@ -146,14 +146,15 @@ bool Enemies::IsMarioAbove(Dim x, Dim y) { //x, y, is tiles
 }
 
 void Enemies::Reactivate(Dim x) {
-		Dim en = 0;
-		for(Dim i = 0; i < MAX_HEIGHT; ++i)
-				for(Dim j = 0; j < MAX_WIDTH; ++j)
-						if(map[i][j]) {
-								shortMap[en][X_INDEX] = i;
-								shortMap[en][Y_INDEX] = j;
-								shortMap[en++][ISACTIVE] = 0;
-						}
-
-		// @todo deactivate active enemies
+	Dim en = 0;
+	for(Dim i = 0; i < MAX_HEIGHT; ++i)
+		for(Dim j = 0; j < MAX_WIDTH; ++j)
+			if(map[i][j]) {
+					shortMap[en][X_INDEX] = i;
+					shortMap[en][Y_INDEX] = j;
+					shortMap[en++][ISACTIVE] = 0;
+			}
+	Goumbas::KillGoumbas();
+	GreenKoopa::DeactivateAllKoopas();
+	Piranhas::Deactivate();
 }

@@ -253,6 +253,7 @@ void MarioBrosMain::CommitDestructions(){
 		Items::SuspendBricks();
 		Items::CommitDestructions();
 		GreenKoopa::CommitDestructions();
+		Piranhas::CommitDestructions();
 		return ;
 }
 

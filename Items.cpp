@@ -722,10 +722,6 @@ void Items::IsByTube(const char* id) {
 		}
 }
 
-void Items::IsByBrick(const char* id) {
-		//@todo to deletes
-}
-
 bool Items::IsMarioLeft(Dim x, Dim y) {
 	Sprite* m = Mario::GetMarioCurrentSprite();
 	Dim mi = m->GetX();
@@ -762,10 +758,10 @@ void Items::BrickCollision() {
 		 !IsOnBrick("rightuppipe") && !IsOnBrick("solidbrick")
 		)
 			Mario::SetOnBrick(false);
-		IsByTube("leftpipe");
-		IsByTube("rightpipe");
-		IsByTube("solidbrick");
-		IsByBrick("bricks");
+
+  IsByTube("leftpipe");
+  IsByTube("rightpipe");
+  IsByTube("solidbrick");
 
 	CollisionMarioWithMushroom();
 	CollisionMarioWithStar();
@@ -781,17 +777,16 @@ bool Items::IsMarioOnBrick(){
 }
 
 bool Items::IsEnemyOnBrick(const char* id, Dim x, Dim y){
-		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
-				MovingAnimator *g = (MovingAnimator *) (*it);
-				Dim gx = g->GetSprite()->GetX();
-				Dim gy = g->GetSprite()->GetY();
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+			MovingAnimator *g = (MovingAnimator *) (*it);
+			Dim gx = g->GetSprite()->GetX();
+			Dim gy = g->GetSprite()->GetY();
 
-				Dim i = (x > gx) ? x - gx : gx - x;
-				if(y < gy && gy - y < 16 && i < 16)
-						return true;
-		}
-		return false;
-		
+			Dim i = (x > gx) ? x - gx : gx - x;
+			if(y < gy && gy - y < 16 && i < 16)
+					return true;
+	}
+	return false;
 }
 
 void Items::CollisionMarioWithMushroom() {

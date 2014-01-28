@@ -33,8 +33,10 @@ public:
 		static void ArtificialIntelligence();
 		static void CreateIfAny();
 		static void ViewWindowMove();
-		static void Suspend();
-		static void Kill();
+
+		static void Deactivate();
+
+		static void CommitDestructions();
 		
 };
 

@@ -22,6 +22,8 @@ class GreenKoopa {
 		static void Dead();
 		static void MoveKoopasInShells();
 		static Dim delay;
+
+		static void KoopasKillMario();
 public:
 		static void Create(const char* id);
 		static void ArtificialIntelligence();
@@ -31,6 +33,7 @@ public:
 		static void CommitDestructions();
 		static void ComeOutFromShell(Animator* a, void* v);
 		static void SetDelay(Dim _delay) { delay = _delay; }
+		static void DeactivateAllKoopas();
 };
 
 #endif

@@ -26,6 +26,7 @@ void GreenKoopa::ArtificialIntelligence() {
 		CreateGreenKoopaIfAny();
 		MoveKoopasInShells();
 		MoveGreenKoopas();
+		//KoopasKillMario();
 }
 
 void GreenKoopa::CreateGreenKoopaIfAny() {
@@ -177,6 +178,7 @@ void GreenKoopa::MoveGreenKoopas() {
 						Mario::ChangeState(Jumping);
 						MovingPathAnimator* g = Mario::GetStandJump();
 						g->SetCurrIndex(0);
+						g->SetLastTime(currTime);
 						AnimatorHolder::MarkAsRunning(g);
 
 						return ;
@@ -209,34 +211,60 @@ void GreenKoopa::ViewWindowMove() {
 }
 
 void GreenKoopa::CommitDestructions() {
-		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end();) {
-				Dim currPosX = (*it)->GetSprite()->GetX();
-				Dim currPosY = (*it)->GetSprite()->GetY();
+	Dim currPosX, currPosY, TileX, TileY;
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end();) {
+			currPosX = (*it)->GetSprite()->GetX();
+			currPosY = (*it)->GetSprite()->GetY();
 
-				Dim TileX = (*it)->GetSprite()->GetTileX();
-				Dim TileY = (*it)->GetSprite()->GetTileY();
+			TileX = (*it)->GetSprite()->GetTileX();
+			TileY = (*it)->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || currPosX > 16*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
-						std::list<MovingAnimator*>::iterator prev = it++;
-						suspending.push_back(*prev);
-						AnimatorHolder::MarkAsSuspended(*prev);
-						running.erase(prev);
-				} else
-						++it;
+			if(currPosX < 2 || currPosX > 16*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
+					std::list<MovingAnimator*>::iterator prev = it++;
+					suspending.push_back(*prev);
+					AnimatorHolder::MarkAsSuspended(*prev);
+					running.erase(prev);
+			} else
+					++it;
+	}
+	for (std::list<MovingAnimator*>::iterator it=walkingdead.begin(); it != walkingdead.end();) {
+			currPosX = (*it)->GetSprite()->GetX();
+			currPosY = (*it)->GetSprite()->GetY();
+
+			TileX = (*it)->GetSprite()->GetTileX();
+			TileY = (*it)->GetSprite()->GetTileY();
+
+			if(currPosX < 2 || currPosX > 15*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
+					std::list<MovingAnimator*>::iterator prev = it++;
+					suspendingdead.push_back(*prev);
+					AnimatorHolder::MarkAsSuspended(*prev);
+					walkingdead.erase(prev);
+			} else
+					++it;
+	}
+}
+
+void GreenKoopa::KoopasKillMario() {
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+				MovingAnimator* g = *it;
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+
+				if(Enemies::IsMarioLeftOrRight(x, y))
+						 Mario::Hited();
 		}
-		for (std::list<MovingAnimator*>::iterator it=walkingdead.begin(); it != walkingdead.end();) {
-				Dim currPosX = (*it)->GetSprite()->GetX();
-				Dim currPosY = (*it)->GetSprite()->GetY();
+}
 
-				Dim TileX = (*it)->GetSprite()->GetTileX();
-				Dim TileY = (*it)->GetSprite()->GetTileY();
+void GreenKoopa::DeactivateAllKoopas() {
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+		suspending.push_back(*it);
+		AnimatorHolder::MarkAsSuspended(*it);
+	}	
+	running.clear();
 
-				if(currPosX < 2 || currPosX > 15*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
-						std::list<MovingAnimator*>::iterator prev = it++;
-						suspendingdead.push_back(*prev);
-						AnimatorHolder::MarkAsSuspended(*prev);
-						walkingdead.erase(prev);
-				} else
-						++it;
-		}
+	for (std::list<MovingAnimator*>::iterator it=walkingdead.begin(); it != walkingdead.end(); ++it) {
+		suspendingdead.push_back(*it);
+		AnimatorHolder::MarkAsSuspended(*it);
+	}	
+	walkingdead.clear();
 }

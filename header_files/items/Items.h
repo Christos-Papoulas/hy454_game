@@ -118,7 +118,6 @@ public:
 
 		static void ReactivateItems(Dim x);
 		static bool IsMarioOnBrick();
-		static void IsByBrick(const char* id);
 };
 
 #endif

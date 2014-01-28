@@ -219,7 +219,9 @@ void Mario::MarioMovesLeft() {
 	AnimatorHolder::MarkAsSuspended(MarioAnimator);
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioBWalk);
-	MarioBWalk->GetMovingAnimation()->SetDx(-3);
+	if(MarioBWalk->GetSprite()->GetX() > 4)
+		MarioBWalk->GetMovingAnimation()->SetDx(-3);
+
 	ChangeState(backwalk);
 }
 
@@ -410,6 +412,9 @@ void Mario::MarioFinishDeath(Animator*a, void*v) {
 		RestoreCheckpoint(checkpoints[1]);
 	else 
 		RestoreCheckpoint(checkpoints[0]);
+
+	Items::ReactivateItems(0);
+	Enemies::Reactivate(0);
 }
 
 void Mario::RestoreCheckpoint(Dim x) {
@@ -424,8 +429,6 @@ void Mario::RestoreCheckpoint(Dim x) {
 	activeMario->SetY(129);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Terrain::GetTileLayer()->SetViewWindow(viewWin);
-	Items::ReactivateItems(x);
-	Enemies::Reactivate(x);
 }
 
 Animator* Mario::GetAnimator() {
@@ -680,7 +683,7 @@ void Mario::Run() {
  }
 
  void Mario::Hited() {
-	 if(IsMarioSmall()){
+	 if(IsMarioSmall() && !isDead()){
 		 Coins::RemoveLife();
 		 MarioDeading();
 	 } else if(IsSuperMario()) {

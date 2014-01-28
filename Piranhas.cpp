@@ -56,3 +56,31 @@ void Piranhas::ViewWindowMove() {
 		for (std::list<HiddenAnimator*>::iterator it=running.begin(); it != running.end(); ++it)
 				(*it)->GetSprite()->SetX((*it)->GetSprite()->GetX() - 1);
 }
+
+void Piranhas::CommitDestructions() {
+	/*Dim currPosX, currPosY, TileX, TileY;
+	for (std::list<HiddenAnimator*>::iterator it=running.begin(); it != running.end();) {
+			currPosX = (*it)->GetSprite()->GetX();
+			currPosY = (*it)->GetSprite()->GetY();
+
+			TileX = (*it)->GetSprite()->GetTileX();
+			TileY = (*it)->GetSprite()->GetTileY();
+
+			if(currPosX < 2 || currPosX > 16*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
+					std::list<HiddenAnimator*>::iterator prev = it++;
+					suspending.push_back(*prev);
+					AnimatorHolder::MarkAsSuspended(*prev);
+					AnimatorHolder::Cancel(*prev);
+					running.erase(prev);
+			} else
+					++it;
+	}*/
+}
+
+void Piranhas::Deactivate() {
+	for (std::list<HiddenAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+		suspending.push_back(*it);
+		AnimatorHolder::MarkAsSuspended((Animator*) *it);
+	}	
+	running.clear();
+}
