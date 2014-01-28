@@ -344,21 +344,24 @@ void Items::SetBrickAsActive(Dim x, Dim y) {
 }
 
 void Items::SuspendBricks(const char* id) {
-		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
-				MovingAnimator* g = ( MovingAnimator* )*it;
-				Dim currPosX = g->GetSprite()->GetX();
-				Dim currPosY = g->GetSprite()->GetY();
+		MovingAnimator* g;
+		Dim currPosX, currPosY, TileX, TileY;
+		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end();) {
+				g = ( MovingAnimator* )*it;
+				currPosX = g->GetSprite()->GetX();
+				currPosY = g->GetSprite()->GetY();
 
-				Dim TileX = g->GetSprite()->GetTileX();
-				Dim TileY = g->GetSprite()->GetTileY();
+				TileX = g->GetSprite()->GetTileX();
+				TileY = g->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || currPosX > SCREEN_WINDOW_WIDTH|| TileX > MAX_WIDTH || TileY > MAX_HEIGHT) {
-						suspending[id].push_back(*it);
-						AnimatorHolder::MarkAsSuspended(*it);
-						running[id].erase(it);
-						return ;
-				}
-		}		
+				if(currPosX < 2 || currPosX > 16*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
+						std::list<Animator*>::iterator prev = it++;
+						suspending[id].push_back(*prev);
+						AnimatorHolder::MarkAsSuspended(*prev);
+						running[id].erase(prev);
+				} else
+						++it;
+		}
 }
 
 void Items::KillSprites(const char* id) {
@@ -618,7 +621,7 @@ bool Items::BrickIsHit(Animator* g, const char* id, Dim x, Dim y) {
 	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	Dim j = (y > mj) ? y - mj : mj - y;
-	if(mj > y && i < COLLISION_DETECT && (j <= 17)){ //@todo the right operation is equality check
+	if(mj > y && i < (COLLISION_DETECT + 3 )&& (j <= 17)){ //@todo the right operation is equality check
 		NotifyHit(g, id, x, y);
 		Sounds::Play("hit_brick");
 		return true;
@@ -719,6 +722,10 @@ void Items::IsByTube(const char* id) {
 		}
 }
 
+void Items::IsByBrick(const char* id) {
+		//@todo to deletes
+}
+
 bool Items::IsMarioLeft(Dim x, Dim y) {
 	Sprite* m = Mario::GetMarioCurrentSprite();
 	Dim mi = m->GetX();
@@ -757,7 +764,8 @@ void Items::BrickCollision() {
 			Mario::SetOnBrick(false);
 		IsByTube("leftpipe");
 		IsByTube("rightpipe");
-	IsByTube("solidbrick");
+		IsByTube("solidbrick");
+		IsByBrick("bricks");
 
 	CollisionMarioWithMushroom();
 	CollisionMarioWithStar();

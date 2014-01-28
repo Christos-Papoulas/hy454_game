@@ -256,6 +256,8 @@ void Mario::MarioFinishWalking(Animator* anmtr, void* param) {
 void Mario::MarioStandingJump() {
 		if(marioState == Jumping || isDead())
 				return ;
+		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
+				return ;
 		SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -263,7 +265,7 @@ void Mario::MarioStandingJump() {
 		AnimatorHolder::MarkAsRunning(MarioSJump);
 		SetDimensions(MarioWaiting, MarioSJump);
 		SetDimensions(MarioAnimator, MarioSJump);
-		
+		MarioSJump->SetLastTime(currTime);
 		ChangeState(Jumping);
 		return ;
 }

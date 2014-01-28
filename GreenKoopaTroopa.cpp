@@ -216,7 +216,7 @@ void GreenKoopa::CommitDestructions() {
 				Dim TileX = (*it)->GetSprite()->GetTileX();
 				Dim TileY = (*it)->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || currPosX > 16*16 || currPosY < 2 || currPosY > 16*16 ||TileX > MAX_WIDTH || TileY > MAX_HEIGHT) {
+				if(currPosX < 2 || currPosX > 16*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
 						std::list<MovingAnimator*>::iterator prev = it++;
 						suspending.push_back(*prev);
 						AnimatorHolder::MarkAsSuspended(*prev);
@@ -231,7 +231,7 @@ void GreenKoopa::CommitDestructions() {
 				Dim TileX = (*it)->GetSprite()->GetTileX();
 				Dim TileY = (*it)->GetSprite()->GetTileY();
 
-				if(currPosX < 2 || currPosX > 16*16 || TileX > MAX_WIDTH || TileY > MAX_HEIGHT) {
+				if(currPosX < 2 || currPosX > 15*16 || currPosY < 2 || currPosY > 15*16 ||TileX >= MAX_WIDTH || TileY >= MAX_HEIGHT) {
 						std::list<MovingAnimator*>::iterator prev = it++;
 						suspendingdead.push_back(*prev);
 						AnimatorHolder::MarkAsSuspended(*prev);
