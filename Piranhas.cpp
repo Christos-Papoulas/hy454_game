@@ -20,7 +20,7 @@ void Piranhas::CreateIfAny() {
 
 								g = suspending.back();
 								suspending.pop_back();
-								if(!g) return ;
+								assert(g);
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16 + 8);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
@@ -71,7 +71,7 @@ void Piranhas::CommitDestructions() {
 					suspending.push_back(*prev);
 					AnimatorHolder::MarkAsSuspended(*prev);
 					AnimatorHolder::Cancel(*prev);
-					running.erase(prev);
+					running.remove(*prev);
 			} else
 					++it;
 	}*/

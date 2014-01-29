@@ -11,10 +11,11 @@
 class Sprite {
 		byte frameNo;
 		Rect frameBox;
-		Dim x, y; // hold the position of sprite at the map
+		Dim x;
+		Dim y; // hold the position of sprite at the map
 		bool isVisible;
 		AnimationFilm* currFilm;
-		TileLayer* myLayer;
+		
 		public:
 				Sprite (Dim _x, Dim _y, AnimationFilm* film);
 				Dim GetX();

@@ -4,7 +4,7 @@
 #include "../Objects.h"
 #include "../tiles/TileLayer.h"
 
-
+#include "Sprites.h"
 
 class Collision{
 		private:
@@ -22,6 +22,7 @@ class Collision{
 			static void CheckCollision();
 			static void SetGravity(bool x) { IsGravityAddicted = x; };
 			static bool GetGravity() { return IsGravityAddicted; };
-
 };
+
+
 #endif
