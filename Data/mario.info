@@ -85,7 +85,7 @@ questionfinish 1
 77 375 16 16
 1001
 superwaiting 1
-32 96 16 32
+32 95 16 32
 1002
 superwalking 3
 32 0 16 32
@@ -193,7 +193,7 @@ flushsuperwalking 6
 1027
 superflushwaiting 2
 32 96 16 32
-65 96 16 32
+63 96 16 30
 1028
 superflushbwalk 6
 100 225 16 32
@@ -201,7 +201,7 @@ superflushbwalk 6
 100 243 12 32
 133 243 12 32
 100 257 16 32
-133 257 16 32
+133 257 16 30
 1029
 superflushjump 2
 32 49 16 32

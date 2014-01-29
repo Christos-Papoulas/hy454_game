@@ -99,50 +99,54 @@ bool Enemies::IsOnAir(Dim x, Dim y, Dim width) {
 }
 
 bool Enemies::IsMarioLeft(Dim x, Dim y) {
-		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
-		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
+	if(Mario::isDead()) return false;
+	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 
-		Dim j = (y > mj) ? y - mj : mj - y;
-		if(x > mi && x - mi < COLLISION_DETECT && j < COLLISION_DETECT)
-				return true;
-		return false;
+	Dim j = (y > mj) ? y - mj : mj - y;
+	if(x > mi && x - mi < COLLISION_DETECT && j < COLLISION_DETECT)
+			return true;
+	return false;
 }
 
 bool Enemies::IsMarioRight(Dim x, Dim y) {
-		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
-		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
+	if(Mario::isDead()) return false;
+	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 
-		Dim j = (y > mj) ? y - mj : mj - y;
-		if(x < mi && mi - x < COLLISION_DETECT && j < COLLISION_DETECT)
-				return true;
-		return false;
+	Dim j = (y > mj) ? y - mj : mj - y;
+	if(x < mi && mi - x < COLLISION_DETECT && j < COLLISION_DETECT)
+			return true;
+	return false;
 }
 
 bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
-		Dim mi = Mario::GetMarioCurrentSprite()->GetX();
-		Dim mj = Mario::GetMarioCurrentSprite()->GetY();
+	if(Mario::isDead()) return false;
+	Dim mi = Mario::GetMarioCurrentSprite()->GetX();
+	Dim mj = Mario::GetMarioCurrentSprite()->GetY();
 
-		Dim i = (x > mi) ? x - mi : mi - x;
-		Dim j = (y > mj) ? y - mj : mj - y;
+	Dim i = (x > mi) ? x - mi : mi - x;
+	Dim j = (y > mj) ? y - mj : mj - y;
 
-		if(i < COLLISION_DETECT && j < COLLISION_DETECT)
-				return true;
+	if(i < COLLISION_DETECT && j < COLLISION_DETECT)
+			return true;
 
-		if(Mario::IsSuperMario()){
-				Dim j = (y + 16 > mj) ? y - 16 - mj : mj - 16 - y;
-				if(i < (COLLISION_DETECT  + 2) && j < COLLISION_DETECT)
-						return true;
-		}
-		return false;
+	if(Mario::IsSuperMario()){
+			Dim j = (y + 16 > mj) ? y - 16 - mj : mj - 16 - y;
+			if(i < (COLLISION_DETECT  + 2) && j < COLLISION_DETECT)
+					return true;
+	}
+	return false;
 }
 
 bool Enemies::IsMarioAbove(Dim x, Dim y) { //x, y, is tiles
-		Dim mx = Mario::GetMarioCurrentSprite()->GetTileX();
-		Dim my = Mario::GetMarioCurrentSprite()->GetTileY();
+	if(Mario::isDead()) return false;
+	Dim mx = Mario::GetMarioCurrentSprite()->GetTileX();
+	Dim my = Mario::GetMarioCurrentSprite()->GetTileY();
 
-		if(x == mx && my + 1 == y)
-				return true;
-		return false;
+	if(x == mx && my + 1 == y)
+			return true;
+	return false;
 }
 
 void Enemies::Reactivate(Dim x) {

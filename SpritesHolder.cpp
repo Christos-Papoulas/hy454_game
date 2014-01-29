@@ -39,7 +39,7 @@ void Initializer::InitMarioWaiting() {
 		Sprite *spriteMario = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string("mariowaiting") ));
 		
 		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
-						0, 1, 
+						0, 0, 
 						0, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariowaiting"))
 						);
 		
@@ -176,7 +176,7 @@ void Initializer::InitMarioDeath() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-static MovingAnimator* superWaiting = NULL;
+MovingAnimator* superWaiting = NULL;
 void Initializer::SuperWaiting() {
 		if(superWaiting) {
 				Mario::CreateWaiting(superWaiting);
@@ -189,8 +189,7 @@ void Initializer::SuperWaiting() {
 						0, 0, 
 						0, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superwaiting"))
 						);
-		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
-		
+		MovingAnimator* aMovAnimr =  new MovingAnimator();
 		Mario::CreateWaiting(aMovAnimr);
 		superWaiting = aMovAnimr;
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
@@ -198,7 +197,7 @@ void Initializer::SuperWaiting() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-static MovingAnimator* superWalking = NULL;
+MovingAnimator* superWalking = NULL;
 void Initializer::SuperWalking() {
 		if(superWalking) {
 				Mario::CreateWalking(superWalking);
@@ -254,12 +253,12 @@ void Initializer::SuperWalkJump() {
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 28; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, -j, 0, 100);
+				PathEntry pathEntry(5, -j, i%2, 100);
 				paths.push_back( pathEntry );
 		}
 
 		for(offset_t i = 0, j= 18; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, j, 0, 100);
+				PathEntry pathEntry(5, j, i%2, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superjumping")));
@@ -308,12 +307,12 @@ void Initializer::SuperBackWalkJump() {
 		std::vector<PathEntry> paths;
 		
 		for(offset_t i = 0, j= 16; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(-5, -j, 0, 100);
+				PathEntry pathEntry(-5, -j, i%2, 100);
 				paths.push_back( pathEntry );
 		}
 
 		for(offset_t i = 0, j= 6; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(-5, j, 0, 100);
+				PathEntry pathEntry(-5, j, i%2, 100);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superbackjump")));

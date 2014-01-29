@@ -662,7 +662,7 @@ bool Mario::IsMarioSmall() {
 }
 
 bool Mario::IsInvincible() {
-		return marioLevel == InvincibleMario;
+		return marioLevel == InvincibleMario || marioLevel == InvincibleSuper;
 }
 
 bool Mario::IsSuperMario() {

@@ -46,11 +46,11 @@ void FlushMario::Waiting() {
 						0, 1, 
 						0, 0, 120, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("flushmariowaiting"))
 						);
-		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator();
 		
 		Mario::CreateWaiting(aMovAnimr);
 		FlushMario::marioWaiting = aMovAnimr;
-		aMovAnimn->SetContinuous(false);
+		aMovAnimn->SetContinuous(true);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinisWaiting, NULL);
 		AnimatorHolder::Register( aMovAnimr );
@@ -195,7 +195,7 @@ void FlushMario::SuperWaiting() {
 						0, 0, 90, false, 
 						ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superflushwaiting"))
 		);
-		MovingAnimator* aMovAnimr =  new MovingAnimator(); 
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator();
 		
 		Mario::CreateWaiting(aMovAnimr);
 		SuperFlushWaiting = aMovAnimr;
