@@ -14,6 +14,7 @@ Dim Coins::coins = 0;
 Dim Coins::lifes = 3;
 Dim Score::score = 0;
 Dim Mario::checkpoints[3] = {0, 60, 145};
+timestamp_t Mario::timeReturn2Small;
 
 bool Mario::isRunningNow = false;
 
@@ -23,31 +24,58 @@ std::vector<PathEntry> Mario::backpaths;
 MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
 
+bool	Mario::justReturn2Small = false;
+
 Dim countScroll = 0;
 bool  Mario::isUnderGround = false;
+bool	swap = true;
 static bool MoveViewWindow(Dim x) {
+	Mario::FlushAnimation();
 	if(Mario::GetMarioCurrentSprite()->GetTileX()
 		+ Terrain::GetTileLayer()->GetViewWindow().GetX() >= 198){
 		countScroll = 0;
 		(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
 		return false;
 	}
-		if( x > 85 && !Mario::isUnderGround) {
-			(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
+	if( x > 85 && !Mario::isUnderGround) {
+		(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
-			Goumbas::ViewWindowMove();
-			GreenKoopa::ViewWindowMove();
-			Items::ViewWindowMove();
-			Piranhas::ViewWindowMove();
-			countScroll++;
-			if(countScroll == 16) {
-				(Terrain::GetTileLayer())-> ScrollHorizBy(1);
-				(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
-				countScroll = 0;
-			}
-			return true;
-	} 
+		Goumbas::ViewWindowMove();
+		GreenKoopa::ViewWindowMove();
+		Items::ViewWindowMove();
+		Piranhas::ViewWindowMove();
+		countScroll++;
+		if(countScroll == 16) {
+			(Terrain::GetTileLayer())-> ScrollHorizBy(1);
+			(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
+			countScroll = 0;
+		}
+		return true;
+	}
+	
 	return false;
+}
+
+timestamp_t timeHited = 0;
+timestamp_t waitUntilFlush;
+void Mario::FlushAnimation() {
+	if(Mario::justReturn2Small){
+		if(timeHited == 0){
+			waitUntilFlush = timeHited = GetTimeReturn2Small();
+		}else if(currTime - timeHited > TIME_FLASH_MARIO) {
+			timeHited = 0; justReturn2Small = false;
+		}
+		if(swap){
+			if(currTime - waitUntilFlush > 20){
+				swap = false;
+				AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
+				waitUntilFlush += 20;
+			}
+		} else {
+			swap = true;
+			AnimatorHolder::MarkAsRunning(Mario::GetAnimator());
+		}
+	}
 }
 
 void Mario::MoveViewWin() {
@@ -702,5 +730,7 @@ void Mario::Run() {
 			 Initializer::InitMario();
 			 ChangeLevel(prev);
 			 Mario::SetDimensions(x, y);
+			 justReturn2Small = true;
+			 SetTimeReturn2Small(currTime);
 	 }
  }

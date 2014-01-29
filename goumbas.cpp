@@ -158,9 +158,10 @@ void Goumbas::GoumbasKillMario() {
 				AnimatorHolder::MarkAsSuspended(*it);
 				goumbaSuspending.push_back(*it);
 				running.erase(it);
-				return ;
-			} else
+				
+			} else if(!Mario::IsJustReturn2Small())
 				Mario::Hited();
+			return ;
 		}
 	}
 }

@@ -27,6 +27,7 @@
 extern Dim countScroll;
 
 #define RUNNING_DELAY		100
+#define TIME_FLASH_MARIO 5000
 
 enum MarioState { 
 		Walking = 0,
@@ -59,6 +60,9 @@ class Mario {
 		
 		static MarioState marioState;
 		static MarioLevel marioLevel;
+		static bool justReturn2Small;
+		static timestamp_t timeReturn2Small;
+
 		Mario(MovingAnimator* mario_animator);
 		~Mario();
 		static std::vector<PathEntry> paths;
@@ -68,6 +72,9 @@ class Mario {
 		friend void ChangeLevel(Animator* prev);
 		static bool isRunningNow;
 		friend class Piranhas;
+
+		static void SetTimeReturn2Small(timestamp_t _t) { timeReturn2Small = _t; }
+		static timestamp_t GetTimeReturn2Small() { return timeReturn2Small; }
 	public:
 		static void SuperMario();
 		static void FlashMario();
@@ -146,6 +153,9 @@ class Mario {
 		static void Hited();
 		static Dim checkpoints[3];
 		static void RestoreCheckpoint(Dim x);
+
+		static void FlushAnimation();
+		static bool IsJustReturn2Small() { return justReturn2Small; }
 };
 
 #endif
