@@ -13,7 +13,7 @@
 #include "../tiles/TileLayer.h"
 #include "../collision/Collision.h"
 #include "../items/Items.h"
-
+#include "collision\CollisionChecker.h"
 #include <stdlib.h>
 #include <list>
 
@@ -25,6 +25,8 @@ class Piranhas {
 		static void KillMario();
 		
 		static void Move();
+		
+		static void CancelCollision(HiddenAnimator* g);
 public:
 		static void Create();
 

@@ -22,6 +22,7 @@ class HiddenAnimator : public Animator {
 		Sprite* GetSprite();
 		MovingPathAnimation* GetMovingPathAnimation() { return anim; }
 		void SetShow(Dim x) { show = x; }
+		void ResetCurrIndex() { currIndex = 0; }
 };
 
 #endif

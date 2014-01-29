@@ -3,7 +3,6 @@
 
 #include "../Objects.h"
 #include "../tiles/TileLayer.h"
-
 #include "Sprites.h"
 
 class Collision{
@@ -23,6 +22,5 @@ class Collision{
 			static void SetGravity(bool x) { IsGravityAddicted = x; };
 			static bool GetGravity() { return IsGravityAddicted; };
 };
-
 
 #endif

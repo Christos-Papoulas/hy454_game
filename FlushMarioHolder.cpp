@@ -72,7 +72,7 @@ void FlushMario::StandJump() {
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, 
 				ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("flushmariojump")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
-		Sprite::CollisionCheck(spriteMario);
+
 		Mario::CreateSjumping(aMovAnimr);
 		MarioStandJump = aMovAnimr;
 		aMovAnimn->SetContinuous(false);
@@ -103,7 +103,7 @@ void FlushMario::WalkJumnp() {
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, 
 				ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("flushmariojump")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
-		Sprite::CollisionCheck(spriteMario);
+
 		Mario::CreateWjumping(aMovAnimr);
 		MarioWalkJump = aMovAnimr;
 		aMovAnimn->SetContinuous(false);
@@ -135,7 +135,6 @@ void FlushMario::BackWalkJump() {
 				ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("flushmariobjump")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 
-		Sprite::CollisionCheck(spriteMario);
 		Mario::CreateBackAndJump( aMovAnimr );
 		backWalkJump = aMovAnimr;
 		aMovAnimn->SetContinuous(false);

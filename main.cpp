@@ -245,6 +245,7 @@ void MarioBrosMain::ArtificialIntelligence(){
 
 void MarioBrosMain::CollisionChecking(){
 		Collision::CheckCollision();
+		CollisionChecker::Check();
 		return ;
 }
 
@@ -293,9 +294,11 @@ void MarioBrosMain::InitializeGame() {
 		NumbersHolder::InitWorld();
 		NumbersHolder::InitEpi();
 		NumbersHolder::InitCoin();
+		
 		Enemies::Create();
 		new Configurator("mario.conf");
 		Enemies::MakeShortMap();		
+
 		redraw = true;
 }
 

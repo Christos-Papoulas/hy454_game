@@ -26,8 +26,10 @@
 #include "items\Items.h"
 #include "Objects.h"
 #include "collision\Collision.h"
+#include "collision\CollisionChecker.h"
 #include "sounds\Sounds.h"
 #include "conf\parser.h"
+
 
 /* Alllegro Libraries */
 #include <allegro5\allegro5.h> 

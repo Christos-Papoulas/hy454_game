@@ -21,12 +21,21 @@ void Piranhas::CreateIfAny() {
 								g = suspending.back();
 								suspending.pop_back();
 								assert(g);
+								g->ResetCurrIndex();
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16 + 8);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsFirstRunning(g);
 								Enemies::SetEnemyAsActive(y,x);
 								running.push_back(g);
+
+								CollisionChecker::Register(g->GetSprite(), Mario::MarioWaiting->GetSprite(), Mario::Hited);
+								CollisionChecker::Register(g->GetSprite(), Mario::MarioBWalk->GetSprite(), Mario::Hited);
+								CollisionChecker::Register(g->GetSprite(), Mario::MarioSJump->GetSprite(), Mario::Hited);
+								CollisionChecker::Register(g->GetSprite(), Mario::MarioWJump->GetSprite(), Mario::Hited);
+								CollisionChecker::Register(g->GetSprite(), Mario::BackJump->GetSprite(), Mario::Hited);
+								CollisionChecker::Register(g->GetSprite(), Mario::MarioAnimator->GetSprite(), Mario::Hited);
+								
 						}
 				}
 } 
@@ -36,7 +45,7 @@ void Piranhas::Create() {
 		
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 14u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, (i < 7u) ? -3 : 3, i%2, 165);
+				PathEntry pathEntry(0, (i < 7u) ? -3 : 3, i%2, i == 0 ? 3000 : 165);
 				paths.push_back( pathEntry );
 		}
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("piranhaplant")));
@@ -58,7 +67,7 @@ void Piranhas::ViewWindowMove() {
 }
 
 void Piranhas::CommitDestructions() {
-	/*Dim currPosX, currPosY, TileX, TileY;
+	Dim currPosX, currPosY, TileX, TileY;
 	for (std::list<HiddenAnimator*>::iterator it=running.begin(); it != running.end();) {
 			currPosX = (*it)->GetSprite()->GetX();
 			currPosY = (*it)->GetSprite()->GetY();
@@ -70,17 +79,26 @@ void Piranhas::CommitDestructions() {
 					std::list<HiddenAnimator*>::iterator prev = it++;
 					suspending.push_back(*prev);
 					AnimatorHolder::MarkAsSuspended(*prev);
-					AnimatorHolder::Cancel(*prev);
-					running.remove(*prev);
+					CancelCollision(*prev);
+					running.erase(prev);
 			} else
 					++it;
-	}*/
+	}
+}
+void Piranhas::CancelCollision(HiddenAnimator* g) {
+	CollisionChecker::Cancel(g->GetSprite(), Mario::MarioWaiting->GetSprite(), Mario::Hited);
+	CollisionChecker::Cancel(g->GetSprite(), Mario::MarioBWalk->GetSprite(), Mario::Hited);
+	CollisionChecker::Cancel(g->GetSprite(), Mario::MarioSJump->GetSprite(), Mario::Hited);
+	CollisionChecker::Cancel(g->GetSprite(), Mario::MarioWJump->GetSprite(), Mario::Hited);
+	CollisionChecker::Cancel(g->GetSprite(), Mario::BackJump->GetSprite(), Mario::Hited);
+	CollisionChecker::Cancel(g->GetSprite(), Mario::MarioAnimator->GetSprite(), Mario::Hited);
 }
 
 void Piranhas::Deactivate() {
 	for (std::list<HiddenAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
 		suspending.push_back(*it);
 		AnimatorHolder::MarkAsSuspended((Animator*) *it);
+		CancelCollision(*it);
 	}	
 	running.clear();
 }

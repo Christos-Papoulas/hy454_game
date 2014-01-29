@@ -67,7 +67,7 @@ class Mario {
 		static void KeepInsideViewWin();
 		friend void ChangeLevel(Animator* prev);
 		static bool isRunningNow;
-		
+		friend class Piranhas;
 	public:
 		static void SuperMario();
 		static void FlashMario();
