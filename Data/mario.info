@@ -9,7 +9,7 @@ mariojumping 1
 0 64 16 16
 3
 mariodeading 1
-0 81 16 16
+0 81 16 14
 4
 mariowaiting 1
 0 97 12 16
@@ -85,7 +85,7 @@ questionfinish 1
 77 375 16 16
 1001
 superwaiting 1
-32 95 16 32
+32 95 16 31
 1002
 superwalking 3
 32 0 16 32
@@ -215,8 +215,8 @@ goumbabaddeath 1
 97 32 15 15
 1951
 redkoopaleft 2
-133 96 14 32 
-133 112 14 32 
+131 96 14 32 
+131 112 14 32 
 223
 brickbreak 1
 0 280 8 8

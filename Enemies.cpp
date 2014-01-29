@@ -92,6 +92,7 @@ bool Enemies::IsOnAir(Dim x, Dim y, Dim width) {
 		Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		Dim shift = (width>>4);
+		if(y + j + 1 + shift > MAX_HEIGHT)  return true; // gt enw einai mesa sta oria tou terrain koitaei ap eksw!
 		Dim value = Collision::GetValue(x + i, y + j + 1 + shift);
 		if(value == 0)
 				return true;

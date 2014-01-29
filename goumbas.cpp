@@ -147,14 +147,22 @@ void Goumbas::ViewWindowMove() {
 }
 
 void Goumbas::GoumbasKillMario() {
-		for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
-				MovingAnimator* g = *it;
-				Dim x = g->GetSprite()->GetX();
-				Dim y = g->GetSprite()->GetY();
-
-				if(Enemies::IsMarioLeftOrRight(x, y))
-						 Mario::Hited();
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+		MovingAnimator* g = *it;
+		Dim x = g->GetSprite()->GetX();
+		Dim y = g->GetSprite()->GetY();
+		bool collision = Enemies::IsMarioLeftOrRight(x, y);
+		if(collision){
+			if(Mario::IsInvincible()){
+				BadDeath(x, y);
+				AnimatorHolder::MarkAsSuspended(*it);
+				goumbaSuspending.push_back(*it);
+				running.erase(it);
+				return ;
+			} else
+				Mario::Hited();
 		}
+	}
 }
 
 void Goumbas::SuspendGoumbas(){

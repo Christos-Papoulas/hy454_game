@@ -260,6 +260,7 @@ void Mario::MarioStandingJump() {
 				return ;
 		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
 				return ;
+		Sounds::Play("jump_small");
 		SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -278,6 +279,7 @@ void Mario::MarioWalkingJump() {
 		}
 		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
 				return ;
+		Sounds::Play("jump_small");
 		SetDimensions(MarioWJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -295,7 +297,7 @@ void Mario::BackWalkAndJump() {
 		if(marioState == BackAndJump || isDead()){
 				return ;
 		}
-
+		Sounds::Play("jump_small");
 		SetDimensions(BackJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -597,8 +599,8 @@ bool Mario::IsOnPipe(Dim x, Dim y) {
 }
 
 void ChangeLevel(Animator* prev) {
-		AnimatorHolder::MarkAsSuspended(prev);
-		switch (Mario::marioState) {
+	AnimatorHolder::MarkAsSuspended(prev);
+	switch (Mario::marioState) {
 		case Waiting:
 				Mario::MarioFinisWaiting(0,0);
 				break;
@@ -622,6 +624,8 @@ void ChangeLevel(Animator* prev) {
 		default: 
 				assert(0);
 	}
+	AnimatorHolder::MarkAsRunning(Mario::MarioWaiting);
+
 	return ;
 }
 void Mario::SuperMario() {

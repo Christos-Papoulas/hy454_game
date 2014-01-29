@@ -148,10 +148,6 @@ void MarioBrosMain::InputManagement(){
 
 	if(!Mario::isWalkingJump() && !Mario::isBackJumping() &&  gameState == Play) {
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
-					if(!z_pressed){
-						Sounds::Play("jump_small");
-						z_pressed = 1;
-					}
 						if(Mario::isWalking() && !Mario::isWalkingJump()){
 							return Mario::MarioWalkingJump();
 						}
