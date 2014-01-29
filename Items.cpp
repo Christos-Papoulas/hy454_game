@@ -734,7 +734,7 @@ bool Items::IsMarioLeft(Dim x, Dim y) {
 	Sprite* m = Mario::GetMarioCurrentSprite();
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
-	if(Mario::IsSuperMario()){
+	if(Mario::IsSuperMario() || Mario::IsInvincibleSuper()){
 		mj += 16;
 		mi +=5;
 	}
@@ -749,7 +749,7 @@ bool Items::IsMarioRight(Dim x, Dim y) {
 	Sprite* m = Mario::GetMarioCurrentSprite();
 	Dim mi = m->GetX();
 	Dim mj = m->GetY();
-	if(Mario::IsSuperMario()){
+	if(Mario::IsSuperMario() || Mario::IsInvincibleSuper()){
 		mj += 16;
 		mi -= 8;
 	}
