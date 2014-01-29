@@ -110,6 +110,7 @@ public:
 		static bool IsEnemyOnBrick(const char* id, Dim x, Dim y);
 
 		static void CommitDestructions();
+		static void CommitDestructions(char* id);
 
 		static void FinishMoveBrick(Animator* a, void* v);
 

@@ -23,22 +23,9 @@ class CollisionChecker {
   };
 
   public:
-		static void Register (Sprite* s1, Sprite* s2, CollisionCallBack c){
-			Pair p(s1, s2);
-			PairWithCallback pc(p, c);
-			pairs.push_back(pc);
-		}
-
-		static void Cancel (Sprite* s1, Sprite* s2, CollisionCallBack c) {
-			std::vector<PairWithCallback>::iterator it = std::find(pairs.begin(), pairs.end(), PairWithCallback(Pair(s1, s2), c));
-			pairs.erase(it);
-		}
-
-		static void Check (void) {
- 			std::for_each(
-  					pairs.begin(), pairs.end(), CheckFunctor()
-			); 
-		}
+		static void Register (Sprite* s1, Sprite* s2, CollisionCallBack c);
+		static void Cancel (Sprite* s1, Sprite* s2, CollisionCallBack c);
+		static void Check (void);
 };
 
 #endif

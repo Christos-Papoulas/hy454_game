@@ -26,7 +26,7 @@ void GreenKoopa::ArtificialIntelligence() {
 		CreateGreenKoopaIfAny();
 		MoveKoopasInShells();
 		MoveGreenKoopas();
-		//KoopasKillMario();
+		KoopasKillMario();
 }
 
 void GreenKoopa::CreateGreenKoopaIfAny() {
@@ -250,7 +250,7 @@ void GreenKoopa::KoopasKillMario() {
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 
-				if(Enemies::IsMarioLeftOrRight(x, y))
+				if(Enemies::IsMarioLeftOrRight(x, y + 8))
 						 Mario::Hited();
 		}
 }

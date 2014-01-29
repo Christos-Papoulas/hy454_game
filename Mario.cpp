@@ -311,20 +311,21 @@ void Mario::BackWalkAndJump() {
 }
 
 void Mario::MarioDeading() {
-		if(marioState == Death) return ;
-		SetDimensions(MarioDeath, MarioAnimator);
-
+		if(marioState == Death) 
+			return ;
+		Sprite *s = GetMarioCurrentSprite();
+		SetDimensions(s->GetX(), s->GetY());
+		
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
 		AnimatorHolder::MarkAsSuspended(MarioWaiting);
 		AnimatorHolder::MarkAsSuspended(MarioWJump);
 		AnimatorHolder::MarkAsSuspended(MarioSJump);
 		AnimatorHolder::MarkAsSuspended(MarioBWalk);
+
 		MarioDeath->SetLastTime(currTime);
 		AnimatorHolder::MarkAsRunning(MarioDeath);
-		ChangeState(WalkAndJump);
+		ChangeState(Death);
 		Sounds::Play("mario_death");
-		
-		marioState = Death;
 }
 
 void Mario::MarioFinishBackWalk(Animator*, void*) {
@@ -536,6 +537,9 @@ void Mario::SetDimensions(Dim x, Dim y) {
 
 		MarioWJump->GetSprite()->SetX(x);
 		MarioWJump->GetSprite()->SetY(y);
+
+		MarioDeath->GetSprite()->SetX(x);
+		MarioDeath->GetSprite()->SetY(y);
 }
 
 void Mario::SetDimensions(MovingPathAnimator* source, MovingAnimator* dest) {

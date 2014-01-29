@@ -29,13 +29,6 @@ bool Sprite::CollisionCheck (Sprite *s) {
 	Dim sw = s->GetFrameBox().GetWidth() - COLLISION_OFFSET;
 	Dim sx = s->GetX() + COLLISION_OFFSET;	Dim sy = s->GetY() + COLLISION_OFFSET;
 
-	printf("\nenemy(%u %u %u %u)\n", x, y, h, w);
-	printf("mario(%u %u %u %u)\n", sx, sy, sh, sw);
-	printf("collision: %d\n", (
-						( ( sx <= x && x <= (sx + sw) ) || ( x <= sx && sx <= (x + w) ) ) 
-						&&
-						( ( sy <= y && y <= (sy + sh) ) || ( y <= sy && sy <= (y + h) ) )
-					));
 	return	(
 						( ( sx <= x && x <= (sx + sw) ) || ( x <= sx && sx <= (x + w) ) ) 
 						&&

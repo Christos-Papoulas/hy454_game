@@ -3,6 +3,7 @@
 std::map<std::string, std::list<Animator*> > Items::suspending;
 std::map<std::string, std::list<Animator*> > Items::running;
 std::list<Animator*> Items::toDesrtuct;
+std::list<Animator*> toDesrtuctBricks;
 
 Dim Items::map[MAX_HEIGHT][MAX_WIDTH];
 Index**	Items::shortMap;
@@ -218,17 +219,8 @@ void Items::DestroyBrick(MovingPathAnimator* prevAnim) {
 		runningDestruction.push_back(destr);
 		destr->SetLastTime(currTime);
 		AnimatorHolder::MarkAsRunning( destr );
-		std::list<Animator*>::iterator it = running["bricks"].begin();
-		while (it != running["bricks"].end()){
-				if((*it) == (MovingPathAnimator*)  prevAnim) {
-						suspending["bricks"].push_back( *it );
-						AnimatorHolder::MarkAsSuspended( *it );
-						running["bricks"].erase( it );
-						return ;
-				}
-				else
-						 ++it;
-		}
+		
+		toDesrtuctBricks.push_back(prevAnim);
 }
 
 void Items::FinishMoveBrick(Animator* a, void* v) {
@@ -541,6 +533,22 @@ void Items::CommitDestructions() {
 		toDesrtuct.clear();
 }
 
+void Items::CommitDestructions(char* id) {
+	for (std::list<Animator*>::iterator del=toDesrtuctBricks.begin(); del != toDesrtuctBricks.end(); ++del) {
+		std::list<Animator*>::iterator it = running[id].begin();
+		while (it != running[id].end()){
+			if((*it) == (MovingPathAnimator*)  *del) {
+				std::list<Animator*>::iterator prev = it++;
+				suspending[id].push_back(*prev);
+				AnimatorHolder::MarkAsSuspended(*prev);
+				running[id].erase(prev);
+			}
+			else
+					++it;
+			}
+	}
+	toDesrtuctBricks.clear();
+}
 
 void Items::ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y) {
 		MovingAnimator *g;

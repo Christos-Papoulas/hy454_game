@@ -253,6 +253,7 @@ void MarioBrosMain::CommitDestructions(){
 		Goumbas::SuspendGoumbas();
 		Items::SuspendBricks();
 		Items::CommitDestructions();
+		Items::CommitDestructions("bricks");
 		GreenKoopa::CommitDestructions();
 		Piranhas::CommitDestructions();
 		return ;
