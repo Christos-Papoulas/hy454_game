@@ -719,7 +719,7 @@ void Mario::Run() {
  }
 
  void Mario::Hited() {
-	 if(IsMarioSmall() && !isDead()){
+	 if(IsMarioSmall() && !isDead() && !justReturn2Small){
 		 Coins::RemoveLife();
 		 MarioDeading();
 	 } else if(IsSuperMario()) {

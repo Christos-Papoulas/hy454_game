@@ -110,11 +110,13 @@ void Items::CreateBricks() {
 												CreateABrickAnimation();
 										}
 										g = (MovingAnimator* ) suspending["bricks"].back();
+										std::cout << "Create Brick :" << y << " " << x << "\n";
 										suspending["bricks"].pop_back();
 								}	else if(brick[y][x] == 25) {
 										if(suspending["questionbrick"].size() == 0)
 												CreateAQuestionAnimation();
 										g = (MovingAnimator* ) suspending["questionbrick"].back();
+										
 										suspending["questionbrick"].pop_back();
 								} else if(brick[y][x] == 265) {
 										if(suspending["leftuppipe"].size() == 0)
