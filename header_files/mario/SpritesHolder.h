@@ -17,6 +17,7 @@
 
 namespace Initializer {
 		extern void InitMario();
+
 		extern void InitMarioWalking();
 		extern void InitMarioWaiting();
 		extern void InitMarioStandJump();
@@ -26,6 +27,7 @@ namespace Initializer {
 
 		extern void InitMarioDeath();
 		
+		extern void InitSuperMario();
 		extern void SuperWaiting();
 		extern void SuperWalking();
 		extern void SuperBackWalk();

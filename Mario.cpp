@@ -14,7 +14,10 @@ Dim Coins::coins = 0;
 Dim Coins::lifes = 3;
 Dim Score::score = 0;
 Dim Mario::checkpoints[3] = {0, 60, 145};
+
 timestamp_t Mario::timeReturn2Small;
+timestamp_t Mario::timeIsInvincible;
+timestamp_t Mario::startBeInvincible = 0;
 
 bool Mario::isRunningNow = false;
 
@@ -31,6 +34,7 @@ bool  Mario::isUnderGround = false;
 bool	swap = true;
 static bool MoveViewWindow(Dim x) {
 	Mario::FlushAnimation();
+	Mario::CountTimeInvincibleMario(); 
 	if(Mario::GetMarioCurrentSprite()->GetTileX()
 		+ Terrain::GetTileLayer()->GetViewWindow().GetX() >= 198){
 		countScroll = 0;
@@ -74,6 +78,17 @@ void Mario::FlushAnimation() {
 		} else {
 			swap = true;
 			AnimatorHolder::MarkAsRunning(Mario::GetAnimator());
+		}
+	}
+}
+
+void Mario::CountTimeInvincibleMario() {
+	if(Mario::IsInvincible()){
+		if(!GetTimeBeInvincible())
+			StartBeInvincible(currTime);
+		else if(currTime - GetTimeBeInvincible() > GetTime2BeInvincible()){
+			StartBeInvincible(0);
+			Return2Normal();
 		}
 	}
 }
@@ -659,12 +674,7 @@ void ChangeLevel(Animator* prev) {
 void Mario::SuperMario() {
 		marioLevel = Super_Mario;
 		Animator* prev = GetAnimator();
-		Initializer::SuperBackWalk();
-		Initializer::SuperWalkJump();
-		Initializer::SuperStandJump();
-		Initializer::SuperBackWalkJump();
-		Initializer::SuperWaiting();
-		Initializer::SuperWalking();
+		Initializer::InitSuperMario();
 		ChangeLevel(prev);
 }
 
@@ -686,6 +696,7 @@ void Mario::SetMarioAsInvincible() {
 						FlushMario::InitSuperMario();	
 						break;
 		}
+		StartBeInvincible(currTime);
 		ChangeLevel(prev);
 }
 
@@ -733,4 +744,22 @@ void Mario::Run() {
 			 justReturn2Small = true;
 			 SetTimeReturn2Small(currTime);
 	 }
+ }
+
+ void Mario::Return2Normal() {
+	Dim x = GetMarioCurrentSprite()->GetX();
+	Dim y = GetMarioCurrentSprite()->GetY();
+	Animator* prev = GetAnimator();
+	switch (marioLevel){
+		case InvincibleMario:
+			Initializer::InitMario();
+			marioLevel = MarioSmall;
+			break;
+		case InvincibleSuper:
+			marioLevel = Super_Mario;
+			Initializer::InitSuperMario();
+			break;
+	}
+	ChangeLevel(prev);
+	SetDimensions(x, y);
  }

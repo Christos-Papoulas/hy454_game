@@ -24,6 +24,10 @@ Configurator::Configurator(char *f) {
 		strncpy(value, getOptionToChar(SPEED_GOUMBA), 10);
 		if(!strncmp(value,"fast", 10))
 				Goumbas::SetDelay(60);
+
+		number = getOptionToInt(DURATION_OF_INVINCIBLE);
+		if(number) Mario::SetTimeInvincible(number * 1000);
+		else Mario::SetTimeInvincible(10 * 1000);
 }
 
 static bool CanPutEnemyAt(Dim x, Dim y) {

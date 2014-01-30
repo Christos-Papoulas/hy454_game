@@ -176,6 +176,15 @@ void Initializer::InitMarioDeath() {
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+void Initializer::InitSuperMario(){ 
+	SuperWaiting();
+	SuperWalking();
+	SuperBackWalk();
+	SuperWalkJump();
+	SuperStandJump();
+	SuperBackWalkJump();
+}
+
 MovingAnimator* superWaiting = NULL;
 void Initializer::SuperWaiting() {
 		if(superWaiting) {

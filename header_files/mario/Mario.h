@@ -62,9 +62,9 @@ class Mario {
 		static MarioLevel marioLevel;
 		static bool justReturn2Small;
 		static timestamp_t timeReturn2Small;
+		static timestamp_t timeIsInvincible;
+		static timestamp_t startBeInvincible;
 
-		Mario(MovingAnimator* mario_animator);
-		~Mario();
 		static std::vector<PathEntry> paths;
 		static std::vector<PathEntry> backpaths;
 		static bool isOnBrick;
@@ -75,6 +75,12 @@ class Mario {
 
 		static void SetTimeReturn2Small(timestamp_t _t) { timeReturn2Small = _t; }
 		static timestamp_t GetTimeReturn2Small() { return timeReturn2Small; }
+		Mario(MovingAnimator* mario_animator);
+		~Mario();
+		
+		static void StartBeInvincible(timestamp_t t) { startBeInvincible = t; }
+		static timestamp_t GetTimeBeInvincible() { return startBeInvincible; }
+		static void Return2Normal();
 	public:
 		static void SuperMario();
 		static void FlashMario();
@@ -156,6 +162,10 @@ class Mario {
 
 		static void FlushAnimation();
 		static bool IsJustReturn2Small() { return justReturn2Small; }
+
+		static void SetTimeInvincible(timestamp_t t){ timeIsInvincible = t; }
+		static timestamp_t GetTime2BeInvincible() {return timeIsInvincible; }
+		static void CountTimeInvincibleMario();
 };
 
 #endif
