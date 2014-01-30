@@ -752,12 +752,14 @@ void Mario::Run() {
 	Animator* prev = GetAnimator();
 	switch (marioLevel){
 		case InvincibleMario:
+			marioLevel = MarioSmall; // change lever before Init is NECESSARY
 			Initializer::InitMario();
-			marioLevel = MarioSmall;
+			
 			break;
 		case InvincibleSuper:
-			marioLevel = Super_Mario;
+			marioLevel = Super_Mario; // change lever before Init is NECESSARY
 			Initializer::InitSuperMario();
+
 			break;
 	}
 	ChangeLevel(prev);

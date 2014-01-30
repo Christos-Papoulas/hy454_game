@@ -45,6 +45,8 @@ class Items {
 		static Index countBricks;
 		static Index countItems;
 
+		static const char* strItems[];
+
 		static void CreateScores();
 		static void CreateABrickAnimation();
 		static void CreateSprite(char* id, Dim index, offset_t dx, offset_t dy, Dim delay);
@@ -62,7 +64,7 @@ class Items {
 		static void ReadMap();
 		static void ReadBrickMap();
 		static void MakeShortMap();
-		static void CreateIfAny();
+		
 		static void SetItemAsActive(Dim x, Dim y);
 		static bool IsItemActive(Dim x, Dim y);
 

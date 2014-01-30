@@ -91,9 +91,6 @@ void Items::MakeShortBricks() {
 						}
 }
 
-
-const char* strItems[] = {"bricks", "questionbrick", "leftuppipe", "leftpipe", "rightuppipe", "rightpipe",
-												"solidbrick"}; // unused
 void Items::CreateBricks() {
 		MovingAnimator* g = NULL;
 		
@@ -110,69 +107,58 @@ void Items::CreateBricks() {
 												CreateABrickAnimation();
 										}
 										g = (MovingAnimator* ) suspending["bricks"].back();
-										std::cout << "Create Brick :" << y << " " << x << "\n";
 										suspending["bricks"].pop_back();
+										running["bricks"].push_back((Animator*) g);
 								}	else if(brick[y][x] == 25) {
 										if(suspending["questionbrick"].size() == 0)
 												CreateAQuestionAnimation();
 										g = (MovingAnimator* ) suspending["questionbrick"].back();
-										
+
 										suspending["questionbrick"].pop_back();
+										running["questionbrick"].push_back((Animator*) g);
 								} else if(brick[y][x] == 265) {
 										if(suspending["leftuppipe"].size() == 0)
 												CreateSprite("leftuppipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["leftuppipe"].back();
-										suspending["leftuppipe"].pop_back();								
+
+										suspending["leftuppipe"].pop_back();
+										running["leftuppipe"].push_back((Animator*) g);
 								} else if(brick[y][x] == 298) {
 										if(suspending["leftpipe"].size() == 0)
 												CreateSprite("leftpipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["leftpipe"].back();
-										suspending["leftpipe"].pop_back();								
+
+										suspending["leftpipe"].pop_back();
+										running["leftpipe"].push_back((Animator*) g);
 								} else if(brick[y][x] == 266) {
 										if(suspending["rightuppipe"].size() == 0)
 												CreateSprite("rightuppipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["rightuppipe"].back();
-										suspending["rightuppipe"].pop_back();								
-								} else if(brick[y][x] == 267) {
-										if(suspending["leftpipe"].size() == 0)
-												CreateSprite("leftpipe", 16, 0, 0, 0);
-										g = (MovingAnimator* ) suspending["leftpipe"].back();
-										suspending["leftpipe"].pop_back();								
+
+										suspending["rightuppipe"].pop_back();
+										running["rightuppipe"].push_back((Animator*) g);
 								} else if(brick[y][x] == 299) {
 										if(suspending["rightpipe"].size() == 0)
 												CreateSprite("rightpipe", 16, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["rightpipe"].back();
-										suspending["rightpipe"].pop_back();								
+
+										suspending["rightpipe"].pop_back();
+										running["rightpipe"].push_back((Animator*) g);										
 								} else if(brick[y][x] == 34) {
 										if(suspending["solidbrick"].size() == 0)
 												CreateSprite("solidbrick", 20, 0, 0, 0);
 										g = (MovingAnimator* ) suspending["solidbrick"].back();
-										suspending["solidbrick"].pop_back();		
+										
+										suspending["solidbrick"].pop_back();
+										running["solidbrick"].push_back((Animator*) g);
 								}
-								if(!g) return ;
+								assert(g);
 
 								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 								g->GetSprite()->SetY(y * 16);
 								g->SetLastTime(CurrTime());
 								AnimatorHolder::MarkAsRunning(g);
 								SetBrickAsActive(y,x);
-
-								if(brick[y][x] == 2)
-										running["bricks"].push_back((Animator*) g);
-								else if(brick[y][x] == 25)
-										running["questionbrick"].push_back((Animator*) g);
-								else if(brick[y][x] == 265)
-										running["leftuppipe"].push_back((Animator*) g);
-								else if(brick[y][x] == 266)
-										running["rightuppipe"].push_back((Animator*) g);
-								else if(brick[y][x] == 267)
-										running["leftpipe"].push_back((Animator*) g);
-								else if(brick[y][x] == 299)
-										running["rightpipe"].push_back((Animator*) g);
-								else if(brick[y][x] == 34)
-										running["solidbrick"].push_back((Animator*) g);
-								else 
-										running["rightpipe"].push_back((Animator*) g);
 						}
 				}
 }
@@ -210,7 +196,6 @@ void Items::CreateDestroyBrick(Dim x, Dim y) {
 		suspendingDestruction.push_back( destr = new Destruction(x, y));
 		AnimatorHolder::Register( destr );
 }
-
 
 void Items::DestroyBrick(MovingPathAnimator* prevAnim) {
 		if(suspendingDestruction.size() == 0)
@@ -373,18 +358,15 @@ void Items::KillPipes() {
 	KillSprites("rightpipe");
 }
 
+#define NUM_OF_ITEMS 11
+const char* Items::strItems[] = {
+	"bricks", "questionbrick", "leftuppipe", "leftpipe", "rightuppipe", "rightpipe",
+	"solidbrick", "coinanimation", "questionfinish", "mushroom", "star"
+};
+
 void Items::SuspendBricks() {
-		SuspendBricks("bricks");
-		SuspendBricks("questionbrick");
-		SuspendBricks("leftuppipe");
-		SuspendBricks("leftpipe");
-		SuspendBricks("rightuppipe");
-		SuspendBricks("rightpipe");
-		SuspendBricks("solidbrick");
-		SuspendBricks("coinanimation");
-		SuspendBricks("questionfinish");
-		SuspendBricks("mushroom");
-		SuspendBricks("star");
+	for(Dim i= 0; i < NUM_OF_ITEMS; ++i)
+		SuspendBricks(strItems[i]);
  }
 
  void Items::ViewWindowMove(const char* id) {
@@ -395,48 +377,12 @@ void Items::SuspendBricks() {
 		 }
  }
  void Items::ViewWindowMove() {
-		 ViewWindowMove("bricks");
-		 ViewWindowMove("questionbrick");
-		 ViewWindowMove("leftuppipe");
-		 ViewWindowMove("leftpipe");
-		 ViewWindowMove("rightuppipe");
-		 ViewWindowMove("rightpipe");
-		 ViewWindowMove("mushroom");
-		 ViewWindowMove("solidbrick");
-		 ViewWindowMove("coinanimation");
-		 ViewWindowMove("questionfinish");
-		 ViewWindowMove("star");
+	 for(Dim i= 0; i < NUM_OF_ITEMS; ++i)
+		 ViewWindowMove(strItems[i]);
  }
-
-
-void Items::CreateIfAny() {
-		MovingAnimator* g = NULL;
-		for(Dim i = 0; i < VIEW_WINDOW_TILE_HEIGHT; i++)
-				for(Dim j = 0; j < VIEW_WINDOW_TILE_WIDTH; j++){
-						Dim y = i;
-						Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
-						Rect view = Terrain::GetTileLayer()->GetViewWindow();
-						if(GetFromMap(y, x) == 161) {
-								if(IsItemActive(y, x)) 
-										continue;
-								//if(suspending.empty()) 
-									//	Create();
-							//	g = suspending.back();
-							//	suspending.pop_back();
-								if(!g) return ;
-								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
-								g->GetSprite()->SetY(y * 16);
-								g->SetLastTime(CurrTime());
-								AnimatorHolder::MarkAsRunning(g);
-								SetItemAsActive(y,x);
-								//running.push_back(g);
-						}
-				}
-}
 
 void Items::ArtificialIntelligence() {
 		CreateBricks();
-		CreateIfAny();
 		BrickCollision();
 		MoveStars();
 }
