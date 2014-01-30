@@ -91,76 +91,99 @@ void Items::MakeShortBricks() {
 						}
 }
 
-void Items::CreateBricks() {
-		MovingAnimator* g = NULL;
+void Items::CreateBricks() { //and coins!
+	MovingAnimator* g = NULL;
 		
-		for(Dim i = 0; i < VIEW_WINDOW_TILE_WIDTH; i++)
-				for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++){
-						Dim y = i;
-						Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
-						Rect view = Terrain::GetTileLayer()->GetViewWindow();
-						if(brick[y][x]) {
-								if(IsBrickActive(y, x)) 
-										continue;
-								if(brick[y][x] == 2){
-										if(suspending["bricks"].size() == 0) { 
-												CreateABrickAnimation();
-										}
-										g = (MovingAnimator* ) suspending["bricks"].back();
-										suspending["bricks"].pop_back();
-										running["bricks"].push_back((Animator*) g);
-								}	else if(brick[y][x] == 25) {
-										if(suspending["questionbrick"].size() == 0)
-												CreateAQuestionAnimation();
-										g = (MovingAnimator* ) suspending["questionbrick"].back();
+	for(Dim i = 0; i < VIEW_WINDOW_TILE_WIDTH; i++)
+		for(Dim j = 0; j < VIEW_WINDOW_TILE_HEIGHT; j++){
+				Dim y = i;
+				Dim x = j + Terrain::GetTileLayer()->GetViewWindow().GetX();
+				Rect view = Terrain::GetTileLayer()->GetViewWindow();
+				if(brick[y][x]) {
+						if(IsBrickActive(y, x)) 
+								continue;
 
-										suspending["questionbrick"].pop_back();
-										running["questionbrick"].push_back((Animator*) g);
-								} else if(brick[y][x] == 265) {
-										if(suspending["leftuppipe"].size() == 0)
-												CreateSprite("leftuppipe", 16, 0, 0, 0);
-										g = (MovingAnimator* ) suspending["leftuppipe"].back();
-
-										suspending["leftuppipe"].pop_back();
-										running["leftuppipe"].push_back((Animator*) g);
-								} else if(brick[y][x] == 298) {
-										if(suspending["leftpipe"].size() == 0)
-												CreateSprite("leftpipe", 16, 0, 0, 0);
-										g = (MovingAnimator* ) suspending["leftpipe"].back();
-
-										suspending["leftpipe"].pop_back();
-										running["leftpipe"].push_back((Animator*) g);
-								} else if(brick[y][x] == 266) {
-										if(suspending["rightuppipe"].size() == 0)
-												CreateSprite("rightuppipe", 16, 0, 0, 0);
-										g = (MovingAnimator* ) suspending["rightuppipe"].back();
-
-										suspending["rightuppipe"].pop_back();
-										running["rightuppipe"].push_back((Animator*) g);
-								} else if(brick[y][x] == 299) {
-										if(suspending["rightpipe"].size() == 0)
-												CreateSprite("rightpipe", 16, 0, 0, 0);
-										g = (MovingAnimator* ) suspending["rightpipe"].back();
-
-										suspending["rightpipe"].pop_back();
-										running["rightpipe"].push_back((Animator*) g);										
-								} else if(brick[y][x] == 34) {
-										if(suspending["solidbrick"].size() == 0)
-												CreateSprite("solidbrick", 20, 0, 0, 0);
-										g = (MovingAnimator* ) suspending["solidbrick"].back();
-										
-										suspending["solidbrick"].pop_back();
-										running["solidbrick"].push_back((Animator*) g);
+						if(brick[y][x] == 2){
+								if(suspending["bricks"].size() == 0) { 
+										CreateABrickAnimation();
 								}
-								assert(g);
+								g = (MovingAnimator* ) suspending["bricks"].back();
+								suspending["bricks"].pop_back();
+								running["bricks"].push_back((Animator*) g);
+						}	else if(brick[y][x] == 25) {
+								if(suspending["questionbrick"].size() == 0)
+										CreateAQuestionAnimation();
+								g = (MovingAnimator* ) suspending["questionbrick"].back();
 
-								g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
-								g->GetSprite()->SetY(y * 16);
-								g->SetLastTime(CurrTime());
-								AnimatorHolder::MarkAsRunning(g);
-								SetBrickAsActive(y,x);
+								suspending["questionbrick"].pop_back();
+								running["questionbrick"].push_back((Animator*) g);
+						} else if(brick[y][x] == 265) {
+								if(suspending["leftuppipe"].size() == 0)
+										CreateSprite("leftuppipe", 16, 0, 0, 0);
+								g = (MovingAnimator* ) suspending["leftuppipe"].back();
+
+								suspending["leftuppipe"].pop_back();
+								running["leftuppipe"].push_back((Animator*) g);
+						} else if(brick[y][x] == 298) {
+								if(suspending["leftpipe"].size() == 0)
+										CreateSprite("leftpipe", 16, 0, 0, 0);
+								g = (MovingAnimator* ) suspending["leftpipe"].back();
+
+								suspending["leftpipe"].pop_back();
+								running["leftpipe"].push_back((Animator*) g);
+						} else if(brick[y][x] == 266) {
+								if(suspending["rightuppipe"].size() == 0)
+										CreateSprite("rightuppipe", 16, 0, 0, 0);
+								g = (MovingAnimator* ) suspending["rightuppipe"].back();
+
+								suspending["rightuppipe"].pop_back();
+								running["rightuppipe"].push_back((Animator*) g);
+						} else if(brick[y][x] == 299) {
+								if(suspending["rightpipe"].size() == 0)
+										CreateSprite("rightpipe", 16, 0, 0, 0);
+								g = (MovingAnimator* ) suspending["rightpipe"].back();
+
+								suspending["rightpipe"].pop_back();
+								running["rightpipe"].push_back((Animator*) g);										
+						} else if(brick[y][x] == 34) {
+								if(suspending["solidbrick"].size() == 0)
+										CreateSprite("solidbrick", 20, 0, 0, 0);
+								g = (MovingAnimator* ) suspending["solidbrick"].back();
+										
+								suspending["solidbrick"].pop_back();
+								running["solidbrick"].push_back((Animator*) g);
 						}
+						assert(g);
+
+						g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
+						g->GetSprite()->SetY(y * 16);
+						g->SetLastTime(CurrTime());
+						AnimatorHolder::MarkAsRunning(g);
+						SetBrickAsActive(y,x);
 				}
+				if(GetFromMap(y, x) == 124) {
+					MovingPathAnimator* g;
+					if(IsItemActive(y, x)) continue;
+					std::vector<PathEntry> paths;
+					for(Dim k = 0u; k < 10u; ++k) { // @todo make the code better!		
+						PathEntry pathEntry(0, 0, k % 3, 80);
+						paths.push_back( pathEntry );
+					}
+					if(suspending["coinanimation"].size() == 0)
+						CreateCoinSprite("coinanimation", false);
+					g = (MovingPathAnimator* ) suspending["coinanimation"].back();
+					assert(g);
+					suspending["coinanimation"].pop_back();	
+					g->GetSprite()->SetX(j * 16);
+					g->GetSprite()->SetY(i * 16);
+					g->SetLastTime(CurrTime());
+					g->GetAnimation()->SetPath(paths);
+					g->GetAnimation()->SetContinuous(true);
+					AnimatorHolder::MarkAsRunning(g);
+					running["coinanimation"].push_back(g);
+					SetItemAsActive(y, x);
+				}
+		}
 }
 
 void Items::CreateABrickAnimation() {
@@ -270,17 +293,17 @@ void Items::CreateSpriteWithPath(char* id, Dim start, Dim end, offset_t dx, offs
 		AnimatorHolder::Register( aMovAnimr );
 }
 
-void Items::CreateCoinSprite(char* id) {
+void Items::CreateCoinSprite(char* id, bool moving) {
 		Sprite * sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string(id) ));
 		std::vector<PathEntry> paths;
 		
 		for(Dim i = 0u; i < 10u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, (i < 5u) ? -6 : 6, 0, 70);
+				PathEntry pathEntry(0, moving ? ((i < 5u) ? -6 : 6) : 0, i % 3, 80);
 				paths.push_back( pathEntry );
 		}
 		
 		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(21u));
-		aMovAnimn->SetContinuous(false);
+		aMovAnimn->SetContinuous(moving ? false : true);
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 
 		suspending[id].push_back( (Animator*) aMovAnimr );
@@ -385,6 +408,7 @@ void Items::ArtificialIntelligence() {
 		CreateBricks();
 		BrickCollision();
 		MoveStars();
+		CoinCollision();
 }
 
 void Items::SetItemAsActive(Dim x, Dim y) {
@@ -396,6 +420,11 @@ void Items::SetItemAsActive(Dim x, Dim y) {
 }
 
 bool Items::IsItemActive(Dim x, Dim y) {
+		assert(x <= MAX_HEIGHT && y <= MAX_WIDTH);
+		for(Dim i = 0; i < countItems; i++)
+				if(shortMap[i][X_INDEX] == x && shortMap[i][Y_INDEX] == y)
+						return shortMap[i][ISACTIVE] == 1;
+		assert(0);
 		return false;
 }
 
@@ -551,12 +580,18 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 		}else if(!strcmp(id, "questionbrick")){
 				MovingPathAnimator* g;
 				if(suspending["coinanimation"].size() == 0)
-						CreateCoinSprite("coinanimation");
+						CreateCoinSprite("coinanimation", true);
 				g = (MovingPathAnimator* ) suspending["coinanimation"].back();
 				suspending["coinanimation"].pop_back();	
+				std::vector<PathEntry> paths;
+				for(Dim k = 0u; k < 10u; ++k) { // @todo make the code better!		
+					PathEntry pathEntry(0, k < 5 ? -6 : 6, k % 3, 80);
+					paths.push_back( pathEntry );
+				}
 				g->GetSprite()->SetX(x + 3);
 				g->GetSprite()->SetY(y - 16);
 				g->SetLastTime(CurrTime());
+				g->GetAnimation()->SetPath(paths);
 				AnimatorHolder::MarkAsRunning(g);
 				running["coinanimation"].push_back(g);
 				ShowSolidQuestion((MovingAnimator*)prevAnim, x, y);
@@ -863,4 +898,34 @@ void Items::ReactivateItems(Dim x) {
 		KillSprites("bricks");
 		KillSprites("questionbrick");
 		KillSprites("solidbrick");
+}
+
+void Items::CoinCollision() {
+	Dim mx = Mario::GetMarioCurrentSprite()->GetX();
+	Dim my = Mario::GetMarioCurrentSprite()->GetY();
+	Dim mw = Mario::GetMarioCurrentSprite()->GetFrameBox().GetWidth();
+	Dim mh = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight();
+	Dim x, y, w, h;
+	std::list<Animator*>::iterator it = running["coinanimation"].begin();
+	while (it != running["coinanimation"].end()){
+		x = ((MovingPathAnimator*)*it)->GetSprite()->GetX();
+		y = ((MovingPathAnimator*)*it)->GetSprite()->GetY();
+		w = ((MovingPathAnimator*)*it)->GetSprite()->GetFrameBox().GetWidth();
+		h = ((MovingPathAnimator*)*it)->GetSprite()->GetFrameBox().GetHeight();
+		if(  ( ( mx <= x && x <= (mx + mw) ) || ( x <= mx && mx <= (x + w) ) ) 
+						&&
+				 ( ( my <= y && y <= (my + mh) ) || ( y <= my && my <= (y + h) ) )
+			) {
+				suspending["coinanimation"].push_back( *it );
+				AnimatorHolder::MarkAsSuspended( *it );
+				running["coinanimation"].erase( it );
+				Coins::CheckCoins();
+				Score::ScoreAdd(200);
+				Sounds::Play("coin");
+				return ;
+		}
+		else
+					++it;
+	}
+	return ;
 }

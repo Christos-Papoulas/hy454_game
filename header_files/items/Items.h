@@ -82,7 +82,8 @@ class Items {
 		static void IsByTube(const char* id);
 
 		static void NotifyHit(Animator* g, const char* id, Dim x, Dim y);
-		static void CreateCoinSprite(char* id);
+		static void CreateCoinSprite(char* id, bool moving);
+		static void CoinCollision();
 		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
 		static void CollisionMarioWithMushroom();
 		static void CollisionMarioWithStar();
