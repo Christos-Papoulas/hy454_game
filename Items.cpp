@@ -791,8 +791,10 @@ void Items::CollisionMarioWithMushroom() {
 						suspending["mushroom"].push_back(*it);
 						AnimatorHolder::MarkAsSuspended(*it);
 						running["mushroom"].erase(it);
-
-						Mario::SuperMario();
+						if(!Mario::IsInvincibleSuper())
+							Mario::SuperMario();
+						else if(Mario::IsInvincibleSmall())
+							Mario::SetSuperAsInvincible();
 						Score::ScoreAdd(1000);
 						Sounds::Play("powerup");
 						return ;

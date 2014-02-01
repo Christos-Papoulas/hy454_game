@@ -707,6 +707,11 @@ void Mario::FlashMario() {
 		ChangeLevel(prev);
 }
 
+void Mario::SetSuperAsInvincible() {
+	marioLevel = InvincibleSuper;
+	FlushMario::InitSuperMario();	
+}
+
 void Mario::SetMarioAsInvincible() {
 		Animator* prev = GetAnimator();
 		switch (marioLevel) {
@@ -715,8 +720,7 @@ void Mario::SetMarioAsInvincible() {
 						FlushMario::InitMario();
 						break;
 				case Super_Mario:
-						marioLevel = InvincibleSuper;
-						FlushMario::InitSuperMario();	
+						SetSuperAsInvincible();
 						break;
 		}
 		StartBeInvincible(currTime);
