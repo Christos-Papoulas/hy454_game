@@ -355,6 +355,10 @@ void Mario::BackWalkAndJump() {
 		return ;
 }
 
+void Mario::MovesDown() {
+	EnterPipe();
+	//if()
+}
 void Mario::MarioDeading() {
 		if(marioState == Death) 
 			return ;

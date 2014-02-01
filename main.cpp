@@ -165,7 +165,7 @@ void MarioBrosMain::InputManagement(){
 						Mario::isNotRunning();
 
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
-						return Mario::EnterPipe(); // @todo something
+						return Mario::MovesDown(); // @todo something
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
 						Mario::GetOutFromPipe();
 						return Mario::MarioMovesRight();

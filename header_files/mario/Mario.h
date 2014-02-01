@@ -81,6 +81,8 @@ class Mario {
 		static void StartBeInvincible(timestamp_t t) { startBeInvincible = t; }
 		static timestamp_t GetTimeBeInvincible() { return startBeInvincible; }
 		static void Return2Normal();
+
+		static void EnterPipe();
 	public:
 		static void SuperMario();
 		static void FlashMario();
@@ -119,10 +121,11 @@ class Mario {
 		static void MarioMovesLeft();
 		static void MarioMovesRight();
 		static void BackWalkAndJump();
+		static void MovesDown();
 		static void MarioDeading();
 		static void Run();
 		static void isNotRunning();
-		static void EnterPipe();
+		
 		static void GetOutFromPipe();
 		static Dim PipeEnterScroll(Dim i);
 		
