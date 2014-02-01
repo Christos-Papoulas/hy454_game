@@ -179,6 +179,7 @@ void FlushMario::InitSuperMario() {
 		SuperWalkJump();
 		SuperStandJump();
 		SuperBackWalkJump();
+		Down();
 }
 
 void FlushMario::SuperWaiting() {
@@ -340,4 +341,27 @@ void FlushMario::SuperBackWalkJump() {
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
 		AnimatorHolder::Register( aMovAnimr );
+}
+
+MovingAnimator* FlushMario::down = NULL;
+void FlushMario::Down() {
+		if(down){
+				Mario::CreateDown(down);
+				return ;
+		} 
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY(),
+																		AnimationFilmHolder::GetFilm( std::string("flushdown") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 1, 
+						0, 0, 90, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("flushdown"))
+						);
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		Mario::CreateDown(aMovAnimr);
+		down = aMovAnimr;
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::FinishDown, NULL);
+		AnimatorHolder::Register( aMovAnimr );				
 }

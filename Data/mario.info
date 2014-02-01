@@ -1,4 +1,4 @@
-57
+59
 1
 mariowalking 3
 0 0 16 16
@@ -220,3 +220,10 @@ redkoopaleft 2
 223
 brickbreak 1
 0 280 8 8
+224
+superdown 1
+32 69 16 32
+225
+flushdown 2
+32 69 16 32
+64 69 16 32

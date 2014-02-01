@@ -24,6 +24,7 @@
 #include < vector>
 #include <time.h>
 
+extern ALLEGRO_KEYBOARD_STATE keyboardState;
 extern Dim countScroll;
 
 #define RUNNING_DELAY		100
@@ -57,7 +58,8 @@ class Mario {
 		static MovingPathAnimator* MarioWJump;
 		static MovingPathAnimator* BackJump;
 		static MovingPathAnimator* MarioDeath;
-		
+		static MovingAnimator* Down;
+
 		static MarioState marioState;
 		static MarioLevel marioLevel;
 		static bool justReturn2Small;
@@ -94,6 +96,7 @@ class Mario {
 		static void CreateWjumping(MovingPathAnimator* mario_animator);
 		static void CreateDeath(MovingPathAnimator* mario_animator);
 		static void CreateBackAndJump(MovingPathAnimator* mario_animator);
+		static void CreateDown(MovingAnimator* _m);
 
 		static Sprite* GetMarioCurrentSprite();
 		static  Animator* GetAnimator();
@@ -115,7 +118,7 @@ class Mario {
 		static void MarioFinishWjumping(Animator*, void*);
 		static void MarioFinishDeath(Animator*a, void*v);
 		static void MarioFinishBackJump(Animator*, void*);
-
+		static void FinishDown(Animator*, void*);
 		static void MarioStandingJump();
 		static void MarioWalkingJump();
 		static void MarioMovesLeft();

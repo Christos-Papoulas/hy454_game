@@ -9,6 +9,7 @@ MovingPathAnimator* Mario::MarioWJump = NULL;
 MovingAnimator* Mario::MarioBWalk = NULL;
 MovingPathAnimator* Mario::BackJump = NULL;
 MovingPathAnimator* Mario::MarioDeath = NULL;
+MovingAnimator* Mario::Down = NULL;
 bool Mario::isOnBrick = false;
 Dim Coins::coins = 0;
 Dim Coins::lifes = 3;
@@ -188,6 +189,10 @@ void Mario::CreateBackAndJump(MovingPathAnimator* mario_animator) {
 		}
 }
 
+void Mario::CreateDown(MovingAnimator* _m) {
+	Down = _m;
+}
+
 void Mario::CreateDeath(MovingPathAnimator* mario_animator) {
 		if(!MarioDeath)
 				MarioDeath = mario_animator;
@@ -357,8 +362,14 @@ void Mario::BackWalkAndJump() {
 
 void Mario::MovesDown() {
 	EnterPipe();
-	//if()
+	if(IsInvincibleSuper() || IsSuperMario()) {
+		Animator *g = GetAnimator();
+		AnimatorHolder::MarkAsSuspended(g);
+		SetDimensions(Down, MarioWaiting);
+		AnimatorHolder::MarkAsRunning(Down);
+	}
 }
+
 void Mario::MarioDeading() {
 		if(marioState == Death) 
 			return ;
@@ -435,6 +446,14 @@ void Mario::MarioFinishBackJump(Animator*, void*) {
 		AnimatorHolder::MarkAsRunning(MarioWaiting);
 		BackJump->SetCurrIndex(0);
 		ChangeState(Waiting);
+}
+
+void Mario::FinishDown(Animator*, void*) {
+	if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN))
+		return ;
+	AnimatorHolder::MarkAsSuspended(Down);
+	AnimatorHolder::MarkAsRunning(MarioWaiting);
+	ChangeState(Waiting);
 }
 
 clock_t wai;

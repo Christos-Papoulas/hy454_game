@@ -183,6 +183,7 @@ void Initializer::InitSuperMario(){
 	SuperWalkJump();
 	SuperStandJump();
 	SuperBackWalkJump();
+	SuperDown();
 }
 
 MovingAnimator* superWaiting = NULL;
@@ -332,6 +333,26 @@ void Initializer::SuperBackWalkJump() {
 		aMovAnimn->SetContinuous(false);
 		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
 		aMovAnimr->SetOnFinish(Mario::MarioFinishBackJump, NULL);
+		AnimatorHolder::Register( aMovAnimr );
+}
+
+MovingAnimator* superDown = NULL;
+void Initializer::SuperDown() {
+		if(superDown) {
+				Mario::CreateDown(superDown);
+				return ;
+		}
+		Sprite* m = Mario::GetMarioCurrentSprite();
+		Sprite * spriteMario = new Sprite(m->GetX(), m->GetY() - 16, AnimationFilmHolder::GetFilm( std::string("superdown") ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new MovingAnimation(
+			0, 0, 160, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("superdown"))
+		);
+		MovingAnimator* aMovAnimr =  new MovingAnimator();
+		Mario::CreateDown(aMovAnimr);
+		superDown = aMovAnimr;
+		aMovAnimr->Start( spriteMario, aMovAnimn, GetCurrTime());			
+		aMovAnimr->SetOnFinish(Mario::FinishDown, NULL);
 		AnimatorHolder::Register( aMovAnimr );
 }
 

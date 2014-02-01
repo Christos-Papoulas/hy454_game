@@ -34,6 +34,7 @@ namespace Initializer {
 		extern void SuperWalkJump();
 		extern void SuperStandJump();
 		extern void SuperBackWalkJump();
+		extern void SuperDown();
 };
 
 class SpritesHolder {

@@ -22,7 +22,7 @@ namespace FlushMario{
 		extern MovingPathAnimator* MarioWalkJump;
 		extern MovingPathAnimator* backWalkJump;
 		extern MovingAnimator* marioBackWalk;
-
+		
 		extern void InitMario();
 
 		extern void Walking();
@@ -41,6 +41,7 @@ namespace FlushMario{
 		extern MovingPathAnimator* SuperFlushWalkJump;
 		extern MovingPathAnimator* SuperFlushbackWalkJump;
 		extern MovingAnimator* SuperFlushBackWalk;
+		extern MovingAnimator* down;
 
 		extern void SuperWaiting();
 		extern void SuperWalking();
@@ -48,6 +49,7 @@ namespace FlushMario{
 		extern void SuperWalkJump();
 		extern void SuperStandJump();
 		extern void SuperBackWalkJump();
+		extern void Down();		
 };
 
 #endif
