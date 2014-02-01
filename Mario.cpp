@@ -543,7 +543,7 @@ void Mario::GetOutFromPipe() {
 			activeMario->SetY(129);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
 			Mario::isUnderGround = false;
-			
+			Items::SuspendCoinsUnderGround();
 		}
 	}
 }

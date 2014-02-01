@@ -67,6 +67,7 @@ bool Enemies::CanGoLeft(Dim x, Dim y) {
 				return true;
 		if(Collision::GetValue(x + i - 1, y + j) != 0)
 				return false;
+		
 		return true;
 }
 
@@ -76,6 +77,7 @@ bool Enemies::CanGoRight(Dim x, Dim y) {
 		
 		if(Collision::GetValue(x + i + 1, y + j) != 0)
 				return false;
+
 		return true;
 }
 

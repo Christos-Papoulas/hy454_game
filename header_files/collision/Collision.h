@@ -15,12 +15,12 @@ class Collision{
 			static void MarioCollision(Dim x_tile, Dim y_tile);
 
 		public:
-			static void Create() {  };
+			static void Create() {  }
 			static void SetValue(Dim x, Dim y, Dim value);
 			static Dim GetValue(Dim y, Dim x) {assert(x <= MAX_HEIGHT && y <= MAX_WIDTH); return Collision_map[x][y]; }
 			static void CheckCollision();
-			static void SetGravity(bool x) { IsGravityAddicted = x; };
-			static bool GetGravity() { return IsGravityAddicted; };
+			static void SetGravity(bool x) { IsGravityAddicted = x; }
+			static bool GetGravity() { return IsGravityAddicted; }
 };
 
 #endif

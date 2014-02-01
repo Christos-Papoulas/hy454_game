@@ -929,3 +929,53 @@ void Items::CoinCollision() {
 	}
 	return ;
 }
+
+bool Items::IsPipeOnLeft(Sprite* En) {
+	char *id = "rightpipe";
+	Dim PipeX;
+	Dim EnX = En->GetX();
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+		PipeX = ((MovingAnimator*) *it)->GetSprite()->GetX();
+		
+		if(EnX > PipeX)
+			continue;
+		else {
+			return Sprite::Overlap(En, ((MovingAnimator*) *it)->GetSprite());
+		}
+	}
+	return false;
+}
+
+bool Items::IsPipeOnRight(Sprite *En) {
+	char *id = "leftpipe";
+	Dim PipeX;
+	Dim EnX = En->GetX();
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+		PipeX = ((MovingAnimator*) *it)->GetSprite()->GetX();
+		
+		if(PipeX > EnX)
+			continue;
+		else {
+			return Sprite::Overlap(En, ((MovingAnimator*) *it)->GetSprite());
+		}
+	}
+	return false;
+}
+
+void Items::SuspendCoinsUnderGround() {
+	std::vector<PathEntry> paths;
+	for(Dim i = 0u; i < 10u; ++i) { // @todo make the code better!		
+			PathEntry pathEntry(0, (i < 5u) ? -6 : 6, i % 3, 80);
+			paths.push_back( pathEntry );
+	}
+
+	for (std::list<Animator*>::iterator it=running["coinanimation"].begin(); it != running["coinanimation"].end(); ++it) {
+		MovingPathAnimator* g = ( MovingPathAnimator* )*it;
+		g->SetCurrIndex(0);
+		g->GetAnimation()->SetContinuous(false);
+		g->GetAnimation()->SetPath(paths);
+		suspending["coinanimation"].push_back(g);
+		AnimatorHolder::MarkAsSuspended(g);
+	}
+	running["coinanimation"].clear();
+}

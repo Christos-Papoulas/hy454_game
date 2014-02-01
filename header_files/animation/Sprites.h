@@ -37,6 +37,7 @@ class Sprite {
 				void SetFilmAndReset(AnimationFilm*);
 				AnimationFilm* GetCurrFilm();
 				Rect GetFrameBox() { return frameBox; }
+				static bool Overlap(Sprite* s1, Sprite* s2);
 };
 
 #endif

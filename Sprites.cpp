@@ -23,7 +23,8 @@ bool Sprite::IsVisible() const {
 bool Sprite::CollisionCheck (Sprite *s) {
 	Dim h = frameBox.GetHeight() - COLLISION_OFFSET;
 	Dim w = frameBox.GetWidth() - COLLISION_OFFSET;
-	Dim x = this->x + COLLISION_OFFSET; Dim y = this->y + COLLISION_OFFSET;
+	Dim x = this->x + COLLISION_OFFSET; 
+	Dim y = this->y + COLLISION_OFFSET;
 
 	Dim sh = s->GetFrameBox().GetHeight() - COLLISION_OFFSET;
 	Dim sw = s->GetFrameBox().GetWidth() - COLLISION_OFFSET;
@@ -136,4 +137,19 @@ void Sprite::SetFilmAndReset(AnimationFilm* flm) {
 
 AnimationFilm* Sprite::GetCurrFilm() {
 		return currFilm;
+}
+
+bool Sprite::Overlap(Sprite* s1, Sprite* s2) {//s1 is enemy , s2 is pipe
+	Dim mx = s1->GetX();
+	Dim my = s1->GetY();
+	Dim mw = s1->GetFrameBox().GetWidth() + COLLISION_OFFSET;
+	Dim mh = s1->GetFrameBox().GetHeight() + COLLISION_OFFSET;
+	Dim x = s2->GetX() ;
+	Dim y = s2->GetY() ;
+	Dim w = s2->GetFrameBox().GetWidth();
+	Dim h = s2->GetFrameBox().GetHeight();
+	Dim Dy = (my > y) ? my - y : y - my;
+	return (((x + 16 )>= mx && x - mx < 3) && Dy < 8)
+					||
+				 (((mx + 16) <= x && mx - x < 3) && Dy < 8);
 }

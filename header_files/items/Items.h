@@ -122,6 +122,10 @@ public:
 
 		static void ReactivateItems(Dim x);
 		static bool IsMarioOnBrick();
+		static bool IsPipeOnLeft(Sprite *En);
+		static bool IsPipeOnRight(Sprite *En);
+
+		static void SuspendCoinsUnderGround();
 };
 
 #endif

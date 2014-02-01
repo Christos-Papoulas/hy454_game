@@ -120,7 +120,7 @@ void Goumbas::MoveGoumbas() {
 						Items::Throw100Coins(x, y);
 						return ;
 				}
-
+			
 				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
 						g->GetMovingAnimation()->SetDx(-2);
 				else if(!Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
@@ -131,7 +131,7 @@ void Goumbas::MoveGoumbas() {
 						g->GetMovingAnimation()->SetDx(-2);
 				else
 						g->GetMovingAnimation()->SetDx(0);
-
+				
 				if( Enemies::IsOnAir(TileX, TileY, 0) && !Enemies::IsOnBrick(currPosX, currPosY)) 
 						g->GetMovingAnimation()->SetDy(3);
 				else
