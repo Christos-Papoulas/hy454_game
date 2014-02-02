@@ -475,9 +475,9 @@ void Mario::MarioFinishDeath(Animator*a, void*v) {
 	MarioBrosMain::SetGamePlay();
 	
 	AnimatorHolder::MarkAsSuspended(a);
-	if( Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[2] )
+	if( Mario::GetMarioCurrentSprite()->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX() > checkpoints[2] )
 			RestoreCheckpoint(checkpoints[2]);
-	if( Mario::GetMarioCurrentSprite()->GetTileX() > checkpoints[1] )
+	else if( Mario::GetMarioCurrentSprite()->GetTileX() + Terrain::GetTileLayer()->GetViewWindow().GetX() > checkpoints[1] )
 		RestoreCheckpoint(checkpoints[1]);
 	else 
 		RestoreCheckpoint(checkpoints[0]);

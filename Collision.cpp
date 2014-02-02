@@ -19,6 +19,8 @@ void Collision::SetValue(Dim x, Dim y, Dim value) {
 				value == 69  ||
 				value == 266)
 			Collision_map[x][y] = 1;
+		else if(value == 47)
+			Collision_map[x][y] = value;
 		else
 			Collision_map[x][y] = 0;
 }
@@ -44,7 +46,9 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 		Sounds::Play("mario_death");
 		Mario::MarioFinishDeath(0,0);
 	}
-
+	if(Collision::GetValue(y_tile + i, x_tile + j) == 47){
+		AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
+	}
 	//assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
 
