@@ -37,7 +37,15 @@ void Collision::CheckGravity(Dim x_tile, Dim y_tile) {
 void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 	Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 	Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
-	assert(j+x_tile+1 < MAX_HEIGHT);
+	Dim y = Mario::GetMarioCurrentSprite()->GetY();
+	clock_t wa;
+	if(y == 222){
+		Coins::RemoveLife();
+		Sounds::Play("mario_death");
+		Mario::MarioFinishDeath(0,0);
+	}
+
+	//assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
 
 	Animator* marioAnimator = Mario::GetAnimator();

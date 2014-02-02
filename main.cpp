@@ -192,6 +192,8 @@ void MarioBrosMain::InputManagement(){
 
 				if(al_key_down(&keyboardState, ALLEGRO_KEY_C))
 					Mario::SuperMario();
+				if(al_key_down(&keyboardState, ALLEGRO_KEY_V))
+					Mario::SetMarioAsInvincible();
 		}
 }
 
