@@ -68,7 +68,8 @@ bool MarioBrosMain::InitAllegro(){
 }
 
  void MarioBrosMain::Rendering(timestamp_t now) {
-		if(!al_is_event_queue_empty(queue)) 
+
+	 if(!al_is_event_queue_empty(queue)) 
 				return ;
 		 
 		al_clear_to_color(al_map_rgba(0, 0, 0, 0));
@@ -82,6 +83,10 @@ bool MarioBrosMain::InitAllegro(){
 		if(gameState == Pause){
 			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 			AnimatorHolder::Display(al_get_backbuffer(display)); 		// @todo working properly;
+		}
+
+		if(gameState == Over){
+			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 		}
 
 		

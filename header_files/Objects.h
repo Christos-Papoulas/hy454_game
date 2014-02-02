@@ -19,6 +19,7 @@
 #define LIFE_SCREEN1_MAP	"data\\Lifes_Screen1.txt"
 #define BLACK_SCREEN_MAP	"data\\Black_Screen.txt"
 #define GAME_OVER_SCREEN	"data\\Game_Over.txt"
+#define GAME_WIN			"data\\Win_Screen.txt"
 
 typedef unsigned char byte;
 typedef unsigned short Dim;

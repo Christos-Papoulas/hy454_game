@@ -99,6 +99,18 @@ void TerrainStartScreen::CreateGameOver() {
 	CalculateTilesPositionStartScreen();
 }
 
+void TerrainStartScreen::CreateWin() {
+	FILE* fp_new;
+	terrainStartScreen = new TerrainStartScreen();
+	terrainStartScreen->tileLayerStartScreen = new TileLayerStartScreen();
+
+	fp_new = fopen(GAME_WIN, "r");
+	if(!tileLayerStartScreen->ReadMap(fp_new))
+		fprintf(stderr, "cannot read start_screen file\n");
+	fclose(fp_new);
+	CalculateTilesPositionStartScreen();
+}
+
 void TerrainStartScreen::CleanUp() {
 		delete terrainStartScreen;
 }

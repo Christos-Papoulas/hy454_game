@@ -36,6 +36,7 @@ void Collision::CheckGravity(Dim x_tile, Dim y_tile) {
 		}
 }
 
+clock_t wa;
 void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 	Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 	Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
@@ -48,6 +49,11 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 	}
 	if(Collision::GetValue(y_tile + i, x_tile + j) == 47){
 		AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
+		TerrainStartScreen::CreateWin();
+		wa = clock();
+		while( clock() != wa + 3000 );
+		if(MarioBrosMain::GameIsPlay())
+			MarioBrosMain::SetGameOver();
 	}
 	//assert(j+x_tile+1 < MAX_HEIGHT);
 	assert(i+y_tile < MAX_WIDTH);
