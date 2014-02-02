@@ -41,13 +41,14 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 	Dim i = Terrain::GetTileLayer()->GetViewWindow().GetX();
 	Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 	Dim y = Mario::GetMarioCurrentSprite()->GetY();
+	Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight() >> 4;
 	clock_t wa;
 	if(y == 222){
 		Coins::RemoveLife();
 		Sounds::Play("mario_death");
 		Mario::MarioFinishDeath(0,0);
 	}
-	if(Collision::GetValue(y_tile + i, x_tile + j) == 47){
+	if(Collision::GetValue(y_tile + i, x_tile + j + mheight - 1) == 47){
 		AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
 		TerrainStartScreen::CreateWin();
 		wa = clock();
