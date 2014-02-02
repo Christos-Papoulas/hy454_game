@@ -12,6 +12,7 @@ bool redraw = true;
 const float FPS = 90;
 int z_pressed = 0;
 int space_pressed = 0;
+clock_t wait;
 
 bool MarioBrosMain::InitAllegro(){
 		if(!al_init()){
@@ -87,6 +88,10 @@ bool MarioBrosMain::InitAllegro(){
 
 		if(gameState == Over){
 			TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
+			al_flip_display();
+			wait = clock();
+			while( clock() != wait + 3000 );
+			exit(0);
 		}
 
 		
@@ -202,7 +207,6 @@ void MarioBrosMain::InputManagement(){
 		}
 }
 
-clock_t wait;
 void MarioBrosMain::StartScreen(timestamp_t now) {
 	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter

@@ -51,6 +51,7 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 	if(Collision::GetValue(y_tile + i, x_tile + j + mheight - 1) == 47){
 		AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
 		TerrainStartScreen::CreateWin();
+		Sounds::Play("finish");
 		wa = clock();
 		while( clock() != wa + 3000 );
 		if(MarioBrosMain::GameIsPlay())
