@@ -21,6 +21,7 @@ ALLEGRO_SAMPLE_ID Sounds::id_warning;
 ALLEGRO_SAMPLE_ID Sounds::id_hurry_up;
 ALLEGRO_SAMPLE_ID Sounds::id_underground;
 ALLEGRO_SAMPLE_ID Sounds::id_underground_hurry_up;
+ALLEGRO_SAMPLE_ID Sounds::id_jump_super;
 
 ALLEGRO_SAMPLE *Sounds::music=NULL;
 ALLEGRO_SAMPLE *Sounds::jump_small=NULL;
@@ -43,9 +44,10 @@ ALLEGRO_SAMPLE *Sounds::warning;
 ALLEGRO_SAMPLE *Sounds::hurry_up;
 ALLEGRO_SAMPLE *Sounds::underground;
 ALLEGRO_SAMPLE *Sounds::underground_hurry_up;
+ALLEGRO_SAMPLE *Sounds::jump_super;
 
 bool Sounds::InitSounds() {
-	if (!al_reserve_samples(20)){
+	if (!al_reserve_samples(22)){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return false;
 	}
@@ -71,8 +73,9 @@ bool Sounds::InitSounds() {
 	hurry_up = al_load_sample(HURRY_UP);
 	underground = al_load_sample(UNDERGROUND);
 	underground_hurry_up = al_load_sample(UNDERGROUND_HURRY_UP);
+	jump_super = al_load_sample(JUMP_SUPER);
 
-	if (!music || !jump_small || !pause || !hit_brick || !powerup_appears || !powerup || !mario_death || !Invincible || !one_up || !coin || !fireworks || !flag || !game_over || !enter_pipe || !finish || !stomp || !vine || !warning || !hurry_up || !underground || !underground_hurry_up) {
+	if (!music || !jump_small || !pause || !hit_brick || !powerup_appears || !powerup || !mario_death || !Invincible || !one_up || !coin || !fireworks || !flag || !game_over || !enter_pipe || !finish || !stomp || !vine || !warning || !hurry_up || !underground || !underground_hurry_up || !jump_super) {
 		printf( "Audio clip sample not loaded!\n" ); 
 		return false;
 	}
@@ -122,6 +125,8 @@ void Sounds::Play(const char* id) {
 		al_play_sample(underground, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_underground);
 	}else if(id == "underground_hurry_up") {
 		al_play_sample(underground_hurry_up, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_underground_hurry_up);
+	}else if(id == "jump_super") {
+		al_play_sample(jump_super, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_jump_super);
 	}
 	
 }
@@ -169,6 +174,8 @@ void Sounds::Pause(const char* id) {
 		al_stop_sample(&id_underground);
 	}else if(id == "underground_hurry_up") {
 		al_stop_sample(&id_underground_hurry_up);
+	}else if(id == "jump_super") {
+		al_stop_sample(&id_jump_super);
 	}
 	
 }

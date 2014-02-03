@@ -194,7 +194,6 @@ void MarioBrosMain::InputManagement(){
 						z_pressed = 1;
 					}
 					if(!Mario::isStandingJumping()){
-						Sounds::Play("jump_small");
 						return Mario::MarioStandingJump();
 					}
 				}

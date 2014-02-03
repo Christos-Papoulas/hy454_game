@@ -308,7 +308,10 @@ void Mario::MarioStandingJump() {
 				return ;
 		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
 				return ;
-		Sounds::Play("jump_small");
+		if(!Mario::IsInvincibleSuper || !Mario::IsSuperMario())
+			Sounds::Play("jump_small");
+		else
+			Sounds::Play("jump_super");
 		SetDimensions(MarioSJump, MarioWaiting);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -327,7 +330,10 @@ void Mario::MarioWalkingJump() {
 		}
 		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
 				return ;
-		Sounds::Play("jump_small");
+		if(!Mario::IsInvincibleSuper || !Mario::IsSuperMario())
+			Sounds::Play("jump_small");
+		else
+			Sounds::Play("jump_super");
 		SetDimensions(MarioWJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);
@@ -345,7 +351,11 @@ void Mario::BackWalkAndJump() {
 		if(marioState == BackAndJump || isDead()){
 				return ;
 		}
-		Sounds::Play("jump_small");
+				return ;
+		if(!Mario::IsInvincibleSuper || !Mario::IsSuperMario())
+			Sounds::Play("jump_small");
+		else
+			Sounds::Play("jump_super");
 		SetDimensions(BackJump, MarioAnimator);
 
 		AnimatorHolder::MarkAsSuspended(MarioAnimator);

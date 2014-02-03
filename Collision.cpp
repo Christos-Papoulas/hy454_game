@@ -48,6 +48,8 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 		Sounds::Play("mario_death");
 		Mario::MarioFinishDeath(0,0);
 	}
+	if(y > 240)
+		Mario::GetMarioCurrentSprite()->SetY(100);
 	if(Collision::GetValue(y_tile + i, x_tile + j + mheight - 1) == 47){
 		AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
 		TerrainStartScreen::CreateWin();
