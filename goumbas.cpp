@@ -155,6 +155,8 @@ void Goumbas::GoumbasKillMario() {
 		if(collision){
 			if(Mario::IsInvincible()){
 				BadDeath(x, y);
+				Sounds::Play("stomp");
+				Score::ScoreAdd(100);
 				AnimatorHolder::MarkAsSuspended(*it);
 				goumbaSuspending.push_back(*it);
 				running.erase(it);
@@ -201,6 +203,8 @@ void Goumbas::CollicionWithKoopaInShells(Dim kx, Dim ky) {
 			dy = (ky > gy) ? ky - gy : gy - ky;
 			if(dx < COLLISION_DETECT && dy < COLLISION_DETECT){
 					BadDeath(gx, gy);
+					Sounds::Play("stomp");
+					Score::ScoreAdd(100);
 					AnimatorHolder::MarkAsSuspended(*it);
 					goumbaSuspending.push_back(*it);
 					running.erase(it);
