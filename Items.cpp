@@ -114,7 +114,7 @@ void Items::CreateBricks() { //and coins!
 								if(suspending["questionbrick"].size() == 0)
 										CreateAQuestionAnimation();
 								g = (MovingAnimator* ) suspending["questionbrick"].back();
-
+								
 								suspending["questionbrick"].pop_back();
 								running["questionbrick"].push_back((Animator*) g);
 						} else if(brick[y][x] == 265) {
@@ -506,15 +506,16 @@ void Items::CreateAQuestionAnimation() {
 		
 		std::vector<PathEntry> paths;
 		for(Dim i = 0u; i < 3u; ++i) { // @todo make the code better!		
-				PathEntry pathEntry(0, 0, i%3, 1000);
+				PathEntry pathEntry(0, 0, i%3, 300);
 				paths.push_back( pathEntry );
 		}
-		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("mariojumping")));
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf("questionbrick")));
 		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator(); 
 				
 		suspending["questionbrick"].push_back( (Animator*) aMovAnimr );
 		aMovAnimn->SetContinuous(false);
-		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());
+		
 		AnimatorHolder::Register( aMovAnimr );
 }
 
