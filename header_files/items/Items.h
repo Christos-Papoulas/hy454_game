@@ -57,6 +57,8 @@ class Items {
 		static void SuspendBricks(const char* id);
 
 		static void KillSprites(const char* id);
+		static void SuspendSprites(const char* id);
+		static void RegenerateSprites(const char* id);
 
 		static Dim GetFromMap(Dim x, Dim y) { return map[x][y]; }
 		static void SetOnMap(Dim value, Dim x, Dim y) { map[x][y] = value; }
@@ -108,6 +110,8 @@ public:
 		static bool IsMarioLeft(Dim x, Dim y);
 		static bool IsMarioRight(Dim x, Dim y);
 		static void KillPipes();
+		static void KillBricks();
+		static void RegenerateBricks();
 
 		static bool IsOnBrick(const char* id);
 		static bool IsEnemyOnBrick(const char* id, Dim x, Dim y);

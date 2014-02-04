@@ -374,6 +374,31 @@ void Items::KillSprites(const char* id) {
 	running[id].clear();
 }
 
+void Items::SuspendSprites(const char* id){
+	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+				suspending[id].push_back(*it);
+				AnimatorHolder::MarkAsSuspended(*it);
+	}
+}
+
+void Items::RegenerateSprites(const char* id){
+	for (std::list<Animator*>::iterator it=suspending[id].begin(); it != running[id].end(); ++it) {
+				AnimatorHolder::MarkAsRunning(*it);
+	}
+}
+
+void Items::KillBricks(){
+	SuspendSprites("questionbrick");
+	SuspendSprites("solidbrick");
+	SuspendSprites("bricks");
+}
+
+void Items::RegenerateBricks(){
+	RegenerateSprites("questionbrick");
+	RegenerateSprites("solidbrick");
+	RegenerateSprites("bricks");
+}
+
 void Items::KillPipes() {
 	KillSprites("leftuppipe");
 	KillSprites("leftpipe");
