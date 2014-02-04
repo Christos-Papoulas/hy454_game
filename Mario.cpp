@@ -572,8 +572,20 @@ void Mario::GetOutFromPipe() {
 			viewWin.SetY(0);
 			viewWin.SetHeight(15);
 			viewWin.SetWidth(16);
-			activeMario->SetX(76);
-			activeMario->SetY(129);
+			/*activeMario->SetX(76);
+			activeMario->SetY(129);*/
+			MarioWaiting->GetSprite()->SetX(76);
+			MarioWaiting->GetSprite()->SetY(150);
+			MarioAnimator->GetSprite()->SetX(76);
+			MarioAnimator->GetSprite()->SetY(150);
+			MarioBWalk->GetSprite()->SetX(76);
+			MarioBWalk->GetSprite()->SetY(150);
+			MarioSJump->GetSprite()->SetX(76);
+			MarioSJump->GetSprite()->SetY(150);
+			MarioWJump->GetSprite()->SetX(76);
+			MarioWJump->GetSprite()->SetY(150);
+			BackJump->GetSprite()->SetX(76);
+			BackJump->GetSprite()->SetY(150);
 			Terrain::GetTileLayer()->SetViewWindow(viewWin);
 			Mario::isUnderGround = false;
 			Items::SuspendCoinsUnderGround();
