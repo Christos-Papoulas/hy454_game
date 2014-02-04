@@ -697,11 +697,10 @@ void Items::IsByTube(const char* id) {
 					if(Items::IsMarioLeft(x, y)){
 						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(0);
 						break;
-					}
+					}/*
 					else{
 						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(4);
-					}
-					
+					}*/					
 				}
 				else if(Mario::GetState() == backwalk){
 					if(mi > x){

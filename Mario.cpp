@@ -285,6 +285,9 @@ void Mario::MarioMovesRight() {
 	AnimatorHolder::MarkAsSuspended(MarioSJump);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	
+	if(MarioAnimator->GetMovingAnimation()->GetDx() == 0)
+		MarioAnimator->GetMovingAnimation()->SetDx(4);
+
 	ChangeState(Walking);
 }
 
@@ -308,7 +311,7 @@ void Mario::MarioStandingJump() {
 				return ;
 		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
 				return ;
-		if(!Mario::IsInvincibleSuper || !Mario::IsSuperMario())
+		if(!Mario::IsInvincibleSuper() || !Mario::IsSuperMario())
 			Sounds::Play("jump_small");
 		else
 			Sounds::Play("jump_super");
@@ -330,7 +333,7 @@ void Mario::MarioWalkingJump() {
 		}
 		if(IsOnAir(GetMarioCurrentSprite()->GetTileX(), GetMarioCurrentSprite()->GetTileY()) && !Items::IsMarioOnBrick())
 				return ;
-		if(!Mario::IsInvincibleSuper || !Mario::IsSuperMario())
+		if(!Mario::IsInvincibleSuper() || !Mario::IsSuperMario())
 			Sounds::Play("jump_small");
 		else
 			Sounds::Play("jump_super");
@@ -352,7 +355,7 @@ void Mario::BackWalkAndJump() {
 				return ;
 		}
 				return ;
-		if(!Mario::IsInvincibleSuper || !Mario::IsSuperMario())
+		if(!Mario::IsInvincibleSuper() || !Mario::IsSuperMario())
 			Sounds::Play("jump_small");
 		else
 			Sounds::Play("jump_super");
