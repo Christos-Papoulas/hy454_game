@@ -698,7 +698,7 @@ void Items::IsByTube(const char* id) {
 						break;
 					}
 					else{
-						((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(4);
+						//((MovingAnimator*) marioAnimator)->GetMovingAnimation()->SetDx(4);
 					}
 					
 				}
