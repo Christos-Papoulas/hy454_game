@@ -242,13 +242,11 @@ void MarioBrosMain::GamePause(timestamp_t now) {
 	if(gameState == Play){
 		gameState = Pause;
 		TerrainStartScreen::CreatePause();
-		//Items::KillBricks();
-		AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
+		Items::KillBricks();
 	}else if(gameState == Pause){
 		gameState = Play;
 		AnimatorHolder::SetTime(now);
-		//Items::RegenerateBricks();
-		AnimatorHolder::MarkAsRunning(Mario::GetAnimator());
+		Items::RegenerateBricks();
 	}
 }
 
