@@ -153,8 +153,6 @@ void MarioBrosMain::ManageTime() {
 }
 
 void MarioBrosMain::InputManagement(){
-	if(!al_key_down(&keyboardState, ALLEGRO_KEY_LEFT))
-		z_pressed = 0;
 	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
 		space_pressed = 0;
 
@@ -202,10 +200,6 @@ void MarioBrosMain::InputManagement(){
 					}
 					return ;
 				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
-					if(!z_pressed){
-						
-						z_pressed = 1;
-					}
 					if(!Mario::isStandingJumping()){
 						return Mario::MarioStandingJump();
 					}
