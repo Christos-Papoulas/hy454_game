@@ -122,19 +122,32 @@ void MarioBrosMain::DeathRender() {
 	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), currTime);
 	al_flip_display();
 }
-
+bool flag = true;
 void MarioBrosMain::ManageTime() {
 	Time::clock();
-	if(Time::time == 100) {
+	if(Time::time == 100 && flag) {
 		if(!Mario::isUnderGround){
 			Sounds::Pause("music");
 			Sounds::Play("warning");
+			wait = clock();
+			while( clock() != wait + 2000 );
 			Sounds::Play("hurry_up");
+			flag = false;
 		}else{
 			Sounds::Pause("music");
 			Sounds::Play("warning");
+			wait = clock();
+			while( clock() != wait + 2000 );
 			Sounds::Play("underground_hurry_up");
+			flag = false;
 		}
+	}
+	if(Time::time == 0){
+		TerrainStartScreen::CreateGameOver();
+		Sounds::Pause("music");
+		Sounds::Pause("hurry_up");
+		Sounds::Pause("underground_hurry_up");
+		MarioBrosMain::SetGameOver();
 	}
 	NumbersHolder::PrintNumberTime(Time::time);
 }
