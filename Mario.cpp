@@ -354,7 +354,6 @@ void Mario::BackWalkAndJump() {
 		if(marioState == BackAndJump || isDead()){
 				return ;
 		}
-				return ;
 		if(!Mario::IsInvincibleSuper() || !Mario::IsSuperMario())
 			Sounds::Play("jump_small");
 		else
