@@ -26,6 +26,7 @@
 #define HURRY_UP "Data\\Sounds\\Hurry_Up.ogg"
 #define UNDERGROUND "Data\\Sounds\\Underground.ogg"
 #define UNDERGROUND_HURRY_UP "Data\\Sounds\\Underground_Hurry_Up.ogg"
+#define JUMP_SUPER "Data\\Sounds\\smb_jump-super.wav"
 
 
 
@@ -52,6 +53,7 @@ class Sounds{
 		static ALLEGRO_SAMPLE_ID id_hurry_up;
 		static ALLEGRO_SAMPLE_ID id_underground;
 		static ALLEGRO_SAMPLE_ID id_underground_hurry_up;
+		static ALLEGRO_SAMPLE_ID id_jump_super;
 
 		static ALLEGRO_SAMPLE *music;
 		static ALLEGRO_SAMPLE *jump_small;
@@ -74,6 +76,7 @@ class Sounds{
 		static ALLEGRO_SAMPLE *hurry_up;
 		static ALLEGRO_SAMPLE *underground;
 		static ALLEGRO_SAMPLE *underground_hurry_up;
+		static ALLEGRO_SAMPLE *jump_super;
 		static bool InitSounds();
 		static void Play(const char* id);
 		static void Pause(const char* id);
