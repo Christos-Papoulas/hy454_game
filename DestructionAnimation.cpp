@@ -11,25 +11,25 @@ Destruction::Destruction(Dim x, Dim y) {
 		Dim start1 = 12, start2 = 0;
 		Dim xp = 5;
 		for(offset_t i = 0, j= start1; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(-1, -1, 0, delay);
+				PathEntry pathEntry(-1, -2, 0, delay);
 				p1.push_back( pathEntry );
 		}
 
 		// p2
 		for(offset_t i = 0, j= start1; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(-1, 1, 0, delay);
+				PathEntry pathEntry(-1, 2, 0, delay);
 				p2.push_back( pathEntry );
 		}
 
 		// p3
 		for(offset_t i = 0, j= start1; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(1, -1, 0, delay);
+				PathEntry pathEntry(1, -2, 0, delay);
 				p3.push_back( pathEntry );
 		}
 
 		//p4
 		for(offset_t i = 0, j= start1; i < 6; ++i, j-=2) { // @todo make the code better!		
-				PathEntry pathEntry(1, 1, 0, delay);
+				PathEntry pathEntry(1, 2, 0, delay);
 				p4.push_back( pathEntry );
 		}
 

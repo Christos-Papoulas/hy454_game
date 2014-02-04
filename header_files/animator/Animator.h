@@ -27,6 +27,7 @@ class Animator {
 				virtual void Display (Bitmap at)=0;
 				void SetOnFinish (FinishCallback f, void* c=(void*) 0){ onFinish = f, finishClosure = c; }
 				void SetLastTime(timestamp_t t) {/*assert(t >= lastTime);*/ lastTime = t;}
+				timestamp_t GetLastTime() { return lastTime; }
 				Animator (void); 
 				virtual ~Animator(){};
 };
