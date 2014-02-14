@@ -300,6 +300,39 @@ void Items::CreateSpriteWithPath(char* id, Dim start, Dim end, offset_t dx, offs
 		AnimatorHolder::Register( aMovAnimr );
 }
 
+
+void Items::CreateFirework(const char* id, const Dim x, const Dim y) {
+	Sprite *sprite = new Sprite(20, 100,
+				AnimationFilmHolder::GetFilm( std::string(id) ));
+		
+		MovingAnimation* aMovAnimn = (MovingAnimation*) new FrameRangeAnimation(
+						0, 2, 
+						0, -5, 100, false, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf(id))
+						);
+		aMovAnimn->SetDx(x);
+		aMovAnimn->SetDy(y);
+
+		MovingAnimator* aMovAnimr =  (MovingAnimator*)new FrameRangeAnimator(); 
+		
+		suspending[id].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());
+
+		aMovAnimr->SetOnFinish(FinishFirework);
+		AnimatorHolder::Register( aMovAnimr );
+		AnimatorHolder::MarkAsFirstRunning(aMovAnimr);
+}
+
+void Items::FinishFirework(Animator*a, void*) {
+	Dim x = rand() % SCREEN_WINDOW_WIDTH;
+	Dim y = ((rand() +100) % SCREEN_WINDOW_HEIGHT) - 100;
+	if(a) AnimatorHolder::MarkAsSuspended(a);
+	
+	suspending["fireworks"].push_back( a );
+	CreateFirework("fireworks", x, y);
+	Sounds::Play("fireworks");
+}
+
 void Items::CreateCoinSprite(char* id, bool moving) {
 		Sprite * sprite = new Sprite(20, 100, AnimationFilmHolder::GetFilm( std::string(id) ));
 		std::vector<PathEntry> paths;
@@ -1051,4 +1084,8 @@ void Items::SuspendCoinsUnderGround() {
 		AnimatorHolder::MarkAsSuspended(g);
 	}
 	running["coinanimation"].clear();
+}
+
+void Items::ThrowAFirework() {
+	FinishFirework(0, 0);
 }

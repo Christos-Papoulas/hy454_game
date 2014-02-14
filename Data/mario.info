@@ -1,4 +1,4 @@
-60
+61
 1
 mariowalking 3
 0 0 16 16
@@ -230,3 +230,8 @@ flushdown 2
 324
 greenmushroom 1
 18 376 15 16
+325
+fireworks 3
+99 311 7 7
+96 323 11 11 
+95 339 15 15

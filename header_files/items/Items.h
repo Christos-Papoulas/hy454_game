@@ -93,7 +93,9 @@ class Items {
 		static void PowerUp(const char* id, std::list<Animator*>::iterator it);
 		static void WinALife(const char* id, std::list<Animator*>::iterator it);
 		static void CreateAJumpingBrick(MovingPathAnimator* mpa);
+		static void CreateFirework(const char* id, const Dim x, const Dim y);
 		friend void Destruction::FinishDestroy(Animator* a, void* v);
+
 public:
 		static void Init();
 		static void ArtificialIntelligence();
@@ -131,6 +133,8 @@ public:
 		static bool IsPipeOnRight(Sprite *En);
 
 		static void SuspendCoinsUnderGround();
+		static void FinishFirework(Animator*, void*);
+		static void ThrowAFirework();
 };
 
 #endif
