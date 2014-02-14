@@ -1,4 +1,4 @@
-59
+60
 1
 mariowalking 3
 0 0 16 16
@@ -227,3 +227,6 @@ superdown 1
 flushdown 2
 32 69 16 32
 64 69 16 32
+324
+greenmushroom 1
+18 376 15 16

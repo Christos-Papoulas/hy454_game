@@ -87,10 +87,11 @@ class Items {
 		static void CreateCoinSprite(char* id, bool moving);
 		static void CoinCollision();
 		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
-		static void CollisionMarioWithMushroom();
+		static void CollisionMarioWithMushroom(const char * id);
 		static void CollisionMarioWithStar();
 		static void MoveStars();
-
+		static void PowerUp(const char* id, std::list<Animator*>::iterator it);
+		static void WinALife(const char* id, std::list<Animator*>::iterator it);
 		static void CreateAJumpingBrick(MovingPathAnimator* mpa);
 		friend void Destruction::FinishDestroy(Animator* a, void* v);
 public:

@@ -102,8 +102,14 @@ void Items::CreateBricks() { //and coins!
 				if(brick[y][x]) {
 						if(IsBrickActive(y, x)) 
 								continue;
-
-						if(brick[y][x] == 2){
+						if(brick[y][x] == 1) {
+							if(suspending["bricks"].size() == 0) { 
+										CreateABrickAnimation();
+								}
+								g = (MovingAnimator* ) suspending["bricks"].back();
+								suspending["bricks"].pop_back();
+								running["bricks"].push_back((Animator*) g);
+						} else if(brick[y][x] == 2){
 								if(suspending["bricks"].size() == 0) { 
 										CreateABrickAnimation();
 								}
@@ -158,7 +164,8 @@ void Items::CreateBricks() { //and coins!
 						g->GetSprite()->SetX((j % VIEW_WINDOW_TILE_HEIGHT) * 16);
 						g->GetSprite()->SetY(y * 16);
 						g->SetLastTime(CurrTime());
-						AnimatorHolder::MarkAsRunning(g);
+						if(brick[y][x] != 1)
+							AnimatorHolder::MarkAsRunning(g);
 						SetBrickAsActive(y,x);
 				}
 				if(GetFromMap(y, x) == 124) {
@@ -405,10 +412,10 @@ void Items::KillPipes() {
 	KillSprites("rightpipe");
 }
 
-#define NUM_OF_ITEMS 11
+#define NUM_OF_ITEMS 12
 const char* Items::strItems[] = {
 	"bricks", "questionbrick", "leftuppipe", "leftpipe", "rightuppipe", "rightpipe",
-	"solidbrick", "coinanimation", "questionfinish", "mushroom", "star"
+	"solidbrick", "coinanimation", "questionfinish", "mushroom", "star", "greenmushroom"
 };
 
 void Items::SuspendBricks() {
@@ -588,6 +595,20 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				g->SetLastTime(CurrTime());
 				AnimatorHolder::MarkAsRunning(g);
 				running["mushroom"].push_back(g);
+				SetOnMap(0, xj, xi);
+				ShowSolidQuestion((MovingAnimator*)prevAnim, x, y);
+				Sounds::Play("powerup_appears");
+		} else if(res == 588) {
+				MovingAnimator *g;
+				if(suspending["greenmushroom"].size() == 0)
+						CreateSprite("greenmushroom", 10, 3, 0, 120);
+				g = (MovingAnimator* ) suspending["greenmushroom"].back();
+				suspending["greenmushroom"].pop_back();	
+				g->GetSprite()->SetX(x);
+				g->GetSprite()->SetY(y - 16);
+				g->SetLastTime(CurrTime());
+				AnimatorHolder::MarkAsRunning(g);
+				running["greenmushroom"].push_back(g);
 				SetOnMap(0, xj, xi);
 				ShowSolidQuestion((MovingAnimator*)prevAnim, x, y);
 				Sounds::Play("powerup_appears");
@@ -783,7 +804,8 @@ void Items::BrickCollision() {
   IsByTube("rightpipe");
   IsByTube("solidbrick");
 
-	CollisionMarioWithMushroom();
+	CollisionMarioWithMushroom("mushroom");
+	CollisionMarioWithMushroom("greenmushroom");
 	CollisionMarioWithStar();
 }
 
@@ -809,23 +831,43 @@ bool Items::IsEnemyOnBrick(const char* id, Dim x, Dim y){
 	return false;
 }
 
-void Items::CollisionMarioWithMushroom() {
-		for (std::list<Animator*>::iterator it=running["mushroom"].begin(); it != running["mushroom"].end(); ++it) {
+void Items::PowerUp(const char* id, std::list<Animator*>::iterator it){
+	suspending[id].push_back(*it);
+	AnimatorHolder::MarkAsSuspended(*it);
+	running[id].erase(it);
+	if(!Mario::IsInvincibleSuper())
+		Mario::SuperMario();
+	else if(Mario::IsInvincibleSmall())
+		Mario::SetSuperAsInvincible();
+	Score::ScoreAdd(1000);
+	Sounds::Play("powerup");
+	return ;
+}
+
+void Items::WinALife(const char* id, std::list<Animator*>::iterator it){
+	suspending[id].push_back(*it);
+	AnimatorHolder::MarkAsSuspended(*it);
+	running[id].erase(it);
+	
+	Coins::AddLife();
+
+	Score::ScoreAdd(1000);
+	Sounds::Play("powerup");
+	return ;
+}
+
+void Items::CollisionMarioWithMushroom(const char * id) {
+		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
 				MovingAnimator* g = (MovingAnimator*)*it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
 				if(Enemies::IsMarioLeftOrRight(x, y)){
-						suspending["mushroom"].push_back(*it);
-						AnimatorHolder::MarkAsSuspended(*it);
-						running["mushroom"].erase(it);
-						if(!Mario::IsInvincibleSuper())
-							Mario::SuperMario();
-						else if(Mario::IsInvincibleSmall())
-							Mario::SetSuperAsInvincible();
-						Score::ScoreAdd(1000);
-						Sounds::Play("powerup");
+						if(!strcmp(id, "mushroom"))
+							PowerUp(id, it);
+						else
+							WinALife(id, it);
 						return ;
 				}
 				if(Enemies::CanGoLeft(TileX, TileY) && g->GetMovingAnimation()->GetDx() < 0)
