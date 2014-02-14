@@ -63,6 +63,7 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 	assert(i+y_tile < MAX_WIDTH);
 
 	Animator* marioAnimator = Mario::GetAnimator();
+
 	switch (Mario::GetState()){
 		case Waiting:
 				CheckGravity(x_tile, y_tile);
@@ -95,6 +96,15 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 						Mario::MarioFinishWjumping(0, 0);
 				}
 				break;
+		case BackAndJump:
+			if (!Mario::CanGoLeft(y_tile, x_tile)){
+				int currIndex = ((MovingPathAnimator*) marioAnimator)->GetCurrIndex();
+				((MovingPathAnimator*) marioAnimator)->GetAnimation()->SetOnPath(currIndex, 0);
+			}
+			if(!Mario::IsOnAir(y_tile, x_tile) && ((MovingPathAnimator*) marioAnimator)->GetCurrIndex() > 1) {
+					Mario::MarioFinishBackJump(0, 0);
+			}
+			break;
 	}
 }
 
@@ -103,12 +113,12 @@ void Collision::CheckCollision() {
 	Dim x = activeMario->GetTileX();
 	Dim y = activeMario->GetTileY();
 
-	if(Mario::GetState() == Death || Mario::GetState() == BackAndJump) 
+	if(Mario::GetState() == Death) 
 			return ;
 	MarioCollision(x,y);
 	Mario::SetDimensions(Mario::GetMarioCurrentSprite()->GetX(),Mario::GetMarioCurrentSprite()->GetY());
 
-	if(Mario::isWalkingJump()) return ;
+	if(Mario::isWalkingJump() || Mario::GetState() == BackAndJump) return ;
 
 	if(Collision::GetGravity() == true)
 			activeMario->Move(0,1);

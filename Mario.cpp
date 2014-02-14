@@ -160,14 +160,14 @@ void Mario::CreateSjumping(MovingPathAnimator* mario_animator) {
 void Mario::CreateWjumping(MovingPathAnimator* mario_animator) {
 		MarioWJump = mario_animator;
 		paths.clear();
-		for(offset_t i = 0, j= 20; i < 6; ++i, j-=2) { // @todo make the code better!		
+		for(offset_t i = 0, j= 16; i < 7; ++i, j-=2) { // @todo make the code better!		
 				PathEntry pathEntry(5, -j, 
 						IsInvincible() ? i%2 : 0, 100);
 				paths.push_back( pathEntry );
 		}
 
-		for(offset_t i = 0, j= 10; i < 6; ++i, j+=2) { // @todo make the code better!		
-				PathEntry pathEntry(5, j, 
+		for(offset_t i = 0, j= 2; i < 7; ++i, j+=2) { // @todo make the code better!		
+				PathEntry pathEntry( 5, j, 
 						IsInvincible() ? i%2 : 0, 100);
 				paths.push_back( pathEntry );
 		}
@@ -369,6 +369,7 @@ void Mario::BackWalkAndJump() {
 		
 		ChangeState(BackAndJump);
 		marioState = BackAndJump;
+
 		return ;
 }
 
@@ -656,7 +657,7 @@ bool Mario::IsOnAir(Dim x, Dim y) {
 		Dim j = Terrain::GetTileLayer()->GetViewWindow().GetY();
 		Dim mheight = Mario::GetMarioCurrentSprite()->GetFrameBox().GetHeight() >> 4;
 
-		if(Collision::GetValue(x + i, y + j + mheight) == 0 || Collision::GetValue(x + i + 1, y + j + mheight) == 0)
+		if(Collision::GetValue(x + i, y + j + mheight) == 0 /*|| Collision::GetValue(x + i + 1, y + j + mheight) == 0*/)
 				return true;
 		return false;
 }
