@@ -160,6 +160,7 @@ class Mario {
 		static bool IsSuperMario();
 		static bool IsInvincibleSuper() { return marioLevel == InvincibleSuper; }
 		static bool IsInvincibleSmall() { return marioLevel == InvincibleMario; }
+		static bool IsMikio() {return marioLevel == MarioSmall || marioLevel == InvincibleMario;}
 
 		static bool isUnderGround;
 		static void Hited();

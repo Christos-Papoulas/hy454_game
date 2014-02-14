@@ -38,7 +38,7 @@ goombadead 1
 121 31 15 7
 1941
 greenkoopaleft 2
-95 96 14 32 
+97 96 14 32 
 95 112 14 32 
 323
 mushroom 1
@@ -122,8 +122,8 @@ flushmariowaiting 2
 16 97 12 16
 1009 
 flushmariobjump 2
-0 346 16 16
-16 346 16 16
+0 346 14 16
+16 346 15 16
 1010
 flushmariojump 2
 0 64 16 16
@@ -132,8 +132,8 @@ flushmariojump 2
 flushmariobwalk 6
 0 225 10 16
 16 176 16 16
-0 237 9 16
-16 193 9 16
+0 237 10 16
+16 193 10 16
 0 248 13 16
 16 206 16 16
 1012
@@ -193,7 +193,7 @@ flushsuperwalking 6
 1027
 superflushwaiting 2
 32 96 16 32
-63 96 16 32
+64 96 16 32
 1028
 superflushbwalk 6
 100 225 16 32
@@ -212,10 +212,10 @@ superflushbjump 2
 133 273 16 32
 999
 goumbabaddeath 1
-97 32 15 15
+0 376 15 15
 1951
 redkoopaleft 2
-131 96 14 32 
+133 96 14 32 
 131 112 14 32 
 223
 brickbreak 1

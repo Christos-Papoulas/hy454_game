@@ -74,21 +74,7 @@ Sprite::Sprite(Dim _x, Dim _y, AnimationFilm* film) :
 
 //lecture10 slide30
 void Sprite::Display(Bitmap dest) {
-		Rect visibleArea; /*
-		Rect spriteArea(x, y, frameBox.w, frameBox.h);
-		if (!ClippedEntirely(spriteArea, myLayer->GetPixelViewWindow(), &visibleArea)) {
-				Rect clippedFrame(
-						frameBox.x + (visibleArea.x -x),
-						frameBox.y + (visibleArea.y -y),
-						visibleArea.w,
-						visibleArea.h
-				);
-				Point at(
-						da.x + (visibleArea.x -myLayer->GetViewWinX()),
-						da.y + (visibleArea.y -myLayer->GetViewWinY())
-				);
-				MaskedBlit(currFilm->GetBitmap(), clippedFrame,	dest, at);
-		}*/
+		Rect visibleArea; 
 		al_draw_bitmap_region(currFilm->GetBitmap(), frameBox.GetX(), frameBox.GetY(), 
 			frameBox.GetWidth(), frameBox.GetHeight(), x, y, NULL);
 }

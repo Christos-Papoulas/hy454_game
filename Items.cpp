@@ -665,15 +665,20 @@ static bool IsMarioAboveBrickPrivate(Dim x, Dim y) {
 	Dim mj = m->GetY();
 	Dim i = (x > mi) ? x - mi : mi - x;
 	Dim mheight = m->GetFrameBox().GetHeight();
-	if((mj < y && y - mj < 9+mheight) && ( i < 16 )){ 
-		return true;
+	Dim j = y - mj;
+	if( Mario::IsMikio() ) {
+		if((mj < y && j < 9+mheight && j > 19) && ( i < 16 ))
+			return true;
+	} else {
+		if((mj < y && j < 9+mheight && j > 28) && ( i < 16 ))
+			return true;
 	}
+
 	return false;
 }
 
 bool Items::IsOnBrick(const char* id) {
 	bool active = false;
-	// this function genarates segmentation fault
 	for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); it != running[id].end() && ++it != running[id].end()) {
 				MovingAnimator* g = ( MovingAnimator* )*it;
 				Dim x = g->GetSprite()->GetX();
@@ -688,7 +693,7 @@ bool Items::IsOnBrick(const char* id) {
 						(Mario::isWalkingJump() || Mario::isBackJumping()) && 
 						((MovingPathAnimator*) Mario::GetAnimator())->GetCurrIndex() > 1) {
 							if(Mario::isWalkingJump())
-									Mario::MarioFinishWjumping(NULL,NULL);
+									Mario::MarioFinishWjumping(0, 0);
 							else
 								Mario::MarioFinishBackJump(0, 0);
 				}
