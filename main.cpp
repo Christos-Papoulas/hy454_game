@@ -304,10 +304,11 @@ void MarioBrosMain::FPSCalculation(){
 		if(prevMili == 0){
 				prevMili = mili;
 		}
-		else if(mili - prevMili > 1000) {
-				prevMili = 0;
-				fps = 0;
+		else if(mili - prevMili > 1000) {	
+			prevMili = 0;
+			fps = 0;
 		}
+		
 		return ;
 }
 

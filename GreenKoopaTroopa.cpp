@@ -102,6 +102,7 @@ void GreenKoopa::MoveKoopasInShells(const char* id) {
 						g->GetMovingAnimation()->SetDx(0);
 		}
 }
+
 void GreenKoopa::ComeOutFromShell(Animator* a, void* v) {
 		MovingAnimator* g; char toCreate[20];
 		const std::string id = ((MovingAnimator*)a)->GetSprite()->GetCurrFilm()->GetID();
