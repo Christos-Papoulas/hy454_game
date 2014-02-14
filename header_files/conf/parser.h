@@ -25,6 +25,7 @@
 #define SPEED_KOOPA "speed_of_green_koopa"
 #define SPEED_GOUMBA "speed_of_goumba"
 #define DURATION_OF_INVINCIBLE "duration_of_invincible_mario"
+#define INITIAL_LIFES "initial_player_lifes"
 
 class Configurator {
 		void PutGoumbasOnMap(Dim enemy, Dim n);

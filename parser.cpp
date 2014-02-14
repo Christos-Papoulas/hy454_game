@@ -28,6 +28,9 @@ Configurator::Configurator(char *f) {
 		number = getOptionToInt(DURATION_OF_INVINCIBLE);
 		if(number) Mario::SetTimeInvincible(number * 1000);
 		else Mario::SetTimeInvincible(10 * 1000);
+
+		number = getOptionToInt(INITIAL_LIFES);
+		if(number > 0 && number < 3) Coins::SetLife(number);
 }
 
 static bool CanPutEnemyAt(Dim x, Dim y) {

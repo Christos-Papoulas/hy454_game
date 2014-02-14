@@ -10,7 +10,7 @@ class Coins{
 		static Dim GetCoins(){return coins;}
 		static void CheckCoins();
 		static Dim lifes;
-		static void SetLife(Dim num){lifes = num;}
+		static void SetLife(Dim num) {lifes = num;}
 		static Dim GetLife(){return lifes;}
 		static void AddLife(){lifes += 1;}
 		static void RemoveLife(){lifes -= 1;}

@@ -92,7 +92,7 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 					int currIndex = ((MovingPathAnimator*) marioAnimator)->GetCurrIndex();
 					((MovingPathAnimator*) marioAnimator)->GetAnimation()->SetOnPath(currIndex, 0);
 				}
-				if(!Mario::IsOnAir(y_tile, x_tile) && ((MovingPathAnimator*) marioAnimator)->GetCurrIndex() > 1) {
+				if(!Mario::IsOnAir(y_tile, x_tile + 1) && ((MovingPathAnimator*) marioAnimator)->GetCurrIndex() > 1) {
 						Mario::MarioFinishWjumping(0, 0);
 				}
 				break;
@@ -101,7 +101,7 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 				int currIndex = ((MovingPathAnimator*) marioAnimator)->GetCurrIndex();
 				((MovingPathAnimator*) marioAnimator)->GetAnimation()->SetOnPath(currIndex, 0);
 			}
-			if(!Mario::IsOnAir(y_tile, x_tile) && ((MovingPathAnimator*) marioAnimator)->GetCurrIndex() > 1) {
+			if(!Mario::IsOnAir(y_tile, x_tile+1) && ((MovingPathAnimator*) marioAnimator)->GetCurrIndex() > 1) {
 					Mario::MarioFinishBackJump(0, 0);
 			}
 			break;

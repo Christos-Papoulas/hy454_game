@@ -215,8 +215,14 @@ void MarioBrosMain::InputManagement(){
 
 void MarioBrosMain::StartScreen(timestamp_t now) {
 	TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
+	Dim lifes = Coins::GetLife();
 	if((al_key_down(&keyboardState, ALLEGRO_KEY_ENTER)) && gameState == Start){ // enter
-		TerrainStartScreen::CreateLifeScreen();
+		if(lifes >= 3)
+			TerrainStartScreen::CreateLifeScreen();
+		else if(lifes == 2)
+			TerrainStartScreen::CreateLifeScreen2();
+		else 
+			TerrainStartScreen::CreateLifeScreen1();
 		TerrainStartScreen::DisplayTerrain(al_get_backbuffer(display), now);
 		al_flip_display();
 		wait = clock();
