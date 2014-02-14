@@ -162,6 +162,7 @@ void Enemies::Reactivate(Dim x) {
 					shortMap[en++][ISACTIVE] = 0;
 			}
 	Goumbas::KillGoumbas();
-	GreenKoopa::DeactivateAllKoopas();
+	GreenKoopa::DeactivateAllKoopas("greenkoopasleft");
+	GreenKoopa::DeactivateAllKoopas("redkoopasleft");
 	Piranhas::Deactivate();
 }

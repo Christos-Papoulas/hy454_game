@@ -42,21 +42,6 @@ void Sprite::Move (Dim x,Dim y) {
 	SetX(GetX() + x);
 	SetY(GetY() + y);
 	return ;
-	/*Apply the movement;
-	if (gravityAddicted) {
-		Check the terrain tiles just below;
-		if (over solid terrain) {
-			if (isFalling) {
-				isFalling = false;
-				NotifyStopFalling();
-			}
-		}
-		else
-			if (!isFalling) {
-				isFalling = true; 
-				NotifyStartFalling(); 
-			}
-	}*/
 }
 
 void Sprite::Move(int x, int y){

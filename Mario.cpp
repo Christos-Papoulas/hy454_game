@@ -46,7 +46,10 @@ static bool MoveViewWindow(Dim x) {
 		(Terrain::GetTileLayer())->SetScrollviewWindow(countScroll);
 			
 		Goumbas::ViewWindowMove();
-		GreenKoopa::ViewWindowMove();
+		GreenKoopa::ViewWindowMove("greenkoopaleft");
+		GreenKoopa::ViewWindowMove("redkoopaleft");
+		GreenKoopa::ViewWindowMove("greenkoopahit");
+		GreenKoopa::ViewWindowMove("redkoopahit");
 		Items::ViewWindowMove();
 		Piranhas::ViewWindowMove();
 		countScroll++;

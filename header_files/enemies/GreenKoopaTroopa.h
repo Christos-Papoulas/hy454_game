@@ -15,25 +15,26 @@
 #include "../tiles/TileLayer.h"
 
 class GreenKoopa {
-		static std::list<MovingAnimator*> suspending;
-		static std::list<MovingAnimator*> running;
-		static std::list<MovingAnimator*> suspendingdead;
-		static std::list<MovingAnimator*> walkingdead;
-		static void Dead();
-		static void MoveKoopasInShells();
+		static std::map<std::string,std::list<MovingAnimator*>> suspending;
+		static std::map<std::string,std::list<MovingAnimator*>> running;
+		static std::map<std::string,std::list<MovingAnimator*>> suspendingdead;
+		static std::map<std::string,std::list<MovingAnimator*>> walkingdead;
+
+		static void Dead(const char* id);
+		static void MoveKoopasInShells(const char* id);
 		static Dim delay;
 
-		static void KoopasKillMario();
+		static void KoopasKillMario(const char* id);
 public:
 		static void Create(const char* id);
 		static void ArtificialIntelligence();
 		static void CreateGreenKoopaIfAny();
-		static void MoveGreenKoopas();
-		static void ViewWindowMove();
-		static void CommitDestructions();
+		static void MoveGreenKoopas(const char* id);
+		static void ViewWindowMove(const char* id);
+		static void CommitDestructions(const char* id);
 		static void ComeOutFromShell(Animator* a, void* v);
 		static void SetDelay(Dim _delay) { delay = _delay; }
-		static void DeactivateAllKoopas();
+		static void DeactivateAllKoopas(const char* id);
 };
 
 #endif

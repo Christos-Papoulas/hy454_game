@@ -51,7 +51,7 @@ void Configurator::PutKoopasOnMap(Dim enemy, Dim n){
 						y = 15 + (rand() % (MAX_WIDTH - 15));
 	
 						if( CanPutEnemyAt(x, y) && CanPutEnemyAt(x, y + 1)){
-								Enemies::SetOnMap(enemy, x, y);
+								Enemies::SetOnMap(enemy +  rand() % 2, x, y);
 								Enemies::IncreaseEnemies();
 								break;
 						}
