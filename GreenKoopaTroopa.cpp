@@ -267,6 +267,13 @@ void GreenKoopa::KoopasKillMario(const char* id) {
 		}
 }
 
+void GreenKoopa::DeactivateAllKoopas() {
+	DeactivateAllKoopas("greenkoopahit");
+	DeactivateAllKoopas("redkoopahit");
+	DeactivateAllKoopas("greenkoopaleft");
+	DeactivateAllKoopas("redkoopaleft");
+}
+
 void GreenKoopa::DeactivateAllKoopas(const char* id) {
 	for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
 		suspending[id].push_back(*it);

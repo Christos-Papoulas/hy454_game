@@ -10,7 +10,7 @@ ALLEGRO_KEYBOARD_STATE keyboardState;
 bool redraw = true;
 
 const float FPS = 90;
-int z_pressed = 0;
+
 int space_pressed = 0;
 clock_t wait;
 
@@ -152,6 +152,7 @@ void MarioBrosMain::ManageTime() {
 	NumbersHolder::PrintNumberTime(Time::time);
 }
 
+timestamp_t z_pressed = 0;
 void MarioBrosMain::InputManagement(){
 	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
 		space_pressed = 0;
@@ -166,50 +167,59 @@ void MarioBrosMain::InputManagement(){
 		}
 		return ;
 	}
+	if(!al_key_down(&keyboardState, ALLEGRO_KEY_Z) && z_pressed){
+		if(Mario::isStandingJumping())
+			Mario::MarioFinishSjumping(0, 0);
+
+		z_pressed = 0;
+		return ;
+	}
 
 	if(!Mario::isWalkingJump() && !Mario::isBackJumping() &&  gameState == Play) {
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
-						if(Mario::isWalking() && !Mario::isWalkingJump()){
-							return Mario::MarioWalkingJump();
-						}
-				}
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){
-						if(Mario::isBackWalk() && !Mario::isBackJumping() ){
-							return Mario::BackWalkAndJump();
-						}
-				}
-
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_X) && Mario::isWalking()){
-						Mario::Run();
-				}
-				if(!al_key_down(&keyboardState, ALLEGRO_KEY_X))
-						Mario::isNotRunning();
-
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
-						return Mario::MovesDown(); // @todo something
-				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
-						Mario::GetOutFromPipe();
-						return Mario::MarioMovesRight();
-				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){ // lest
-						return Mario::MarioMovesLeft();
-				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
-					if(!space_pressed){
-						Sounds::Play("pause");
-						GamePause(currTime);
-						space_pressed = 1;
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
+				z_pressed = currTime;	
+				if(Mario::isWalking() && !Mario::isWalkingJump()){
+						return Mario::MarioWalkingJump();
 					}
-					return ;
-				}else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
-					if(!Mario::isStandingJumping()){
-						return Mario::MarioStandingJump();
+			}
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){
+					if(Mario::isBackWalk() && !Mario::isBackJumping() ){
+						return Mario::BackWalkAndJump();
 					}
-				}
-				al_flush_event_queue(queue);
+			}
 
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_C))
-					Mario::SuperMario();
-				if(al_key_down(&keyboardState, ALLEGRO_KEY_V))
-					Mario::SetMarioAsInvincible();
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_X) && Mario::isWalking()){
+					Mario::Run();
+			}
+			if(!al_key_down(&keyboardState, ALLEGRO_KEY_X))
+					Mario::isNotRunning();
+
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_DOWN)){ // down
+					return Mario::MovesDown(); // @todo something
+			}else if(al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){ // right
+					Mario::GetOutFromPipe();
+					return Mario::MarioMovesRight();
+			}else if(al_key_down(&keyboardState, ALLEGRO_KEY_LEFT)){ // lest
+					return Mario::MarioMovesLeft();
+			}else if(al_key_down(&keyboardState, ALLEGRO_KEY_SPACE)){ // space
+				if(!space_pressed){
+					Sounds::Play("pause");
+					GamePause(currTime);
+					space_pressed = 1;
+				}
+				return ;
+			}else if(al_key_down(&keyboardState, ALLEGRO_KEY_Z)){ // z
+				z_pressed = currTime;
+				if(!Mario::isStandingJumping()){
+					return Mario::MarioStandingJump();
+				}
+			}
+			al_flush_event_queue(queue);
+
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_C))
+				Mario::SuperMario();
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_V))
+				Mario::SetMarioAsInvincible();
 		}
 }
 

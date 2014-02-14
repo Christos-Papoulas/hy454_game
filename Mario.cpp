@@ -401,6 +401,7 @@ void Mario::MarioDeading() {
 		MarioDeath->SetLastTime(currTime);
 		AnimatorHolder::MarkAsRunning(MarioDeath);
 		ChangeState(Death);
+		Sounds::Pause("music");
 		Sounds::Play("mario_death");
 }
 
@@ -514,6 +515,7 @@ void Mario::RestoreCheckpoint(Dim x) {
 	activeMario->SetY(129);
 	AnimatorHolder::MarkAsRunning(MarioAnimator);
 	Terrain::GetTileLayer()->SetViewWindow(viewWin);
+	Sounds::Play("music");
 }
 
 Animator* Mario::GetAnimator() {
@@ -560,6 +562,7 @@ void Mario::EnterPipe() {
 			activeMario->SetY(20);
 			Items::KillPipes();
 			Goumbas::KillGoumbas();
+			GreenKoopa::DeactivateAllKoopas();
 	}
 	return;
 }
@@ -817,6 +820,8 @@ void Mario::Run() {
 
 			break;
 	}
+	Sounds::Pause("Invincible");
+	Sounds::Play("music");
 	ChangeLevel(prev);
 	SetDimensions(x, y);
  }

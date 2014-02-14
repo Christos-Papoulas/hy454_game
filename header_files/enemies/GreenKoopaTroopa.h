@@ -35,6 +35,7 @@ public:
 		static void ComeOutFromShell(Animator* a, void* v);
 		static void SetDelay(Dim _delay) { delay = _delay; }
 		static void DeactivateAllKoopas(const char* id);
+		static void DeactivateAllKoopas();
 };
 
 #endif
