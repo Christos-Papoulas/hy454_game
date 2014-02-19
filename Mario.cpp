@@ -580,6 +580,7 @@ void Mario::GetOutFromPipe() {
 		if(x == 12){
 			Sounds::Play("enter_pipe");
 			Sounds::Pause("underground");
+			Sounds::Pause("music");
 			Sounds::Play("music");
 			Rect viewWin;
 			viewWin.SetX(159);
@@ -830,7 +831,7 @@ void Mario::Run() {
 
 			break;
 	}
-	
+	Sounds::Pause("music");
 	Sounds::Play("music");
 	ChangeLevel(prev);
 	SetDimensions(x, y);
