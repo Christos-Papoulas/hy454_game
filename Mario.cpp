@@ -819,7 +819,7 @@ void Mario::Run() {
 	 if(IsMarioSmall() && !isDead() && !justReturn2Small){
 		 Coins::RemoveLife();
 		 MarioDeading();
-	 } else if(IsSuperMario()) {
+	 } else if(IsSuperMario() || isFire()) {
 			 Dim x = Mario::GetMarioCurrentSprite()->GetX();
 			 Dim y = Mario::GetMarioCurrentSprite()->GetY();
 			 marioLevel = MarioSmall;
