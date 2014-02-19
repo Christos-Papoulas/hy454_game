@@ -721,10 +721,10 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				Score::ScoreAdd(200);
 				Sounds::Play("coin");
 		} else if(mpa ) {
-				if(Mario::IsSuperMario() || Mario::IsInvincibleSuper()){
-						DestroyBrick( (MovingPathAnimator*) prevAnim);
-				} else
-						CreateAJumpingBrick((MovingPathAnimator*)prevAnim);
+			if(Mario::IsSuperMario() || Mario::IsInvincibleSuper() || Mario::isFire()){
+					DestroyBrick( (MovingPathAnimator*) prevAnim);
+			} else
+					CreateAJumpingBrick((MovingPathAnimator*)prevAnim);
 		}
 		
 }
