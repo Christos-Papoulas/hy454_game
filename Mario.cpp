@@ -29,7 +29,7 @@ MarioState Mario::marioState = Walking;
 MarioLevel Mario::marioLevel = MarioSmall;
 
 bool	Mario::justReturn2Small = false;
-
+bool Mario::isOnDoor = false;
 Dim countScroll = 0;
 bool  Mario::isUnderGround = false;
 bool	swap = true;
@@ -39,7 +39,11 @@ static bool MoveViewWindow(Dim x) {
 	if(Mario::GetMarioCurrentSprite()->GetTileX()
 		+ Terrain::GetTileLayer()->GetViewWindow().GetX() >= 198){
 		countScroll = 0;
-		(Terrain::GetTileLayer())->SetScrollviewWindow(0); 
+		if(!Mario::isUnderGround && !Mario::IsOnDoor()) {
+			Mario::MarioAnimator->GetMovingAnimation()->SetContinuous(true);
+			Mario::MarioMovesRight();
+		}
+		(Terrain::GetTileLayer())->SetScrollviewWindow(0);
 		return false;
 	}
 	if( x > 85 && !Mario::isUnderGround) {
@@ -72,6 +76,7 @@ void Mario::FlushAnimation() {
 			waitUntilFlush = timeHited = GetTimeReturn2Small();
 		}else if(currTime - timeHited > TIME_FLASH_MARIO) {
 			timeHited = 0; justReturn2Small = false;
+			AnimatorHolder::MarkAsRunning(Mario::GetAnimator());
 		}
 		if(swap){
 			if(currTime - waitUntilFlush > 20){
@@ -350,6 +355,7 @@ void Mario::MarioWalkingJump() {
 		AnimatorHolder::MarkAsRunning(MarioWJump);
 		
 		ChangeState(WalkAndJump);
+		marioState = WalkAndJump;
 		return ;
 }
 
@@ -744,6 +750,7 @@ void Mario::SetSuperAsInvincible() {
 }
 
 void Mario::SetMarioAsInvincible() {
+		if(IsInvincible() ) return ;
 		Animator* prev = GetAnimator();
 		switch (marioLevel) {
 				case MarioSmall:
@@ -755,6 +762,9 @@ void Mario::SetMarioAsInvincible() {
 						break;
 		}
 		StartBeInvincible(currTime);
+		Sounds::Play("powerup");
+		Sounds::Pause("music");
+		Sounds::Play("Invincible");
 		ChangeLevel(prev);
 }
 
@@ -820,7 +830,7 @@ void Mario::Run() {
 
 			break;
 	}
-	Sounds::Pause("Invincible");
+	
 	Sounds::Play("music");
 	ChangeLevel(prev);
 	SetDimensions(x, y);

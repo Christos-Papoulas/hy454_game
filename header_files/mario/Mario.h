@@ -85,7 +85,12 @@ class Mario {
 		static void Return2Normal();
 
 		static void EnterPipe();
+		friend bool MoveViewWindow(Dim x);
+		static bool isOnDoor;
 	public:
+		static MovingAnimator* GetWalkingAnimator() { return MarioAnimator; }
+		static bool IsOnDoor() { return isOnDoor; }
+		static void SetOnDoor() { isOnDoor = true; }
 		static void SuperMario();
 		static void FlashMario();
 		static void CreateWalking(MovingAnimator* mario_animator);

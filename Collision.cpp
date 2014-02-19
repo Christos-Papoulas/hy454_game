@@ -53,6 +53,7 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 		Mario::GetMarioCurrentSprite()->SetY(100);
 
 	if(Collision::GetValue(y_tile + i, x_tile + j + mheight - 1) == 47){
+		Mario::SetOnDoor();
 		if(!isFinishGame) {
 			AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
 			TerrainStartScreen::CreateWin();
@@ -62,6 +63,9 @@ void Collision::MarioCollision(Dim y_tile, Dim x_tile) { //mario tyles
 		}
 		if(wa == 0) { 
 			wa = clock();
+			Mario::GetWalkingAnimator()->GetMovingAnimation()->SetDx(0);
+			Mario::MarioFinishWalking(0, 0);
+			AnimatorHolder::MarkAsSuspended(Mario::GetAnimator());
 			Items::ThrowAFirework();
 		}
 		if( clock() >= wa + 3000 )

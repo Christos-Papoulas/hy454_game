@@ -4,6 +4,7 @@ std::map<std::string,std::list<MovingAnimator*>> GreenKoopa::suspending;
 std::map<std::string,std::list<MovingAnimator*>> GreenKoopa::running;
 std::map<std::string,std::list<MovingAnimator*>> GreenKoopa::suspendingdead;
 std::map<std::string,std::list<MovingAnimator*>> GreenKoopa::walkingdead;
+
 Dim GreenKoopa::delay = 100;
 
 void GreenKoopa::Create(const char* id) {
@@ -75,13 +76,19 @@ void GreenKoopa::MoveKoopasInShells(const char* id) {
 				Dim currPosY = g->GetSprite()->GetY();
 				Dim TileX = g->GetSprite()->GetTileX();
 				Dim TileY = g->GetSprite()->GetTileY();
-				if(g->GetMovingAnimation()->GetDx() != 0)
-						Goumbas::CollicionWithKoopaInShells(currPosX, currPosY);
+				if(g->GetMovingAnimation()->GetDx() != 0) {
+					CollicionWithKoopaInShells("redkoopaleft", currPosX, currPosY);	
+					CollicionWithKoopaInShells("greenkoopaleft", currPosX, currPosY);
+					Goumbas::CollicionWithKoopaInShells(currPosX, currPosY);
+				}
 				if(Enemies::IsMarioLeft(currPosX, currPosY)) {
-						g->GetMovingAnimation()->SetDx(4);
-						g->GetMovingAnimation()->SetDelay(40);
-						g->GetMovingAnimation()->SetContinuous(true);
-						g->SetLastTime(currTime);
+					if(g->GetMovingAnimation()->GetDx() < 0)
+						Mario::Hited();
+					g->GetMovingAnimation()->SetDx(4);
+					
+					g->GetMovingAnimation()->SetDelay(40);
+					g->GetMovingAnimation()->SetContinuous(true);
+					g->SetLastTime(currTime);
 				}
 				else if(Enemies::IsMarioRight(currPosX, currPosY)) {
 						g->GetMovingAnimation()->SetDx(-4);
@@ -258,13 +265,22 @@ void GreenKoopa::CommitDestructions(const char* id) {
 }
 
 void GreenKoopa::KoopasKillMario(const char* id) {
-	for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+	for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ) {
 				MovingAnimator* g = *it;
 				Dim x = g->GetSprite()->GetX();
 				Dim y = g->GetSprite()->GetY();
 
-				if(Enemies::IsMarioLeftOrRight(x, y + 8))
-						 Mario::Hited();
+				if(Enemies::IsMarioLeftOrRight(x, y + 12)) {
+					if(Mario::IsInvincible()){
+						std::list<MovingAnimator*>::iterator prev = it++;
+						suspendingdead[id].push_back(*prev);
+						AnimatorHolder::MarkAsSuspended(*prev);
+					} else {
+						Mario::Hited();
+						++it;
+					}
+				} else
+					++it;
 		}
 }
 
@@ -287,4 +303,22 @@ void GreenKoopa::DeactivateAllKoopas(const char* id) {
 		AnimatorHolder::MarkAsSuspended(*it);
 	}	
 	walkingdead[id].clear();
+}
+
+void GreenKoopa::CollicionWithKoopaInShells(const char* id, Dim kx, Dim ky) {
+	Dim gx, gy, dx, dy; 
+	for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+			gx = (*it)->GetSprite()->GetX();
+			gy = (*it)->GetSprite()->GetY();
+			dx = (kx > gx) ? kx - gx : gx - kx;
+			dy = (ky > gy) ? ky - gy : gy - ky;
+			if(dx < COLLISION_DETECT && dy < (COLLISION_DETECT << 2)){
+					Sounds::Play("stomp");
+					Score::ScoreAdd(100);
+					AnimatorHolder::MarkAsSuspended(*it);
+					suspending[id].push_back(*it);
+					running[id].erase(it);
+					return ;
+			}
+	}
 }

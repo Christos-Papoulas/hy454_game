@@ -25,6 +25,7 @@ class GreenKoopa {
 		static Dim delay;
 
 		static void KoopasKillMario(const char* id);
+		static void CollicionWithKoopaInShells(const char* id, Dim kx, Dim ky) ;
 public:
 		static void Create(const char* id);
 		static void ArtificialIntelligence();

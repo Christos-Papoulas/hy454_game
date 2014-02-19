@@ -933,9 +933,7 @@ void Items::CollisionMarioWithStar() {
 						running["star"].erase(it);
 						Mario::SetMarioAsInvincible();
 						Score::ScoreAdd(1000);
-						Sounds::Play("powerup");
-						Sounds::Pause("music");
-						Sounds::Play("Invincible");
+						
 						return ;
 				}
 		}
