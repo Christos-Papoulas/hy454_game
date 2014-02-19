@@ -445,10 +445,11 @@ void Items::KillPipes() {
 	KillSprites("rightpipe");
 }
 
-#define NUM_OF_ITEMS 12
+#define NUM_OF_ITEMS 13
 const char* Items::strItems[] = {
 	"bricks", "questionbrick", "leftuppipe", "leftpipe", "rightuppipe", "rightpipe",
-	"solidbrick", "coinanimation", "questionfinish", "mushroom", "star", "greenmushroom"
+	"solidbrick", "coinanimation", "questionfinish", "mushroom", "star", "greenmushroom",
+	"flower"
 };
 
 void Items::SuspendBricks() {
@@ -473,8 +474,24 @@ void Items::ArtificialIntelligence() {
 		BrickCollision();
 		MoveStars();
 		CoinCollision();
+		FireCollision();
 }
 
+void Items::FireCollision() {
+	Dim fx, fy;
+	for (std::list<Animator*>::iterator it=running["bullet"].begin(); it != running["bullet"].end(); ) {
+		fx = ((MovingPathAnimator*)*it)->GetSprite()->GetX();
+		fy = ((MovingPathAnimator*)*it)->GetSprite()->GetY();
+		if(Goumbas::FireCollision(fx, fy) || GreenKoopa::FireCollision("greenkoopaleft", fx, fy) ||
+			GreenKoopa::FireCollision("redkoopaleft", fx, fy)){
+			std::list<Animator*>::iterator prev = it++;
+			suspending["bullet"].push_back(*prev);
+			running["bullet"].erase(prev);
+		} else 
+			++it;
+	}
+	
+}
 void Items::SetItemAsActive(Dim x, Dim y) {
 		for(Dim i = 0; i < countItems; i++)
 				if(shortMap[i][X_INDEX] == x && shortMap[i][Y_INDEX] == y) {
@@ -618,6 +635,18 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 		MovingPathAnimator* mpa = dynamic_cast<MovingPathAnimator*>(prevAnim);
 
 		if(res == 323){
+			if(Mario::IsSuperMario()){
+				CreateSprite("flower", 0, 0, 0, 0, 100); 
+				MovingAnimator* flower = (MovingAnimator*) suspending["flower"].back();
+				assert(flower);
+				flower->GetSprite()->SetX(x+3);
+				flower->GetSprite()->SetY(y-16);
+				suspending["flower"].pop_back();
+				running["flower"].push_back(flower);
+				AnimatorHolder::MarkAsRunning(flower);
+				SetOnMap(0, xj, xi);
+				Sounds::Play("powerup_appears");
+			} else {
 				MovingAnimator *g;
 				if(suspending["mushroom"].size() == 0)
 						CreateSprite("mushroom", 10, 3, 0, 120);
@@ -631,6 +660,7 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				SetOnMap(0, xj, xi);
 				ShowSolidQuestion((MovingAnimator*)prevAnim, x, y);
 				Sounds::Play("powerup_appears");
+			}
 		} else if(res == 588) {
 				MovingAnimator *g;
 				if(suspending["greenmushroom"].size() == 0)
@@ -649,11 +679,24 @@ void Items::NotifyHit(Animator* prevAnim, const char* id, Dim x, Dim y) {
 				CreateSpriteWithPath("star", 0, 3, 0, 0, 100);
 				MovingPathAnimator* star = (MovingPathAnimator*) suspending["star"].back();
 				assert(star);
-				star->GetSprite()->SetX(x+3);
+				star->GetSprite()->SetX(x-3);
 				star->GetSprite()->SetY(y-16);
 				suspending["star"].pop_back();
 				running["star"].push_back(star);
 				AnimatorHolder::MarkAsRunning(star);
+				SetOnMap(0, xj, xi);
+				Sounds::Play("powerup_appears");
+		} else if(res == 30) {
+				if(Mario::IsMikio()) 
+					return ;
+				CreateSprite("flower", 0, 0, 0, 0, 100); 
+				MovingAnimator* flower = (MovingAnimator*) suspending["flower"].back();
+				assert(flower);
+				flower->GetSprite()->SetX(x+3);
+				flower->GetSprite()->SetY(y-16);
+				suspending["flower"].pop_back();
+				running["flower"].push_back(flower);
+				AnimatorHolder::MarkAsRunning(flower);
 				SetOnMap(0, xj, xi);
 				Sounds::Play("powerup_appears");
 		}else if(!strcmp(id, "questionbrick")){
@@ -839,6 +882,7 @@ void Items::BrickCollision() {
 
 	CollisionMarioWithMushroom("mushroom");
 	CollisionMarioWithMushroom("greenmushroom");
+	CollisionMarioWithFlower("flower");
 	CollisionMarioWithStar();
 }
 
@@ -918,6 +962,25 @@ void Items::CollisionMarioWithMushroom(const char * id) {
 						g->GetMovingAnimation()->SetDy(3);
 				else
 						g->GetMovingAnimation()->SetDy(0);
+		}
+}
+
+void Items::CollisionMarioWithFlower(const char * id) {
+		for (std::list<Animator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+				MovingAnimator* g = (MovingAnimator*)*it;
+				Dim x = g->GetSprite()->GetX();
+				Dim y = g->GetSprite()->GetY();
+				Dim TileX = g->GetSprite()->GetTileX();
+				Dim TileY = g->GetSprite()->GetTileY();
+				if(Enemies::IsMarioLeftOrRight(x, y)){
+						if(!strcmp(id, "flower")){
+							suspending[id].push_back(*it);
+							AnimatorHolder::MarkAsSuspended(*it);
+							running[id].erase(it);
+							Mario::SetAsFire();
+							return ;
+						}
+				}
 		}
 }
 
@@ -1086,4 +1149,40 @@ void Items::SuspendCoinsUnderGround() {
 
 void Items::ThrowAFirework() {
 	FinishFirework(0, 0);
+}
+
+void Items::ThrowAFireBall() {
+	Dim x = Mario::GetMarioCurrentSprite()->GetX();
+	Dim y = Mario::GetMarioCurrentSprite()->GetY();
+	if(suspending["bullet"].size() == 0)
+		CreateFire("bullet", x, y);
+	MovingPathAnimator *g = (MovingPathAnimator*) suspending["bullet"].back();
+	suspending["bullet"].pop_back();
+	running["bullet"].push_back(g);
+	AnimatorHolder::MarkAsRunning(g);
+}
+
+
+void Items::CreateFire(char* id, Dim x, Dim y) {
+		Sprite *sprite = new Sprite(x + 9, y + 24,
+				AnimationFilmHolder::GetFilm( std::string(id) ));
+		
+		std::vector<PathEntry> paths;
+		Dim k = 0;
+		for(offset_t i = 0, j= 7; i < 6; ++i, j--) { // @todo make the code better!		
+				PathEntry pathEntry(5, -j, k++ % 4, 80);
+				paths.push_back( pathEntry );
+		}
+
+		for(offset_t i = 0, j= 2; i < 6; ++i, j++) { // @todo make the code better!		
+				PathEntry pathEntry( 5, j, k++ % 4, 80);
+				paths.push_back( pathEntry );
+		}
+		MovingPathAnimation* aMovAnimn = (MovingPathAnimation*) new MovingPathAnimation(paths, ParseMarioInfo::GetAnimationIdOf(ParseMarioInfo::GetIndexOf(id)));
+		MovingPathAnimator* aMovAnimr = (MovingPathAnimator*) new MovingPathAnimator();
+		
+		suspending[id].push_back( (Animator*) aMovAnimr );
+		
+		aMovAnimr->Start( sprite, aMovAnimn, GetCurrTime());			
+		AnimatorHolder::Register( aMovAnimr );
 }

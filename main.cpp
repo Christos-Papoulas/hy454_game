@@ -153,6 +153,7 @@ void MarioBrosMain::ManageTime() {
 }
 
 timestamp_t z_pressed = 0;
+timestamp_t c_pressed = 0;
 void MarioBrosMain::InputManagement(){
 	if(!al_key_down(&keyboardState, ALLEGRO_KEY_SPACE))
 		space_pressed = 0;
@@ -174,6 +175,19 @@ void MarioBrosMain::InputManagement(){
 		z_pressed = 0;
 		return ;
 	}
+	if(al_key_down(&keyboardState, ALLEGRO_KEY_C))
+		if(Mario::isFire()){
+			if(c_pressed == 0) { 
+				c_pressed = currTime;
+				Sounds::Play("fire");
+				Items::ThrowAFireBall();
+			} else if (currTime - c_pressed > 200) {
+				Items::ThrowAFireBall();
+				Sounds::Play("fire");
+				c_pressed = currTime;
+			}
+			assert(currTime >= c_pressed);
+		}
 
 	if(!Mario::isWalkingJump() && !Mario::isBackJumping() &&  gameState == Play) {
 			if(al_key_down(&keyboardState, ALLEGRO_KEY_Z) && al_key_down(&keyboardState, ALLEGRO_KEY_RIGHT)){
@@ -215,8 +229,8 @@ void MarioBrosMain::InputManagement(){
 				}
 			}
 			al_flush_event_queue(queue);
-
-			if(al_key_down(&keyboardState, ALLEGRO_KEY_C))
+			
+			if(al_key_down(&keyboardState, ALLEGRO_KEY_B))
 				Mario::SuperMario();
 			if(al_key_down(&keyboardState, ALLEGRO_KEY_V))
 				Mario::SetMarioAsInvincible();

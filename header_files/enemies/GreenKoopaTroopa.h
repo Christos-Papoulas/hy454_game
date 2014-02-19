@@ -37,6 +37,7 @@ public:
 		static void SetDelay(Dim _delay) { delay = _delay; }
 		static void DeactivateAllKoopas(const char* id);
 		static void DeactivateAllKoopas();
+		static bool FireCollision(const char* id, Dim fx, Dim fy);
 };
 
 #endif

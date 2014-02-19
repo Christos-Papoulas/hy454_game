@@ -14,6 +14,7 @@
 #include "../enemies\Piranhas.h"
 #include "../enemies/GreenKoopaTroopa.h"
 #include "FlushMarioHolder.h"
+#include "FireMario.h"
 #include "SpritesHolder.h"
 #include "../items/Coins.h"
 #include "Score.h"
@@ -44,7 +45,8 @@ enum MarioLevel {
 		MarioSmall = 0,
 		Super_Mario,
 		InvincibleMario,
-		InvincibleSuper
+		InvincibleSuper,
+		Fire
 };
 
 class Mario {
@@ -178,6 +180,9 @@ class Mario {
 		static void SetTimeInvincible(timestamp_t t){ timeIsInvincible = t; }
 		static timestamp_t GetTime2BeInvincible() {return timeIsInvincible; }
 		static void CountTimeInvincibleMario();
+
+		static void SetAsFire();
+		static bool isFire() { return marioLevel == Fire; }
 };
 
 #endif

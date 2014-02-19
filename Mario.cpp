@@ -733,10 +733,12 @@ void ChangeLevel(Animator* prev) {
 	return ;
 }
 void Mario::SuperMario() {
-		marioLevel = Super_Mario;
-		Animator* prev = GetAnimator();
-		Initializer::InitSuperMario();
-		ChangeLevel(prev);
+	if(isFire())
+		return ;
+	marioLevel = Super_Mario;
+	Animator* prev = GetAnimator();
+	Initializer::InitSuperMario();
+	ChangeLevel(prev);
 }
 
 void Mario::FlashMario() {
@@ -767,6 +769,21 @@ void Mario::SetMarioAsInvincible() {
 		Sounds::Pause("music");
 		Sounds::Play("Invincible");
 		ChangeLevel(prev);
+}
+
+void Mario::SetAsFire() {
+	if(isFire() ) return ;
+	Animator* prev = GetAnimator();
+	switch (marioLevel) {
+		case MarioSmall:
+			break;
+		case Super_Mario:
+			marioLevel = Fire;
+			FireMario::FireMario();
+			Sounds::Play("powerup");
+			ChangeLevel(prev);
+			break;
+	}
 }
 
 bool Mario::IsMarioSmall() {

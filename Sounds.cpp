@@ -45,9 +45,10 @@ ALLEGRO_SAMPLE *Sounds::hurry_up;
 ALLEGRO_SAMPLE *Sounds::underground;
 ALLEGRO_SAMPLE *Sounds::underground_hurry_up;
 ALLEGRO_SAMPLE *Sounds::jump_super;
+ALLEGRO_SAMPLE *Sounds::fire;
 
 bool Sounds::InitSounds() {
-	if (!al_reserve_samples(22)){
+	if (!al_reserve_samples(23)){
 		fprintf(stderr, "failed to reserve samples!\n");
 		return false;
 	}
@@ -74,8 +75,9 @@ bool Sounds::InitSounds() {
 	underground = al_load_sample(UNDERGROUND);
 	underground_hurry_up = al_load_sample(UNDERGROUND_HURRY_UP);
 	jump_super = al_load_sample(JUMP_SUPER);
+	fire = al_load_sample(FIRE);
 
-	if (!music || !jump_small || !pause || !hit_brick || !powerup_appears || !powerup || !mario_death || !Invincible || !one_up || !coin || !fireworks || !flag || !game_over || !enter_pipe || !finish || !stomp || !vine || !warning || !hurry_up || !underground || !underground_hurry_up || !jump_super) {
+	if (!music || !fire || !jump_small || !pause || !hit_brick || !powerup_appears || !powerup || !mario_death || !Invincible || !one_up || !coin || !fireworks || !flag || !game_over || !enter_pipe || !finish || !stomp || !vine || !warning || !hurry_up || !underground || !underground_hurry_up || !jump_super) {
 		printf( "Audio clip sample not loaded!\n" ); 
 		return false;
 	}
@@ -127,6 +129,8 @@ void Sounds::Play(const char* id) {
 		al_play_sample(underground_hurry_up, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_underground_hurry_up);
 	}else if(id == "jump_super") {
 		al_play_sample(jump_super, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&id_jump_super);
+	}else if(id == "fire") {
+		al_play_sample(fire, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 	
 }

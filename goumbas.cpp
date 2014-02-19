@@ -212,3 +212,23 @@ void Goumbas::CollicionWithKoopaInShells(Dim kx, Dim ky) {
 			}
 	}
 }
+
+bool Goumbas::FireCollision(Dim fx, Dim fy) {
+	Dim gx, gy, dx, dy;
+	for (std::list<MovingAnimator*>::iterator it=running.begin(); it != running.end(); ++it) {
+			gx = (*it)->GetSprite()->GetX();
+			gy = (*it)->GetSprite()->GetY();
+			dx = (fx > gx) ? fx - gx : gx - fx;
+			dy = (fy > gy) ? fy - gy : gy - fy;
+			if(dx < COLLISION_DETECT && dy < COLLISION_DETECT){
+					BadDeath(gx, gy);
+					Sounds::Play("stomp");
+					Score::ScoreAdd(100);
+					AnimatorHolder::MarkAsSuspended(*it);
+					goumbaSuspending.push_back(*it);
+					running.erase(it);
+					return true;
+			}
+	}
+	return false;
+}

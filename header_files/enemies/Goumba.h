@@ -41,6 +41,7 @@ public:
 		static void SetDelay(Dim _delay) { delay = _delay; }
 
 		static void CollicionWithKoopaInShells(Dim kx, Dim ky);
+		static bool FireCollision(Dim fx, Dim fy);
 };
 
 #endif

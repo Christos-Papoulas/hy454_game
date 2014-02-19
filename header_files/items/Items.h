@@ -88,6 +88,7 @@ class Items {
 		static void CoinCollision();
 		static void ShowSolidQuestion(MovingAnimator* prevAnim, Dim x, Dim y);
 		static void CollisionMarioWithMushroom(const char * id);
+		static void CollisionMarioWithFlower(const char * id);
 		static void CollisionMarioWithStar();
 		static void MoveStars();
 		static void PowerUp(const char* id, std::list<Animator*>::iterator it);
@@ -96,6 +97,9 @@ class Items {
 		static void CreateFirework(const char* id, const Dim x, const Dim y);
 		friend void Destruction::FinishDestroy(Animator* a, void* v);
 
+
+		static void CreateFire(char* id, Dim x, Dim y);
+		static void FireCollision();
 public:
 		static void Init();
 		static void ArtificialIntelligence();
@@ -135,6 +139,7 @@ public:
 		static void SuspendCoinsUnderGround();
 		static void FinishFirework(Animator*, void*);
 		static void ThrowAFirework();
+		static void ThrowAFireBall();
 };
 
 #endif

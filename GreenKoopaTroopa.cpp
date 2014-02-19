@@ -322,3 +322,22 @@ void GreenKoopa::CollicionWithKoopaInShells(const char* id, Dim kx, Dim ky) {
 			}
 	}
 }
+
+bool GreenKoopa::FireCollision(const char* id, Dim fx, Dim fy) {
+	Dim gx, gy, dx, dy; 
+	for (std::list<MovingAnimator*>::iterator it=running[id].begin(); it != running[id].end(); ++it) {
+		gx = (*it)->GetSprite()->GetX();
+		gy = (*it)->GetSprite()->GetY();
+		dx = (fx > gx) ? fx - gx : gx - fx;
+		dy = (fy > gy) ? fy - gy : gy - fy;
+		if(dx < COLLISION_DETECT && dy < (COLLISION_DETECT << 2)){
+				Sounds::Play("stomp");
+				Score::ScoreAdd(100);
+				AnimatorHolder::MarkAsSuspended(*it);
+				suspending[id].push_back(*it);
+				running[id].erase(it);
+				return true;
+		}	
+	}
+	return false;
+}

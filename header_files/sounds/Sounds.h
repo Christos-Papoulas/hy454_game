@@ -27,6 +27,7 @@
 #define UNDERGROUND "Data\\Sounds\\Underground.ogg"
 #define UNDERGROUND_HURRY_UP "Data\\Sounds\\Underground_Hurry_Up.ogg"
 #define JUMP_SUPER "Data\\Sounds\\smb_jump-super.wav"
+#define FIRE "Data\\Sounds\\smb_kick.wav"
 
 
 
@@ -77,6 +78,7 @@ class Sounds{
 		static ALLEGRO_SAMPLE *underground;
 		static ALLEGRO_SAMPLE *underground_hurry_up;
 		static ALLEGRO_SAMPLE *jump_super;
+		static ALLEGRO_SAMPLE *fire;
 		static bool InitSounds();
 		static void Play(const char* id);
 		static void Pause(const char* id);

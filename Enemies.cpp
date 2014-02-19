@@ -136,7 +136,7 @@ bool Enemies::IsMarioLeftOrRight(Dim x, Dim y) { // x, y, is on screen
 
 	if(Mario::IsSuperMario()){
 			j = (y > mj) ? y - 16 - mj : mj + 16 - y;
-			if(i < COLLISION_DETECT && j < COLLISION_DETECT)
+			if(i < COLLISION_DETECT && (j < COLLISION_DETECT || j > 65000))
 					return true;
 	}
 	return false;
