@@ -1,4 +1,4 @@
-hy454_game
+hy454_game Mario Bros
 ==========
 In this project we implemented a subset of the game “Super Mario Bros”.
 Mario is able to walk, run, jump, duck, get into pipes, collect power-ups (except the flower)
