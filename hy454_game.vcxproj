@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F3F12C70-EEC0-4C7B-94F8-886C7995252B}</ProjectGuid>
+    <RootNamespace>hy454_game</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;C:\boost_1_55_0\;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;C:\boost_1_55_0\;</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\boost_1_55_0\;$(ALEGRO5)\include;$(HY454_GAME)\header_files;$(HY454_GAME)\header_files\tiles;$(HY454_GAME)\header_files\animation;$(HY454_GAME)\header_files\animator;\$(HY454_GAME)\header_files\mario;$(HY454_GAME)\header_files\terrain</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ALEGRO5)\lib;C:\Boost\lib\i386;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>allegro-5.0.10-monolith-mt-debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(ALEGRO5)\include;$(HY454_GAME)\header_files;$(HY454_GAME)\header_files\tiles;$(HY454_GAME)\header_files\animation;$(HY454_GAME)\header_files\animator;\$(HY454_GAME)\header_files\mario;$(HY454_GAME)\header_files\terrain</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>${ALEGRO5}\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);allegro-5.0.10-monolith-mt-debug.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationFilm.cpp" />
+    <ClCompile Include="AnimationFilmHolder.cpp" />
+    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="AnimatorHolder.cpp" />
+    <ClCompile Include="BitmapLoader.cpp" />
+    <ClCompile Include="Coins.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionChecker.cpp" />
+    <ClCompile Include="DestructionAnimation.cpp" />
+    <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="FireMario.cpp" />
+    <ClCompile Include="FlushMarioHolder.cpp" />
+    <ClCompile Include="FrameRangeAnimator.cpp" />
+    <ClCompile Include="goumbas.cpp" />
+    <ClCompile Include="GreenKoopaTroopa.cpp" />
+    <ClCompile Include="HiddenAnimator.cpp" />
+    <ClCompile Include="Items.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MovingAnimator.cpp" />
+    <ClCompile Include="MovingPathAnimator.cpp" />
+    <ClCompile Include="NumbersHolder.cpp" />
+    <ClCompile Include="Objects.cpp" />
+    <ClCompile Include="ParseMarioInfo.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="Piranhas.cpp" />
+    <ClCompile Include="Sounds.cpp" />
+    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="SpritesHolder.cpp" />
+    <ClCompile Include="terrain.cpp" />
+    <ClCompile Include="TerrainStartScreen.cpp" />
+    <ClCompile Include="TerrainUtils.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
+    <ClCompile Include="TileLayerStartScreen.cpp" />
+    <ClCompile Include="TilesBitmap.cpp" />
+    <ClCompile Include="TilesBitmapStartScreen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FireMario.h" />
+    <ClInclude Include="header_files\animation\Animation.h" />
+    <ClInclude Include="header_files\animation\AnimationFilm.h" />
+    <ClInclude Include="header_files\animation\AnimationFilmHolder.h" />
+    <ClInclude Include="header_files\animation\BitmapLoader.h" />
+    <ClInclude Include="header_files\animation\FrameListAnimation.h" />
+    <ClInclude Include="header_files\animation\FrameRangeAnimation.h" />
+    <ClInclude Include="header_files\animation\MovingAnimation.h" />
+    <ClInclude Include="header_files\animation\MovingPathAnimation.h" />
+    <ClInclude Include="header_files\animation\ScrollingAnimation.h" />
+    <ClInclude Include="header_files\animation\Sprites.h" />
+    <ClInclude Include="header_files\animator\Animator.h" />
+    <ClInclude Include="header_files\animator\AnimatorHolder.h" />
+    <ClInclude Include="header_files\animator\FrameRangeAnimator.h" />
+    <ClInclude Include="header_files\animator\HiddenAnimator.h" />
+    <ClInclude Include="header_files\animator\MovingAnimator.h" />
+    <ClInclude Include="header_files\animator\MovingPathAnimator.h" />
+    <ClInclude Include="header_files\collision\Collision.h" />
+    <ClInclude Include="header_files\collision\CollisionChecker.h" />
+    <ClInclude Include="header_files\conf\parser.h" />
+    <ClInclude Include="header_files\enemies\Enemies.h" />
+    <ClInclude Include="header_files\enemies\Goumba.h" />
+    <ClInclude Include="header_files\enemies\GreenKoopaTroopa.h" />
+    <ClInclude Include="header_files\enemies\piranhas.h" />
+    <ClInclude Include="header_files\items\Coins.h" />
+    <ClInclude Include="header_files\items\DestructionAnimation.h" />
+    <ClInclude Include="header_files\items\Items.h" />
+    <ClInclude Include="header_files\logs\logs.h" />
+    <ClInclude Include="header_files\MarioBrosMain.h" />
+    <ClInclude Include="header_files\mario\FlushMarioHolder.h" />
+    <ClInclude Include="header_files\mario\logic.h" />
+    <ClInclude Include="header_files\mario\Mario.h" />
+    <ClInclude Include="header_files\mario\NumbersHolder.h" />
+    <ClInclude Include="header_files\mario\Score.h" />
+    <ClInclude Include="header_files\mario\SpritesHolder.h" />
+    <ClInclude Include="header_files\Objects.h" />
+    <ClInclude Include="header_files\parsers\ParseMarioInfo.h" />
+    <ClInclude Include="header_files\sounds\Sounds.h" />
+    <ClInclude Include="header_files\terrain\terrain.h" />
+    <ClInclude Include="header_files\terrain\TerrainStartScreen.h" />
+    <ClInclude Include="header_files\terrain\TerrainUtils.h" />
+    <ClInclude Include="header_files\tiles\TileLayer.h" />
+    <ClInclude Include="header_files\tiles\TileLayerStartScreen.h" />
+    <ClInclude Include="header_files\tiles\TilesBitmap.h" />
+    <ClInclude Include="header_files\tiles\TilesBitmapStartScreen.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="hy454_game.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
