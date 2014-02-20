@@ -1,7 +1,29 @@
 hy454_game
 ==========
+In this project we implemented a subset of the game “Super Mario Bros”.
+Mario is able to walk, run, jump, duck, get into pipes, collect power-ups (except the flower)
+and stump on enemies. He can also break brick blocks and hit “?” blocks for coins
+and power-ups. The game finishes when Mario enters the castle at the end of the
+level.
 
-The project of hy454 
+The Mario franchise consists of video games published and produced
+by Nintendo starring the fictional character, Mario. It was originally created by game
+designer Shigeru Miyamoto with the arcade Donkey Kong, released on July 9, 1981.
+The games have been developed by a variety of developers including
+Nintendo, Hudson Soft, and AlphaDream. Most Mario games have either been
+released for the arcade or Nintendo video game consoles and handhelds dating from
+the Nintendo Entertainment System to the current generation of video game
+consoles. The main series in the franchise is the Super Mario platform series, which
+mostly follows Mario's adventures in the fictional world of the Mushroom Kingdom.
+These games typically rely on Mario's jumping ability to allow him to progress
+through levels
+
+## Game Play
+* z: jump
+* x: run
+* c: throw fireballs
+* arrows: move
+
 ## Technical Issues
 All the useful defines are at /header_files/Objects.h
 
