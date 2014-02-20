@@ -48,7 +48,7 @@ void Configurator::PutKoopasOnMap(Dim enemy, Dim n){
 				tries = 0;
 				while(1) {
 						x = rand() % MAX_HEIGHT;
-						y = 15 + (rand() % (MAX_WIDTH - 15));
+						y = 15 + (rand() % (MAX_WIDTH - 30));
 	
 						if( CanPutEnemyAt(x, y) && CanPutEnemyAt(x, y + 1)){
 								Enemies::SetOnMap(enemy +  rand() % 2, x, y);
@@ -73,7 +73,7 @@ void Configurator::PutGoumbasOnMap(Dim enemy, Dim n) {
 				tries = 0;
 				while(1) {
 						x = rand() % MAX_HEIGHT;
-						y = 15 + (rand() % (MAX_WIDTH - 15));
+						y = 15 + (rand() % (MAX_WIDTH - 30));
 	
 						if( CanPutEnemyAt(x, y) ){
 								Enemies::SetOnMap(enemy, x, y);
