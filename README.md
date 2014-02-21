@@ -46,4 +46,4 @@ and start building efficient Allegro Programs.
 
 A basic guide ["From C to C++!"](http://www.4p8.com/eric.brasseur/cppcen.html) is a good chance to start. But as we continue, we need a [full guide of C++](http://e-maxx.ru/bookz/files/stroustrup.pdf).
 
-Takis, Lefteris, Christos
+Lefteris Pahis, Christos Papoulas
