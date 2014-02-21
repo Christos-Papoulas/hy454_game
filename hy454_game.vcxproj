@@ -46,7 +46,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\boost_1_55_0\;$(ALEGRO5)\include;$(HY454_GAME)\header_files;$(HY454_GAME)\header_files\tiles;$(HY454_GAME)\header_files\animation;$(HY454_GAME)\header_files\animator;\$(HY454_GAME)\header_files\mario;$(HY454_GAME)\header_files\terrain</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_55_0\;$(ALEGRO5)\include;$(HY454_GAME)\header_files;$(HY454_GAME)\header_files\tiles;$(HY454_GAME)\header_files\animation;$(HY454_GAME)\header_files\animator;$(HY454_GAME)\header_files\mario;$(HY454_GAME)\header_files\terrain;$(HY454_GAME)\header_files\collision;$(HY454_GAME)\header_files\conf;$(HY454_GAME)\header_files\enemies;$(HY454_GAME)\header_files\items;$(HY454_GAME)\header_files\logs;$(HY454_GAME)\header_files\parsers;$(HY454_GAME)\header_files\sounds</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -72,44 +72,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="AnimationFilm.cpp" />
-    <ClCompile Include="AnimationFilmHolder.cpp" />
-    <ClCompile Include="Animator.cpp" />
-    <ClCompile Include="AnimatorHolder.cpp" />
-    <ClCompile Include="BitmapLoader.cpp" />
-    <ClCompile Include="Coins.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CollisionChecker.cpp" />
-    <ClCompile Include="DestructionAnimation.cpp" />
-    <ClCompile Include="Enemies.cpp" />
-    <ClCompile Include="FireMario.cpp" />
-    <ClCompile Include="FlushMarioHolder.cpp" />
-    <ClCompile Include="FrameRangeAnimator.cpp" />
-    <ClCompile Include="goumbas.cpp" />
-    <ClCompile Include="GreenKoopaTroopa.cpp" />
-    <ClCompile Include="HiddenAnimator.cpp" />
-    <ClCompile Include="Items.cpp" />
-    <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="MovingAnimator.cpp" />
-    <ClCompile Include="MovingPathAnimator.cpp" />
-    <ClCompile Include="NumbersHolder.cpp" />
     <ClCompile Include="Objects.cpp" />
-    <ClCompile Include="ParseMarioInfo.cpp" />
-    <ClCompile Include="parser.cpp" />
-    <ClCompile Include="Piranhas.cpp" />
-    <ClCompile Include="Sounds.cpp" />
-    <ClCompile Include="Sprites.cpp" />
-    <ClCompile Include="SpritesHolder.cpp" />
-    <ClCompile Include="terrain.cpp" />
-    <ClCompile Include="TerrainStartScreen.cpp" />
-    <ClCompile Include="TerrainUtils.cpp" />
-    <ClCompile Include="TileLayer.cpp" />
-    <ClCompile Include="TileLayerStartScreen.cpp" />
-    <ClCompile Include="TilesBitmap.cpp" />
-    <ClCompile Include="TilesBitmapStartScreen.cpp" />
+    <ClCompile Include="source_files\animation\Animation.cpp" />
+    <ClCompile Include="source_files\animation\AnimationFilm.cpp" />
+    <ClCompile Include="source_files\animation\AnimationFilmHolder.cpp" />
+    <ClCompile Include="source_files\animation\BitmapLoader.cpp" />
+    <ClCompile Include="source_files\animation\Sprites.cpp" />
+    <ClCompile Include="source_files\animator\Animator.cpp" />
+    <ClCompile Include="source_files\animator\AnimatorHolder.cpp" />
+    <ClCompile Include="source_files\animator\FrameRangeAnimator.cpp" />
+    <ClCompile Include="source_files\animator\HiddenAnimator.cpp" />
+    <ClCompile Include="source_files\animator\MovingAnimator.cpp" />
+    <ClCompile Include="source_files\animator\MovingPathAnimator.cpp" />
+    <ClCompile Include="source_files\collision\Collision.cpp" />
+    <ClCompile Include="source_files\collision\CollisionChecker.cpp" />
+    <ClCompile Include="source_files\conf\parser.cpp" />
+    <ClCompile Include="source_files\enemies\Enemies.cpp" />
+    <ClCompile Include="source_files\enemies\Goumbas.cpp" />
+    <ClCompile Include="source_files\enemies\GreenKoopaTroopa.cpp" />
+    <ClCompile Include="source_files\enemies\Piranhas.cpp" />
+    <ClCompile Include="source_files\items\DestructionAnimation.cpp" />
+    <ClCompile Include="source_files\items\Items.cpp" />
+    <ClCompile Include="source_files\logs\log.cpp" />
+    <ClCompile Include="source_files\mario\FireMario.cpp" />
+    <ClCompile Include="source_files\mario\FlushMarioHolder.cpp" />
+    <ClCompile Include="source_files\mario\Mario.cpp" />
+    <ClCompile Include="source_files\mario\NumbersHolder.cpp" />
+    <ClCompile Include="source_files\mario\SpritesHolder.cpp" />
+    <ClCompile Include="source_files\parsers\ParseMarioInfo.cpp" />
+    <ClCompile Include="source_files\sounds\Sounds.cpp" />
+    <ClCompile Include="source_files\terrain\terrain.cpp" />
+    <ClCompile Include="source_files\terrain\TerrainStartScreen.cpp" />
+    <ClCompile Include="source_files\terrain\TerrainUtils.cpp" />
+    <ClCompile Include="source_files\tiles\Coins.cpp" />
+    <ClCompile Include="source_files\tiles\TileLayer.cpp" />
+    <ClCompile Include="source_files\tiles\TileLayerStartScreen.cpp" />
+    <ClCompile Include="source_files\tiles\TilesBitmap.cpp" />
+    <ClCompile Include="source_files\tiles\TilesBitmapStartScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FireMario.h" />

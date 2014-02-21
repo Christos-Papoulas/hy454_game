@@ -1,28 +1,28 @@
 #ifndef _MARIO_H_
 #define _MARIO_H_
 
-#include "../animator/MovingAnimator.h"
-#include "../animator/FrameRangeAnimator.h"
-#include "../animator/MovingPathAnimator.h"
-#include "../animator/AnimatorHolder.h"
-#include "../animation/AnimationFilmHolder.h"
-#include "../terrain/terrain.h"
-#include "../tiles/TileLayer.h"
-#include "../tiles/TilesBitmap.h"
-#include "../terrain/TerrainStartScreen.h"
-#include "../enemies/Goumba.h"
-#include "../enemies\Piranhas.h"
-#include "../enemies/GreenKoopaTroopa.h"
+#include "MovingAnimator.h"
+#include "FrameRangeAnimator.h"
+#include "MovingPathAnimator.h"
+#include "AnimatorHolder.h"
+#include "AnimationFilmHolder.h"
+#include "terrain.h"
+#include "TileLayer.h"
+#include "TilesBitmap.h"
+#include "TerrainStartScreen.h"
+#include "Goumba.h"
+#include "Piranhas.h"
+#include "GreenKoopaTroopa.h"
 #include "FlushMarioHolder.h"
 #include "FireMario.h"
 #include "SpritesHolder.h"
-#include "../items/Coins.h"
+#include "Coins.h"
 #include "Score.h"
-#include "sounds\Sounds.h"
+#include "Sounds.h"
 #include "MarioBrosMain.h"
 
 #include <assert.h>
-#include < vector>
+#include <vector>
 #include <time.h>
 
 extern ALLEGRO_KEYBOARD_STATE keyboardState;

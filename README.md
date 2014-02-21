@@ -1,5 +1,15 @@
 hy454_game Mario Bros
 ==========
+
+## Game Play
+
+* z: jump
+* x: run
+* c: throw fireballs
+* arrows: move
+
+## Description
+
 In this project we implemented a subset of the game “Super Mario Bros”.
 Mario is able to walk, run, jump, duck, get into pipes, collect power-ups (except the flower)
 and stump on enemies. He can also break brick blocks and hit “?” blocks for coins
@@ -18,13 +28,8 @@ mostly follows Mario's adventures in the fictional world of the Mushroom Kingdom
 These games typically rely on Mario's jumping ability to allow him to progress
 through levels
 
-## Game Play
-* z: jump
-* x: run
-* c: throw fireballs
-* arrows: move
-
 ## Technical Issues
+
 All the useful defines are at /header_files/Objects.h
 
 ## Tutorial for allegro
